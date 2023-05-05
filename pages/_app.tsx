@@ -33,6 +33,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	}, []);
 
 	if (isSSR) return null;
+
 	return (
 		<WalletProvider>
 			<UserProvider>

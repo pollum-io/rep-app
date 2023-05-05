@@ -5,11 +5,8 @@ export const fetchOpportunitiesByCompany = async (
 	query: object,
 	host?: string
 ) => {
-	console.log(host, "fetchOpportunitiesByCompany: host");
-
 	const api = apiInstance(host);
 	const params = query ? `?${qs.stringify(query)}` : "";
-	console.log(params, "fetchOpportunitiesByCompany: params");
 
 	const response = await api.get(`/opportunity${params}`, {
 		headers: {

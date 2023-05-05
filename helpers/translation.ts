@@ -4,7 +4,7 @@ import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
 export const availableLanguages = ["en", "pt-br"];
-export const defaultLocale = "en";
+export const defaultLocale = "pt-br";
 const LOCALE_VERSION = "1.5.1";
 
 const determineLngFn = (code: string): string => {
@@ -41,7 +41,7 @@ i18next
 	.use(initReactI18next)
 	.init({
 		backend: {
-			loadPath: `./locales/{{lng}}.json`,
+			loadPath: `../public/locales/{{lng}}.json`,
 			queryStringParams: { v: LOCALE_VERSION },
 		},
 		react: {
