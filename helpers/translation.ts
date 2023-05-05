@@ -3,8 +3,8 @@ import { initReactI18next } from "react-i18next";
 import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-export const availableLanguages = ["en", "pt-br"];
-export const defaultLocale = "pt-br";
+export const availableLanguages = ["en", "br"];
+export const defaultLocale = "br";
 const LOCALE_VERSION = "1.5.1";
 
 const determineLngFn = (code: string): string => {
