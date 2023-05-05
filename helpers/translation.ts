@@ -41,7 +41,7 @@ i18next
 	.use(initReactI18next)
 	.init({
 		backend: {
-			loadPath: `../public/locales/{{lng}}.json`,
+			loadPath: `./locales/{{lng}}/translation.json`,
 			queryStringParams: { v: LOCALE_VERSION },
 		},
 		react: {
@@ -49,9 +49,7 @@ i18next
 		},
 		load: "languageOnly",
 		lowerCaseLng: true,
-		debug: true,
 		fallbackLng: determineLngFn,
-		initImmediate: false,
 		preload: [defaultLocale],
 		keySeparator: ".",
 		interpolation: { escapeValue: false },
