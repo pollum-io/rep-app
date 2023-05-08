@@ -49,7 +49,7 @@ i18next
 		},
 		load: "languageOnly",
 		lowerCaseLng: true,
-		fallbackLng: determineLngFn,
+		// fallbackLng: determineLngFn,
 		preload: [defaultLocale],
 		keySeparator: ".",
 		interpolation: { escapeValue: false },
