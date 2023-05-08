@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../styles";
 import "../styles/termsScrollbar.css";
 import AppWrapper from "../container/AppWrapper";
+import "../helpers/translation";
 import { useEffect, useState } from "react";
 import "../styles/maps.css";
 import "../styles/mapsLabel.css";
