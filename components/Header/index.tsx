@@ -61,7 +61,7 @@ export const Header: React.FC = () => {
 					fontSize="0.875rem"
 					lineHeight="1.25rem"
 					alignItems="center"
-					w={"12rem"}
+					w={"14rem"}
 				>
 					<HamburguerMenu />
 				</Flex>

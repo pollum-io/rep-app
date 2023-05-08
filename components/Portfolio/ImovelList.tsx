@@ -53,6 +53,7 @@ export const ImovelList: FunctionComponent<IImovelList> = ({
 		};
 
 		getImage();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

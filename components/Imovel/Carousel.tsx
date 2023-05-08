@@ -52,6 +52,7 @@ export const Carousel: React.FC<ICarousel> = props => {
 				});
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [extra_images, modal_images]);
 
 	return (
