@@ -41,7 +41,7 @@ i18next
 	.use(initReactI18next)
 	.init({
 		backend: {
-			loadPath: `./locales/{{lng}}.json`,
+			loadPath: `/locales/{{lng}}.json`,
 			queryStringParams: { v: LOCALE_VERSION },
 		},
 		react: {
@@ -56,3 +56,28 @@ i18next
 	});
 
 export default i18next;
+
+// import React from "react";
+// import { useTranslation, initReactI18next } from "react-i18next";
+// import i18next from "i18next";
+// import HttpApi from "i18next-http-backend";
+// import LanguageDetector from "i18next-browser-languagedetector";
+
+// i18next
+// 	.use(HttpApi)
+// 	.use(LanguageDetector)
+// 	.use(initReactI18next)
+// 	.init({
+// 		backend: {
+// 			loadPath: "/locales/{{lng}}/{{ns}}.json",
+// 		},
+// 		fallbackLng: "en",
+// 		debug: true,
+// 		detection: {
+// 			order: ["cookie", "navigator"],
+// 			caches: ["cookie"],
+// 		},
+// 		interpolation: {
+// 			escapeValue: false,
+// 		},
+// 	});
