@@ -41,7 +41,7 @@ i18next
 	.use(initReactI18next)
 	.init({
 		backend: {
-			loadPath: `public/locales/{{lng}}.json`,
+			loadPath: `locales/{{lng}}.json`,
 			queryStringParams: { v: LOCALE_VERSION },
 		},
 		react: {
