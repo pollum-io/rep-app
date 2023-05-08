@@ -71,7 +71,7 @@ i18next
 		backend: {
 			loadPath: "/locales/{{lng}}/{{ns}}.json",
 		},
-		fallbackLng: "pt-br",
+		fallbackLng: "pt-BR",
 		debug: true,
 		detection: {
 			order: ["cookie", "navigator"],
