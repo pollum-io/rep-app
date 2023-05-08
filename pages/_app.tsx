@@ -3,7 +3,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../styles";
 import "../styles/termsScrollbar.css";
 import AppWrapper from "../container/AppWrapper";
-import "../helpers/translation";
 import { useEffect, useState } from "react";
 import "../styles/maps.css";
 import "../styles/mapsLabel.css";
@@ -23,15 +22,7 @@ const toasty = {
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	const queryClient = new QueryClient({});
-	const [isSSR, setIsSSR] = useState(true);
 
-	useEffect(() => {
-		return () => {
-			setIsSSR(false);
-		};
-	}, []);
-
-	if (isSSR) return null;
 	return (
 		<WalletProvider>
 			<UserProvider>
