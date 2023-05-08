@@ -1,17 +1,17 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../styles";
-import "../styles/termsScrollbar.css";
 import AppWrapper from "../container/AppWrapper";
 import { useEffect, useState } from "react";
-import "../styles/maps.css";
-import "../styles/mapsLabel.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastyProvider } from "../contexts/toasty";
 import { OpportunitiesProvider } from "../contexts/opportunities";
 import { WalletProvider } from "../contexts/wallet";
 import { UserProvider } from "../contexts/user";
 import { TransactionsProvider } from "../contexts/transactions";
+import "../styles/termsScrollbar.css";
+import "../styles/maps.css";
+import "../styles/mapsLabel.css";
 import "../styles/tooltipChart.css";
 import "../styles/pieChart.css";
 
