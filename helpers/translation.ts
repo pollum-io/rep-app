@@ -3,8 +3,8 @@ import { initReactI18next } from "react-i18next";
 import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-export const availableLanguages = ["en", "br"];
-export const defaultLocale = "br";
+export const availableLanguages = ["en", "pt-br"];
+export const defaultLocale = "pt-br";
 const LOCALE_VERSION = "1.5.1";
 
 const determineLngFn = (code: string): string => {
@@ -23,13 +23,13 @@ const determineLngFn = (code: string): string => {
 		return language;
 	}
 
-	// Base locale match
-	const codeBase = code.split("-")[0].toLowerCase();
-	if (availableLanguages.includes(codeBase)) {
-		language = codeBase;
+	// // Base locale match
+	// const codeBase = code.split("-")[0].toLowerCase();
+	// if (availableLanguages.includes(codeBase)) {
+	// 	language = codeBase;
 
-		return language;
-	}
+	// 	return language;
+	// }
 
 	// Fallback
 	return language;
