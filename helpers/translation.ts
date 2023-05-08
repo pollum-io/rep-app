@@ -23,13 +23,13 @@ const determineLngFn = (code: string): string => {
 		return language;
 	}
 
-	// // Base locale match
-	// const codeBase = code.split("-")[0].toLowerCase();
-	// if (availableLanguages.includes(codeBase)) {
-	// 	language = codeBase;
+	// Base locale match
+	const codeBase = code.split("-")[0].toLowerCase();
+	if (availableLanguages.includes(codeBase)) {
+		language = codeBase;
 
-	// 	return language;
-	// }
+		return language;
+	}
 
 	// Fallback
 	return language;
@@ -41,7 +41,7 @@ i18next
 	.use(initReactI18next)
 	.init({
 		backend: {
-			loadPath: `./locales/{{lng}}.json`,
+			loadPath: `public/locales/{{lng}}.json`,
 			queryStringParams: { v: LOCALE_VERSION },
 		},
 		react: {
@@ -49,7 +49,7 @@ i18next
 		},
 		load: "languageOnly",
 		lowerCaseLng: true,
-		// fallbackLng: determineLngFn,
+		fallbackLng: determineLngFn,
 		preload: [defaultLocale],
 		keySeparator: ".",
 		interpolation: { escapeValue: false },
