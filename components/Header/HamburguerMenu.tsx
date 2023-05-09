@@ -153,9 +153,9 @@ export const HamburguerMenu: React.FC = () => {
 									pl="1.625rem"
 									py="0.2rem"
 									onClick={() => {
-										i18next.changeLanguage("pt-br");
+										i18next.changeLanguage("br");
 									}}
-									bgColor={language === "pt-br" ? "#F7FAFC" : "#ffffff"}
+									bgColor={language === "br" ? "#F7FAFC" : "#ffffff"}
 								>
 									<Text
 										fontFamily="Poppins"
@@ -165,7 +165,7 @@ export const HamburguerMenu: React.FC = () => {
 									>
 										{t("header.pt")}
 									</Text>
-									<Flex display={language === "pt-br" ? "flex" : "none"}>
+									<Flex display={language === "br" ? "flex" : "none"}>
 										<BsCheck color="#1789A3" size={18} />
 									</Flex>
 								</Flex>
