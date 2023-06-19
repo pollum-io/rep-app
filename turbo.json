@@ -6,7 +6,8 @@
     "NEXT_PUBLIC_GOOGLE_MAPS_APY_KEY",
     "JWT_SECRET",
     "EMAIL_PROVIDER",
-    "PASSWORD_PROVIDER"
+    "PASSWORD_PROVIDER",
+    "NODE_ENV"
   ],
   "pipeline": {
     "build": {

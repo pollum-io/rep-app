@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { serialize } from "cookie";
+import { CookieSerializeOptions, serialize } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import User from "../models/user";
 import dbConnect from "./dbConnect";
@@ -18,11 +18,11 @@ type DecodedUser = {
 };
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
-export const cookieOptions = {
+export const cookieOptions: CookieSerializeOptions = {
 	httpOnly: true,
 	maxAge: 604800,
 	path: "/",
-	sameSite: "Strict",
+	sameSite: "strict",
 	secure: process.env.NODE_ENV === "production",
 };
 
