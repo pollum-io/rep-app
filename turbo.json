@@ -1,6 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "MONGODB_URI",
+    "NEXT_PUBLIC_GOOGLE_MAPS_APY_KEY",
+    "JWT_SECRET",
+    "EMAIL_PROVIDER",
+    "PASSWORD_PROVIDER"
+  ],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
