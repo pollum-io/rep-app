@@ -59,7 +59,7 @@ export const BarCharts: React.FC<IExample> = props => {
 				/>
 				<Bar
 					dataKey="token_minted"
-					width="max-content"
+					width={"max-content" as any}
 					label={{ position: "right", formatter: (value: any) => `${value}` }}
 				>
 					{sortedChartData?.map((value, index) => (
