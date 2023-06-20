@@ -1,5 +1,10 @@
 {
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo: 'teste'"
+    }
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -18,5 +23,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "husky": "^8.0.3"
+  }
 }
