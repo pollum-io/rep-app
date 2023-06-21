@@ -8,7 +8,7 @@ import {
 import { OpportunitiesCards } from "../Opportunities/OpportunitiesCard/OpportunitiesCard";
 import { CompanieContact } from "./CompanieContact/CompanieContact";
 import { CompanieDetails } from "./CompanieDetails/CompanieDetails";
-import { CompanieMembers } from "./CompanieMembers/";
+import { CompanieMembers } from "./CompanieMembers/CompanieMembers";
 
 interface ICompanie {
 	companieDetail: ICompaniesDetails;
