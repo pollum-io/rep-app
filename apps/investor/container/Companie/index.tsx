@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { CompaniePage } from "../../components/Companie";
+import { CompaniePage } from "../../components/CompaniePage";
 import { ICompaniesDetails } from "../../components/Companies/CompaniesCard/dto";
 import { DefaultTemplate } from "../DefaultTemplate";
 
