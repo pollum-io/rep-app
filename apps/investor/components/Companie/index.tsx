@@ -9,6 +9,7 @@ import { OpportunitiesCards } from "../Opportunities/OpportunitiesCard/Opportuni
 import { CompanieContact } from "./CompanieContact/CompanieContact";
 import { CompanieDetails } from "./CompanieDetails/CompanieDetails";
 import { CompanieMembers } from "./CompanieMembers/CompanieMembers";
+import { ICompanieMembers } from "./CompanieMembers/dto";
 
 interface ICompanie {
 	companieDetail: ICompaniesDetails;
@@ -149,12 +150,12 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 									<Text>{t("companieDetails.whoBuilds")}</Text>
 
 									{companieDetail?.team?.map(
-										(team: ICompaniesTeam, index: any) => (
+										(team: ICompanieMembers, index: number) => (
 											// eslint-disable-next-line react/jsx-key
 											<CompanieMembers
 												key={index}
 												name={team.name}
-												position={team.position}
+												occupation={team.occupation}
 												image={team.image}
 											/>
 										)

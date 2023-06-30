@@ -1,7 +1,7 @@
 import axios from "axios";
-import { IOpportunitieAddress } from "../components/Opportunities/OpportunitiesCard/dto";
+import { IAddressData } from "../dtos/AddressData";
 
-export async function fetchGeocode(localization: IOpportunitieAddress) {
+export async function fetchGeocode(localization: IAddressData) {
 	const { address, neighborhood, state_alias, street } = localization;
 
 	try {
@@ -10,12 +10,14 @@ export async function fetchGeocode(localization: IOpportunitieAddress) {
 			{
 				params: {
 					address: `${address}+${street},+${neighborhood},+${state_alias}`,
-					key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_APY_KEY as any,
+					key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_APY_KEY as string,
 				},
 			}
 		);
 		return response.data;
-	} catch (error: any) {
-		console.log(error.message);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.message);
+		}
 	}
 }

@@ -12,10 +12,10 @@ import { Carousel } from "./Carousel";
 interface ICollectionsModal {
 	isOpen: boolean;
 	onClose: () => void;
-	images: any;
+	images: string[];
 }
 
-export const CollectionsModal: React.FC<ICollectionsModal> = props => {
+export const CollectionsModal: React.FC<ICollectionsModal> = (props) => {
 	const { isOpen, onClose, images } = props;
 	return (
 		<>

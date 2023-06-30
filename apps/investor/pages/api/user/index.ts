@@ -48,12 +48,14 @@ router.post(async (req, res) => {
 		delete newUser._doc.password;
 
 		res.status(201).json({ data: newUser });
-	} catch (error: any) {
-		res.status(400).json({
-			error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
-				? error.message
-				: JSON.parse(error.message),
-		});
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({
+				error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
+					? error.message
+					: JSON.parse(error.message),
+			});
+		}
 	}
 });
 

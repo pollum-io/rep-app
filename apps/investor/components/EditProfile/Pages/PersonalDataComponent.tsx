@@ -2,22 +2,25 @@ import { Flex } from "@chakra-ui/react";
 import { useUser } from "../../../hooks/useUser";
 import { PersonalDataPF } from "../PersonalDataPF";
 import { PersonalDataPJ } from "../PersonalDataPJ";
+import { UserDataPF } from "../../../dtos/UserPF";
+import { UserDataPJ } from "../../../dtos/UserPJ";
 
 interface IChangePassword {
-	data?: any;
-	token?: any;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
+	token?: string;
 }
 
-export const PersonalDataComponent: React.FC<IChangePassword> = props => {
-	const { data, token } = props;
+export const PersonalDataComponent: React.FC<IChangePassword> = (props) => {
+	const { userDataPF, userDataPJ, token } = props;
 	const { isInvestor } = useUser();
-	console.log(isInvestor, "isInvestor");
+
 	return (
 		<Flex w="100%" justifyContent="end">
-			{isInvestor ? (
-				<PersonalDataPF data={data} token={token} />
+			{isInvestor || userDataPF?.is_legal_entity ? (
+				<PersonalDataPF data={userDataPF} token={token} />
 			) : (
-				<PersonalDataPJ data={data} token={token} />
+				<PersonalDataPJ data={userDataPJ} token={token} />
 			)}
 		</Flex>
 	);

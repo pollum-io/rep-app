@@ -98,7 +98,7 @@ export const Recover_PasswordContainer: FunctionComponent = () => {
 										h="2rem"
 										pl="0.7rem"
 										color="#2D3748"
-										onChange={e => setEmail(e.target.value)}
+										onChange={(e) => setEmail(e.target.value)}
 									/>
 								</InputGroup>
 							</Flex>

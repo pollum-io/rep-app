@@ -10,16 +10,31 @@ import {
 	Legend,
 	ResponsiveContainer,
 } from "recharts";
-
-interface IExample {
-	chartData?: any[];
-	enterpriseInvestment?: any[];
+interface ChartDataItem {
+	date: string;
+	amount: number;
 }
 
-export const Examaple: React.FC<IExample> = props => {
+interface InvestmentDataItem {
+	date: string;
+	amount: number;
+	investment_address: string;
+}
+interface IExample {
+	chartData?: ChartDataItem[];
+	enterpriseInvestment?: InvestmentDataItem[];
+}
+
+type CustomTooltipProps = {
+	active: boolean;
+	payload?: Array<{ value: number; payload: { date: string } }>;
+	label?: string;
+};
+
+export const Examaple: React.FC<IExample> = (props) => {
 	const { chartData, enterpriseInvestment } = props;
 
-	const CustomTooltip = ({ active, payload, label }: any) => {
+	const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
 		if (active && payload && payload.length && chartData) {
 			return (
 				<div className="custom-tooltip">
@@ -40,18 +55,18 @@ export const Examaple: React.FC<IExample> = props => {
 		}
 	};
 
-	const sumAmountsByDate = (array: any) => {
-		const result: any = {};
-		array.forEach((item: any) => {
+	const sumAmountsByDate = (array: InvestmentDataItem[]): ChartDataItem[] => {
+		const result: Record<string, ChartDataItem> = {};
+		array.forEach((item) => {
 			const date = item.date.substring(0, 10);
 			const investment_address = item.investment_address;
 			if (!result[date]) {
-				result[date] = { date, amount: item.amount, investment_address };
+				result[date] = { date, amount: item.amount };
 			} else {
 				result[date].amount += item.amount;
 			}
 		});
-		const sortedResult = Object.values(result).sort((a: any, b: any) =>
+		const sortedResult = Object.values(result).sort((a, b) =>
 			a?.date?.localeCompare(b?.date)
 		);
 
@@ -75,7 +90,7 @@ export const Examaple: React.FC<IExample> = props => {
 					axisLine={false}
 					tickLine={false}
 					stroke="#ffffff"
-					tickFormatter={date => format(new Date(date), "MMM")}
+					tickFormatter={(date) => format(new Date(date), "MMM")}
 					dataKey="date"
 				/>
 				<YAxis

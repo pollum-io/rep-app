@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 import { Button, Flex, Img, Text, SimpleGrid } from "@chakra-ui/react";
 import { IOpportunitiesCard } from "./dto";
 import { useRouter } from "next/router";
@@ -11,16 +11,15 @@ import { Oval } from "react-loader-spinner";
 import { fetchGetInvestorPFById } from "../../../services";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
-import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
 
 interface IOpportunitiesCompaniesCard {
-	id?: any;
-	investorId?: any;
-	enterpriseData?: any;
-	token?: any;
+	id?: string;
+	investorId?: string;
+	enterpriseData?: string[];
+	token?: string;
 	isPortfolio?: boolean;
-	host?: any;
+	host?: string;
 }
 
 export const OpportunitiesCard: FunctionComponent<
@@ -31,7 +30,6 @@ export const OpportunitiesCard: FunctionComponent<
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
 	const isEnterprise = investorId ? false : true;
-	console.log(router.query._id, "router.query");
 	const { data: cardsInfo } = query(
 		["oportunity", router.query],
 		() =>
@@ -43,8 +41,6 @@ export const OpportunitiesCard: FunctionComponent<
 			refetchInterval: false,
 		}
 	);
-	console.log(cardsInfo, "cardsInfo");
-	console.log(investorId, "investorId");
 
 	const { data: user } = query(
 		["user"],
@@ -82,11 +78,12 @@ export const OpportunitiesCard: FunctionComponent<
 
 	const imoveisDisponiveis = useMemo(() => {
 		const userOpportunties = user?.data?.opportunities_avaliable;
-
-		const imoveisDisponiveis = cardsInfo?.data?.map((imovel: any) => {
-			const isDisponivel = userOpportunties?.includes(imovel._id);
-			return { ...imovel, isAvailable: isDisponivel };
-		});
+		const imoveisDisponiveis = cardsInfo?.data?.map(
+			(imovel: IOpportunitiesCard) => {
+				const isDisponivel = userOpportunties?.includes(imovel._id);
+				return { ...imovel, isAvailable: isDisponivel };
+			}
+		);
 		return imoveisDisponiveis;
 	}, [cardsInfo?.data, user?.data?.opportunities_avaliable]);
 
@@ -378,14 +375,9 @@ export const OpportunitiesCard: FunctionComponent<
 	);
 };
 
-export const OpportunitiesCards: FunctionComponent<any> = ({
-	id,
-	investorId,
-	enterpriseData,
-	isPortfolio,
-	host,
-	token,
-}) => {
+export const OpportunitiesCards: FunctionComponent<
+	IOpportunitiesCompaniesCard
+> = ({ id, investorId, enterpriseData, isPortfolio, host, token }) => {
 	return (
 		<SimpleGrid
 			columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}

@@ -1,8 +1,4 @@
-import React, {
-	ForwardRefRenderFunction,
-	FunctionComponent,
-	useEffect,
-} from "react";
+import React, { ForwardRefRenderFunction } from "react";
 import {
 	FormControl,
 	FormLabel,
@@ -10,15 +6,7 @@ import {
 	Text,
 	SelectProps as ChakraSelectProps,
 } from "@chakra-ui/react";
-interface SelectProps extends ChakraSelectProps {
-	name: string;
-	label?: string;
-	type?: string;
-	selectValue?: any;
-	setData?: any;
-	defaultValue?: string;
-	setInputValues?: React.Dispatch<any>;
-}
+import { InputValues, SelectProps, UfValue } from "../../dtos/ISelectProps";
 
 export const SelectComponent: ForwardRefRenderFunction<
 	HTMLSelectElement,
@@ -64,16 +52,17 @@ export const SelectComponent: ForwardRefRenderFunction<
 					placeholder="Select option"
 					color={"black"}
 					fontSize="0.875rem"
-					onChange={e => {
+					defaultValue={defaultValue}
+					onChange={(e) => {
 						setInputValues &&
-							setInputValues((prevState: any) => ({
+							setInputValues((prevState: InputValues) => ({
 								...prevState,
 								[type]: e.target.value,
 							}));
 					}}
 				>
-					{selectValue?.map((value: any) => (
-						<option key={value.id} value={value.Uf}>
+					{selectValue?.map((value, index: number) => (
+						<option key={index} value={value.Uf}>
 							{value.State}
 						</option>
 					))}
@@ -91,11 +80,11 @@ export const SelectComponent: ForwardRefRenderFunction<
 					placeholder="Select option"
 					color={"black"}
 					fontSize="0.875rem"
-					onChange={e => setData(e.target.value)}
+					onChange={(e) => setData(e.target.value)}
 					defaultValue={defaultValue}
 				>
-					{selectValue?.map((value: any) => (
-						<option key={value.id} value={value.name}>
+					{selectValue?.map((value, index: number) => (
+						<option key={index} value={value.name}>
 							{value.name}
 						</option>
 					))}
@@ -113,18 +102,18 @@ export const SelectComponent: ForwardRefRenderFunction<
 					placeholder="Select option"
 					color={"black"}
 					fontSize="0.875rem"
-					onChange={e => {
+					onChange={(e) => {
 						setData(e.target.value);
 						setInputValues &&
-							setInputValues((prevState: any) => ({
+							setInputValues((prevState: InputValues) => ({
 								...prevState,
 								[type]: e.target.value,
 							}));
 					}}
 					defaultValue={defaultValue}
 				>
-					{selectValue?.map((value: any) => (
-						<option key={value.id} value={value.name}>
+					{selectValue?.map((value, index: number) => (
+						<option key={index} value={value.name}>
 							{value.name}
 						</option>
 					))}

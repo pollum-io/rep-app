@@ -5,7 +5,6 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
-	Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { FunctionComponent, useCallback, useState } from "react";
@@ -20,12 +19,12 @@ export const MenuInput: FunctionComponent<IMenuInput> = ({
 	param,
 }) => {
 	const router = useRouter();
-	const [value, setValue] = useState<any>("");
+	const [value, setValue] = useState<string>("");
 
 	const { t } = useTranslation();
 
 	const setParams = useCallback(
-		(param: string, value: any) => {
+		(param: string, value: string) => {
 			router.query[param] = value;
 			router.push(router);
 		},
@@ -69,7 +68,7 @@ export const MenuInput: FunctionComponent<IMenuInput> = ({
 				{value ? labels[value] : placeholder}
 			</MenuButton>
 			<MenuList bgColor="#ffffff" border="0.0625rem solid #E2E8F0">
-				{fields?.map((field: any) => (
+				{fields?.map((field: string) => (
 					<MenuItem
 						key={field}
 						bgColor="#ffffff"
@@ -94,19 +93,19 @@ export const MenuInputs: FunctionComponent = () => {
 	return (
 		<Flex gap="1.5rem" alignItems={"center"}>
 			<MenuInput
-				placeholder={t("inputs.propertyType") as any}
+				placeholder={t("inputs.propertyType") as string}
 				color="#2D3748"
 				fields={["Todos imóveis", "Comercial", "Residencial", "Loteamento"]}
 				param="enterprise_type"
 			/>
 			<MenuInput
-				placeholder={t("inputs.completionForecast") as any}
+				placeholder={t("inputs.completionForecast") as string}
 				color="#2D3748"
 				fields={["Crescente", "Decrescente"]}
 				param="expected_delivery_date"
 			/>
 			<MenuInput
-				placeholder={t("inputs.minimumInvestment") as any}
+				placeholder={t("inputs.minimumInvestment") as string}
 				color="#2D3748"
 				fields={["Mínimo", "Máximo"]}
 				param="min_investment"
@@ -122,7 +121,7 @@ export const MenuInputs: FunctionComponent = () => {
 				py="2"
 				fontWeight={"500"}
 			>
-				{t("inputs.clear") as any}
+				{t("inputs.clear") as string}
 			</Button>
 		</Flex>
 	);

@@ -63,7 +63,7 @@ router.get(verifyUser, async (req, res) => {
 			token_address: { $in: addresses },
 		}).lean();
 
-		investments = investments.map(investment => {
+		investments = investments.map((investment) => {
 			const opportunity = opportunities.find(
 				({ token_address }) => token_address === investment?.investment_address
 			);
@@ -80,8 +80,10 @@ router.get(verifyUser, async (req, res) => {
 		});
 
 		res.status(200).json({ data: investments, totalPages });
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 

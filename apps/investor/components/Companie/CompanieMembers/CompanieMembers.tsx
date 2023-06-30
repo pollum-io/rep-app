@@ -28,7 +28,7 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 	);
 };
 
-export const CompanieMembers: FunctionComponent<any> = ({
+export const CompanieMembers: FunctionComponent<ICompanieMembers> = ({
 	image,
 	name,
 	occupation,

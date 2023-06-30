@@ -3,7 +3,7 @@ import { Change_PasswordContainer } from "../container";
 import { fetchCodeVerify } from "../services/fetchCodeVerify";
 
 interface IChangePasswordData {
-	code?: any;
+	code?: string;
 	isValid?: boolean;
 }
 

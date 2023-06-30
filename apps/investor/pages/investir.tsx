@@ -11,6 +11,11 @@ interface IInvest {
 	token: string;
 }
 
+type UserLogin = {
+	investor_pf?: string;
+	investor_pj: string;
+};
+
 const Investir: NextPage<IInvest> = ({ data, cotas, address, token }) => (
 	<InvestContainer
 		data={data}
@@ -29,8 +34,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 	const host = req.headers.host;
 	const token = req.cookies["livn_auth"];
 	const response = await fetchImovelDetail(query.id, host);
-	let cotas = query.cotas;
-	let address = query.oportunitiesAddress;
+	const cotas = query.cotas;
+	const address = query.oportunitiesAddress;
 
 	if (!token) {
 		return {
@@ -42,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	const user: any = jwt_decode(token);
+	const user: UserLogin = jwt_decode(token);
 
 	if (!user?.investor_pf && !user?.investor_pj) {
 		return {

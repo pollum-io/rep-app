@@ -11,8 +11,8 @@ export interface IDefaultInput {
 	border?: string;
 	inputColor?: string;
 	registerType?: string;
-	name?: any;
+	name?: string;
 	display?: boolean;
-	defaultValue?: any;
+	defaultValue?: string;
 	register?: UseFormRegister<FieldValues>;
 }

@@ -1,35 +1,35 @@
-import jwt_decode from "jwt-decode";
-import type { GetServerSideProps, NextPage } from "next";
-import { PortfolioContainer } from "../container";
-import { fetchEnterpriseInvestment } from "../services/fetchEnterpriseInvestmet";
-import { fetchGetInvestment } from "../services/fetchGetInvestment";
-import { fetchOpportunitiesByCompanyPortfolio } from "../services/fetchOpportunitiesByCompanyPortfolio";
+// import jwt_decode from "jwt-decode";
+// import type { GetServerSideProps, NextPage } from "next";
+// import { PortfolioContainer } from "../container";
+// import { fetchEnterpriseInvestment } from "../services/fetchEnterpriseInvestmet";
+// import { fetchGetInvestment } from "../services/fetchGetInvestment";
+// import { fetchOpportunitiesByCompanyPortfolio } from "../services/fetchOpportunitiesByCompanyPortfolio";
 
-interface IPortfolio {
-	data?: any;
-	enterpriseData?: any;
-	enterpriseInvestment?: any;
-	host?: any;
-	user?: any;
-}
+// interface IPortfolio {
+// 	data?: string;
+// 	enterpriseData?: string;
+// 	enterpriseInvestment?: string;
+// 	host?: string;
+// 	user?: string;
+// }
 
-const Portfolio: NextPage<IPortfolio> = ({
-	data,
-	enterpriseData,
-	enterpriseInvestment,
-	host,
-	user,
-}) => (
-	<PortfolioContainer
-		portfolioData={data}
-		enterpriseData={enterpriseData?.data}
-		enterpriseInvestment={enterpriseInvestment}
-		host={host}
-		user={user}
-	/>
-);
+// const Portfolio: NextPage<IPortfolio> = ({
+// 	data,
+// 	enterpriseData,
+// 	enterpriseInvestment,
+// 	host,
+// 	user,
+// }) => (
+// 	<PortfolioContainer
+// 		portfolioData={data}
+// 		enterpriseData={enterpriseData?.data}
+// 		enterpriseInvestment={enterpriseInvestment}
+// 		host={host}
+// 		user={user}
+// 	/>
+// );
 
-export default Portfolio;
+// export default Portfolio;
 
 // export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 // 	const token = req.cookies["livn_auth"];
@@ -44,7 +44,7 @@ export default Portfolio;
 // 		};
 // 	}
 
-// 	const user: any = jwt_decode(token);
+// 	const user: string = jwt_decode(token);
 // 	const host = req.headers.host;
 
 // 	if (!user?.investor_pf && !user?.investor_pj) {

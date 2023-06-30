@@ -1,5 +1,5 @@
 export {};
 
 declare global {
-  var mongoose: any;
+	let mongoose: any;
 }

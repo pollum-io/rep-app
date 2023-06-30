@@ -91,7 +91,7 @@ export const CompanieContact: FunctionComponent<ICompanieContact> = ({
 			top="10%"
 		>
 			{infos.map(
-				item =>
+				(item) =>
 					item.content && (
 						<Link
 							key={item.id}

@@ -6,7 +6,9 @@ export const fetchCodeVerify = async (code?: any, host?: string) => {
 		const response = await api.get(`/codeVerify?code=${code}`);
 
 		return response;
-	} catch (error: any) {
-		console.log("Erro", error.message);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log("Erro", error.message);
+		}
 	}
 };

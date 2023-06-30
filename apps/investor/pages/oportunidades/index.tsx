@@ -2,7 +2,9 @@ import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { OpportunitiesContainer } from "../../container";
 
-const Opportunities: NextPage = props => <OpportunitiesContainer {...props} />;
+const Opportunities: NextPage = (props) => (
+	<OpportunitiesContainer {...props} />
+);
 
 export default Opportunities;
 

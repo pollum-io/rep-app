@@ -3,6 +3,7 @@ import { CookieSerializeOptions, serialize } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import User from "../models/user";
 import dbConnect from "./dbConnect";
+import { ServerResponse } from "http";
 
 interface Request extends NextApiRequest {
 	user?: DecodedUser;
@@ -17,6 +18,13 @@ type DecodedUser = {
 	exp: number;
 };
 
+interface User {
+	_id: string;
+	email: string;
+	investor_pf?: string | null;
+	investor_pj?: string | null;
+}
+
 const JWT_SECRET = process.env.JWT_SECRET as string;
 export const cookieOptions: CookieSerializeOptions = {
 	httpOnly: true,
@@ -27,7 +35,7 @@ export const cookieOptions: CookieSerializeOptions = {
 };
 
 export function setCookie(
-	res: any,
+	res: ServerResponse,
 	name: string,
 	value: string,
 	options?: Record<string, unknown>
@@ -41,7 +49,7 @@ export function setCookie(
 	);
 }
 
-export function generateToken(user: any) {
+export function generateToken(user: User) {
 	if (!user) return "";
 
 	const token = jwt.sign(
@@ -61,7 +69,7 @@ export function generateToken(user: any) {
 export async function verifyUser(
 	req: Request,
 	res: NextApiResponse,
-	next: any
+	next: NextFunction
 ) {
 	try {
 		await dbConnect();
@@ -82,8 +90,10 @@ export async function verifyUser(
 		req.user = user;
 
 		next();
-	} catch (error: any) {
-		res.status(400).json({ error: error?.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error?.message });
+		}
 	}
 }
 

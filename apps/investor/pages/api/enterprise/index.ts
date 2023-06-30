@@ -79,12 +79,14 @@ router.post(verifyUser, async (req, res) => {
 		setCookie(res, "livn_auth", token);
 
 		res.status(201).json({ data: enterprise });
-	} catch (error: any) {
-		res.status(400).json({
-			error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
-				? error.message
-				: JSON.parse(error.message),
-		});
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({
+				error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
+					? error.message
+					: JSON.parse(error.message),
+			});
+		}
 	}
 });
 
@@ -105,10 +107,10 @@ router.get(async (req, res) => {
 			.lean();
 
 		const ids = enterprises.map(
-			enterprise => new mongoose.Types.ObjectId(enterprise._id)
+			(enterprise) => new mongoose.Types.ObjectId(enterprise._id)
 		);
 
-		const oppData = await getAvailableAndClosedOpportunities(ids);
+		const oppData = await getAvailableAndClosedOpportunities(String(ids));
 		const defaultOppData = {
 			opportunities_closed: 0,
 			opportunities_available: 0,
@@ -126,12 +128,14 @@ router.get(async (req, res) => {
 		});
 
 		res.status(200).json({ data: enterprises, totalPages });
-	} catch (error: any) {
-		res.status(400).json({
-			error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
-				? error.message
-				: JSON.parse(error.message),
-		});
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({
+				error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
+					? error.message
+					: JSON.parse(error.message),
+			});
+		}
 	}
 });
 

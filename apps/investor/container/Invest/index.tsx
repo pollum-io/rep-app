@@ -11,8 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
-import { useTransactions } from "../../hooks/useTransactions";
-import { useWallet } from "../../hooks/useWallet";
 import { useTranslation } from "react-i18next";
 import { fetchUserApproveData } from "../../services/fetchUserApproveData";
 
@@ -30,11 +28,10 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 	token,
 }) => {
 	const [counter, setCounter] = useState<number>(Number(cotas));
-	const { approve } = useTransactions();
+	// const { approve } = useTransactions();
 	const totalValue = counter * data.token_price;
 	const BRZ_DECIMALS = 10 ** 4;
 	const amount = totalValue * BRZ_DECIMALS;
-	const { connectWallet, isConnected, signer, account } = useWallet();
 	const { t } = useTranslation();
 
 	const available = useMemo(() => {
@@ -49,22 +46,10 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 		style: "currency",
 		currency: "BRL",
 	});
-	const approveTransfer = async (oportunitiesAddress: any, amount: any) => {
-		if (!isConnected || !signer) {
-			return await connectWallet();
-		} else {
-			await approve(oportunitiesAddress, amount, account, token);
-			return;
-		}
-	};
 
 	const buttonText = useMemo(() => {
-		if (!isConnected || !signer) {
-			return "Connectar metamask";
-		} else {
-			return "Confirmar investimento";
-		}
-	}, [isConnected, signer]);
+		return "Confirmar investimento";
+	}, []);
 
 	return (
 		<DefaultTemplate>
@@ -319,20 +304,11 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 								color="#FFFFFF"
 							>
 								<Flex>
-									{isConnected ? (
-										<Text>
-											Siga os passos da carteira para realizar o investimento.
-											Sua compra será finalizada após a assinatura do contrato
-											que será enviado ao seu e-mail cadastrado.{" "}
-										</Text>
-									) : (
-										<Text>
-											Conecte-se à sua carteira digital do Metamask e siga os
-											passos da carteira para realizar o investimento. Sua
-											compra será finalizada após a assinatura do contrato que
-											será enviado ao seu e-mail cadastrado.
-										</Text>
-									)}
+									<Text>
+										Siga os passos da carteira para realizar o investimento. Sua
+										compra será finalizada após a assinatura do contrato que
+										será enviado ao seu e-mail cadastrado.{" "}
+									</Text>
 								</Flex>
 								<Button
 									justifyContent="center"
@@ -348,7 +324,6 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 									color="#007088"
 									_hover={{ bgColor: "#EDF2F7" }}
 									_active={{ bgColor: "#E2E8F0" }}
-									onClick={() => approveTransfer(oportunitiesAddress, amount)}
 								>
 									{buttonText}
 								</Button>

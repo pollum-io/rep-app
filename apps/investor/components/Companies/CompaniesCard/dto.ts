@@ -43,7 +43,7 @@ interface ICompaniesAddress {
 }
 
 export interface ICompaniesTeam {
-	name: any;
+	name: string;
 	position: string;
 	image: string;
 }

@@ -24,16 +24,9 @@ export const OpportunitiesProvider: React.FC<{ children: React.ReactNode }> = ({
 			hasToken,
 			setHasToken,
 			cotas,
-			setCotas
+			setCotas,
 		}),
-		[
-			ended,
-			setEnded,
-			hasToken,
-			setHasToken,
-			cotas,
-			setCotas
-		]
+		[ended, setEnded, hasToken, setHasToken, cotas, setCotas]
 	);
 
 	return (

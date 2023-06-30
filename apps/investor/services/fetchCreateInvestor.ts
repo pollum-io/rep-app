@@ -9,7 +9,9 @@ export const fetchCreateInvestorPF = async (data: any, token: any) => {
 			},
 		});
 		return response.data;
-	} catch (error: any) {
-		console.log(error.message);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.message);
+		}
 	}
 };

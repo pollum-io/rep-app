@@ -22,7 +22,7 @@ export const fetchUserApproveData = async (
 			}
 		);
 		return response.data;
-	} catch (error: any) {
+	} catch (error) {
 		console.log(error.message);
 	}
 };

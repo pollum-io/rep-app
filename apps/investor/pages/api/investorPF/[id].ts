@@ -33,8 +33,10 @@ router.get(verifyUser, async (req, res) => {
 		}
 
 		res.status(200).json({ data: investor });
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 
@@ -58,8 +60,10 @@ router.put(verifyUser, async (req, res) => {
 		}
 
 		res.status(201).json({ data: investor });
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 
@@ -76,8 +80,10 @@ router.delete(verifyUser, async (req, res) => {
 		}
 
 		res.status(204).end();
-	} catch (error: any) {
-		res.status(400).json({ error: error?.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error?.message });
+		}
 	}
 });
 

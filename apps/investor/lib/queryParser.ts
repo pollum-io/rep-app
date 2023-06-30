@@ -4,10 +4,10 @@ type TQueryType = Partial<{
 
 type TQueryDataParams = {
 	fields: string[];
-	values: { [key: string]: any };
+	values: { [key: string]: string | number };
 };
 
-const resetFieldOnValues = (value: any) => ["Todos imóveis"].includes(value);
+const resetFieldOnValues = (value: string) => ["Todos imóveis"].includes(value);
 
 export default function queryParser(
 	query: TQueryType,
@@ -16,10 +16,11 @@ export default function queryParser(
 	return Object.fromEntries(
 		Object.entries(query)
 			.filter(
-				([key, value]: any) =>
-					queryDataParams.fields.includes(key) && !resetFieldOnValues(value)
+				([key, value]) =>
+					queryDataParams.fields.includes(key) &&
+					!resetFieldOnValues(String(value))
 			)
-			.map(([key, value]: any) => [
+			.map(([key, value]) => [
 				key,
 				queryDataParams.values[value as keyof typeof queryDataParams.values] ||
 					(queryDataParams.fields.includes(key) && value),

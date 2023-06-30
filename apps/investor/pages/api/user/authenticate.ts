@@ -46,7 +46,7 @@ router.post(async (req, res) => {
 
 		const token = generateToken(user);
 
-		let data = { user, token };
+		const data = { user, token };
 
 		setCookie(res, "livn_auth", token);
 
@@ -59,12 +59,14 @@ router.post(async (req, res) => {
 		}
 
 		res.status(200).json({ data });
-	} catch (error: any) {
-		res.status(400).json({
-			error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
-				? error.message
-				: JSON.parse(error.message),
-		});
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({
+				error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
+					? error.message
+					: JSON.parse(error.message),
+			});
+		}
 	}
 });
 

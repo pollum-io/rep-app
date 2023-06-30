@@ -8,18 +8,17 @@ import { FiMapPin } from "react-icons/fi";
 import { TbInfoSquare } from "react-icons/tb";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { useOpportunities } from "../../hooks/useOpportunities";
-import { useTransactions } from "../../hooks/useTransactions";
-import { useWallet } from "../../hooks/useWallet";
 import { fetchEnterpriseById } from "../../services";
 import { formatDate } from "../../utils/formatDate";
-import { Maps } from "../Map/Maps";
+// import { Maps } from "../Map/Maps";
 import { Carousel } from "./Carousel";
 import { Collections } from "./Collections";
 import { PriceCard } from "./PriceCard";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	usersId: any;
+	usersId: UserInfo;
 }
 
 export const ImovelDetail: FunctionComponent<IImovelProps> = ({
@@ -27,11 +26,9 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	usersId,
 }) => {
 	const { hasToken } = useOpportunities();
-	const [dateEndend, setDateEnded] = useState<any>();
-	const [ended, setEnded] = useState<any>();
+	const [dateEndend, setDateEnded] = useState<string>();
+	const [ended, setEnded] = useState<boolean>();
 	const [cota, setCota] = useState<number>(0);
-	const { account } = useWallet();
-	const { shares } = useTransactions();
 	const { t } = useTranslation();
 
 	const renderer = ({
@@ -60,26 +57,10 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 		}
 	};
 
-	useEffect(
-		() => {
-			const getCotas = async () => {
-				if (imovelDetails.token_address && account) {
-					const valorDeCotas = await shares(
-						imovelDetails.token_address,
-						account
-					);
-					setCota(Number(valorDeCotas));
-				}
-			};
-			getCotas();
-		},
-		// eslint-disable-next-line
-		[imovelDetails.token_address, account, dateEndend]
-	);
 	return (
 		<>
 			<Flex px="5rem" flexDir={"column"} alignItems="center">
-				<Collections images={imovelDetails?.pictures_enterprise as any[]} />
+				<Collections images={imovelDetails?.pictures_enterprise} />
 				<Flex gap="2.75rem" maxWidth="70rem">
 					<Flex flexDir={"column"}>
 						<Flex gap="0.5rem" pb="0.5rem">
@@ -374,7 +355,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 					</Text>
 				</Flex>
 				<Flex maxWidth="70rem">
-					<Maps localization={imovelDetails?.address} />
+					{/* <Maps localization={imovelDetails?.address} /> */}
 				</Flex>
 				<Flex
 					mt="2rem"
@@ -395,7 +376,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 					</Flex>
 					<Flex>
 						<Carousel
-							extra_images={imovelDetails?.pictures_neighbor as any[]}
+							extra_images={imovelDetails?.pictures_neighbor}
 							widthValue="30rem"
 							heightValue="15rem"
 						/>

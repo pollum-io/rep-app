@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { FiCopy } from "react-icons/fi";
 import { useOpportunities } from "../../hooks/useOpportunities";
 interface IPriceCard {
-	id: any;
+	id: string;
 	price: number;
 	minted: number;
 	supply: number;
@@ -15,7 +15,7 @@ interface IPriceCard {
 	investor_pj?: string;
 }
 
-export const PriceCard: React.FC<IPriceCard> = props => {
+export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const {
 		id,
 		price,

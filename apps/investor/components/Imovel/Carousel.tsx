@@ -19,24 +19,22 @@ const settings = {
 interface ICarousel {
 	widthValue: string;
 	heightValue: string;
-	extra_images?: any;
-	modal_images?: any;
+	extra_images?: string[];
+	modal_images?: string[];
 }
 
-export const Carousel: React.FC<ICarousel> = props => {
+export const Carousel: React.FC<ICarousel> = (props) => {
 	const { widthValue, heightValue, extra_images, modal_images } = props;
 	const [slider, setSlider] = React.useState<Slider | null>(null);
 	const top = useBreakpointValue({ base: "90%", md: "50%" });
 	const side = useBreakpointValue({ base: "30%", md: "10px" });
 	const api = apiInstance();
-
 	const [imagesCarousel, setImagesCarousel] = useState<string[]>([]);
-
 	useEffect(() => {
 		if (extra_images) {
 			extra_images.map((picture: string) => {
-				api.get(`/file/${picture}`).then(response => {
-					setImagesCarousel(prevState => [
+				api.get(`/file/${picture}`).then((response) => {
+					setImagesCarousel((prevState) => [
 						...prevState,
 						response.request?.responseURL,
 					]);
@@ -44,8 +42,8 @@ export const Carousel: React.FC<ICarousel> = props => {
 			});
 		} else {
 			modal_images.map((picture: string) => {
-				api.get(`/file/${picture}`).then(response => {
-					setImagesCarousel(prevState => [
+				api.get(`/file/${picture}`).then((response) => {
+					setImagesCarousel((prevState) => [
 						...prevState,
 						response.request?.responseURL,
 					]);
@@ -105,8 +103,8 @@ export const Carousel: React.FC<ICarousel> = props => {
 			>
 				<MdArrowForwardIos color="#ffffff" size={50} />
 			</IconButton>
-			<Slider {...settings} ref={slider => setSlider(slider)}>
-				{imagesCarousel?.map((url: any, index: any) => (
+			<Slider {...settings} ref={(slider) => setSlider(slider)}>
+				{imagesCarousel?.map((url: string, index: number) => (
 					<Box
 						key={index}
 						height={heightValue}

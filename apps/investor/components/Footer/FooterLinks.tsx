@@ -49,7 +49,7 @@ export const FooterLinks: React.FC = () => {
 				<Text fontSize={"sm"} fontWeight="600" pb="0.875rem">
 					Titulo
 				</Text>
-				{mocked.map(item => (
+				{mocked.map((item) => (
 					<Flex key={item.id} pb="0.5rem">
 						<Text fontSize={"sm"} fontWeight="400">
 							{item.name}
@@ -61,7 +61,7 @@ export const FooterLinks: React.FC = () => {
 				<Text fontSize={"sm"} fontWeight="600" pb="0.875rem">
 					Titulo
 				</Text>
-				{mocked.map(item => (
+				{mocked.map((item) => (
 					<Flex key={item.id} pb="0.5rem">
 						<Text fontSize={"sm"} fontWeight="400">
 							{item.name}
@@ -73,7 +73,7 @@ export const FooterLinks: React.FC = () => {
 				<Text fontSize={"sm"} fontWeight="600" pb="0.875rem">
 					Titulo
 				</Text>
-				{mocked.map(item => (
+				{mocked.map((item) => (
 					<Flex key={item.id} pb="0.5rem">
 						<Text fontSize={"sm"} fontWeight="400">
 							{item.name}
