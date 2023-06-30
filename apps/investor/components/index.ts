@@ -6,7 +6,4 @@ export * from "./Inputs/MenuInput/MenuInput";
 export * from "./Opportunities/OpportunitiesCard/OpportunitiesCard";
 export * from "./Toasty/ToastyCard/toastyCard";
 export * from "./Companies/CompaniesCard/CompaniesCard";
-export * from "./Companie/CompanieDetails/CompanieDetails";
-export * from "./Companie/CompanieContact/CompanieContact";
-export * from "./Companie/CompanieMembers/CompanieMembers";
 export * from "./Header";

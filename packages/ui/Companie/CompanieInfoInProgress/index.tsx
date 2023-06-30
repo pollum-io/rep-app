@@ -1,7 +1,6 @@
-import { Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
-import { FiMapPin } from "react-icons/fi";
 import { ICompanieInfoInProgress } from "./dto";
 
 export const CompanieInfoInProgress: FunctionComponent<
