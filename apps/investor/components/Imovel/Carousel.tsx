@@ -30,6 +30,7 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 	const side = useBreakpointValue({ base: "30%", md: "10px" });
 	const api = apiInstance();
 	const [imagesCarousel, setImagesCarousel] = useState<string[]>([]);
+
 	useEffect(() => {
 		if (extra_images) {
 			extra_images.map((picture: string) => {
@@ -50,6 +51,7 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 				});
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [extra_images, modal_images]);
 
 	return (

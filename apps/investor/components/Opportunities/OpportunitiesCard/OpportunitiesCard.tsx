@@ -24,12 +24,13 @@ interface IOpportunitiesCompaniesCard {
 
 export const OpportunitiesCard: FunctionComponent<
 	IOpportunitiesCompaniesCard
-> = ({ id, investorId, enterpriseData, isPortfolio, host, token }) => {
+> = ({ id, investorId, token }) => {
 	const currentTime = new Date();
 	const router = useRouter();
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
 	const isEnterprise = investorId ? false : true;
+
 	const { data: cardsInfo } = query(
 		["oportunity", router.query],
 		() =>
@@ -56,7 +57,6 @@ export const OpportunitiesCard: FunctionComponent<
 		hours,
 		minutes,
 		completed,
-		props: { date },
 	}: CountdownRenderProps) => {
 		if (completed) {
 			return "Encerrado";

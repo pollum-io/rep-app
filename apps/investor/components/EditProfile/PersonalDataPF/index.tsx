@@ -20,7 +20,7 @@ interface IPersonalDataPF {
 
 export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	const { data, token } = props;
-	const [isDisabled, setIsDisabled] = useState(true);
+	const [isDisabled] = useState(true);
 	const [maritalStatus, setMaritalStatus] = useState<string>(
 		data?.marital_status?.status
 	);
@@ -29,13 +29,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	const isStableUnion: boolean =
 		maritalStatus === "União Estável" ? true : false;
 	const [equityRegime, setEquityRegime] = useState<string>("");
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { isSubmitSuccessful },
-		reset,
-	} = useForm();
+	const { register, handleSubmit } = useForm();
 	const { userInfos } = useUser();
 	const { toast } = useToasty();
 	const dataFormatada = new Date(data?.birthday_date)

@@ -1,5 +1,5 @@
-import React, { SVGProps, useCallback, useState } from "react";
-import { PieChart, Pie, Sector, Cell } from "recharts";
+import React, { useCallback, useState } from "react";
+import { PieChart, Pie, Cell } from "recharts";
 
 interface PieChartDataItem {
 	name: string;
@@ -23,29 +23,29 @@ export const PieChartPortfolio: React.FC<IPieChart> = (props) => {
 	const COLORS: string[] = ["#2321C0", "#BCA1FF", "#1BA9EA", "#6E40E7"];
 
 	// Conta as instâncias de cada tipo de empresa
-	const countByType: Record<string, number> | undefined = data?.reduce(
-		(counts: Record<string, number>, item: PieChartDataItem) => {
-			const type = item.name;
-			if (type in counts) {
-				counts[type]++;
-			} else {
-				counts[type] = 1;
-			}
-			return counts;
-		},
-		{}
-	);
+	// const countByType: Record<string, number> | undefined = data?.reduce(
+	// 	(counts: Record<string, number>, item: PieChartDataItem) => {
+	// 		const type = item.name;
+	// 		if (type in counts) {
+	// 			counts[type]++;
+	// 		} else {
+	// 			counts[type] = 1;
+	// 		}
+	// 		return counts;
+	// 	},
+	// 	{}
+	// );
 
-	// Calcula as porcentagens de cada tipo de empresa
-	const total: number = Object?.values(countByType).reduce(
-		(sum: number, count: number) => sum + count,
-		0
-	);
-	const percentages: { enterprise_type: string; percentage: number }[] =
-		Object.entries(countByType).map(([type, count]: [string, number]) => ({
-			enterprise_type: type,
-			percentage: (count / total) * 100,
-		}));
+	// // Calcula as porcentagens de cada tipo de empresa
+	// const total: number = Object?.values(countByType).reduce(
+	// 	(sum: number, count: number) => sum + count,
+	// 	0
+	// );
+	// const percentages: { enterprise_type: string; percentage: number }[] =
+	// 	Object.entries(countByType).map(([type, count]: [string, number]) => ({
+	// 		enterprise_type: type,
+	// 		percentage: (count / total) * 100,
+	// 	}));
 
 	const renderCustomizedLabel = ({
 		cx,
@@ -54,7 +54,6 @@ export const PieChartPortfolio: React.FC<IPieChart> = (props) => {
 		innerRadius,
 		outerRadius,
 		percent,
-		index,
 	}: {
 		cx: number;
 		cy: number;
@@ -82,28 +81,28 @@ export const PieChartPortfolio: React.FC<IPieChart> = (props) => {
 		);
 	};
 
-	const renderActiveShape = (
-		cx: number,
-		cy: number,
-		innerRadius: number,
-		outerRadius: number,
-		startAngle: number,
-		endAngle: number,
-		fill: string
-	) => {
-		return (
-			<Sector
-				cx={cx}
-				cy={cy}
-				innerRadius={innerRadius}
-				outerRadius={outerRadius + 5}
-				startAngle={startAngle}
-				endAngle={endAngle}
-				fill={fill}
-				className="recharts-pie-sector-active"
-			/>
-		);
-	};
+	// const renderActiveShape = (
+	// 	cx: number,
+	// 	cy: number,
+	// 	innerRadius: number,
+	// 	outerRadius: number,
+	// 	startAngle: number,
+	// 	endAngle: number,
+	// 	fill: string
+	// ) => {
+	// 	return (
+	// 		<Sector
+	// 			cx={cx}
+	// 			cy={cy}
+	// 			innerRadius={innerRadius}
+	// 			outerRadius={outerRadius + 5}
+	// 			startAngle={startAngle}
+	// 			endAngle={endAngle}
+	// 			fill={fill}
+	// 			className="recharts-pie-sector-active"
+	// 		/>
+	// 	);
+	// };
 
 	const countEnterpriseTypes = (data: PieChartDataItem[]) => {
 		const typesCount: Record<string, number> = {};

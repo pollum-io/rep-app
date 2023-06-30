@@ -7,7 +7,6 @@ import {
 	YAxis,
 	CartesianGrid,
 	Tooltip,
-	Legend,
 	ResponsiveContainer,
 } from "recharts";
 interface ChartDataItem {
@@ -34,7 +33,7 @@ type CustomTooltipProps = {
 export const Examaple: React.FC<IExample> = (props) => {
 	const { chartData, enterpriseInvestment } = props;
 
-	const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+	const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
 		if (active && payload && payload.length && chartData) {
 			return (
 				<div className="custom-tooltip">
@@ -59,7 +58,6 @@ export const Examaple: React.FC<IExample> = (props) => {
 		const result: Record<string, ChartDataItem> = {};
 		array.forEach((item) => {
 			const date = item.date.substring(0, 10);
-			const investment_address = item.investment_address;
 			if (!result[date]) {
 				result[date] = { date, amount: item.amount };
 			} else {

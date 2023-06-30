@@ -31,7 +31,6 @@ export const InputBase: ForwardRefRenderFunction<
 		type,
 		maxLength,
 		placeholderText,
-		setInputValues,
 		...rest
 	},
 	ref

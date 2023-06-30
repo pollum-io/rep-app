@@ -1,11 +1,7 @@
 import jwt_decode from "jwt-decode";
 import { LoginContainer } from "../container";
 import type { GetServerSideProps, NextPage } from "next";
-
-type UserLogin = {
-	investor_pf?: string;
-	investor_pj: string;
-};
+import { UserLogin } from "../dtos/IUserLogin";
 
 const Login: NextPage = () => <LoginContainer />;
 
@@ -20,7 +16,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 	try {
 		user = jwt_decode(token);
-		console.log(user, "user");
 	} catch (error) {
 		user = null;
 	}

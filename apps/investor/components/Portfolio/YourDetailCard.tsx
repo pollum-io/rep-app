@@ -1,5 +1,5 @@
-import { Flex, Img, NumberInputStepperProps, Text } from "@chakra-ui/react";
-import { FunctionComponent, useMemo, useState } from "react";
+import { Flex, Img, Text } from "@chakra-ui/react";
+import { FunctionComponent, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "../../hooks/useUser";
 

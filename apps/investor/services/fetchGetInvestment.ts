@@ -1,8 +1,8 @@
 import { apiInstance } from "./api";
 
 export const fetchGetInvestment = async (
-	investor_pf: any,
-	token: any,
+	investor_pf: string,
+	token: string,
 	host?: string
 ) => {
 	try {

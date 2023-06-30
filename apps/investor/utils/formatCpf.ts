@@ -1,4 +1,4 @@
-export function formatCPF(value: any) {
+export function formatCPF(value: string) {
 	// Remove tudo o que não é dígito
 	value = value?.replace(/\D/g, "");
 

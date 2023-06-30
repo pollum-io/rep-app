@@ -21,7 +21,7 @@ const router = nextConnect({
 
 const OpportunitySchema = z.object({
 	name: z.optional(z.string().max(60)),
-	address: z.optional(z.object({} as { [key: string]: any })),
+	address: z.optional(z.object({} as { [key: string]: z.ZodTypeAny })),
 	min_investment: z.optional(z.number()),
 	init_date: z.optional(z.string().datetime({ offset: true })),
 	expected_delivery_date: z.optional(z.string().datetime({ offset: true })),
@@ -31,7 +31,9 @@ const OpportunitySchema = z.object({
 	cub_expected: z.optional(z.number()),
 	description: z.optional(z.string()),
 	general_info: z.optional(z.array(z.string())),
-	event_ensuing: z.optional(z.optional(z.object({} as { [key: string]: any }))),
+	event_ensuing: z.optional(
+		z.optional(z.object({} as { [key: string]: z.ZodTypeAny }))
+	),
 	neighbor_description: z.optional(z.string()),
 	pictures_neighbor: z.optional(z.array(z.string())),
 	pictures_enterprise: z.optional(z.array(z.string())),

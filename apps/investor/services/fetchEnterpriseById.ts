@@ -1,6 +1,6 @@
 import { apiInstance } from "./api";
 
-export const fetchEnterpriseById = async (id: any, host?: string) => {
+export const fetchEnterpriseById = async (id: string, host?: string) => {
 	try {
 		const api = apiInstance(host);
 		const response = await api.get(`/enterprise/${id}`);

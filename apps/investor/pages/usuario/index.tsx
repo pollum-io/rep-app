@@ -5,6 +5,7 @@ import { fetchGetInvestorPFById } from "../../services/fetchGetInvestorPFById";
 import { fetchGetInvestorPJById } from "../../services/fetchGetInvestorPJById";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
+import { UserLogin } from "../../dtos/IUserLogin";
 
 interface IEditProfile {
 	userDataPF: UserDataPF;
@@ -34,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	const user: any = jwt_decode(token);
+	const user: UserLogin = jwt_decode(token);
 	const host = req.headers.host;
 
 	if (!user?.investor_pf && !user?.investor_pj) {
@@ -48,7 +49,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 
 	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(query.id, token, host);
+		const response = await fetchGetInvestorPFById(
+			String(query.id),
+			token,
+			host
+		);
 
 		return {
 			props: {
@@ -58,7 +63,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 			},
 		};
 	} else if (user?.investor_pj) {
-		const response = await fetchGetInvestorPJById(query.id, token, host);
+		const response = await fetchGetInvestorPJById(
+			String(query.id),
+			token,
+			host
+		);
 
 		return {
 			props: {

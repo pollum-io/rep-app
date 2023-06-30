@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useUser } from "../../../hooks/useUser";
 import { useToasty } from "../../../hooks/useToasty";
-import { fetchEditInvestorPF } from "../../../services";
 import { InputComponent } from "../../Inputs/DeafultInput/InputComponent";
 import { SelectComponent } from "../../Select/SelectComponent";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
 import { brasilStates } from "../../Register/states";
 import { UserDataPJ } from "../../../dtos/UserPJ";
+import { fetchEditInvestorPJ } from "../../../services/fetchEditInvestorPJ";
 
 interface IChangePassword {
 	data?: UserDataPJ;
@@ -22,18 +22,13 @@ type UfData = {
 
 export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 	const { data, token } = props;
-	const [isDisabled, setIsDisabled] = useState(true);
+	const [isDisabled] = useState(true);
 	const [inputValuesUf, setInputValuesUf] = useState<UfData>();
 	const { t } = useTranslation();
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { isSubmitSuccessful },
-		reset,
-	} = useForm();
+	const { register, handleSubmit } = useForm();
 	const { userInfos } = useUser();
 	const { toast } = useToasty();
+
 	const onSubmitForm = async (data: UserDataPJ) => {
 		let request: UserDataPJ;
 
@@ -49,7 +44,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 			address: data?.address,
 		};
 
-		await fetchEditInvestorPF(userInfos, request, token)
+		await fetchEditInvestorPJ(userInfos, request, token)
 			.then((res) => {
 				if (res) {
 					toast({

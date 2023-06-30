@@ -1,4 +1,4 @@
-export function formatCNPJ(value: any) {
+export function formatCNPJ(value: string) {
 	// Remove tudo o que não é dígito
 	value = value.replace(/\D/g, "");
 

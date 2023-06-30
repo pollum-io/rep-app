@@ -25,6 +25,6 @@ export default function queryParser(
 				queryDataParams.values[value as keyof typeof queryDataParams.values] ||
 					(queryDataParams.fields.includes(key) && value),
 			])
-			.filter(([key, value]) => value)
+			.filter(([value]) => value)
 	);
 }

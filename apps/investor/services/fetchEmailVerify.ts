@@ -1,6 +1,6 @@
 import { apiInstance } from "./api";
 
-export const fetchEmailVerify = async (email?: any, host?: string) => {
+export const fetchEmailVerify = async (email?: string, host?: string) => {
 	try {
 		console.log(email, "email");
 

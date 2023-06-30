@@ -1,27 +1,5 @@
-import {
-	Flex,
-	Img,
-	Radio,
-	RadioGroup,
-	Stack,
-	Text,
-	SimpleGrid,
-	Checkbox,
-	Button,
-} from "@chakra-ui/react";
-import dynamic from "next/dynamic";
-import { FunctionComponent, useEffect, useMemo, useState } from "react";
-import { BsCheckLg, BsCircleFill } from "react-icons/bs";
-import { OpportunitiesCard, OpportunitiesCards } from "../../components";
-import { MenuChart } from "../../components/Portfolio/MenuChart";
-import { NotInvestWarn } from "../../components/Portfolio/NotInvestWarn";
-import { YourDetailtCard } from "../../components/Portfolio/YourDetailCard";
+import { FunctionComponent } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
-import { Examaple } from "../../components/Portfolio/Chart";
-
-import { useUser } from "../../hooks/useUser";
-import moment from "moment";
-import { useTranslation } from "react-i18next";
 
 interface IPortfolio {
 	portfolioData: string[];
@@ -31,33 +9,7 @@ interface IPortfolio {
 	user?: string;
 }
 
-const BarCharts = dynamic(
-	async () => {
-		const mod = await import("../../components/Portfolio/BarChart");
-		return mod.BarCharts;
-	},
-	{
-		ssr: false,
-	}
-);
-
-const PieChartPortfolio = dynamic(
-	async () => {
-		const mod = await import("../../components/Portfolio/PieChart");
-		return mod.PieChartPortfolio;
-	},
-	{
-		ssr: false,
-	}
-);
-
-export const PortfolioContainer: FunctionComponent<IPortfolio> = ({
-	portfolioData,
-	enterpriseData,
-	enterpriseInvestment,
-	host,
-	user,
-}) => {
+export const PortfolioContainer: FunctionComponent<IPortfolio> = ({}) => {
 	// const [value, setValue] = useState("1");
 	// const [yoursInvestments, setYoursInvestments] = useState<string>();
 	// const [hasInvest, setHasInvest] = useState<boolean>(true);

@@ -66,7 +66,7 @@ export const BarCharts: React.FC<IExample> = (props) => {
 						formatter: (value: number) => `${value}`,
 					}}
 				>
-					{sortedChartData?.map((value, index) => (
+					{sortedChartData?.map((value) => (
 						<Cell key={value.id} fill={getCellColor(value.token_minted)} />
 					))}
 				</Bar>

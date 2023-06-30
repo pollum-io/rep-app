@@ -1,11 +1,9 @@
 import { FunctionComponent, useState } from "react";
 import {
-	Collapse,
 	Flex,
 	Input,
 	InputGroup,
 	InputLeftElement,
-	Slide,
 	Text,
 } from "@chakra-ui/react";
 import { DefaultTemplate } from "../../container";

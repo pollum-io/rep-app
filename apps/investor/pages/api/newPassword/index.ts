@@ -23,7 +23,7 @@ const NewPasswordSchema = z.object({
 	newPassword: z.string().min(6),
 });
 
-router.put(verifyUser, async (req: any, res: NextApiResponse<ResponseData>) => {
+router.put(verifyUser, async (req, res: NextApiResponse<ResponseData>) => {
 	try {
 		await dbConnect();
 

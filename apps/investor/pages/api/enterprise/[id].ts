@@ -22,7 +22,7 @@ const router = nextConnect({
 });
 
 export async function getAvailableAndClosedOpportunities(
-	ids: string | string[]
+	ids: string | string[] | mongoose.Types.ObjectId[]
 ) {
 	const dateNow = new Date();
 	const is_array = Array.isArray(ids);

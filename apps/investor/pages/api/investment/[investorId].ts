@@ -25,8 +25,8 @@ router.get(verifyUser, async (req, res) => {
 		await dbConnect();
 
 		const { investorId } = req.query;
-		const page = (req.query.page as any) ? (req.query.page as any) - 1 : 0;
-		const limit = (req.query.limit as any) || 100;
+		const page = +req.query.page ? +req.query.page - 1 : 0;
+		const limit = +req.query.limit || 100;
 		const { user } = req;
 
 		if (!isValidObjectId(investorId)) {

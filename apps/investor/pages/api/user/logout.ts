@@ -1,14 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { z } from "zod";
 import nextConnect from "next-connect";
 
 import { clearUser } from "../../../lib/auth";
 import { ApiResponse } from "../../../models/ApiResponse";
-
-const authSchema = z.object({
-	email: z.string(),
-	password: z.string(),
-});
 
 type ResponseData = ApiResponse<string>;
 

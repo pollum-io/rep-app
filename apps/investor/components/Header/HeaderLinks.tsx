@@ -24,6 +24,7 @@ export const HeaderLinks: React.FC = () => {
 	];
 
 	const { pathname, push } = useRouter();
+
 	return (
 		<Flex gap="1">
 			{links.map((item) => (

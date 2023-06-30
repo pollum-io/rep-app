@@ -12,7 +12,6 @@ import {
 import { DefaultTemplate } from "../DefaultTemplate";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { useTranslation } from "react-i18next";
-import { fetchUserApproveData } from "../../services/fetchUserApproveData";
 
 interface IInvest {
 	data: IOpportunitiesCard;
@@ -25,13 +24,9 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 	data,
 	cotas,
 	oportunitiesAddress,
-	token,
 }) => {
 	const [counter, setCounter] = useState<number>(Number(cotas));
 	// const { approve } = useTransactions();
-	const totalValue = counter * data.token_price;
-	const BRZ_DECIMALS = 10 ** 4;
-	const amount = totalValue * BRZ_DECIMALS;
 	const { t } = useTranslation();
 
 	const available = useMemo(() => {

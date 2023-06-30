@@ -1,8 +1,8 @@
 import { apiInstance } from "./api";
 
 export const fetchChangePassword = async (
-	code: any,
-	password: any,
+	code: string,
+	password: string,
 	host?: string
 ) => {
 	try {

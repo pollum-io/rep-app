@@ -1,5 +1,4 @@
-import { Flex, Img, Text, Icon, SimpleGrid } from "@chakra-ui/react";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { ImovelDetail } from "../../components/Imovel/imovel";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";

@@ -1,4 +1,4 @@
-export function formatPhoneNumber(phoneNumber: any) {
+export function formatPhoneNumber(phoneNumber: string) {
 	let value = phoneNumber?.replace(/\D/g, "");
 
 	if (value?.length >= 2) {

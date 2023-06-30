@@ -24,19 +24,17 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 		address,
 		oportunitiesAddress,
 		investor_pf,
-		investor_pj,
 	} = props;
-	const [isInvestidor, setIsInvestidor] = useState(investor_pf ? true : false);
+	const [isInvestidor] = useState(investor_pf ? true : false);
 	const { ended, hasToken } = useOpportunities();
 	const { push } = useRouter();
 	const [cotas, setCotas] = useState<number>(0);
-	const [copied, setCopied] = useState(false);
+	// const [copied, setCopied] = useState(false);
 	const { t } = useTranslation();
 
 	const handleClick = async (value: string) => {
 		try {
 			await navigator.clipboard.writeText(value);
-			setCopied(true);
 		} catch (error) {
 			console.error("Failed to copy text: ", error);
 		}

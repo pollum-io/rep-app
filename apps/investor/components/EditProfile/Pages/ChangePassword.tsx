@@ -1,14 +1,12 @@
 import {
 	Button,
-	Collapse,
 	Flex,
-	Img,
 	Input,
 	InputGroup,
 	InputRightElement,
 	Text,
 } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -38,7 +36,6 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 		register,
 		handleSubmit,
 		formState: { isSubmitSuccessful },
-		reset,
 	} = useForm();
 	const { toast } = useToasty();
 
@@ -230,7 +227,7 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 									</InputRightElement>
 								</InputGroup>
 								<PasswordStrengthBar
-									onChangeScore={(score, feedback) => setButtonScore(score)}
+									onChangeScore={(score) => setButtonScore(score)}
 									minLength={8}
 									password={firstPassword}
 								/>

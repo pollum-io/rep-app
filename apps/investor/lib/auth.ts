@@ -66,11 +66,7 @@ export function generateToken(user: User) {
 	return token;
 }
 
-export async function verifyUser(
-	req: Request,
-	res: NextApiResponse,
-	next: NextFunction
-) {
+export async function verifyUser(req: Request, res: NextApiResponse, next) {
 	try {
 		await dbConnect();
 

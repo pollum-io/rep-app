@@ -39,11 +39,13 @@ const insertSchema = z.object({
 	uf: z.string(),
 	email: z.optional(z.string()),
 	contact_number: z.optional(z.string()),
-	address: z.optional(z.object({} as { [key: string]: any })),
+	address: z.optional(z.object({} as { [key: string]: z.ZodTypeAny })),
 	legal_representatives: z.optional(
-		z.array(z.object({} as { [key: string]: any }))
+		z.array(z.object({} as { [key: string]: z.ZodTypeAny }))
 	),
-	partners: z.optional(z.array(z.object({} as { [key: string]: any }))),
+	partners: z.optional(
+		z.array(z.object({} as { [key: string]: z.ZodTypeAny }))
+	),
 	invited_by: z.string(),
 });
 

@@ -1,27 +1,27 @@
 import { Flex, Text } from "@chakra-ui/react";
 
-const links = [
-	{
-		id: 1,
-		name: "Oportunidades",
-		url: "/oportunidades",
-	},
-	{
-		id: 2,
-		name: "Portfólio",
-		url: "/portfolio",
-	},
-	{
-		id: 3,
-		name: "Empresas",
-		url: "/empresas",
-	},
-	{
-		id: 4,
-		name: "Saiba mais",
-		url: "/saibamais",
-	},
-];
+// const links = [
+// 	{
+// 		id: 1,
+// 		name: "Oportunidades",
+// 		url: "/oportunidades",
+// 	},
+// 	{
+// 		id: 2,
+// 		name: "Portfólio",
+// 		url: "/portfolio",
+// 	},
+// 	{
+// 		id: 3,
+// 		name: "Empresas",
+// 		url: "/empresas",
+// 	},
+// 	{
+// 		id: 4,
+// 		name: "Saiba mais",
+// 		url: "/saibamais",
+// 	},
+// ];
 
 const mocked = [
 	{

@@ -1,15 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
 import { RegisterContainer } from "../container";
 import jwt_decode from "jwt-decode";
+import { UserLogin } from "../dtos/IUserLogin";
 
 const Registrar: NextPage = (props) => <RegisterContainer {...props} />;
 
 export default Registrar;
-
-type UserLogin = {
-	investor_pf?: string;
-	investor_pj: string;
-};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["livn_auth"];

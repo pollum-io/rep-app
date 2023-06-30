@@ -4,10 +4,8 @@ import {
 	AccordionIcon,
 	AccordionItem,
 	AccordionPanel,
-	Button,
 	Flex,
 	Icon,
-	Img,
 	Menu,
 	MenuButton,
 	MenuItem,
@@ -28,7 +26,7 @@ export const HamburguerMenu: React.FC = () => {
 
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
-
+	console.log(push, "push");
 	return (
 		<Menu>
 			<MenuButton>

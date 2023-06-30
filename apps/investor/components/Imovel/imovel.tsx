@@ -1,6 +1,6 @@
 import { Flex, Icon, Img, SimpleGrid, Text } from "@chakra-ui/react";
 import moment from "moment-timezone";
-import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
@@ -8,9 +8,7 @@ import { FiMapPin } from "react-icons/fi";
 import { TbInfoSquare } from "react-icons/tb";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { useOpportunities } from "../../hooks/useOpportunities";
-import { fetchEnterpriseById } from "../../services";
 import { formatDate } from "../../utils/formatDate";
-// import { Maps } from "../Map/Maps";
 import { Carousel } from "./Carousel";
 import { Collections } from "./Collections";
 import { PriceCard } from "./PriceCard";
@@ -28,7 +26,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	const { hasToken } = useOpportunities();
 	const [dateEndend, setDateEnded] = useState<string>();
 	const [ended, setEnded] = useState<boolean>();
-	const [cota, setCota] = useState<number>(0);
+	const [cota] = useState<number>(0);
 	const { t } = useTranslation();
 
 	const renderer = ({

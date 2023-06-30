@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Flex, Checkbox, Button, Text, SlideFade } from "@chakra-ui/react";
 import { useRegister } from "../../hooks/useRegister";
 import { useToasty } from "../../hooks/useToasty";
@@ -14,9 +14,10 @@ import { useRouter } from "next/router";
 import { SelectComponent } from "../Select/SelectComponent";
 import { brasilStates } from "./states";
 import { useTranslation } from "react-i18next";
-import { useQuery as query } from "react-query";
 import { fetchCreateInvestorPF, fetchEnterprise, logout } from "../../services";
 import { fetchCreateInvestorPJ } from "../../services/fetchCreateInvestorPJ";
+import { ICreateInvestorPF } from "../../dtos/ICreateInvestorPF";
+import { ICreateInvestorPJ } from "../../dtos/ICreateInvestorPJ";
 
 interface IRegisterContent {
 	token: string;
@@ -59,14 +60,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 		setSecondStep,
 		setIsPhysical,
 	} = useRegister();
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { isSubmitSuccessful },
-		reset,
-		getValues,
-	} = useForm();
+	const { register, handleSubmit, reset, getValues } = useForm();
 	const { push } = useRouter();
 	const { toast } = useToasty();
 	const { t } = useTranslation();
@@ -113,24 +107,30 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 	};
 
 	const onSubmitForm = async (data: IRequestData) => {
-		const request = isPhysical
-			? {
-					full_name: String(data?.full_name),
-					cpf: data?.cpf?.replace(/[.-]/g, ""),
-					birthday_date: new Date(data?.birthday_date),
-					is_legal_entity: isPhysical,
-					invited_by: String(data?.invited_by),
-			  }
-			: {
-					full_name: String(data?.full_name),
-					cnpj: data?.cnpj.replace(/[-./]/g, ""),
-					uf: Object?.values(inputValuesUf)[0],
-					is_legal_entity: isPhysical,
-					invited_by: String(data?.invited_by),
-			  };
+		let dataPF: ICreateInvestorPF;
+		let dataPJ: ICreateInvestorPJ;
+
+		if (isPhysical) {
+			dataPF = {
+				full_name: String(data?.full_name),
+				cpf: data?.cpf?.replace(/[.-]/g, ""),
+				birthday_date: new Date(data?.birthday_date),
+				is_legal_entity: isPhysical,
+				invited_by: String(data?.invited_by),
+			};
+		} else {
+			dataPJ = {
+				full_name: String(data?.full_name),
+				cnpj: data?.cnpj.replace(/[-./]/g, ""),
+				uf: Object?.values(inputValuesUf)[0],
+				is_legal_entity: isPhysical,
+				invited_by: String(data?.invited_by),
+			};
+		}
+
 		await (isPhysical
-			? fetchCreateInvestorPF(request, token)
-			: fetchCreateInvestorPJ(request, token)
+			? fetchCreateInvestorPF(dataPF, token)
+			: fetchCreateInvestorPJ(dataPJ, token)
 		)
 			.then((res) => {
 				if (res) {

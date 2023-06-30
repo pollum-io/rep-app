@@ -1,29 +1,20 @@
 import React, { ForwardRefRenderFunction } from "react";
-import {
-	FormControl,
-	FormLabel,
-	Select,
-	Text,
-	SelectProps as ChakraSelectProps,
-} from "@chakra-ui/react";
-import { InputValues, SelectProps, UfValue } from "../../dtos/ISelectProps";
+import { FormControl, FormLabel, Select, Text } from "@chakra-ui/react";
+import { InputValues, SelectProps } from "../../dtos/ISelectProps";
 
 export const SelectComponent: ForwardRefRenderFunction<
 	HTMLSelectElement,
 	SelectProps
-> = (
-	{
-		name,
-		label,
-		type,
-		selectValue,
-		setData,
-		defaultValue,
-		setInputValues,
-		...rest
-	},
-	ref
-) => {
+> = ({
+	name,
+	label,
+	type,
+	selectValue,
+	setData,
+	defaultValue,
+	setInputValues,
+	...rest
+}) => {
 	return (
 		<FormControl id={name}>
 			{label && (

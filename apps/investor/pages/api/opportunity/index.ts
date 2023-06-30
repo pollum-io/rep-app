@@ -22,7 +22,7 @@ const router = nextConnect({
 
 const OpportunitySchema = z.object({
 	name: z.string().max(60),
-	address: z.optional(z.object({} as { [key: string]: any })),
+	address: z.optional(z.object({} as { [key: string]: z.ZodTypeAny })),
 	enterprise_id: z.string(),
 	min_investment: z.number(),
 	init_date: z.string().datetime({ offset: true }),
@@ -33,7 +33,7 @@ const OpportunitySchema = z.object({
 	cub_expected: z.optional(z.number()),
 	description: z.string(),
 	general_info: z.array(z.string()),
-	event_ensuing: z.optional(z.object({} as { [key: string]: any })),
+	event_ensuing: z.optional(z.object({} as { [key: string]: z.ZodTypeAny })),
 	neighbor_description: z.string(),
 	pictures_neighbor: z.array(z.string()),
 	pictures_enterprise: z.array(z.string()),
@@ -106,8 +106,8 @@ router.get(async (req, res) => {
 
 		const sort = queryParser(req.query, querySort);
 
-		const page = (req.query.page as any) ? (req.query.page as any) - 1 : 0;
-		const limit = (req.query.limit as any) || 12;
+		const page = +req.query.page ? +req.query.page - 1 : 0;
+		const limit = +req.query.limit || 12;
 
 		const results = await Opportunity.countDocuments(filter).sort({
 			createdAt: -1,
