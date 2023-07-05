@@ -1,12 +1,13 @@
 import { Flex, Img, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import { CollectionsModal } from "./CollectionsModal";
 interface ICollections {
-	images: any[];
+	images: string[];
 }
 
-export const Collections: React.FC<ICollections> = props => {
+export const Collections: React.FC<ICollections> = (props) => {
 	const { images } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
+
 	return (
 		<Flex
 			w="100%"

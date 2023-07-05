@@ -1,8 +1,9 @@
 import { GetServerSideProps, NextPage } from "next";
 import { RegisterContainer } from "../container";
 import jwt_decode from "jwt-decode";
+import { UserLogin } from "../dtos/IUserLogin";
 
-const Registrar: NextPage = props => <RegisterContainer {...props} />;
+const Registrar: NextPage = (props) => <RegisterContainer {...props} />;
 
 export default Registrar;
 
@@ -19,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 		};
 	}
 
-	const user: any = jwt_decode(token);
+	const user: UserLogin = jwt_decode(token);
 
 	if (!user?.investor_pf && !user?.investor_pj) {
 		return {

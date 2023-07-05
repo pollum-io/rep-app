@@ -8,19 +8,19 @@ import { useToasty } from "../../hooks/useToasty";
 
 export const Login: FunctionComponent<ButtonProps> = () => {
 	const { push } = useRouter();
-	const [email, setEmail] = useState<any>();
-	const [password, setPassword] = useState<any>();
-	const { getInfosId } = useUser();
+	const [email, setEmail] = useState<string>();
+	const [password, setPassword] = useState<string>();
+	const { GetUserId } = useUser();
 	const { toast } = useToasty();
 	const api = apiInstance();
 
 	const handleLogin = async () => {
 		try {
-			const data: any = await api.post("/user/authenticate", {
+			const data = await api.post("/user/authenticate", {
 				email: email,
 				password: password,
 			});
-			getInfosId(
+			GetUserId(
 				data?.data?.user?.investor_pf === null
 					? data?.data?.user?.investor_pj
 					: data?.data?.user?.investor_pf
@@ -32,22 +32,25 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 				title: "Seja bem-vindo!",
 			});
 			push(!data?.data?.user?.investor_pf ? "/registrar" : "/oportunidades");
-		} catch (error: any) {
-			toast({
-				id: "toast-login-error",
-				position: "top-right",
-				status: "error",
-				title: "Email ou senha incorretos!",
-			});
-			return;
+		} catch (error) {
+			if (error instanceof Error) {
+				toast({
+					id: "toast-login-error",
+					position: "top-right",
+					status: "error",
+					title: "Email ou senha incorretos!",
+				});
+				return;
+			}
 		}
 	};
 
-	const handleKeyPress = (event: any) => {
+	const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === "Enter") {
 			handleLogin();
 		}
 	};
+
 	const { t } = useTranslation();
 
 	return (
@@ -93,7 +96,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							E-mail
 						</Text>
 						<Input
-							placeholder={t("login.placeholderEmail") as any}
+							placeholder={t("login.placeholderEmail") as string}
 							_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 							border="0.0938rem solid #E2E8F0"
 							_hover={{}}
@@ -106,7 +109,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							h="2rem"
 							pl="0.7rem"
 							color="#2D3748"
-							onChange={e => setEmail(e.target.value)}
+							onChange={(e) => setEmail(e.target.value)}
 							onKeyPress={handleKeyPress}
 						/>
 					</Flex>
@@ -136,7 +139,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							</Text>
 						</Flex>
 						<Input
-							placeholder={t("login.placeholderSenha") as any}
+							placeholder={t("login.placeholderSenha") as string}
 							_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 							border="0.0938rem solid #E2E8F0"
 							_hover={{}}
@@ -149,7 +152,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							h="2rem"
 							pl="0.7rem"
 							color="#2D3748"
-							onChange={e => setPassword(e.target.value)}
+							onChange={(e) => setPassword(e.target.value)}
 							type={"password"}
 							onKeyPress={handleKeyPress}
 						/>

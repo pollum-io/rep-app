@@ -1,14 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { z } from "zod";
 import nextConnect from "next-connect";
 
 import { clearUser } from "../../../lib/auth";
 import { ApiResponse } from "../../../models/ApiResponse";
-
-const authSchema = z.object({
-	email: z.string(),
-	password: z.string(),
-});
 
 type ResponseData = ApiResponse<string>;
 
@@ -26,12 +20,14 @@ router.get(async (req, res) => {
 		clearUser(res);
 
 		res.status(200).end();
-	} catch (error: any) {
-		res.status(400).json({
-			error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
-				? error.message
-				: JSON.parse(error.message),
-		});
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({
+				error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
+					? error.message
+					: JSON.parse(error.message),
+			});
+		}
 	}
 });
 

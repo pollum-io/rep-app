@@ -1,49 +1,47 @@
 import {
 	Button,
-	Collapse,
 	Flex,
-	Img,
 	Input,
 	InputGroup,
 	InputRightElement,
 	Text,
 } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useToasty } from "../../../hooks/useToasty";
 import { fetchNewPassword } from "../../../services/fetchNewPassword";
+import { IChangePasswordData } from "../../../dtos/ChangePassword";
 
 interface IChangePassword {
-	token?: any;
+	token?: string;
 }
 
-export const ChangePassword: React.FC<IChangePassword> = props => {
+export const ChangePassword: React.FC<IChangePassword> = (props) => {
 	const { token } = props;
 	const [showOldPassword, setShowOldPassword] = useState<boolean>(true);
 	const [showPasswordInputOne, setShowPasswordInputOne] =
 		useState<boolean>(true);
 	const [showPasswordInputTwo, setShowPasswordInputTwo] =
 		useState<boolean>(true);
-	const [isButtonValid, setIsButtonValid] = useState<any>();
-	const [firstPassword, setFirstPassword] = useState<any>();
-	const [secondPassword, setSecondPassword] = useState<any>();
-	const [buttonScore, setButtonScore] = useState<any>();
+	const [isButtonValid, setIsButtonValid] = useState<boolean>();
+	const [firstPassword, setFirstPassword] = useState<string>();
+	const [secondPassword, setSecondPassword] = useState<string>();
+	const [buttonScore, setButtonScore] = useState<number>();
 
 	const { t } = useTranslation();
 	const {
 		register,
 		handleSubmit,
 		formState: { isSubmitSuccessful },
-		reset,
 	} = useForm();
 	const { toast } = useToasty();
 
-	const onSubmitForm = async (data: any) => {
-		let request: any;
-
+	const onSubmitForm = async (data: IChangePasswordData) => {
+		let request: IChangePasswordData;
+		// eslint-disable-next-line prefer-const
 		request = {
 			oldPassword: data.oldPassword,
 			newPassword: data.newPassword,
@@ -164,7 +162,7 @@ export const ChangePassword: React.FC<IChangePassword> = props => {
 										h="2rem"
 										pl="0.7rem"
 										color="#2D3748"
-										onChange={e => setFirstPassword(e.target.value)}
+										onChange={(e) => setFirstPassword(e.target.value)}
 									/>
 									<InputRightElement
 										display={"flex"}
@@ -210,7 +208,7 @@ export const ChangePassword: React.FC<IChangePassword> = props => {
 										pl="0.7rem"
 										color="#2D3748"
 										{...register("newPassword")}
-										onChange={e => setSecondPassword(e.target.value)}
+										onChange={(e) => setSecondPassword(e.target.value)}
 									/>
 									<InputRightElement
 										display={"flex"}
@@ -229,7 +227,7 @@ export const ChangePassword: React.FC<IChangePassword> = props => {
 									</InputRightElement>
 								</InputGroup>
 								<PasswordStrengthBar
-									onChangeScore={(score, feedback) => setButtonScore(score)}
+									onChangeScore={(score) => setButtonScore(score)}
 									minLength={8}
 									password={firstPassword}
 								/>

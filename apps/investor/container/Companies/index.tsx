@@ -1,29 +1,27 @@
 import { FunctionComponent, useState } from "react";
 import {
-	Collapse,
 	Flex,
 	Input,
 	InputGroup,
 	InputLeftElement,
-	Slide,
 	Text,
 } from "@chakra-ui/react";
 import { DefaultTemplate } from "../../container";
 import { BiSearch } from "react-icons/bi";
 import { CompaniesCard } from "../../components";
 import { useTranslation } from "react-i18next";
+import { ICompanieData } from "../../dtos/ICompaniesData";
 
 interface ICompanies {
-	data: any;
+	data: ICompanieData[];
 }
 
 export const CompaniesContainer: FunctionComponent<ICompanies> = ({ data }) => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const { t } = useTranslation();
-	const filteredImoveis = data.filter((imovel: any) =>
-		imovel.enterprise_name.toLowerCase().includes(searchTerm.toLowerCase())
+	const filteredCompanies = data.filter((comp) =>
+		comp.enterprise_name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
-	console.log(data, "data");
 
 	return (
 		<DefaultTemplate>
@@ -59,7 +57,7 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({ data }) => {
 									w="14.5625rem"
 									border="0.0625rem solid #CBD5E0"
 									borderRadius="4.1875rem"
-									placeholder={t("inputs.findCompanie") as any}
+									placeholder={t("inputs.findCompanie") as string}
 									color="#171923"
 									_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 									fontFamily="Poppins"
@@ -72,7 +70,7 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({ data }) => {
 										border: "0.0625rem solid #CBD5E0",
 									}}
 									value={searchTerm}
-									onChange={e => setSearchTerm(e.target.value)}
+									onChange={(e) => setSearchTerm(e.target.value)}
 								/>
 							</InputGroup>
 						</Flex>
@@ -86,17 +84,16 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({ data }) => {
 						</Text>
 					</Flex>
 					<Flex flexDirection={"column"} gap="1.5rem" w="100%">
-						{filteredImoveis.map((imoveis: any) => (
+						{filteredCompanies.map((comp) => (
 							// eslint-disable-next-line react/jsx-key
 							<CompaniesCard
-								key={imoveis._id}
-								_id={imoveis._id}
-								enterprise_name={imoveis.enterprise_name}
-								enterprise_info={imoveis.enterprise_info}
-								enterprise_logo={imoveis.enterprise_logo}
-								opportunities_available={imoveis.opportunities_available}
-								opportunities_closed={imoveis.opportunities_closed}
-								enterprise_banner={imoveis.enterprise_banner}
+								key={comp._id}
+								_id={comp._id}
+								enterprise_name={comp.enterprise_name}
+								enterprise_logo={comp.enterprise_logo}
+								opportunities_available={comp.opportunities_available}
+								opportunities_closed={comp.opportunities_closed}
+								enterprise_banner={comp.enterprise_banner}
 							/>
 						))}
 					</Flex>

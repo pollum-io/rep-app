@@ -3,10 +3,12 @@ import { GetServerSideProps, NextPage } from "next";
 import { ImovelContainer } from "../../container/Imovel/index";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { fetchImovelDetail } from "../../services/fetchImovelDetail";
+import { UserLogin } from "../../dtos/IUserLogin";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IImovelProps {
 	data: IOpportunitiesCard;
-	users: any;
+	users: UserInfo;
 }
 
 const Imovel: NextPage<IImovelProps> = ({ data, users }) => {
@@ -28,10 +30,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	const user: any = jwt_decode(token);
+	const user: UserLogin = jwt_decode(token);
 	const host = req.headers.host;
 
-	const response = await fetchImovelDetail(query.id, host);
+	const response = await fetchImovelDetail(String(query.id), host);
 
 	return {
 		props: {

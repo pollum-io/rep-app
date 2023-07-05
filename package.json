@@ -1,22 +1,33 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
-  "devDependencies": {
-    "@turbo/gen": "^1.9.7",
-    "eslint": "^7.32.0",
-    "eslint-config-custom": "*",
-    "prettier": "^2.5.1",
-    "turbo": "latest"
-  },
-  "name": "my-turborepo",
-  "packageManager": "yarn@1.22.19",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"prepare": "husky install",
+		"lint-staged": "lint-staged"
+	},
+	"devDependencies": {
+		"@turbo/gen": "^1.9.7",
+		"eslint": "^7.32.0",
+		"eslint-config-custom": "*",
+		"lint-staged": "^13.2.2",
+		"prettier": "^2.5.1",
+		"turbo": "latest"
+	},
+	"name": "my-turborepo",
+	"packageManager": "yarn@1.22.19",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"dependencies": {
+		"husky": "^8.0.3"
+	},
+	"lint-staged": {
+		"*.tsx": "eslint --fix",
+		"*.ts": "eslint --fix",
+		"*.js": "eslint --fix"
+	}
 }

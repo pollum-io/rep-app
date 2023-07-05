@@ -21,7 +21,7 @@ const router = nextConnect({
 
 const OpportunitySchema = z.object({
 	name: z.optional(z.string().max(60)),
-	address: z.optional(z.object({} as { [key: string]: any })),
+	address: z.optional(z.object({} as { [key: string]: z.ZodTypeAny })),
 	min_investment: z.optional(z.number()),
 	init_date: z.optional(z.string().datetime({ offset: true })),
 	expected_delivery_date: z.optional(z.string().datetime({ offset: true })),
@@ -31,7 +31,9 @@ const OpportunitySchema = z.object({
 	cub_expected: z.optional(z.number()),
 	description: z.optional(z.string()),
 	general_info: z.optional(z.array(z.string())),
-	event_ensuing: z.optional(z.optional(z.object({} as { [key: string]: any }))),
+	event_ensuing: z.optional(
+		z.optional(z.object({} as { [key: string]: z.ZodTypeAny }))
+	),
 	neighbor_description: z.optional(z.string()),
 	pictures_neighbor: z.optional(z.array(z.string())),
 	pictures_enterprise: z.optional(z.array(z.string())),
@@ -59,8 +61,10 @@ router.get(async (req, res) => {
 		}
 
 		res.status(200).json({ data: opportunity });
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 
@@ -91,8 +95,10 @@ router.put(verifyUser, async (req, res) => {
 		}
 
 		res.status(200).json({ data: opportunity });
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 
@@ -109,8 +115,10 @@ router.delete(verifyUser, async (req, res) => {
 		await Opportunity.findByIdAndDelete(id);
 
 		res.status(204).end();
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 

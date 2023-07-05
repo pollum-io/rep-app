@@ -1,8 +1,11 @@
 import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { OpportunitiesContainer } from "../../container";
+import { UserLogin } from "../../dtos/IUserLogin";
 
-const Opportunities: NextPage = props => <OpportunitiesContainer {...props} />;
+const Opportunities: NextPage = (props) => (
+	<OpportunitiesContainer {...props} />
+);
 
 export default Opportunities;
 
@@ -19,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 		};
 	}
 
-	const user: any = jwt_decode(token);
+	const user: UserLogin = jwt_decode(token);
 
 	if (!user?.investor_pf && !user?.investor_pj) {
 		return {

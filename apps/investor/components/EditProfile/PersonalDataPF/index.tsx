@@ -1,19 +1,7 @@
-import {
-	Button,
-	Collapse,
-	Flex,
-	Img,
-	Input,
-	InputGroup,
-	InputRightElement,
-	Text,
-} from "@chakra-ui/react";
-import { FunctionComponent, useMemo, useState } from "react";
+import { Button, Collapse, Flex, Img, Text } from "@chakra-ui/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import PasswordStrengthBar from "react-password-strength-bar";
-import { useRouter } from "next/router";
 import { useUser } from "../../../hooks/useUser";
 import { useToasty } from "../../../hooks/useToasty";
 import { fetchEditInvestorPF } from "../../../services";
@@ -23,58 +11,62 @@ import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
 import { formatCPF } from "../../../utils/formatCpf";
 import { estadosCivis } from "../mockedData/estadosCivis";
 import { estadosRegimesPatrimoniais } from "../mockedData/estadosRegimesPatrimoniais";
+import { MaritalStatus, UserDataPF } from "../../../dtos/UserPF";
 
-interface IChangePassword {
-	data?: any;
-	token?: any;
+interface IPersonalDataPF {
+	data?: UserDataPF;
+	token?: string;
 }
 
-export const PersonalDataPF: React.FC<IChangePassword> = props => {
+export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	const { data, token } = props;
-	const [isDisabled, setIsDisabled] = useState(true);
-	const [maritalStatus, setMaritalStatus] = useState<any>(
+	const [isDisabled] = useState(true);
+	const [maritalStatus, setMaritalStatus] = useState<string>(
 		data?.marital_status?.status
 	);
 	const { t } = useTranslation();
 	const isMerried: boolean = maritalStatus === "Casado(a)" ? true : false;
 	const isStableUnion: boolean =
 		maritalStatus === "União Estável" ? true : false;
-	const [equityRegime, setEquityRegime] = useState<any>("");
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { isSubmitSuccessful },
-		reset,
-	} = useForm();
+	const [equityRegime, setEquityRegime] = useState<string>("");
+	const { register, handleSubmit } = useForm();
 	const { userInfos } = useUser();
 	const { toast } = useToasty();
 	const dataFormatada = new Date(data?.birthday_date)
 		.toISOString()
 		.split("T")[0];
 
-	const onSubmitForm = async (data: any) => {
-		let request: any;
-		let value: any;
+	const onSubmitForm = async (data: UserDataPF) => {
+		let request: UserDataPF;
+		let value: MaritalStatus;
 
+		// eslint-disable-next-line prefer-const
 		value = isMerried
 			? {
 					status: maritalStatus,
 					equity_regime: isMerried ? equityRegime : null,
-					spouse_name: isMerried ? data.spouse_name : null,
-					spouse_cpf: isMerried ? data.spouse_cpf : null,
-					spouse_rg: isMerried ? data.spouse_rg : null,
-					spouse_address: isMerried ? data.spouse_address : null,
+					spouse_name: isMerried ? data?.marital_status?.spouse_name : null,
+					spouse_cpf: isMerried ? data?.marital_status?.spouse_cpf : null,
+					spouse_rg: isMerried ? data?.marital_status?.spouse_rg : null,
+					spouse_address: isMerried
+						? data?.marital_status?.spouse_address
+						: null,
 			  }
 			: {
 					status: maritalStatus,
-					partners_name: isStableUnion ? data.partners_name : null,
-					partners_cpf: isStableUnion ? data.partners_cpf : null,
-					partners_rg: isStableUnion ? data.partners_rg : null,
-					partners_address: isStableUnion ? data.partners_address : null,
+					partners_name: isStableUnion
+						? data?.marital_status?.partners_name
+						: null,
+					partners_cpf: isStableUnion
+						? data?.marital_status?.partners_cpf
+						: null,
+					partners_rg: isStableUnion ? data?.marital_status?.partners_rg : null,
+					partners_address: isStableUnion
+						? data?.marital_status?.partners_address
+						: null,
 			  };
-		console.log(value, "value");
 
+		// eslint-disable-next-line prefer-const
 		request = {
 			full_name: data.full_name,
 			birthday_date: new Date(data.birthday_date),
@@ -91,7 +83,7 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 		};
 
 		await fetchEditInvestorPF(userInfos, request, token)
-			.then(res => {
+			.then((res) => {
 				if (res) {
 					console.log(res);
 
@@ -104,7 +96,7 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 					});
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log({ err });
 			});
 	};
@@ -141,28 +133,28 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 						>
 							<Flex flexDirection="column" gap="0.25rem" mb="2.75rem">
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.name") as string}
 									type="text"
 									{...register("full_name")}
 									defaultValue={data?.full_name}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.city") as string}
 									type="text"
 									{...register("city_of_birth")}
 									defaultValue={data?.city_of_birth}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("register.birthDate") as string}
 									type="date"
 									{...register("birthday_date")}
 									defaultValue={dataFormatada}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("register.socialNumber") as string}
 									type="text"
 									maskType={"CPF"}
@@ -170,7 +162,7 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 									defaultValue={formatCPF(data?.cpf)}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.rg") as string}
 									type="text"
 									{...register("rg")}
@@ -205,14 +197,14 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 									{...register("equity_regime")}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.spousesName") as string}
 									type="text"
 									{...register("spouse_name")}
 									defaultValue={data?.marital_status?.spouse_name}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.spouseSocialNumber") as string}
 									type="text"
 									maskType={"CPF"}
@@ -220,14 +212,14 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 									defaultValue={formatCPF(data?.marital_status?.spouse_cpf)}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.spousesRG") as string}
 									type="text"
 									{...register("spouse_rg")}
 									defaultValue={data?.marital_status?.spouse_rg}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.spousesAddress") as string}
 									type="text"
 									{...register("spouse_address")}
@@ -236,14 +228,14 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 							</Collapse>
 							<Collapse in={maritalStatus === "União Estável" && isStableUnion}>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.partnersName") as string}
 									type="text"
 									{...register("partners_name")}
 									defaultValue={data?.marital_status?.partners_name}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.partnersSocialNumber") as string}
 									type="text"
 									maskType={"CPF"}
@@ -251,14 +243,14 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 									defaultValue={formatCPF(data?.marital_status?.partners_cpf)}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.partnersRG") as string}
 									type="text"
 									{...register("partners_rg")}
 									defaultValue={data?.marital_status?.partners_rg}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.partnersAddress") as string}
 									type="text"
 									{...register("partners_address")}
@@ -266,28 +258,28 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 								/>
 							</Collapse>
 							<InputComponent
-								placeholderText={t("inputs.insertHere") as any}
+								placeholderText={t("inputs.insertHere") as string}
 								label={t("editProfile.address") as string}
 								type="text"
 								{...register("address")}
 								defaultValue={data?.address}
 							/>
 							<InputComponent
-								placeholderText={t("inputs.insertHere") as any}
+								placeholderText={t("inputs.insertHere") as string}
 								label={t("editProfile.occupation") as string}
 								type="text"
 								{...register("profession")}
 								defaultValue={data?.profession}
 							/>
 							<InputComponent
-								placeholderText={t("inputs.insertHere") as any}
+								placeholderText={t("inputs.insertHere") as string}
 								label={t("editProfile.email") as string}
 								type="email"
 								{...register("email")}
 								defaultValue={data?.email}
 							/>
 							<InputComponent
-								placeholderText={t("inputs.insertHere") as any}
+								placeholderText={t("inputs.insertHere") as string}
 								label={t("editProfile.phone") as string}
 								type="text"
 								maskType={"Telefone"}

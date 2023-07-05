@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Flex, Checkbox, Button, Text, SlideFade } from "@chakra-ui/react";
 import { useRegister } from "../../hooks/useRegister";
 import { useToasty } from "../../hooks/useToasty";
@@ -14,16 +14,44 @@ import { useRouter } from "next/router";
 import { SelectComponent } from "../Select/SelectComponent";
 import { brasilStates } from "./states";
 import { useTranslation } from "react-i18next";
-import { useQuery as query } from "react-query";
 import { fetchCreateInvestorPF, fetchEnterprise, logout } from "../../services";
 import { fetchCreateInvestorPJ } from "../../services/fetchCreateInvestorPJ";
-import { useWallet } from "../../hooks/useWallet";
+import { ICreateInvestorPF } from "../../dtos/ICreateInvestorPF";
+import { ICreateInvestorPJ } from "../../dtos/ICreateInvestorPJ";
 
-export const RegisterContent: FunctionComponent<any> = props => {
+interface IRegisterContent {
+	token: string;
+}
+
+type UfData = {
+	uf: string;
+};
+
+type ExistingData = {
+	[index: number]: string[];
+	length: number;
+};
+
+type ExistingPjData = {
+	cnpj?: string;
+	full_name?: string;
+};
+
+interface IRequestData {
+	full_name: string;
+	cpf?: string;
+	birthday_date?: Date;
+	cnpj?: string;
+	uf?: string;
+	is_legal_entity: boolean;
+	invited_by: string;
+}
+
+export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 	const { token } = props;
 	const [canSend, setCanSend] = useState(false);
 	const [buttonDisabled, setButtonDisabled] = useState("");
-	const [inputValuesUf, setInputValuesUf] = useState<any>();
+	const [inputValuesUf, setInputValuesUf] = useState<UfData>();
 	const {
 		firstStep,
 		secondStep,
@@ -32,27 +60,22 @@ export const RegisterContent: FunctionComponent<any> = props => {
 		setSecondStep,
 		setIsPhysical,
 	} = useRegister();
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { isSubmitSuccessful },
-		reset,
-		getValues,
-	} = useForm();
+	const { register, handleSubmit, reset, getValues } = useForm();
 	const { push } = useRouter();
 	const { toast } = useToasty();
 	const { t } = useTranslation();
-	const { disconnectWallet } = useWallet();
 
 	const handleValidateData = async () => {
-		const data: any = isPhysical
+		const data: ExistingData = isPhysical
 			? getValues(["cpf"])
 			: getValues(["enterprise_name", "cnpj"]);
+
 		const req = await fetchEnterprise();
-		const cnpjExistentes = req.data.map((values: any) => values.cnpj);
+		const cnpjExistentes = req.data.map(
+			(values: ExistingPjData) => values.cnpj
+		);
 		const enterpriseNameExistentes = req.data.map(
-			(values: any) => values.enterprise_name
+			(values: ExistingPjData) => values.full_name
 		);
 
 		if (isPhysical) {
@@ -67,7 +90,9 @@ export const RegisterContent: FunctionComponent<any> = props => {
 					title: "Nome empresarial já existente!",
 					description: "Nome empresarial já existe na lista de empresas",
 				});
-			} else if (cnpjExistentes.includes(data?.[1]?.replace(/[-./]/g, ""))) {
+			} else if (
+				cnpjExistentes.includes(data?.[1]?.[0]?.replace(/[-./]/g, ""))
+			) {
 				toast({
 					id: "toast-cnpj-error",
 					position: "top-right",
@@ -81,27 +106,33 @@ export const RegisterContent: FunctionComponent<any> = props => {
 		}
 	};
 
-	const onSubmitForm = async (data: any) => {
-		const request = isPhysical
-			? {
-					full_name: String(data?.full_name),
-					cpf: data?.cpf?.replace(/[.-]/g, ""),
-					birthday_date: new Date(data?.birthday_date),
-					is_legal_entity: isPhysical,
-					invited_by: String(data?.invited_by),
-			  }
-			: {
-					full_name: String(data?.enterprise_name),
-					cnpj: data?.cnpj.replace(/[-./]/g, ""),
-					uf: Object?.values(inputValuesUf)[0],
-					is_legal_entity: isPhysical,
-					invited_by: String(data?.invited_by),
-			  };
+	const onSubmitForm = async (data: IRequestData) => {
+		let dataPF: ICreateInvestorPF;
+		let dataPJ: ICreateInvestorPJ;
+
+		if (isPhysical) {
+			dataPF = {
+				full_name: String(data?.full_name),
+				cpf: data?.cpf?.replace(/[.-]/g, ""),
+				birthday_date: new Date(data?.birthday_date),
+				is_legal_entity: isPhysical,
+				invited_by: String(data?.invited_by),
+			};
+		} else {
+			dataPJ = {
+				full_name: String(data?.full_name),
+				cnpj: data?.cnpj.replace(/[-./]/g, ""),
+				uf: Object?.values(inputValuesUf)[0],
+				is_legal_entity: isPhysical,
+				invited_by: String(data?.invited_by),
+			};
+		}
+
 		await (isPhysical
-			? fetchCreateInvestorPF(request, token)
-			: fetchCreateInvestorPJ(request, token)
+			? fetchCreateInvestorPF(dataPF, token)
+			: fetchCreateInvestorPJ(dataPJ, token)
 		)
-			.then(res => {
+			.then((res) => {
 				if (res) {
 					toast({
 						id: "toast1",
@@ -114,7 +145,7 @@ export const RegisterContent: FunctionComponent<any> = props => {
 					push("/oportunidades");
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log({ err });
 			});
 	};
@@ -132,7 +163,12 @@ export const RegisterContent: FunctionComponent<any> = props => {
 	};
 
 	return (
-		<Flex w="100%" alignItems="center" justifyContent="center">
+		<Flex
+			w="100%"
+			alignItems="center"
+			justifyContent="flex-start"
+			pl={"42.12rem"}
+		>
 			<form onSubmit={handleSubmit(onSubmitForm)}>
 				{firstStep ? (
 					<SlideFade in={firstStep} offsetY="-30px">
@@ -187,59 +223,60 @@ export const RegisterContent: FunctionComponent<any> = props => {
 								{!isPhysical ? (
 									<>
 										<InputComponent
-											placeholderText={t("inputs.insertHere") as any}
-											label={t("register.corporateName") as any}
+											placeholderText={t("inputs.insertHere") as string}
+											label={t("register.corporateName") as string}
 											type="text"
 											{...register("enterprise_name")}
 										/>
 										<InputComponent
 											placeholderText="00.000.000/0000-00"
-											label={t("register.nationalRegister") as any}
+											label={t("register.nationalRegister") as string}
 											maskType={"CNPJ"}
 											type="text"
 											{...register("cnpj")}
 										/>
 										<SelectComponent
-											label={t("register.federal") as any}
+											label={t("register.federal") as string}
 											type="uf"
 											selectValue={brasilStates}
 											setInputValues={setInputValuesUf}
 											{...register("uf")}
 										/>
 										<InputComponent
-											label={t("register.whoInvited") as any}
+											label={t("register.whoInvited") as string}
 											type="text"
-											placeholderText={t("inputs.insertHere") as any}
+											placeholderText={t("inputs.insertHere") as string}
 											{...register("invited_by")}
+											onChange={(e) => setButtonDisabled(e.target.value)}
 										/>
 									</>
 								) : (
 									<>
 										<InputComponent
-											label={t("register.noAbbreviations") as any}
+											label={t("register.noAbbreviations") as string}
 											type="text"
-											placeholderText={t("inputs.insertHere") as any}
+											placeholderText={t("inputs.insertHere") as string}
 											{...register("full_name")}
 										/>
 										<InputComponent
-											label={t("register.birthDate") as any}
+											label={t("register.birthDate") as string}
 											type="date"
 											placeholderText="dd/mm/aaaa"
 											{...register("birthday_date")}
 										/>
 										<InputComponent
-											label={t("register.socialNumber") as any}
+											label={t("register.socialNumber") as string}
 											type="text"
 											maskType={"CPF"}
 											placeholderText="000.000.000-00"
 											{...register("cpf")}
 										/>
 										<InputComponent
-											label={t("register.whoInvited") as any}
+											label={t("register.whoInvited") as string}
 											type="text"
-											placeholderText={t("inputs.insertHere") as any}
+											placeholderText={t("inputs.insertHere") as string}
 											{...register("invited_by")}
-											onChange={e => setButtonDisabled(e.target.value)}
+											onChange={(e) => setButtonDisabled(e.target.value)}
 										/>
 									</>
 								)}
@@ -265,11 +302,10 @@ export const RegisterContent: FunctionComponent<any> = props => {
 										transition="0.5s"
 										onClick={() => {
 											logout(push);
-											disconnectWallet();
 										}}
 									>
 										{<BsArrowLeftShort size={22} />}
-										{t("register.back") as any}
+										{t("register.back") as string}
 									</Button>
 									<Button
 										transition="0.5s"
@@ -292,7 +328,7 @@ export const RegisterContent: FunctionComponent<any> = props => {
 										onClick={() => handleValidateData()}
 										isDisabled={buttonDisabled.length === 0}
 									>
-										{t("register.nextStep") as any}{" "}
+										{t("register.nextStep") as string}{" "}
 										{<BsArrowRightShort size={22} />}
 									</Button>
 								</Flex>
@@ -312,7 +348,7 @@ export const RegisterContent: FunctionComponent<any> = props => {
 										lineHeight="1.25rem"
 										color="#2D3748"
 									>
-										{t("register.termsAnd") as any}
+										{t("register.termsAnd") as string}
 									</Text>
 								</Flex>
 								<Flex
@@ -402,7 +438,7 @@ export const RegisterContent: FunctionComponent<any> = props => {
 										lineHeight="1.25rem"
 										color="#2D3748"
 									>
-										{t("register.iAgree") as any}
+										{t("register.iAgree") as string}
 									</Text>
 								</Flex>
 								<Flex gap="1.5rem">
@@ -431,7 +467,7 @@ export const RegisterContent: FunctionComponent<any> = props => {
 										}}
 									>
 										<BsArrowLeftShort size={22} />
-										{t("register.back") as any}
+										{t("register.back") as string}
 									</Button>
 									<Button
 										mt="0.375rem"
@@ -455,7 +491,7 @@ export const RegisterContent: FunctionComponent<any> = props => {
 										color="#ffffff"
 										type="submit"
 									>
-										{t("register.send") as any}
+										{t("register.send") as string}
 									</Button>
 								</Flex>
 							</Flex>

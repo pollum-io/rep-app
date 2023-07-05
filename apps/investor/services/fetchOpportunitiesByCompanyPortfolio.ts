@@ -1,4 +1,3 @@
-import qs from "qs";
 import { apiInstance } from "./api";
 
 export const fetchOpportunitiesByCompanyPortfolio = async (

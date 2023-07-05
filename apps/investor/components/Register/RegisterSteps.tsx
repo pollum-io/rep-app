@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Flex, Text, Progress, Button } from "@chakra-ui/react";
+import { Flex, Text, Progress } from "@chakra-ui/react";
 import { IRegisterSteps } from "./dto";
 import { useRegister } from "../../hooks/useRegister";
 import { BsCheck } from "react-icons/bs";

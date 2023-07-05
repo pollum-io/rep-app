@@ -1,13 +1,15 @@
 import { apiInstance } from "./api";
 
-export const fetchEmailVerify = async (email?: any, host?: string) => {
+export const fetchEmailVerify = async (email?: string, host?: string) => {
 	try {
 		console.log(email, "email");
 
 		const api = apiInstance(host);
 		const response = await api.post(`/recoverPassword/`, { email });
 		return response;
-	} catch (error: any) {
-		console.log("Erro", error.message);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log("Erro", error.message);
+		}
 	}
 };

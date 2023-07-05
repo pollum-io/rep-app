@@ -7,7 +7,6 @@ import { ICompaniesCard } from "./dto";
 export const CompaniesCard: FunctionComponent<ICompaniesCard> = ({
 	_id,
 	enterprise_name,
-	enterprise_info,
 	enterprise_logo,
 	opportunities_closed,
 	opportunities_available,

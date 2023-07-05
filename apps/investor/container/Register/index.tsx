@@ -4,7 +4,13 @@ import { Flex, Img, Text } from "@chakra-ui/react";
 import { RegisterContent } from "../../components/Register/RegisterContent";
 import { useTranslation } from "react-i18next";
 
-export const RegisterContainer: FunctionComponent = (props: any) => {
+interface IRegisterContainer {
+	token: string;
+}
+
+export const RegisterContainer: FunctionComponent = (
+	props: IRegisterContainer
+) => {
 	const { token } = props;
 	const { t } = useTranslation();
 

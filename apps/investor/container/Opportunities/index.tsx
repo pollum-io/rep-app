@@ -6,13 +6,21 @@ import { OpportunitiesCards } from "../../components";
 import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
 
-export const OpportunitiesContainer: FunctionComponent = (props: any) => {
-	const { getInfosId, getInfos } = useUser();
+interface UserData {
+	token: string;
+	user: {
+		investor_pj?: string;
+		investor_pf?: string;
+	};
+}
+
+export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
+	const { GetUserId, getInfos } = useUser();
 	const [bannerRes] = useMediaQuery("(max-width: 1110px)");
 	const { t } = useTranslation();
 
 	useEffect(() => {
-		getInfosId(
+		GetUserId(
 			props?.user?.investor_pf === null
 				? props?.user?.investor_pj
 				: props?.user?.investor_pf
@@ -20,7 +28,7 @@ export const OpportunitiesContainer: FunctionComponent = (props: any) => {
 		getInfos(props.token);
 	}, [
 		getInfos,
-		getInfosId,
+		GetUserId,
 		props.token,
 		props?.user?.investor_pj,
 		props?.user?.investor_pf,

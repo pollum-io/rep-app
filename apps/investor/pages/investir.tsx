@@ -3,6 +3,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { InvestContainer } from "../container";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
 import { fetchImovelDetail } from "../services/fetchImovelDetail";
+import { UserLogin } from "../dtos/IUserLogin";
 
 interface IInvest {
 	data: IOpportunitiesCard;
@@ -28,9 +29,9 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
 	const host = req.headers.host;
 	const token = req.cookies["livn_auth"];
-	const response = await fetchImovelDetail(query.id, host);
-	let cotas = query.cotas;
-	let address = query.oportunitiesAddress;
+	const response = await fetchImovelDetail(String(query.id), host);
+	const cotas = query.cotas;
+	const address = query.oportunitiesAddress;
 
 	if (!token) {
 		return {
@@ -42,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	const user: any = jwt_decode(token);
+	const user: UserLogin = jwt_decode(token);
 
 	if (!user?.investor_pf && !user?.investor_pj) {
 		return {

@@ -28,7 +28,7 @@ const router = nextConnect({
 router.use(verifyUser).use(uploadFile.array("files"));
 
 router.post((req, res) => {
-	const files = req.files.map(file => file.filename);
+	const files = req.files.map((file) => file.filename);
 
 	res.status(200).json({ data: files });
 });

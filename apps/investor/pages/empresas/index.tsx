@@ -2,9 +2,11 @@ import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { CompaniesContainer } from "../../container";
 import { fetchEnterprise } from "../../services/fetchEnterprise";
+import { UserLogin } from "../../dtos/IUserLogin";
+import { ICompanieData } from "../../dtos/ICompaniesData";
 
 interface ICompanies {
-	companies: any;
+	companies: ICompanieData[];
 }
 
 const Companies: NextPage<ICompanies> = ({ companies }) => (
@@ -13,10 +15,7 @@ const Companies: NextPage<ICompanies> = ({ companies }) => (
 
 export default Companies;
 
-export const getServerSideProps: GetServerSideProps = async ({
-	resolvedUrl,
-	req,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["livn_auth"];
 
 	if (!token) {
@@ -29,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	const user: any = jwt_decode(token);
+	const user: UserLogin = jwt_decode(token);
 	const host = req.headers.host;
 
 	if (!user?.investor_pf && !user?.investor_pj) {

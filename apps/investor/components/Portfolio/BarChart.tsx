@@ -8,8 +8,9 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 import * as d3 from "d3";
+import { IChartDataItem } from "../../dtos/IBarChart";
 interface IExample {
-	chartData: any[];
+	chartData: IChartDataItem[];
 }
 
 const formatTokenAddress = (address: string) => {
@@ -18,12 +19,12 @@ const formatTokenAddress = (address: string) => {
 	return `${firstFour}...${lastFour}`;
 };
 
-export const BarCharts: React.FC<IExample> = props => {
+export const BarCharts: React.FC<IExample> = (props) => {
 	const { chartData } = props;
 	const getCellColor = (value: number) => {
 		const colorScale = d3
 			.scaleLinear<string>()
-			.domain([0, d3.max(chartData, d => d.token_minted) || 0])
+			.domain([0, d3.max(chartData, (d) => d.token_minted) || 0])
 			.range(["#D7C7FE", "#2321C0"]);
 
 		return colorScale(value);
@@ -59,10 +60,13 @@ export const BarCharts: React.FC<IExample> = props => {
 				/>
 				<Bar
 					dataKey="token_minted"
-					width={"max-content" as any}
-					label={{ position: "right", formatter: (value: any) => `${value}` }}
+					width={10}
+					label={{
+						position: "right",
+						formatter: (value: number) => `${value}`,
+					}}
 				>
-					{sortedChartData?.map((value, index) => (
+					{sortedChartData?.map((value) => (
 						<Cell key={value.id} fill={getCellColor(value.token_minted)} />
 					))}
 				</Bar>

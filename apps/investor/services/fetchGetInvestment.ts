@@ -1,8 +1,8 @@
 import { apiInstance } from "./api";
 
 export const fetchGetInvestment = async (
-	investor_pf: any,
-	token: any,
+	investor_pf: string,
+	token: string,
 	host?: string
 ) => {
 	try {
@@ -13,7 +13,9 @@ export const fetchGetInvestment = async (
 			},
 		});
 		return response.data;
-	} catch (error: any) {
-		console.log(error.message);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.message);
+		}
 	}
 };

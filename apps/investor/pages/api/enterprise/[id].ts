@@ -8,6 +8,7 @@ import Opportunity from "../../../models/oportunity";
 import Investment from "../../../models/Investment";
 import { verifyUser } from "../../../lib/auth";
 import { ApiResponse } from "../../../models/ApiResponse";
+import { IEnterpriseInvestment } from "../../../dtos/IEnterpriseInvestment";
 
 type ResponseData = ApiResponse<string>;
 
@@ -20,7 +21,9 @@ const router = nextConnect({
 	},
 });
 
-export async function getAvailableAndClosedOpportunities(ids: any) {
+export async function getAvailableAndClosedOpportunities(
+	ids: string | string[] | mongoose.Types.ObjectId[]
+) {
 	const dateNow = new Date();
 	const is_array = Array.isArray(ids);
 	const oppData = await Opportunity.aggregate([
@@ -47,8 +50,8 @@ export async function getAvailableAndClosedOpportunities(ids: any) {
 	return is_array ? oppData : oppData[0];
 }
 
-export async function getEnterpriseInvestments(id: any) {
-	let enterpriseInvestments: any = [];
+export async function getEnterpriseInvestments(id: string | string[]) {
+	let enterpriseInvestments: IEnterpriseInvestment[] = [];
 
 	const oppData2 = await Opportunity.aggregate([
 		{
@@ -65,11 +68,28 @@ export async function getEnterpriseInvestments(id: any) {
 
 	await Promise.all(
 		oppData2.map(async ({ token_address }) => {
-			let investments = await Investment.find({
+			const investments = await Investment.find({
 				investment_address: token_address,
 			}).lean();
+
 			if (investments.length > 0) {
-				enterpriseInvestments = enterpriseInvestments.concat(investments);
+				const convertedInvestments: IEnterpriseInvestment[] = investments.map(
+					(investment: IEnterpriseInvestment) => ({
+						_id: investment._id,
+						date: investment.date,
+						shares: investment.shares,
+						amount: investment.amount,
+						investor_address: investment.investor_address,
+						investment_address: investment.investment_address,
+						transaction_hash: investment.transaction_hash,
+						createdAt: investment.createdAt,
+						updatedAt: investment.updatedAt,
+						__v: investment.__v,
+					})
+				);
+
+				enterpriseInvestments =
+					enterpriseInvestments.concat(convertedInvestments);
 			}
 		})
 	);
@@ -88,7 +108,7 @@ router.get(async (req, res) => {
 		}
 
 		const enterprise = await Enterprise.findById(id).lean();
-		console.log(enterprise, "enterprise");
+
 		if (!enterprise) {
 			return res.status(404).json({ error: "enterprise not found" });
 		}
@@ -108,8 +128,10 @@ router.get(async (req, res) => {
 				...(opData || defaultOppData),
 			},
 		});
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 
@@ -141,8 +163,10 @@ router.put(verifyUser, async (req, res) => {
 		}
 
 		res.status(200).json({ data: enterprise });
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 
@@ -155,8 +179,10 @@ router.delete(verifyUser, async (req, res) => {
 		await Enterprise.findByIdAndDelete(id);
 
 		res.status(204).end();
-	} catch (error: any) {
-		res.status(400).json({ error: error.message });
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({ error: error.message });
+		}
 	}
 });
 

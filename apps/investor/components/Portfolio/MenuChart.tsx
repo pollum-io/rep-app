@@ -1,4 +1,3 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
 	Button,
 	Flex,
@@ -12,9 +11,14 @@ import { FunctionComponent } from "react";
 import { MdExpandMore } from "react-icons/md";
 
 interface IMenuChart {
-	title?: any;
+	title?: string;
 	titleColor?: string;
 	defaultSelection: string;
+}
+
+interface options {
+	id: number;
+	name: string;
 }
 
 const options = [{ id: 1, name: "Option 1" }];
@@ -50,7 +54,7 @@ export const MenuChart: FunctionComponent<IMenuChart> = ({
 					{defaultSelection}
 				</MenuButton>
 				<MenuList>
-					{options.map((values: any) => (
+					{options.map((values: options) => (
 						<MenuItem key={values.id}>{values.name}</MenuItem>
 					))}
 				</MenuList>

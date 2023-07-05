@@ -30,7 +30,7 @@ async function dbConnect() {
 			bufferCommands: false,
 		};
 
-		cached.promise = mongoose.connect(MONGODB_URI, opts).then(mongoose => {
+		cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
 			return mongoose;
 		});
 	}
@@ -42,7 +42,7 @@ async function dbConnect() {
 		throw e;
 	}
 
-	let conn = cached.conn;
+	const conn = cached.conn;
 
 	return { conn };
 }

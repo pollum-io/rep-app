@@ -39,11 +39,13 @@ const insertSchema = z.object({
 	uf: z.string(),
 	email: z.optional(z.string()),
 	contact_number: z.optional(z.string()),
-	address: z.optional(z.object({} as { [key: string]: any })),
+	address: z.optional(z.object({} as { [key: string]: z.ZodTypeAny })),
 	legal_representatives: z.optional(
-		z.array(z.object({} as { [key: string]: any }))
+		z.array(z.object({} as { [key: string]: z.ZodTypeAny }))
 	),
-	partners: z.optional(z.array(z.object({} as { [key: string]: any }))),
+	partners: z.optional(
+		z.array(z.object({} as { [key: string]: z.ZodTypeAny }))
+	),
 	invited_by: z.string(),
 });
 
@@ -52,17 +54,15 @@ router.post(verifyUser, async (req, res) => {
 		await dbConnect();
 
 		const investorData = req.body;
-		console.log(investorData, "investorData");
 
 		const user = req?.user;
-		console.log(user, "user");
 
 		insertSchema.parse(investorData);
 
 		const investorExists = await investorPJ.findOne({
 			cnpj: investorData.cnpj,
 		});
-		console.log(investorExists, "investorExists");
+
 		if (investorExists) {
 			return res.status(400).json({
 				error: "CNPJ already registered",
@@ -82,12 +82,14 @@ router.post(verifyUser, async (req, res) => {
 		setCookie(res, "livn_auth", token);
 
 		res.status(201).json({ data: investor });
-	} catch (error: any) {
-		res.status(400).json({
-			error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
-				? error.message
-				: JSON.parse(error.message),
-		});
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({
+				error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
+					? error.message
+					: JSON.parse(error.message),
+			});
+		}
 	}
 });
 

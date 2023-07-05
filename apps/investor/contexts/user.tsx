@@ -3,13 +3,13 @@ import { fetchGetInvestorPFById } from "../services/fetchGetInvestorPFById";
 import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
 import PersistentFramework from "../utils/persistent";
 interface IRegister {
-	setUserInfos: any;
-	getInfosId: any;
-	getInfos: any;
-	userInfos: any;
+	setUserInfos: React.Dispatch<React.SetStateAction<string>>;
+	GetUserId: (id: string) => Promise<void>;
+	getInfos: (id: string) => Promise<void>;
+	userInfos: string;
 	username: string;
 	isInvestor: boolean;
-	setIsInvestor: any;
+	setIsInvestor: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const UserContext = createContext({} as IRegister);
@@ -20,17 +20,17 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 	const [isUserLogged, setIsUserLogged] = useState<boolean>(false);
 	const [isInvestor, setIsInvestor] = useState<boolean>(false);
 
-	const [userInfos, setUserInfos] = useState<any>();
-	const [username, setUsername] = useState<any>();
+	const [userInfos, setUserInfos] = useState<string>();
+	const [username, setUsername] = useState<string>();
 
-	const getInfosId = async (data: any) => {
-		setUserInfos(data);
+	const GetUserId = async (id: string) => {
+		setUserInfos(id);
 
-		PersistentFramework.add("id", String(data));
+		PersistentFramework.add("id", String(id));
 	};
 
-	const getInfos = async (id: any) => {
-		let name: string = "";
+	const getInfos = async (id: string) => {
+		let name = "";
 		const response = await fetchGetInvestorPFById(userInfos, id);
 		const enterprise = await fetchGetInvestorPJById(userInfos, id);
 
@@ -53,18 +53,18 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 		if (!userInfos) {
 			const id = PersistentFramework.get("id");
 			PersistentFramework.add("id", String(id));
-			setUserInfos(id);
+			setUserInfos(String(id));
 			return;
 		}
 		if (!username) {
 			const name = PersistentFramework.get("name");
 			PersistentFramework.add("name", String(name));
-			setUsername(name);
+			setUsername(String(name));
 			return;
 		}
 		if (isInvestor) {
 			const investor = PersistentFramework.get("isInvestor") as {
-				[k: string]: any;
+				[k: string]: boolean;
 			};
 			if (investor?.isInvestor === true) {
 				setIsInvestor(true);
@@ -85,7 +85,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			getInfos,
 			username,
 			setUserInfos,
-			getInfosId,
+			GetUserId,
 			isInvestor,
 			setIsInvestor,
 		}),

@@ -1,42 +1,51 @@
 import React, { useCallback, useState } from "react";
-import { PieChart, Pie, Sector, Cell } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 
-interface IPieChart {
-	data?: any;
+interface PieChartDataItem {
+	name: string;
+	value: number;
 }
 
-export const PieChartPortfolio: React.FC<IPieChart> = props => {
+interface IPieChart {
+	data?: PieChartDataItem[];
+}
+
+export const PieChartPortfolio: React.FC<IPieChart> = (props) => {
 	const { data } = props;
-	const [activeIndex, setActiveIndex] = useState(0);
+	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const onPieEnter = useCallback(
-		(_: any, index: any) => {
+		(_: number, index: number) => {
 			setActiveIndex(index);
 		},
 		[setActiveIndex]
 	);
-	const RADIAN = Math.PI / 180;
-	const COLORS = ["#2321C0", "#BCA1FF", "#1BA9EA", "#6E40E7"];
+	const RADIAN: number = Math.PI / 180;
+	const COLORS: string[] = ["#2321C0", "#BCA1FF", "#1BA9EA", "#6E40E7"];
 
 	// Conta as instâncias de cada tipo de empresa
-	const countByType = data?.reduce((counts: any, item: any) => {
-		const type = item.enterprise_type;
-		if (type in counts) {
-			counts[type]++;
-		} else {
-			counts[type] = 1;
-		}
-		return counts;
-	}, {});
+	// const countByType: Record<string, number> | undefined = data?.reduce(
+	// 	(counts: Record<string, number>, item: PieChartDataItem) => {
+	// 		const type = item.name;
+	// 		if (type in counts) {
+	// 			counts[type]++;
+	// 		} else {
+	// 			counts[type] = 1;
+	// 		}
+	// 		return counts;
+	// 	},
+	// 	{}
+	// );
 
-	// Calcula as porcentagens de cada tipo de empresa
-	const total: any = Object?.values(countByType).reduce(
-		(sum: any, count: any) => sum + count,
-		0
-	);
-	const percentages = Object.entries(countByType).map(([type, count]: any) => ({
-		enterprise_type: type,
-		percentage: (count / total) * 100,
-	}));
+	// // Calcula as porcentagens de cada tipo de empresa
+	// const total: number = Object?.values(countByType).reduce(
+	// 	(sum: number, count: number) => sum + count,
+	// 	0
+	// );
+	// const percentages: { enterprise_type: string; percentage: number }[] =
+	// 	Object.entries(countByType).map(([type, count]: [string, number]) => ({
+	// 		enterprise_type: type,
+	// 		percentage: (count / total) * 100,
+	// 	}));
 
 	const renderCustomizedLabel = ({
 		cx,
@@ -45,11 +54,18 @@ export const PieChartPortfolio: React.FC<IPieChart> = props => {
 		innerRadius,
 		outerRadius,
 		percent,
-		index,
-	}: any) => {
-		const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-		const x = cx + radius * Math.cos(-midAngle * RADIAN);
-		const y = cy + radius * Math.sin(-midAngle * RADIAN);
+	}: {
+		cx: number;
+		cy: number;
+		midAngle: number;
+		innerRadius: number;
+		outerRadius: number;
+		percent: number;
+		index: number;
+	}) => {
+		const radius: number = innerRadius + (outerRadius - innerRadius) * 0.5;
+		const x: number = cx + radius * Math.cos(-midAngle * RADIAN);
+		const y: number = cy + radius * Math.sin(-midAngle * RADIAN);
 
 		return (
 			<text
@@ -65,47 +81,54 @@ export const PieChartPortfolio: React.FC<IPieChart> = props => {
 		);
 	};
 
-	const renderActiveShape = (props: any) => {
-		const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } =
-			props;
+	// const renderActiveShape = (
+	// 	cx: number,
+	// 	cy: number,
+	// 	innerRadius: number,
+	// 	outerRadius: number,
+	// 	startAngle: number,
+	// 	endAngle: number,
+	// 	fill: string
+	// ) => {
+	// 	return (
+	// 		<Sector
+	// 			cx={cx}
+	// 			cy={cy}
+	// 			innerRadius={innerRadius}
+	// 			outerRadius={outerRadius + 5}
+	// 			startAngle={startAngle}
+	// 			endAngle={endAngle}
+	// 			fill={fill}
+	// 			className="recharts-pie-sector-active"
+	// 		/>
+	// 	);
+	// };
 
-		return (
-			<Sector
-				cx={cx}
-				cy={cy}
-				innerRadius={innerRadius}
-				outerRadius={outerRadius + 5}
-				startAngle={startAngle}
-				endAngle={endAngle}
-				fill={fill}
-				className="recharts-pie-sector-active"
-			/>
-		);
-	};
-
-	const countEnterpriseTypes = (data: any) => {
-		const typesCount: any = {};
-		data.forEach((item: any) => {
-			const type = item.enterprise_type;
+	const countEnterpriseTypes = (data: PieChartDataItem[]) => {
+		const typesCount: Record<string, number> = {};
+		data.forEach((item: PieChartDataItem) => {
+			const type = item.name;
 			typesCount[type] = (typesCount[type] || 0) + 1;
 		});
-		const totalCount: any = Object.values(typesCount).reduce(
-			(a: any, b: any) => a + b,
+		const totalCount: number = Object.values(typesCount).reduce(
+			(a: number, b: number) => a + b,
 			0
 		);
-		return Object.entries(typesCount).map(([type, count]: any) => ({
-			name: type,
-			value: count / totalCount,
-		}));
+		return Object.entries(typesCount).map(
+			([type, count]: [string, number]) => ({
+				name: type,
+				value: count / totalCount,
+			})
+		);
 	};
 
-	const pieChartData = countEnterpriseTypes(data);
+	const pieChartData: PieChartDataItem[] = countEnterpriseTypes(data || []);
 
 	return (
 		<PieChart width={280} height={400}>
 			<Pie
 				activeIndex={activeIndex}
-				activeShape={renderActiveShape}
+				// activeShape={renderActiveShape}
 				data={pieChartData}
 				cx={120}
 				cy={210}
@@ -121,7 +144,7 @@ export const PieChartPortfolio: React.FC<IPieChart> = props => {
 				className="recharts-pie-sector-active"
 				stroke="none"
 			>
-				{pieChartData.map((entry: any, index: any) => (
+				{pieChartData.map((entry: PieChartDataItem, index: number) => (
 					<Cell
 						style={{ outline: "none" }}
 						key={`cell-${index}`}

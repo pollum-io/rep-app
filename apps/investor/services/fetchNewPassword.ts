@@ -1,8 +1,9 @@
+import { IChangePasswordData } from "../dtos/ChangePassword";
 import { apiInstance } from "./api";
 
 export const fetchNewPassword = async (
-	token: any,
-	request: any,
+	token: string,
+	request: IChangePasswordData,
 	host?: string
 ) => {
 	try {
@@ -14,7 +15,9 @@ export const fetchNewPassword = async (
 			},
 		});
 		return response.data;
-	} catch (error: any) {
-		console.log(error.message);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.message);
+		}
 	}
 };

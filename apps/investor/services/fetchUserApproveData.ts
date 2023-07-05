@@ -1,10 +1,10 @@
 import { apiInstance } from "./api";
 
 export const fetchUserApproveData = async (
-	opportunity_address: any,
-	investor_address: any,
-	amount: any,
-	token: any
+	opportunity_address: string,
+	investor_address: string,
+	amount: number,
+	token: string
 ) => {
 	try {
 		const api = apiInstance();
@@ -22,7 +22,7 @@ export const fetchUserApproveData = async (
 			}
 		);
 		return response.data;
-	} catch (error: any) {
+	} catch (error) {
 		console.log(error.message);
 	}
 };

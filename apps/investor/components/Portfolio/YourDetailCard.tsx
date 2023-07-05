@@ -1,14 +1,24 @@
 import { Flex, Img, Text } from "@chakra-ui/react";
-import { FunctionComponent, useMemo, useState } from "react";
+import { FunctionComponent, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "../../hooks/useUser";
 
-interface IYourDeital {
-	investor?: any;
-	enterprise?: any;
+interface Investor {
+	amount: number;
 }
 
-export const YourDetailtCard: FunctionComponent<IYourDeital> = ({
+interface Enterprise {
+	token_minted: number;
+	token_price: number;
+	token_supply: number;
+}
+
+interface IYourDetail {
+	investor?: Investor[];
+	enterprise?: Enterprise[];
+}
+
+export const YourDetailtCard: FunctionComponent<IYourDetail> = ({
 	investor,
 	enterprise,
 }) => {
@@ -17,7 +27,7 @@ export const YourDetailtCard: FunctionComponent<IYourDeital> = ({
 
 	const investorTotalAmount = useMemo(() => {
 		const total = investor?.reduce(
-			(acc: any, item: any) => acc + item.amount,
+			(acc: number, item: Investor) => acc + item.amount,
 			0
 		);
 
@@ -31,7 +41,8 @@ export const YourDetailtCard: FunctionComponent<IYourDeital> = ({
 
 	const enterpriseTotalAmount = useMemo(() => {
 		const total = enterprise?.reduce(
-			(acc: any, item: any) => acc + item.token_minted * item.token_price,
+			(acc: number, item: Enterprise) =>
+				acc + item.token_minted * item.token_price,
 			0
 		);
 		const formattedTotal = total?.toLocaleString("pt-BR", {

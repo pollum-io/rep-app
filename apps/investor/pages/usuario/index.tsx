@@ -2,13 +2,18 @@ import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { Edit_ProfileContainer } from "../../container";
 import { fetchGetInvestorPFById } from "../../services/fetchGetInvestorPFById";
+import { fetchGetInvestorPJById } from "../../services/fetchGetInvestorPJById";
+import { UserDataPF } from "../../dtos/UserPF";
+import { UserDataPJ } from "../../dtos/UserPJ";
+import { UserLogin } from "../../dtos/IUserLogin";
 
 interface IEditProfile {
-	data: any;
-	token: any;
+	userDataPF: UserDataPF;
+	userDataPJ: UserDataPJ;
+	token: string;
 }
 
-const Editar_Perfil: NextPage<IEditProfile> = props => (
+const Editar_Perfil: NextPage<IEditProfile> = (props) => (
 	<Edit_ProfileContainer {...props} />
 );
 
@@ -30,10 +35,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	const user: any = jwt_decode(token);
+	const user: UserLogin = jwt_decode(token);
 	const host = req.headers.host;
-
-	const response = await fetchGetInvestorPFById(query.id, token, host);
 
 	if (!user?.investor_pf && !user?.investor_pj) {
 		return {
@@ -45,11 +48,33 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	return {
-		props: {
-			user,
+	if (user?.investor_pf) {
+		const response = await fetchGetInvestorPFById(
+			String(query.id),
 			token,
-			data: response?.data,
-		},
-	};
+			host
+		);
+
+		return {
+			props: {
+				user,
+				token,
+				userDataPF: response?.data,
+			},
+		};
+	} else if (user?.investor_pj) {
+		const response = await fetchGetInvestorPJById(
+			String(query.id),
+			token,
+			host
+		);
+
+		return {
+			props: {
+				user,
+				token,
+				userDataPJ: response?.data,
+			},
+		};
+	}
 };

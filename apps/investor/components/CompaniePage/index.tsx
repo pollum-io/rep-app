@@ -63,12 +63,12 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 									<Text>{t("companieDetails.whoBuilds")}</Text>
 
 									{companieDetail?.team?.map(
-										(team: ICompaniesTeam, index: any) => (
+										(team: ICompaniesTeam, index: number) => (
 											// eslint-disable-next-line react/jsx-key
 											<CompanieMembers
 												key={index}
 												name={team.name}
-												position={team.position}
+												occupation={team.position}
 												image={team.image}
 											/>
 										)

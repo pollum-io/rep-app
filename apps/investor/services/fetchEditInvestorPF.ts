@@ -1,9 +1,10 @@
+import { UserDataPF } from "../dtos/UserPF";
 import { apiInstance } from "./api";
 
 export const fetchEditInvestorPF = async (
-	investor_pf: any,
-	data: any,
-	token: any
+	investor_pf: string,
+	data: UserDataPF,
+	token: string
 ) => {
 	try {
 		const api = apiInstance();
@@ -13,7 +14,9 @@ export const fetchEditInvestorPF = async (
 			},
 		});
 		return response.data;
-	} catch (error: any) {
-		console.log(error.message);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.message);
+		}
 	}
 };

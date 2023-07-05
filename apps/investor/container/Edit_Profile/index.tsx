@@ -4,9 +4,19 @@ import { DefaultTemplate } from "../DefaultTemplate";
 import { useTranslation } from "react-i18next";
 import { ChangePassword } from "../../components/EditProfile/Pages/ChangePassword";
 import { PersonalDataComponent } from "../../components/EditProfile/Pages/PersonalDataComponent";
+import { UserDataPF } from "../../dtos/UserPF";
+import { UserDataPJ } from "../../dtos/UserPJ";
 
-export const Edit_ProfileContainer: FunctionComponent<any> = props => {
-	const { data, token } = props;
+interface IEditProfile {
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
+	token?: string;
+}
+
+export const Edit_ProfileContainer: FunctionComponent<IEditProfile> = (
+	props
+) => {
+	const { userDataPF, userDataPJ, token } = props;
 	const [pagePath, setPagePath] = useState("personal");
 	const { t } = useTranslation();
 
@@ -69,7 +79,11 @@ export const Edit_ProfileContainer: FunctionComponent<any> = props => {
 						</Button>
 					</Flex>
 					{pagePath === "personal" && (
-						<PersonalDataComponent token={token} data={data} />
+						<PersonalDataComponent
+							token={token}
+							userDataPF={userDataPF}
+							userDataPJ={userDataPJ}
+						/>
 					)}
 					{pagePath === "change-password" && <ChangePassword token={token} />}
 				</Flex>

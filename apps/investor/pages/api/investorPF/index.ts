@@ -42,8 +42,8 @@ const insertSchema = z.object({
 	city_of_birth: z.optional(z.string()),
 	rg: z.optional(z.string()),
 	profession: z.optional(z.string()),
-	address: z.optional(z.object({} as { [key: string]: any })),
-	marital_status: z.optional(z.object({} as { [key: string]: any })),
+	address: z.optional(z.object({} as { [key: string]: z.ZodTypeAny })),
+	marital_status: z.optional(z.object({} as { [key: string]: z.ZodTypeAny })),
 	is_legal_entity: z.optional(z.boolean()),
 	invited_by: z.string(),
 	cnh: z.optional(z.string()),
@@ -80,12 +80,14 @@ router.post(verifyUser, async (req, res) => {
 		setCookie(res, "livn_auth", token);
 
 		res.status(201).json({ data: investor });
-	} catch (error: any) {
-		res.status(400).json({
-			error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
-				? error.message
-				: JSON.parse(error.message),
-		});
+	} catch (error) {
+		if (error instanceof Error) {
+			res.status(400).json({
+				error: !/^[\[|\{](\s|.*|\w)*[\]|\}]$/.test(error.message)
+					? error.message
+					: JSON.parse(error.message),
+			});
+		}
 	}
 });
 

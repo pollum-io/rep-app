@@ -1,5 +1,14 @@
 export class PersistentFramework {
-	static add(name: string, value: { [k: string]: any } | any[] | string) {
+	static add(
+		name: string,
+		value:
+			| { [k: string]: string | boolean | number }
+			| string[]
+			| string
+			| boolean
+			| number
+			| undefined
+	) {
 		if (
 			typeof localStorage !== "undefined" &&
 			localStorage instanceof Storage
@@ -17,7 +26,15 @@ export class PersistentFramework {
 		}
 	}
 
-	static get(name: string): { [k: string]: any } | any[] | undefined {
+	static get(
+		name: string
+	):
+		| { [k: string]: string | boolean | number }
+		| string[]
+		| string
+		| boolean
+		| number
+		| undefined {
 		if (
 			typeof localStorage !== "undefined" &&
 			localStorage instanceof Storage

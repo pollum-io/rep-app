@@ -1,85 +1,51 @@
-import {
-	Button,
-	Collapse,
-	Flex,
-	Img,
-	Input,
-	InputGroup,
-	InputRightElement,
-	Text,
-} from "@chakra-ui/react";
-import { FunctionComponent, useMemo, useState } from "react";
+import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import PasswordStrengthBar from "react-password-strength-bar";
-import { useRouter } from "next/router";
 import { useUser } from "../../../hooks/useUser";
 import { useToasty } from "../../../hooks/useToasty";
-import { fetchEditInvestorPF } from "../../../services";
 import { InputComponent } from "../../Inputs/DeafultInput/InputComponent";
 import { SelectComponent } from "../../Select/SelectComponent";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
-import { formatCPF } from "../../../utils/formatCpf";
-import { estadosCivis } from "../mockedData/estadosCivis";
-import { estadosRegimesPatrimoniais } from "../mockedData/estadosRegimesPatrimoniais";
 import { brasilStates } from "../../Register/states";
+import { UserDataPJ } from "../../../dtos/UserPJ";
+import { fetchEditInvestorPJ } from "../../../services/fetchEditInvestorPJ";
 
 interface IChangePassword {
-	data?: any;
-	token?: any;
+	data?: UserDataPJ;
+	token?: string;
 }
 
-export const PersonalDataPJ: React.FC<IChangePassword> = props => {
+type UfData = {
+	uf: string;
+};
+
+export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 	const { data, token } = props;
-	const [isDisabled, setIsDisabled] = useState(true);
-	const [maritalStatus, setMaritalStatus] = useState<any>(
-		data?.marital_status?.status
-	);
-	const [inputValuesUf, setInputValuesUf] = useState<any>();
+	const [isDisabled] = useState(true);
+	const [inputValuesUf, setInputValuesUf] = useState<UfData>();
 	const { t } = useTranslation();
-	const isMerried: boolean = maritalStatus === "Casado(a)" ? true : false;
-	const [equityRegime, setEquityRegime] = useState<any>("");
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { isSubmitSuccessful },
-		reset,
-	} = useForm();
+	const { register, handleSubmit } = useForm();
 	const { userInfos } = useUser();
 	const { toast } = useToasty();
 
-	const onSubmitForm = async (data: any) => {
-		let request: any;
+	const onSubmitForm = async (data: UserDataPJ) => {
+		let request: UserDataPJ;
 
+		// eslint-disable-next-line prefer-const
 		request = {
-			full_name: data.full_name,
+			full_name: data?.full_name,
 			cnpj: data?.cnpj.replace(/[-./]/g, ""),
 			uf: Object?.values(inputValuesUf)[0],
-			email: data.email,
-			contact_number: data.contact_number
-				.replace(/[^\w]/gi, "")
-				.replace(/\s+/g, ""),
-			address: data.address,
-			legal_representatives: {
-				status: maritalStatus,
-				equity_regime: isMerried ? equityRegime : null,
-				spouse_name: isMerried ? data.spouse_name : null,
-				spouse_cpf: isMerried ? data.spouse_cpf : null,
-				spouse_rg: isMerried ? data.spouse_rg : null,
-			},
-			partners: {
-				status: maritalStatus,
-				equity_regime: isMerried ? equityRegime : null,
-				spouse_name: isMerried ? data.spouse_name : null,
-				spouse_cpf: isMerried ? data.spouse_cpf : null,
-				spouse_rg: isMerried ? data.spouse_rg : null,
-			},
+			email: data?.email,
+			contact_number: data?.contact_number
+				?.replace(/[^\w]/gi, "")
+				?.replace(/\s+/g, ""),
+			address: data?.address,
 		};
 
-		await fetchEditInvestorPF(userInfos, request, token)
-			.then(res => {
+		await fetchEditInvestorPJ(userInfos, request, token)
+			.then((res) => {
 				if (res) {
 					toast({
 						id: "toast-edit",
@@ -90,7 +56,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = props => {
 					});
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log({ err });
 			});
 	};
@@ -127,7 +93,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = props => {
 						>
 							<Flex flexDirection="column" gap="0.25rem" mb="2.75rem">
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.name") as string}
 									type="text"
 									{...register("full_name")}
@@ -135,32 +101,36 @@ export const PersonalDataPJ: React.FC<IChangePassword> = props => {
 								/>
 								<InputComponent
 									placeholderText="00.000.000/0000-00"
-									label={t("register.nationalRegister") as any}
+									label={t("register.nationalRegister") as string}
 									maskType={"CNPJ"}
 									type="text"
 									{...register("cnpj")}
+									defaultValue={data?.cnpj}
 								/>
 								<SelectComponent
-									label={t("register.federal") as any}
+									label={t("register.federal") as string}
 									type="uf"
 									selectValue={brasilStates}
 									setInputValues={setInputValuesUf}
 									{...register("uf")}
+									defaultValue={
+										typeof data?.uf === "object" ? data.uf.uf : data?.uf
+									}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.email") as string}
 									type="email"
 									{...register("email")}
 									defaultValue={data?.email}
 								/>
 								<InputComponent
-									placeholderText={t("inputs.insertHere") as any}
+									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.phone") as string}
 									type="text"
 									maskType={"Telefone"}
 									{...register("phone_number")}
-									defaultValue={formatPhoneNumber(data?.phone_number)}
+									defaultValue={formatPhoneNumber(data?.contact_number)}
 								/>
 							</Flex>
 						</Flex>
@@ -174,7 +144,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = props => {
 							w="20rem"
 						>
 							<InputComponent
-								placeholderText={t("inputs.insertHere") as any}
+								placeholderText={t("inputs.insertHere") as string}
 								label={t("editProfile.address") as string}
 								type="text"
 								{...register("address")}

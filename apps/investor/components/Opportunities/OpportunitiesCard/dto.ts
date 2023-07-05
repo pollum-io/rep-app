@@ -27,7 +27,7 @@ export interface IOpportunitiesCard {
 	updatedAt: string; // ou data
 	blocked?: boolean;
 	finished?: boolean;
-	sale_end_at?: any;
+	sale_end_at?: string;
 	isAvailable?: boolean;
 }
 

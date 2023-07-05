@@ -4,10 +4,6 @@ import {
 	Button,
 	Img,
 	Input,
-	Collapse,
-	PinInput,
-	PinInputField,
-	HStack,
 	InputGroup,
 	InputRightElement,
 	ScaleFade,
@@ -21,7 +17,7 @@ import { fetchChangePassword } from "../../services/fetchChangePassword";
 import { useToasty } from "../../hooks/useToasty";
 
 interface IChangePasswordData {
-	code?: any;
+	code?: string;
 	isValid?: boolean;
 }
 
@@ -31,11 +27,11 @@ export const Change_PasswordContainer: FunctionComponent<
 	const { push } = useRouter();
 	const { t } = useTranslation();
 	const emailPage = true;
-	const [buttonScore, setButtonScore] = useState<any>();
-	const [isButtonValid, setIsButtonValid] = useState<any>();
-	const [firstPassword, setFirstPassword] = useState<any>();
-	const [secondPassword, setSecondPassword] = useState<any>();
-	const [password, setPassword] = useState<any>();
+	const [buttonScore, setButtonScore] = useState<number>();
+	const [isButtonValid, setIsButtonValid] = useState<boolean>();
+	const [firstPassword, setFirstPassword] = useState<string>();
+	const [secondPassword, setSecondPassword] = useState<string>();
+	const [password, setPassword] = useState<string>();
 	const [showPasswordInputOne, setShowPasswordInputOne] =
 		useState<boolean>(true);
 	const [showPasswordInputTwo, setShowPasswordInputTwo] =
@@ -132,7 +128,7 @@ export const Change_PasswordContainer: FunctionComponent<
 									h="2rem"
 									pl="0.7rem"
 									color="#2D3748"
-									onChange={e => setFirstPassword(e.target.value)}
+									onChange={(e) => setFirstPassword(e.target.value)}
 								/>
 								<InputRightElement
 									display={"flex"}
@@ -183,7 +179,7 @@ export const Change_PasswordContainer: FunctionComponent<
 									h="2rem"
 									pl="0.7rem"
 									color="#2D3748"
-									onChange={e => setSecondPassword(e.target.value)}
+									onChange={(e) => setSecondPassword(e.target.value)}
 								/>
 								<InputRightElement
 									display={"flex"}

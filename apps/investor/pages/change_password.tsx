@@ -3,7 +3,7 @@ import { Change_PasswordContainer } from "../container";
 import { fetchCodeVerify } from "../services/fetchCodeVerify";
 
 interface IChangePasswordData {
-	code?: any;
+	code?: string;
 	isValid?: boolean;
 }
 
@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	query,
 }) => {
 	const host = req.headers.host;
-	const response = await fetchCodeVerify(query.code, host);
+	const response = await fetchCodeVerify(String(query.code), host);
 
 	if (!response?.data?.isValid) {
 		return {
