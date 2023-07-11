@@ -13,6 +13,8 @@ import { Carousel } from "./Carousel";
 import { Collections } from "./Collections";
 import { PriceCard } from "./PriceCard";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
+import { ObrasSteps } from "./ObraSteps";
+import { MoreAbout } from "./MoreAbout";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -71,43 +73,46 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 								{imovelDetails?.enterprise_name}
 							</Text>
 						</Flex>
-						<Flex alignItems={"center"} gap="1.5rem" pb="1rem">
+						<Flex gap="0.4rem" pb="1rem" flexDir={"column"} w={"max"}>
 							{imovelDetails?.name && (
 								<Text fontSize="4xl" fontWeight={"600"} color="#171923">
 									{imovelDetails?.name}
 								</Text>
 							)}
-							<Text
-								fontSize={"sm"}
-								fontWeight="400"
-								color="#171923"
-								bgColor="#F0E8FF"
-								py="0.25rem"
-								px="1rem"
-								borderRadius={"4.875rem"}
-							>
-								{imovelDetails?.enterprise_type}
-							</Text>
-							{cota > 0 && (
-								<Flex
+							<Flex gap={"1rem"}>
+								<Text
+									fontSize={"sm"}
+									fontWeight="400"
+									color="#171923"
 									bgColor="#F0E8FF"
 									py="0.25rem"
 									px="1rem"
 									borderRadius={"4.875rem"}
-									fontSize={"sm"}
-									color="#171923"
-									gap="0.25rem"
-									display={!hasToken ? "flex" : "none"}
 									w="max"
 								>
-									<Text w="max" fontWeight="400">
-										{t("opportunitieDetails.youHave")}
-									</Text>
-									<Text w="max" fontWeight="600">
-										{cota} {t("opportunitieDetails.yourShares")}
-									</Text>
-								</Flex>
-							)}
+									{imovelDetails?.enterprise_type}
+								</Text>
+								{cota > 0 && (
+									<Flex
+										bgColor="#F0E8FF"
+										py="0.25rem"
+										px="1rem"
+										borderRadius={"4.875rem"}
+										fontSize={"sm"}
+										color="#171923"
+										gap="0.25rem"
+										display={!hasToken ? "flex" : "none"}
+										w="max"
+									>
+										<Text w="max" fontWeight="400">
+											{t("opportunitieDetails.youHave")}
+										</Text>
+										<Text w="max" fontWeight="600">
+											{cota} {t("opportunitieDetails.yourShares")}
+										</Text>
+									</Flex>
+								)}
+							</Flex>
 						</Flex>
 						<Flex gap="0.625rem" pb="1.5rem">
 							<Icon w="1.25rem" h="1.5rem" color={"#718096"} as={FiMapPin} />
@@ -122,7 +127,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 								w="fit-content"
 								rowGap="2rem"
 							>
-								<Flex flexDir={"column"} gap="0.25rem" w="7rem">
+								<Flex flexDir={"column"} gap="0.25rem" w="8rem">
 									<Text fontSize={"sm"} fontWeight="400" color="#718096">
 										{t("opportunities.card.minInvest")}
 									</Text>
@@ -130,7 +135,8 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 										<Text fontSize={"xs"} color="#718096">
 											R$
 										</Text>
-										<Text color="#000000">{`${imovelDetails?.min_investment}$`}</Text>
+										<Text color="#000000">{`${imovelDetails?.min_investment}`}</Text>
+										<Img src="/icons/info-circle.svg" w={"1rem"} h={"1.3rem"} />
 									</Flex>
 								</Flex>
 								<Flex flexDir={"column"} gap="0.25rem" w="7rem">
@@ -162,7 +168,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 									<Text fontSize={"sm"} fontWeight="400" color="#718096">
 										{t("opportunitieDetails.expected")}
 									</Text>
-									<Flex gap="0.25rem" alignItems="center" w="7rem">
+									<Flex gap="0.25rem" alignItems="center" w="9rem">
 										<Text color="#000000">
 											{imovelDetails?.profitability}%{" "}
 											{t("opportunitieDetails.perYear")}
@@ -171,26 +177,32 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 									</Flex>
 								</Flex>
 
-								<Flex flexDir={"column"} gap="0.25rem" w="7rem">
+								<Flex flexDir={"column"} gap="0.25rem" w="9rem">
 									<Text fontSize={"sm"} fontWeight="400" color="#718096">
-										{t("opportunitieDetails.initial")}
+										Prazo total invest.
 									</Text>
 									<Flex gap="0.25rem">
-										<Text fontSize={"xs"} color="#718096">
-											R$
-										</Text>
-										<Text color="#000000">12.800,00</Text>
+										<Text color="#000000">2 anos</Text>
+										<Img
+											src="/icons/info-circle.svg"
+											w={"1rem"}
+											h={"1.3rem"}
+											color="#A0AEC0"
+										/>
 									</Flex>
 								</Flex>
 								<Flex flexDir={"column"} gap="0.25rem" w="7rem">
 									<Text fontSize={"sm"} fontWeight="400" color="#718096">
-										{t("opportunitieDetails.final")}
+										Retorno final{" "}
 									</Text>
 									<Flex gap="0.25rem">
-										<Text fontSize={"xs"} color="#718096">
-											R$
-										</Text>
-										<Text color="#000000">16.800,00</Text>
+										<Text color="#000000">200%</Text>
+										<Img
+											src="/icons/info-circle.svg"
+											w={"1rem"}
+											h={"1.3rem"}
+											color="#A0AEC0"
+										/>
 									</Flex>
 								</Flex>
 							</SimpleGrid>
@@ -206,27 +218,17 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 								fontSize="2xl"
 								color={"#171923"}
 							>
-								{t("opportunitieDetails.offers")}
+								Estado atual da obra
 							</Text>
-							<Flex gap="8rem">
-								<Flex flexDir={"column"} color={"#171923"}>
-									{imovelDetails?.general_info?.map((infos: string, idx) => (
-										<Text key={idx} pr="3">
-											&bull; {infos}
-										</Text>
-									))}
-								</Flex>
+							<Flex>
+								<ObrasSteps
+									approvalProcess={imovelDetails?.approval_process}
+									licensingProcess={imovelDetails?.licensing_process}
+								/>
 							</Flex>
-							<Text
-								mt="2.375rem"
-								fontSize={"sm"}
-								fontWeight={"500"}
-								color={"#007D99"}
-								_hover={{ cursor: "pointer" }}
-								w="max-content"
-							>
-								{t("opportunitieDetails.seeAll")}
-							</Text>
+							<Flex gap="8rem">
+								<Flex flexDir={"column"} color={"#171923"}></Flex>
+							</Flex>
 						</Flex>
 					</Flex>
 
@@ -296,50 +298,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 					</Flex>
 				</Flex>
 			</Flex>
-			<Flex
-				mt="4.375rem"
-				px="5rem"
-				bgColor={"#E4F2F3"}
-				py="2rem"
-				justifyContent="center"
-			>
-				<Flex flexDir={"column"} w="70rem">
-					<Text mb="2rem" fontWeight={"600"} fontSize="2xl" color={"#171923"}>
-						Em breve você poderá acompanhar:
-					</Text>
-					<Flex gap="2.1875rem">
-						<Flex alignItems={"center"} gap="0.9rem">
-							<Img src={"/images/icons/Home.png"} />
-							<Text fontWeight={"400"} color={"#171923"} w="8.5rem">
-								Todas as plantas da obra
-							</Text>
-						</Flex>
-						<Flex alignItems={"center"} gap="0.9rem">
-							<Img src={"/images/icons/Edit-Square.png"} />
-							<Text fontWeight={"400"} color={"#171923"} w="100%">
-								Auditorias
-							</Text>
-						</Flex>
-						<Flex alignItems={"center"} gap="0.9rem">
-							<Img src={"/images/icons/Document.png"} />
-							<Text fontWeight={"400"} color={"#171923"} w="100%">
-								Notas Fiscais
-							</Text>
-						</Flex>
-						<Flex alignItems={"center"} gap="0.9rem">
-							<Img src={"/images/icons/Folder.png"} />
-							<Text fontWeight={"400"} color={"#171923"} w="75%">
-								Documentos Extras
-							</Text>
-						</Flex>
-					</Flex>
-					<Flex mt="2rem">
-						<Text color={"#171923"}>
-							Atualmente esta obra está em estágio de
-						</Text>
-					</Flex>
-				</Flex>
-			</Flex>
+
 			<Flex
 				py="4rem"
 				px="5rem"
@@ -354,6 +313,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 				</Flex>
 				<Flex maxWidth="70rem">
 					{/* <Maps localization={imovelDetails?.address} /> */}
+					<Img src="/images/Map.png" />
 				</Flex>
 				<Flex
 					mt="2rem"
@@ -380,6 +340,20 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 						/>
 					</Flex>
 				</Flex>
+			</Flex>
+			<Flex
+				py="4rem"
+				px="5rem"
+				flexDir={"column"}
+				justifyContent="center"
+				alignItems="center"
+			>
+				<Flex mb={"2rem"} w="100%" maxWidth="70rem">
+					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#171923"}>
+						Conheça mais sobre essa oportunidade
+					</Text>
+				</Flex>
+				<MoreAbout />
 			</Flex>
 		</>
 	);
