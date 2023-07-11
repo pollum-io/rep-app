@@ -9,7 +9,7 @@ import User from "../../../models/user";
 
 const UserSchema = z.object({
 	email: z.string(),
-	password: z.string(),
+	password: z.optional(z.string()),
 });
 
 type ResponseData = ApiResponse<string>;
@@ -26,7 +26,6 @@ const router = nextConnect({
 router.post(async (req, res) => {
 	try {
 		await dbConnect();
-
 		const { email, password } = req.body;
 
 		UserSchema.parse(req.body);
@@ -39,9 +38,13 @@ router.post(async (req, res) => {
 			});
 		}
 
-		const hash = Buffer.from(
-			crypto.hkdfSync("sha512", password, "livnapp", "", 64)
-		).toString("base64");
+		let hash;
+
+		if (password) {
+			hash = Buffer.from(
+				crypto.hkdfSync("sha512", password, "livnapp", "", 64)
+			).toString("base64");
+		}
 
 		const newUser = await User.create({ email, password: hash });
 

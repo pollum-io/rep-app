@@ -57,6 +57,9 @@ const InvestorPFSchema = new mongoose.Schema(
 		// uf: {
 		// 	type: String,
 		// },
+		isPerfilCompleted: {
+			type: Boolean,
+		},
 	},
 	{
 		timestamps: true,

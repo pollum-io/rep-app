@@ -1,10 +1,19 @@
-import { Flex, Img, Text, useMediaQuery } from "@chakra-ui/react";
+import {
+	Flex,
+	Img,
+	Text,
+	useDisclosure,
+	useMediaQuery,
+} from "@chakra-ui/react";
 import { FunctionComponent, useEffect } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { MenuInputs } from "../../components";
 import { OpportunitiesCards } from "../../components";
 import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
+import { CreateAccountModal } from "../../components/CreateAccount/CreateAccountModal";
+import { UserDataPJ } from "../../dtos/UserPJ";
+import { UserDataPF } from "../../dtos/UserPF";
 
 interface UserData {
 	token: string;
@@ -12,12 +21,15 @@ interface UserData {
 		investor_pj?: string;
 		investor_pf?: string;
 	};
+	userDataPF: UserDataPF;
+	userDataPJ: UserDataPJ;
 }
 
 export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 	const { GetUserId, getInfos } = useUser();
 	const [bannerRes] = useMediaQuery("(max-width: 1110px)");
 	const { t } = useTranslation();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	useEffect(() => {
 		GetUserId(
@@ -32,6 +44,31 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 		props.token,
 		props?.user?.investor_pj,
 		props?.user?.investor_pf,
+		onOpen,
+	]);
+
+	useEffect(() => {
+		if (
+			props?.user?.investor_pf &&
+			props?.userDataPF?.isPerfilCompleted === false
+		) {
+			onOpen();
+			return;
+		}
+
+		if (
+			props?.user?.investor_pj &&
+			props?.userDataPJ?.isPerfilCompleted === false
+		) {
+			onOpen();
+			return;
+		}
+	}, [
+		onOpen,
+		props?.user?.investor_pf,
+		props?.user?.investor_pj,
+		props?.userDataPF?.isPerfilCompleted,
+		props?.userDataPJ?.isPerfilCompleted,
 	]);
 
 	return (
@@ -42,6 +79,18 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 				mb="11.0625rem"
 				justifyContent="center"
 			>
+				<CreateAccountModal
+					isOpen={isOpen}
+					onClose={onClose}
+					userId={
+						props?.user?.investor_pf
+							? props?.user?.investor_pf
+							: props?.user?.investor_pj
+					}
+					token={props.token}
+					investorPF={props?.userDataPF}
+					investorPJ={props?.userDataPJ}
+				/>
 				<Flex w="100%">
 					<Flex w="100%">
 						<Img w="100%" h="21.3125rem" src="images/backgrounds/marble.png" />

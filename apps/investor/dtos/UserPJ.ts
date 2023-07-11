@@ -11,6 +11,7 @@ export interface UserDataPJ {
 	invited_by?: string;
 	createdAt?: string;
 	updatedAt?: string;
+	isPerfilCompleted?: boolean;
 	__v?: number;
 }
 type UfData = {
