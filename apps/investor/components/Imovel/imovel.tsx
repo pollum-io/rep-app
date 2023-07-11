@@ -340,17 +340,20 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 						/>
 					</Flex>
 				</Flex>
-				<Flex w="100%" py="4rem" px="19.2rem" flexDir={"column"}>
-					<Text
-						fontSize={"1.5rem"}
-						fontWeight={"600"}
-						color={"#171923"}
-						mb={"2rem"}
-					>
+			</Flex>
+			<Flex
+				py="4rem"
+				px="5rem"
+				flexDir={"column"}
+				justifyContent="center"
+				alignItems="center"
+			>
+				<Flex mb={"2rem"} w="100%" maxWidth="70rem">
+					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#171923"}>
 						Conheça mais sobre essa oportunidade
 					</Text>
-					<MoreAbout />
 				</Flex>
+				<MoreAbout />
 			</Flex>
 		</>
 	);
