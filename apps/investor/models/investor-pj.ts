@@ -36,6 +36,9 @@ const InvestorPJSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		isPerfilCompleted: {
+			type: Boolean,
+		},
 	},
 	{
 		timestamps: true,

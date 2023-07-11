@@ -48,6 +48,7 @@ const insertSchema = z.object({
 	invited_by: z.string(),
 	cnh: z.optional(z.string()),
 	opportunities_avaliable: z.optional(z.array(z.string())),
+	isPerfilCompleted: z.optional(z.boolean()),
 });
 
 router.post(verifyUser, async (req, res) => {

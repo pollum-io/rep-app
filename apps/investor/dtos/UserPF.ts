@@ -13,6 +13,7 @@ export interface UserDataPF {
 	profession?: string;
 	rg?: string;
 	updatedAt?: string;
+	isPerfilCompleted?: boolean;
 	__v?: number;
 	_id?: string;
 }

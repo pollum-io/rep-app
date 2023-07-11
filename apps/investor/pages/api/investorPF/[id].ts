@@ -52,6 +52,7 @@ router.put(verifyUser, async (req, res) => {
 			{
 				new: true,
 				runValidators: true,
+				isPerfilCompleted: true,
 			}
 		);
 
