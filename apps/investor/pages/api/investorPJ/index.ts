@@ -6,7 +6,7 @@ import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/user";
 import { generateToken, setCookie, verifyUser } from "../../../lib/auth";
 import { ApiResponse } from "../../../models/ApiResponse";
-import investorPJ from "../../../models/investor.pj";
+import investorPJ from "../../../models/investor-pj";
 
 interface NextConnectApiRequest extends NextApiRequest {
 	user?: {
@@ -47,6 +47,7 @@ const insertSchema = z.object({
 		z.array(z.object({} as { [key: string]: z.ZodTypeAny }))
 	),
 	invited_by: z.string(),
+	isPerfilCompleted: z.optional(z.boolean()),
 });
 
 router.post(verifyUser, async (req, res) => {

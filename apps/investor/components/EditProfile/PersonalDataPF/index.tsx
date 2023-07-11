@@ -80,6 +80,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			profession: data.profession,
 			address: data.address,
 			marital_status: value,
+			isPerfilCompleted: true,
 		};
 
 		await fetchEditInvestorPF(userInfos, request, token)

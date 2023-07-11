@@ -45,6 +45,7 @@ interface IRequestData {
 	uf?: string;
 	is_legal_entity: boolean;
 	invited_by: string;
+	isPerfilCompleted: boolean;
 }
 
 export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
@@ -117,6 +118,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				birthday_date: new Date(data?.birthday_date),
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
+				isPerfilCompleted: false,
 			};
 		} else {
 			dataPJ = {
@@ -125,6 +127,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				uf: Object?.values(inputValuesUf)[0],
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
+				isPerfilCompleted: false,
 			};
 		}
 

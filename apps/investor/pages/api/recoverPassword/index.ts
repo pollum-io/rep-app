@@ -5,10 +5,11 @@ import { z } from "zod";
 import dbConnect from "../../../lib/dbConnect";
 import RecoverPassword from "../../../models/recoverPassword";
 import { ApiResponse } from "../../../models/ApiResponse";
-import Investor from "../../../models/investor-pf";
-import Enterprise from "../../../models/enterprise";
 import { v4 as uuidv4 } from "uuid";
 import nodemailer from "nodemailer";
+import investorPj from "../../../models/investor-pj";
+import investorPf from "../../../models/investor-pf";
+import user from "../../../models/user";
 
 type ResponseData = ApiResponse<string>;
 
@@ -35,9 +36,57 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
 			email,
 		});
 
-		const investor = await Investor.findOne({
+		const emailWhitelisted = await user.findOne({
 			email: validatedData.email,
 		});
+
+		const investor = await investorPf.findOne({
+			email: validatedData.email,
+		});
+
+		if (emailWhitelisted) {
+			await RecoverPassword.deleteMany({ email: emailWhitelisted.email });
+
+			const code = uuidv4();
+
+			const recoverPassword = new RecoverPassword({
+				email: validatedData.email,
+				code,
+				expirationDate: new Date(Date.now() + 30 * 60 * 1000), // 30 minutos
+			});
+
+			await recoverPassword.save();
+			const link = `http://localhost:3000/create_password?code=${code}`;
+
+			// Configurar o transporte do nodemailer
+			const transporter = nodemailer.createTransport({
+				service: "hotmail",
+				// port: 587,
+				// secure: false, // true for 465, false for other ports
+				auth: {
+					user: process.env.EMAIL_PROVIDER as string, // generated ethereal user
+					pass: process.env.PASSWORD_PROVIDER as string, // generated ethereal password
+				},
+			});
+			// Configurar o email a ser enviado
+			const mailOptions = {
+				from: "pred-pat-node@outlook.com",
+				to: emailWhitelisted.email,
+				subject: "Criação de senha",
+				text: `Olá! Clique no link a seguir para criar sua senha: ${link}`,
+			};
+
+			// Enviar o email
+			transporter.sendMail(mailOptions, (error, info) => {
+				if (error) {
+					console.log("Error sending email:", error);
+				} else {
+					console.log("Email sent:", info.response);
+				}
+			});
+
+			return res.status(200).end();
+		}
 
 		if (investor) {
 			await RecoverPassword.deleteMany({ email: investor.email });
@@ -83,7 +132,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
 			return res.status(200).end();
 		}
 
-		const enterprise = await Enterprise.findOne({
+		const enterprise = await investorPj.findOne({
 			email: validatedData.email,
 		});
 
@@ -132,7 +181,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
 			return res.status(200).end();
 		}
 
-		return res.status(200);
+		return res.status(200).end();
 	} catch (error) {
 		return res.status(501).json({ error: `Something went wrong! ${error}` });
 	}

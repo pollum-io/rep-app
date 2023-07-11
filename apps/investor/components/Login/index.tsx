@@ -197,7 +197,6 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							{t("login.noAccount")}
 						</Text>
 						<Button
-							type="submit"
 							fontStyle="normal"
 							fontWeight="500"
 							fontSize="0.75rem"
@@ -205,6 +204,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							color="#007D99"
 							bg={"transparent"}
 							_hover={{ opacity: 0.8 }}
+							onClick={() => push("/create_account")}
 						>
 							{t("login.register")}
 						</Button>

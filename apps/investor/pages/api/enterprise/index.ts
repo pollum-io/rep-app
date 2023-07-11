@@ -117,11 +117,8 @@ router.get(async (req, res) => {
 			opportunities_closed: 0,
 			opportunities_available: 0,
 		};
-		console.log(oppData, "oppData");
 
 		enterprises = enterprises.map((enterprise: ICompaniesDetails) => {
-			console.log(enterprise, "enterprise");
-
 			const hasOpportunities = oppData.find(
 				(item: mongoose.Types.ObjectId) => `${item._id}` === `${enterprise._id}`
 			);
