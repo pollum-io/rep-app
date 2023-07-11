@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import {
 	Modal,
 	ModalOverlay,
@@ -30,21 +30,25 @@ export const CreateAccountModal: FunctionComponent<ICreateAccountModal> = (
 	const { isOpen, onClose, userId, token, investorPF, investorPJ } = props;
 	const { push } = useRouter();
 
-	const handle = async () => {
-		if (investorPF) {
-			await fetchEditInvestorPF(
-				userId,
-				{ ...investorPF, isPerfilCompleted: true },
-				token
-			);
-		} else {
-			await fetchEditInvestorPJ(
-				userId,
-				{ ...investorPJ, isPerfilCompleted: true },
-				token
-			);
-		}
-	};
+	useEffect(() => {
+		const change = async () => {
+			console.log("a");
+			if (investorPF) {
+				await fetchEditInvestorPF(
+					userId,
+					{ ...investorPF, isPerfilCompleted: true },
+					token
+				);
+			} else {
+				await fetchEditInvestorPJ(
+					userId,
+					{ ...investorPJ, isPerfilCompleted: true },
+					token
+				);
+			}
+		};
+		change();
+	}, [investorPF, investorPJ, token, userId]);
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
@@ -110,7 +114,6 @@ export const CreateAccountModal: FunctionComponent<ICreateAccountModal> = (
 							py="0.625rem"
 							mb={"1rem"}
 							onClick={() => {
-								handle();
 								push({ pathname: `/usuario`, query: { id: userId } });
 							}}
 						>
