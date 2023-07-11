@@ -192,24 +192,6 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 				</Flex>
 			)}
 			<Flex flexDir={"column"} gap="0.5rem">
-				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"md"} fontWeight="400">
-						{t("opportunitieDetails.quotaAddress")}
-					</Text>
-					<Flex alignItems={"center"} gap="0.5rem">
-						<Text fontSize={"md"} fontWeight="400">
-							{`${address?.slice(0, 5)}...${address?.slice(38)}`}
-						</Text>
-						<Icon
-							color={"#4BA3B7"}
-							w={4}
-							h={4}
-							as={FiCopy}
-							onClick={() => handleClick(address)}
-							_hover={{ cursor: "pointer" }}
-						/>
-					</Flex>
-				</Flex>
 				<Flex
 					justifyContent={"space-between"}
 					display={isInvestidor ? "flex" : "none"}

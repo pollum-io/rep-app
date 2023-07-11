@@ -29,8 +29,14 @@ export interface IOpportunitiesCard {
 	blocked?: boolean;
 	finished?: boolean;
 	sale_end_at: string;
+	approval_process?: IOpportunitiesApprovalProcess[];
+	licensing_process?: IOpportunitiesApprovalProcess[];
 }
 
+export interface IOpportunitiesApprovalProcess {
+	name?: string;
+	status?: string;
+}
 export interface IOpportunitieAddress {
 	state: string;
 	neighborhood: string;
