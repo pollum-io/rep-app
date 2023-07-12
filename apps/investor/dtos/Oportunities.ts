@@ -31,6 +31,7 @@ export interface IOpportunitiesCard {
 	sale_end_at: string;
 	approval_process?: IOpportunitiesApprovalProcess[];
 	licensing_process?: IOpportunitiesApprovalProcess[];
+	incorporation_enrollment?: IOpportunitiesApprovalProcess[];
 }
 
 export interface IOpportunitiesApprovalProcess {

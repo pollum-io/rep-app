@@ -105,6 +105,9 @@ const OpportunitySchema = new mongoose.Schema(
 		licensing_process: {
 			type: Array,
 		},
+		incorporation_enrollment: {
+			type: Array,
+		},
 	},
 	{
 		timestamps: true,
