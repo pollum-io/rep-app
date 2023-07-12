@@ -8,6 +8,7 @@ import { Collections } from "./Collections";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { ImovelDetailPage } from "./Pages/ImovelDetail";
 import { ImovelHomePage } from "./Pages/ImovelHomePage";
+import { ImovelMarketPage } from "./Pages/ImovelMarketPage";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -169,6 +170,12 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 						)}
 						{page === "detalhamento" && (
 							<ImovelDetailPage
+								imovelDetails={imovelDetails}
+								usersId={usersId}
+							/>
+						)}
+						{page === "mercado" && (
+							<ImovelMarketPage
 								imovelDetails={imovelDetails}
 								usersId={usersId}
 							/>
