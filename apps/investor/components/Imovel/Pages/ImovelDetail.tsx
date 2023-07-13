@@ -57,75 +57,87 @@ export const ImovelDetailPage: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="2.75rem" maxWidth="70rem" h={"46rem"}>
-					<Flex flexDir={"column"} maxWidth={"70%"}>
-						<Flex flexDir={"column"} pb="3rem">
-							<Flex
-								gap={"2rem"}
-								border={"1px solid #E5E7EB"}
-								borderRadius={"1rem"}
-								py={"1.5rem"}
-								pl={{ base: "24px", md: "12.5rem", lg: "24.5rem" }}
-								pr={"2rem"}
-								left={"0rem"}
-								position={"absolute"}
-								borderLeft={"none"}
-								borderLeftRadius={"none"}
-							>
-								<Flex flexDir={"column"} gap="0.25rem" w="max">
-									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										Área construída{" "}
-									</Text>
-									<Flex gap="0.25rem">
-										<Text fontSize={"md"} color="#171923">
-											84.364,82 m²{" "}
-										</Text>
-									</Flex>
-								</Flex>
-								<Flex flexDir={"column"} gap="0.25rem" w="max">
-									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										Unidades
-									</Text>
-									<Flex gap="0.25rem">
-										<Text fontSize={"md"} color="#171923">
-											69 lotes{" "}
-										</Text>
-									</Flex>
-								</Flex>
-								<Flex flexDir={"column"} gap="0.25rem" w="max">
-									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										À venda
-									</Text>
-									<Flex gap="0.25rem">
-										<Text fontSize={"md"} color="#171923">
-											30 lotes{" "}
-										</Text>
-									</Flex>
-								</Flex>
-								<Flex flexDir={"column"} gap="0.25rem" w="max">
-									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										VGV estimado{" "}
-									</Text>
-									<Flex gap="0.25rem">
-										<Text fontSize={"md"} color="#171923">
-											R$ 13.110.000,000{" "}
-										</Text>
-									</Flex>
-								</Flex>
-
-								<Flex flexDir={"column"} gap="0.25rem" w="max">
-									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										Preço médio{" "}
-									</Text>
-									<Flex gap="0.25rem">
-										<Text fontSize={"md"} color="#171923">
-											R$ 190.000,000{" "}
-										</Text>
-									</Flex>
-								</Flex>
+				<Flex
+					flexDir={"column"}
+					pb="1rem"
+					w={"100%"}
+					position="relative"
+					right={"14.2rem"}
+				>
+					<Flex
+						gap={"2rem"}
+						w="max"
+						border={"1px solid #E5E7EB"}
+						borderRadius={"1rem"}
+						py={"1.5rem"}
+						pr={"2rem"}
+						justifyContent="flex-end"
+						borderLeft={"none"}
+						pl={{
+							sm: "24px",
+							md: "14rem",
+							lg: "14rem",
+							xl: "14rem",
+							"2xl": "14rem",
+						}}
+						borderLeftRadius={"none"}
+					>
+						<Flex flexDir={"column"} gap="0.25rem" w="max">
+							<Text fontSize={"sm"} fontWeight="400" color="#007D99">
+								Área construída{" "}
+							</Text>
+							<Flex gap="0.25rem">
+								<Text fontSize={"md"} color="#171923">
+									84.364,82 m²{" "}
+								</Text>
 							</Flex>
 						</Flex>
-						<Flex mt="6rem" flexDir={"column"}>
+						<Flex flexDir={"column"} gap="0.25rem" w="max">
+							<Text fontSize={"sm"} fontWeight="400" color="#007D99">
+								Unidades
+							</Text>
+							<Flex gap="0.25rem">
+								<Text fontSize={"md"} color="#171923">
+									69 lotes{" "}
+								</Text>
+							</Flex>
+						</Flex>
+						<Flex flexDir={"column"} gap="0.25rem" w="max">
+							<Text fontSize={"sm"} fontWeight="400" color="#007D99">
+								À venda
+							</Text>
+							<Flex gap="0.25rem">
+								<Text fontSize={"md"} color="#171923">
+									30 lotes{" "}
+								</Text>
+							</Flex>
+						</Flex>
+						<Flex flexDir={"column"} gap="0.25rem" w="max">
+							<Text fontSize={"sm"} fontWeight="400" color="#007D99">
+								VGV estimado{" "}
+							</Text>
+							<Flex gap="0.25rem">
+								<Text fontSize={"md"} color="#171923">
+									R$ 13.110.000,000{" "}
+								</Text>
+							</Flex>
+						</Flex>
+
+						<Flex flexDir={"column"} gap="0.25rem" w="max">
+							<Text fontSize={"sm"} fontWeight="400" color="#007D99">
+								Preço médio{" "}
+							</Text>
+							<Flex gap="0.25rem">
+								<Text fontSize={"md"} color="#171923">
+									R$ 190.000,000{" "}
+								</Text>
+							</Flex>
+						</Flex>
+					</Flex>
+				</Flex>
+				<Flex gap="2.75rem" maxWidth="70rem" h={"36rem"}>
+					<Flex flexDir={"column"} maxWidth={"70%"}>
+						<Flex mt="1rem" flexDir={"column"}>
 							<Text
 								mb="2rem"
 								fontWeight={"600"}
@@ -160,7 +172,7 @@ export const ImovelDetailPage: FunctionComponent<IImovelProps> = ({
 					<Flex
 						flexDirection="column"
 						position="relative"
-						bottom={"12rem"}
+						bottom={"20rem"}
 						h={"60rem"}
 					>
 						<Flex h="58rem" flexDirection="column" gap="1.5rem">
