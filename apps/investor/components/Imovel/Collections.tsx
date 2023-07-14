@@ -14,7 +14,7 @@ export const Collections: React.FC<ICollections> = (props) => {
 			h="100%"
 			gap="0.5rem"
 			pb="1.5rem"
-			pt="2rem"
+			mt="2rem"
 			onClick={onOpen}
 			justifyContent="center"
 		>

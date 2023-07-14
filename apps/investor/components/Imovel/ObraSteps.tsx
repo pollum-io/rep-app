@@ -1,10 +1,13 @@
 import React, { FunctionComponent, useMemo } from "react";
 import { Flex, Text, Progress } from "@chakra-ui/react";
 import { BsCheck } from "react-icons/bs";
-import { IOpportunitiesApprovalProcess } from "../../dtos/Oportunities";
 import { IObraSteps } from "../../dtos/IObraSteps";
 
-const ObraSteps: FunctionComponent<IObraSteps> = ({ title, barPercentage }) => {
+export const ObraSteps: FunctionComponent<IObraSteps> = ({
+	title,
+	barPercentage,
+	titleWidth,
+}) => {
 	const barStatus = useMemo(() => {
 		let status: number;
 
@@ -24,18 +27,26 @@ const ObraSteps: FunctionComponent<IObraSteps> = ({ title, barPercentage }) => {
 		switch (title) {
 			case "Em desenvolvimento":
 			case "Alvará solicitado":
+			case "Memorial em elaboração":
 				steps = 1;
 				break;
 			case "Protocolado na Prefeitura":
 			case "Sob análise na Prefeitura":
+			case "Memorial protocolado/ sob análise do R.I":
 				steps = 2;
 				break;
 			case "Sob analise da Prefeitura":
 			case "Alvará expedido":
+			case "Em cumprimento das exigências do R.I":
 				steps = 3;
 				break;
 			case "Aprovado":
+			case "Exigências cumpridas/sob análise do R.I":
 				steps = 4;
+				break;
+			case "Aprovado":
+			case "Memorial registrado":
+				steps = 5;
 				break;
 			default:
 				steps = 0; // Valor padrão caso nenhum dos casos seja correspondido
@@ -85,7 +96,7 @@ const ObraSteps: FunctionComponent<IObraSteps> = ({ title, barPercentage }) => {
 					fontWeight={barStatus !== 0 ? "500" : "400"}
 					fontSize="0.75rem"
 					lineHeight="1rem"
-					w={"8rem"}
+					w={titleWidth ? titleWidth : "8rem"}
 				>
 					{title}
 				</Text>
@@ -97,41 +108,6 @@ const ObraSteps: FunctionComponent<IObraSteps> = ({ title, barPercentage }) => {
 					bgColor="#EDF2F7"
 					className="percentage"
 				/>
-			</Flex>
-		</Flex>
-	);
-};
-
-interface IObraStepsRender {
-	approvalProcess?: IOpportunitiesApprovalProcess[];
-	licensingProcess?: IOpportunitiesApprovalProcess[];
-}
-
-export const ObrasSteps: FunctionComponent<IObraStepsRender> = ({
-	approvalProcess,
-	licensingProcess,
-}) => {
-	return (
-		<Flex gap="8rem" flexDir={"row"}>
-			<Flex flexDir={"column"} color={"#171923"}>
-				<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
-					Processo de aprovação
-				</Text>
-				{approvalProcess?.map((data) => (
-					<>
-						<ObraSteps title={data.name} barPercentage={data.status} />
-					</>
-				))}
-			</Flex>
-			<Flex flexDir={"column"} color={"#171923"}>
-				<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
-					Processo de aprovação
-				</Text>
-				{licensingProcess?.map((data) => (
-					<>
-						<ObraSteps title={data.name} barPercentage={data.status} />
-					</>
-				))}
 			</Flex>
 		</Flex>
 	);
