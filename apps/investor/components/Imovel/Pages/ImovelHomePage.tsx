@@ -1,4 +1,4 @@
-import { Flex, Icon, Img, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Icon, Img, SimpleGrid, Text, Button } from "@chakra-ui/react";
 import moment from "moment-timezone";
 import { FunctionComponent, useState } from "react";
 import Countdown from "react-countdown";
@@ -15,6 +15,7 @@ import { MoreAbout } from "../MoreAbout";
 import { PriceCard } from "../PriceCard";
 import { ObraSteps } from "../ObraSteps";
 import { formatDate } from "../../../utils/formatDate";
+import { MarketStudy } from "../MarketStudy";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -303,6 +304,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 							/>
 						</Flex>
 					</Flex>
+					<MarketStudy />
 					<Flex w="100%" py="4rem" flexDir={"column"}>
 						<Text
 							fontSize={"1.5rem"}
