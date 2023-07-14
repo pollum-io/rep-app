@@ -59,21 +59,6 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 						Detalhamento
 					</Button>
 					<Button
-						bg={page === "mercado" ? "#B1D8DF" : "transparent"}
-						fontSize={"0.875rem"}
-						fontWeight={"500"}
-						color={page === "mercado" ? "#00262D" : "#718096"}
-						borderRadius={"1rem"}
-						w={"max"}
-						h={"max"}
-						py={"2"}
-						px={"4"}
-						_hover={{ color: "#007D99" }}
-						onClick={() => setPage("mercado")}
-					>
-						Mercado
-					</Button>
-					<Button
 						bg={page === "resumo" ? "#B1D8DF" : "transparent"}
 						fontSize={"0.875rem"}
 						fontWeight={"500"}
