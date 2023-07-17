@@ -23,7 +23,8 @@
 		"packages/*"
 	],
 	"dependencies": {
-		"husky": "^8.0.3"
+		"husky": "^8.0.3",
+		"keen-slider": "^6.8.6"
 	},
 	"lint-staged": {
 		"*.tsx": "eslint --fix",
