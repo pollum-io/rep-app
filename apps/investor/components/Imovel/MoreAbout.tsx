@@ -50,16 +50,11 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 
 export const MoreAbout: FunctionComponent = () => {
 	return (
-		<Flex gap={"1.5rem"}>
+		<Flex gap={"1.5rem"} justifyContent={"center"}>
 			<MoreAboutComponent
 				icon="/icons/description.svg"
 				title="Descrição completa"
 				description="Veja o detalhamento técnico do empreendimento"
-			/>
-			<MoreAboutComponent
-				icon="/icons/market.svg"
-				title="Mercado"
-				description="Dados importantes de mercado imobiliário da região"
 			/>
 			<MoreAboutComponent
 				icon="/icons/opt-resume.svg"

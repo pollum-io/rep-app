@@ -1,63 +1,54 @@
 import React, { useState } from "react";
 import {
 	Box,
-	Image,
+	Flex,
+	Img,
 	Text,
 	Button,
 	IconButton,
-	Img,
-	Flex,
 	Modal,
 	ModalOverlay,
 	ModalContent,
 	ModalHeader,
 	ModalBody,
 	ModalCloseButton,
+	Image,
 } from "@chakra-ui/react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { motion } from "framer-motion";
 
 const plants = [
-	{
-		id: 1,
-		name: "Planta 1",
-		imageUrl: "/images/Map.png",
-	},
+	{ id: 1, name: "Planta 1", imageUrl: "/images/Map.png" },
 	{ id: 2, name: "Planta 2", imageUrl: "/images/Map.png" },
-	{
-		id: 3,
-		name: "Planta 3",
-		imageUrl: "/images/Map.png",
-	},
+	{ id: 3, name: "Planta 3", imageUrl: "/images/Map.png" },
 	{ id: 4, name: "Planta 4", imageUrl: "/images/Map.png" },
-	{
-		id: 5,
-		name: "Planta 5",
-		imageUrl: "/images/Map.png",
-	},
+	{ id: 5, name: "Planta 5", imageUrl: "/images/Map.png" },
 	{ id: 6, name: "Planta 6", imageUrl: "/images/Map.png" },
 ];
 
 const PlantaCarrousel = () => {
-	const [currentImages, setCurrentImages] = useState(plants.slice(0, 4));
-	const [startIndex, setStartIndex] = useState(0);
-	const [selectedImage, setSelectedImage] = useState(null);
+	const [currentSlide, setCurrentSlide] = useState(0);
+	const [loaded, setLoaded] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedImage, setSelectedImage] = useState(null);
 
-	const handleNextPage = () => {
-		const nextIndex = (startIndex + 1) % plants.length;
-		setCurrentImages(plants.slice(nextIndex, nextIndex + 4));
-		setStartIndex(nextIndex);
-	};
-
-	const handlePreviousPage = () => {
-		const previousIndex = (startIndex - 1 + plants.length) % plants.length;
-		setCurrentImages(plants.slice(previousIndex, previousIndex + 4));
-		setStartIndex(previousIndex);
-	};
+	const [sliderRef, instanceRef] = useKeenSlider({
+		mode: "free-snap",
+		slides: {
+			perView: 3.5,
+			spacing: 15,
+		},
+		slideChanged(slider) {
+			setCurrentSlide(slider.track.details.rel);
+		},
+		created() {
+			setLoaded(true);
+		},
+	});
 
 	const handleViewPlant = (index: number) => {
-		const plantIndex = (startIndex + index) % plants.length;
+		const plantIndex = (-1 + index) % plants.length;
 		setSelectedImage(plants[plantIndex]);
 		setIsModalOpen(true);
 	};
@@ -66,29 +57,18 @@ const PlantaCarrousel = () => {
 		setIsModalOpen(false);
 	};
 
-	const showPreviousArrow = startIndex !== 0;
-	const showNextArrow = startIndex !== plants.length - 4;
-
 	return (
-		<Box position="relative">
-			<Flex display="flex" position="relative" overflow="hidden" gap={"1.5rem"}>
-				{currentImages.map((plant, index) => (
-					<motion.div
-						key={plant.id}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
-					>
+		<Flex gap={"1.5rem"} w={"70rem"}>
+			<div ref={sliderRef} className="keen-slider">
+				{plants.map((plant) => (
+					<div className="keen-slider__slide" key={plant.id}>
 						<Box
-							width="calc(17rem - .6rem)"
 							border="1px solid #bdbdbd"
 							borderRadius="0.75rem"
 							_hover={{
 								boxShadow:
 									"0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px rgba(0, 0, 0, 0.10);",
 							}}
-							onClick={() => handleViewPlant(index)}
 						>
 							<Img
 								src={plant.imageUrl}
@@ -113,31 +93,16 @@ const PlantaCarrousel = () => {
 										color="#007D99"
 										h="max"
 										py="1"
-										onClick={() => handleViewPlant(index)}
+										onClick={() => handleViewPlant(plant.id)}
 									>
 										Visualizar
 									</Button>
-									<Img
-										src="/icons/downloand.svg"
-										aria-label="Download"
-										mt={2}
-									/>
+									<Img src="/icons/downloand.svg" alt="Download" mt={2} />
 								</Flex>
 							</Flex>
 						</Box>
-					</motion.div>
+					</div>
 				))}
-			</Flex>
-			<Box
-				position="absolute"
-				top="0"
-				right="0"
-				h="100%"
-				w="5rem"
-				borderRadius="0.75rem"
-				bgGradient="linear(to-r, rgba(0,0,0,0), rgba(0,0,0,0.15))"
-			/>
-			{showPreviousArrow && (
 				<Flex
 					position="absolute"
 					top="50%"
@@ -147,7 +112,6 @@ const PlantaCarrousel = () => {
 					<IconButton
 						icon={<ArrowBackIcon />}
 						aria-label="Previous"
-						onClick={handlePreviousPage}
 						size="lg"
 						isRound
 						ml={2}
@@ -156,31 +120,43 @@ const PlantaCarrousel = () => {
 						boxShadow={
 							"0px 2px 4px -1px rgba(0,0,0,0.05), 0px 6px 10px -2px rgba(0,0,0,0.1)"
 						}
+						onClick={(e) => {
+							e.stopPropagation();
+							instanceRef.current?.prev();
+						}}
+						disabled={currentSlide === 0}
 					/>
 				</Flex>
-			)}
-			{showNextArrow && (
-				<Flex
-					position="absolute"
-					top="50%"
-					right="0"
-					transform="translateY(-50%)"
-				>
-					<IconButton
-						icon={<ArrowForwardIcon />}
-						aria-label="Next"
-						onClick={handleNextPage}
-						size="lg"
-						isRound
-						mr={2}
-						bg={"white"}
-						color={"#007D99"}
-						boxShadow={
-							"0px 2px 4px -1px rgba(0,0,0,0.05), 0px 6px 10px -2px rgba(0,0,0,0.1)"
-						}
-					/>
-				</Flex>
-			)}
+				{loaded && instanceRef.current && (
+					<Flex
+						position="absolute"
+						top="50%"
+						right="0"
+						transform="translateY(-50%)"
+					>
+						<IconButton
+							icon={<ArrowForwardIcon />}
+							aria-label="Next"
+							size="lg"
+							isRound
+							mr={2}
+							bg={"white"}
+							color={"#007D99"}
+							boxShadow={
+								"0px 2px 4px -1px rgba(0,0,0,0.05), 0px 6px 10px -2px rgba(0,0,0,0.1)"
+							}
+							onClick={(e) => {
+								e.stopPropagation();
+								instanceRef.current?.next();
+							}}
+							disabled={
+								currentSlide ===
+								instanceRef.current.track.details.slides.length - 1
+							}
+						/>
+					</Flex>
+				)}
+			</div>
 			<Modal isOpen={isModalOpen} onClose={handleCloseModal} size="full">
 				<ModalOverlay />
 				<ModalContent>
@@ -199,7 +175,7 @@ const PlantaCarrousel = () => {
 					</ModalBody>
 				</ModalContent>
 			</Modal>
-		</Box>
+		</Flex>
 	);
 };
 

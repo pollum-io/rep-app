@@ -14,6 +14,7 @@ import { PriceCard } from "../PriceCard";
 import { ObraSteps } from "../ObraSteps";
 import { TimelineComponent } from "../TimelineComponent";
 import PlantaCarrousel from "../PlantaCarrouselComponent";
+import { useKeenSlider } from "keen-slider/react";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
