@@ -55,6 +55,7 @@ const OpportunitySchema = z.object({
 	incorporation_enrollment: z.optional(
 		z.array(z.object({} as { [key: string]: z.ZodTypeAny }))
 	),
+	sub_categories: z.optional(z.array(z.string())),
 });
 
 const fetchSchema = z.object({

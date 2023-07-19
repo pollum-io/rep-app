@@ -1,5 +1,5 @@
 import { Flex, Icon, Img, Text } from "@chakra-ui/react";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiMapPin } from "react-icons/fi";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
@@ -10,6 +10,7 @@ import { ImovelDetailPage } from "./Pages/ImovelDetail";
 import { ImovelHomePage } from "./Pages/ImovelHomePage";
 import { ImovelMarketPage } from "./Pages/ImovelMarketPage";
 import { OportunitiesNavBar } from "./OportunitiesNavBar";
+import { fetchEnterpriseById } from "../../services";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -24,7 +25,13 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	const [cota] = useState<number>(0);
 	const { t } = useTranslation();
 	const [page, setPage] = useState("oportunidade");
+	const [enterpriseName, setEnterpriseName] = useState();
+	console.log(imovelDetails);
 
+	useMemo(async () => {
+		const name = await fetchEnterpriseById(imovelDetails?.enterprise_id, "");
+		setEnterpriseName(name?.data?.enterprise_name);
+	}, [imovelDetails?.enterprise_id]);
 	return (
 		<>
 			<Flex px="5rem" flexDir={"column"} alignItems="center">
@@ -39,10 +46,16 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 								src={`/api/file/${imovelDetails?.enterprise_logo}`}
 							/>
 							<Text fontWeight={"400"} color="#171923">
-								{imovelDetails?.enterprise_name}
+								{enterpriseName}
 							</Text>
 						</Flex>
-						<Flex gap="0.4rem" pb="1rem" flexDir={"column"} w={"max"}>
+						<Flex
+							gap="0.8rem"
+							mb="1.5rem"
+							flexDir={"column"}
+							w={"max"}
+							alignItems={"start"}
+						>
 							{imovelDetails?.name && (
 								<Text fontSize="4xl" fontWeight={"600"} color="#171923">
 									{imovelDetails?.name}
@@ -60,6 +73,18 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 									w="max"
 								>
 									{imovelDetails?.enterprise_type}
+								</Text>
+								<Text
+									fontSize={"sm"}
+									fontWeight="400"
+									color="#171923"
+									bgColor="#F0E8FF"
+									py="0.25rem"
+									px="1rem"
+									borderRadius={"4.875rem"}
+									w="max"
+								>
+									{imovelDetails?.sub_categories}
 								</Text>
 								{cota > 0 && (
 									<Flex

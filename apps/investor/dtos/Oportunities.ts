@@ -5,6 +5,7 @@ export interface IOpportunitiesCard {
 	profitability: number;
 	pictures_enterprise: string[];
 	name: string;
+	enterprise_id: string;
 	enterprise_logo: string;
 	enterprise_name: string;
 	enterprise_type: string;
@@ -32,6 +33,7 @@ export interface IOpportunitiesCard {
 	approval_process?: IOpportunitiesApprovalProcess[];
 	licensing_process?: IOpportunitiesApprovalProcess[];
 	incorporation_enrollment?: IOpportunitiesApprovalProcess[];
+	sub_categories?: string[];
 }
 
 export interface IOpportunitiesApprovalProcess {
