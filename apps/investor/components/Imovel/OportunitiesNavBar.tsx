@@ -54,6 +54,7 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 				px={"4"}
 				_hover={{ color: "#007D99" }}
 				onClick={() => setPage("resumo")}
+				isDisabled={true}
 			>
 				Resumo
 			</Button>
@@ -69,6 +70,7 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 				px={"4"}
 				_hover={{ color: "#007D99" }}
 				onClick={() => setPage("visao geral")}
+				isDisabled={true}
 			>
 				Visão geral
 			</Button>
