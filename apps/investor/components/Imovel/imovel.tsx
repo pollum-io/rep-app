@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Img, Text } from "@chakra-ui/react";
+import { Flex, Icon, Img, Text } from "@chakra-ui/react";
 import { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiMapPin } from "react-icons/fi";
@@ -9,6 +9,7 @@ import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { ImovelDetailPage } from "./Pages/ImovelDetail";
 import { ImovelHomePage } from "./Pages/ImovelHomePage";
 import { ImovelMarketPage } from "./Pages/ImovelMarketPage";
+import { OportunitiesNavBar } from "./OportunitiesNavBar";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -27,68 +28,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex px="5rem" flexDir={"column"} alignItems="center">
-				<Flex w="70rem" h="100%" gap={"4"} justifyContent="start" mt={"2rem"}>
-					<Button
-						bg={page === "oportunidade" ? "#B1D8DF" : "transparent"}
-						fontSize={"0.875rem"}
-						fontWeight={"500"}
-						color={page === "oportunidade" ? "#00262D" : "#718096"}
-						borderRadius={"1rem"}
-						w={"max"}
-						h={"max"}
-						py={"2"}
-						px={"4"}
-						_hover={{ color: "#007D99" }}
-						onClick={() => setPage("oportunidade")}
-					>
-						Oportunidade
-					</Button>
-					<Button
-						bg={page === "detalhamento" ? "#B1D8DF" : "transparent"}
-						fontSize={"0.875rem"}
-						fontWeight={"500"}
-						color={page === "detalhamento" ? "#00262D" : "#718096"}
-						borderRadius={"1rem"}
-						w={"max"}
-						h={"max"}
-						py={"2"}
-						px={"4"}
-						_hover={{ color: "#007D99" }}
-						onClick={() => setPage("detalhamento")}
-					>
-						Detalhamento
-					</Button>
-					<Button
-						bg={page === "resumo" ? "#B1D8DF" : "transparent"}
-						fontSize={"0.875rem"}
-						fontWeight={"500"}
-						color={page === "resumo" ? "#00262D" : "#718096"}
-						borderRadius={"1rem"}
-						w={"max"}
-						h={"max"}
-						py={"2"}
-						px={"4"}
-						_hover={{ color: "#007D99" }}
-						onClick={() => setPage("resumo")}
-					>
-						Resumo
-					</Button>
-					<Button
-						bg={page === "visao geral" ? "#B1D8DF" : "transparent"}
-						fontSize={"0.875rem"}
-						fontWeight={"500"}
-						color={page === "visao geral" ? "#00262D" : "#718096"}
-						borderRadius={"1rem"}
-						w={"max"}
-						h={"max"}
-						py={"2"}
-						px={"4"}
-						_hover={{ color: "#007D99" }}
-						onClick={() => setPage("visao geral")}
-					>
-						Visão geral
-					</Button>
-				</Flex>
+				<OportunitiesNavBar page={page} setPage={setPage} />
 				<Collections images={imovelDetails?.pictures_enterprise} />
 				<Flex gap="2.75rem" maxWidth="70rem">
 					<Flex flexDir={"column"}>

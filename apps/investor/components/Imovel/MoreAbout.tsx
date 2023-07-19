@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Flex, Text, Progress, Img } from "@chakra-ui/react";
+import { Flex, Text, Img } from "@chakra-ui/react";
 
 import { IMoreAbout } from "../../dtos/IMoreAbout";
 
