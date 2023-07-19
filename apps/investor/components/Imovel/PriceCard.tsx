@@ -1,44 +1,26 @@
-import { Button, Flex, Icon, Img, Text } from "@chakra-ui/react";
+import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiCopy } from "react-icons/fi";
 import { useOpportunities } from "../../hooks/useOpportunities";
 interface IPriceCard {
 	id: string;
 	price: number;
 	minted: number;
 	supply: number;
-	address: string;
 	oportunitiesAddress: string;
 	investor_pf?: string;
 	investor_pj?: string;
 }
 
 export const PriceCard: React.FC<IPriceCard> = (props) => {
-	const {
-		id,
-		price,
-		minted,
-		supply,
-		address,
-		oportunitiesAddress,
-		investor_pf,
-	} = props;
+	const { id, price, minted, supply, oportunitiesAddress, investor_pf } = props;
 	const [isInvestidor] = useState(investor_pf ? true : false);
 	const { ended, hasToken } = useOpportunities();
 	const { push } = useRouter();
 	const [cotas, setCotas] = useState<number>(0);
-	// const [copied, setCopied] = useState(false);
 	const { t } = useTranslation();
 
-	const handleClick = async (value: string) => {
-		try {
-			await navigator.clipboard.writeText(value);
-		} catch (error) {
-			console.error("Failed to copy text: ", error);
-		}
-	};
 	const avalible = useMemo(() => {
 		if (supply > minted) {
 			return supply - minted;
