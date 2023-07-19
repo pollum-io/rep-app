@@ -32,7 +32,6 @@ export const CreateAccountModal: FunctionComponent<ICreateAccountModal> = (
 
 	useEffect(() => {
 		const change = async () => {
-			console.log("a");
 			if (investorPF) {
 				await fetchEditInvestorPF(
 					userId,
