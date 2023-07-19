@@ -108,6 +108,9 @@ const OpportunitySchema = new mongoose.Schema(
 		incorporation_enrollment: {
 			type: Array,
 		},
+		sub_categories: {
+			type: Array,
+		},
 	},
 	{
 		timestamps: true,
