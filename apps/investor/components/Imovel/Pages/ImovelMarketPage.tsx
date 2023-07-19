@@ -1,20 +1,13 @@
-import { Button, Flex, Icon, Img, SimpleGrid, Text } from "@chakra-ui/react";
+import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import moment from "moment-timezone";
 import { FunctionComponent, useState } from "react";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
-import { TbInfoSquare } from "react-icons/tb";
-import {
-	IOpportunitiesApprovalProcess,
-	IOpportunitiesCard,
-} from "../../../dtos/Oportunities";
+import { IOpportunitiesCard } from "../../../dtos/Oportunities";
 import { UserInfo } from "../../../dtos/GlobalUserInfo";
-import { Carousel } from "../Carousel";
 import { MoreAbout } from "../MoreAbout";
 import { PriceCard } from "../PriceCard";
-import { ObraSteps } from "../ObraSteps";
-import { formatDate } from "../../../utils/formatDate";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -217,7 +210,6 @@ export const ImovelMarketPage: FunctionComponent<IImovelProps> = ({
 							)}
 							<PriceCard
 								id={imovelDetails?._id}
-								address={imovelDetails?.token_address}
 								minted={imovelDetails?.token_minted}
 								price={imovelDetails?.token_price}
 								supply={imovelDetails?.token_supply}

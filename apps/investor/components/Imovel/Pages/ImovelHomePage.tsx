@@ -1,4 +1,4 @@
-import { Flex, Icon, Img, SimpleGrid, Text, Button } from "@chakra-ui/react";
+import { Flex, Icon, Img, SimpleGrid, Text } from "@chakra-ui/react";
 import moment from "moment-timezone";
 import { FunctionComponent, useState } from "react";
 import Countdown from "react-countdown";
@@ -258,7 +258,6 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 							)}
 							<PriceCard
 								id={imovelDetails?._id}
-								address={imovelDetails?.token_address}
 								minted={imovelDetails?.token_minted}
 								price={imovelDetails?.token_price}
 								supply={imovelDetails?.token_supply}

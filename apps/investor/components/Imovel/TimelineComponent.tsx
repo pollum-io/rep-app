@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import { BsCheck } from "react-icons/bs";
 import { ITimelineSteps } from "../../dtos/ITimelineSteps";

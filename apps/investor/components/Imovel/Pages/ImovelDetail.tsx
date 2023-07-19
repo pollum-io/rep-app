@@ -14,7 +14,6 @@ import { PriceCard } from "../PriceCard";
 import { ObraSteps } from "../ObraSteps";
 import { TimelineComponent } from "../TimelineComponent";
 import PlantaCarrousel from "../PlantaCarrouselComponent";
-import { useKeenSlider } from "keen-slider/react";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -229,7 +228,6 @@ export const ImovelDetailPage: FunctionComponent<IImovelProps> = ({
 							)}
 							<PriceCard
 								id={imovelDetails?._id}
-								address={imovelDetails?.token_address}
 								minted={imovelDetails?.token_minted}
 								price={imovelDetails?.token_price}
 								supply={imovelDetails?.token_supply}
