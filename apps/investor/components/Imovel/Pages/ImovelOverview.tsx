@@ -11,7 +11,7 @@ import { PriceCard } from "../PriceCard";
 import PrevFinanceiraTable from "../PrevFinanceiraTable";
 import PositiveAndNegativeBarChart from "../FluxoDeCaixaChart";
 import { PrevisaoDeCaixaChart } from "../PrevisaoDeCaixaChart";
-import { MarketStudy } from "../MarketStudy";
+import { DocsComponent } from "../DocsComponent";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -270,7 +270,7 @@ export const ImovelOverview: FunctionComponent<IImovelProps> = ({
 						</Text>
 						<PrevisaoDeCaixaChart />
 					</Flex>
-					<MarketStudy />
+					<DocsComponent title="Estudos de mercado" />
 
 					<Flex w="100%" py="4rem" flexDir={"column"}>
 						<Text
