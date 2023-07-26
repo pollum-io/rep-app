@@ -23,26 +23,28 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 			}}
 			cursor={"pointer"}
 		>
-			<Flex flexDir={"column"} w="14.4rem" align={"center"}>
-				<Img src={icon} w={"3rem"} pb={"1rem"} />
-				<Text
-					color={"#007D99"}
-					fontWeight={600}
-					fontSize={"1.125rem"}
-					pb={"0.5rem"}
-					w="max"
-				>
-					{title}
-				</Text>
-				<Text
-					textAlign={"center"}
-					w="100%"
-					h={"3.75rem"}
-					color={"#171923"}
-					fontSize={"0.875rem"}
-				>
-					{description}
-				</Text>
+			<Flex flexDir={"row"} w="20.5rem" align={"center"}>
+				<Img src={icon} w={"3rem"} pb={"1rem"} mr={"1rem"} />
+				<Flex flexDir={"column"}>
+					<Text
+						color={"#007D99"}
+						fontWeight={600}
+						fontSize={"1.125rem"}
+						pb={"0.5rem"}
+						w="max"
+					>
+						{title}
+					</Text>
+					<Text
+						textAlign={"left"}
+						w="100%"
+						h={"3.75rem"}
+						color={"#171923"}
+						fontSize={"0.875rem"}
+					>
+						{description}
+					</Text>
+				</Flex>
 			</Flex>
 		</Flex>
 	);
@@ -50,16 +52,16 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 
 export const MoreAbout: FunctionComponent = () => {
 	return (
-		<Flex gap={"1.5rem"} justifyContent={"center"}>
+		<Flex gap={"1.5rem"}>
 			<MoreAboutComponent
 				icon="/icons/description.svg"
-				title="Descrição completa"
+				title="Detalhamento técnico"
 				description="Veja o detalhamento técnico do empreendimento"
 			/>
 			<MoreAboutComponent
 				icon="/icons/opt-resume.svg"
 				title="Resumo da oportunidade"
-				description="Retorno, riscos e condições"
+				description="Confira o cronograma de aportes, retorno, riscos e condições"
 			/>
 			<MoreAboutComponent
 				icon="/icons/geral.svg"
