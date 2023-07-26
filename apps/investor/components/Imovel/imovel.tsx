@@ -11,6 +11,7 @@ import { ImovelHomePage } from "./Pages/ImovelHomePage";
 import { ImovelMarketPage } from "./Pages/ImovelMarketPage";
 import { OportunitiesNavBar } from "./OportunitiesNavBar";
 import { fetchEnterpriseById } from "../../services";
+import { ImovelOverview } from "./Pages/ImovelOverview";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -129,6 +130,9 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 								imovelDetails={imovelDetails}
 								usersId={usersId}
 							/>
+						)}
+						{page === "visao geral" && (
+							<ImovelOverview imovelDetails={imovelDetails} usersId={usersId} />
 						)}
 					</Flex>
 				</Flex>
