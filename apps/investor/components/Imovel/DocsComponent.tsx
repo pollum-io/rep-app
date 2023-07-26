@@ -3,10 +3,14 @@ import { Flex, Text, Img, Button } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
+interface IDocs {
+	title?: string;
+}
+
 const MotionFlex = motion(Flex);
 
-const MarketStudyComponent: FunctionComponent = ({}) => {
-	const filesPerPage = 4;
+export const DocsComponent: FunctionComponent<IDocs> = ({ title }) => {
+	const filesPerPage = 5;
 	const totalFiles = 10;
 	const [currentPage, setCurrentPage] = useState(1);
 
@@ -84,11 +88,18 @@ const MarketStudyComponent: FunctionComponent = ({}) => {
 	return (
 		<Flex flexDir={"column"} maxWidth={"max"} mr={"3.4rem"}>
 			<Flex flexDir={"row"} mt="3rem" gap={"16.5rem"}>
-				<Text mb="2rem" fontWeight={"600"} fontSize="2xl" color={"#171923"}>
-					Estudos de mercado
+				<Text
+					w={"max"}
+					mb="2rem"
+					fontWeight={"600"}
+					fontSize="2xl"
+					color={"#171923"}
+				>
+					{title}
 				</Text>
 				<Button
 					h={"max"}
+					w={"max"}
 					py={"2"}
 					px={"6"}
 					borderRadius={"0.6rem"}
@@ -110,7 +121,7 @@ const MarketStudyComponent: FunctionComponent = ({}) => {
 						bgColor={"#F7FAFC"}
 						p={"1rem"}
 						borderRadius={"1rem"}
-						w={"40.8125rem"}
+						w={"100%"}
 						initial="hidden"
 						animate="visible"
 						variants={pageTransition}
@@ -128,36 +139,34 @@ const MarketStudyComponent: FunctionComponent = ({}) => {
 					</MotionFlex>
 				))}
 			</Flex>
-			<Flex gap={"1.5rem"} mt="2rem" justifyContent={"center"}>
-				<Button
-					bgColor="#2D3748"
-					onClick={prevPage}
-					borderRadius="2rem"
-					isDisabled={currentPage === 1}
-					w="max"
-					transition="opacity 0.3s"
-					p={"3"}
-					h="max"
-				>
-					<AiOutlineArrowLeft color="#FFF" />
-				</Button>
-				<Button
-					w="max"
-					p={"3"}
-					borderRadius="2rem"
-					h="max"
-					bgColor="#2D3748"
-					onClick={nextPage}
-					transition="opacity 0.3s"
-					isDisabled={currentPage === totalPages}
-				>
-					<AiOutlineArrowRight color="#FFF" />
-				</Button>
-			</Flex>
+			{files.length > 5 && (
+				<Flex gap={"1.5rem"} mt="2rem" justifyContent={"center"}>
+					<Button
+						bgColor="#2D3748"
+						onClick={prevPage}
+						borderRadius="2rem"
+						isDisabled={currentPage === 1}
+						w="max"
+						transition="opacity 0.3s"
+						p={"3"}
+						h="max"
+					>
+						<AiOutlineArrowLeft color="#FFF" />
+					</Button>
+					<Button
+						w="max"
+						p={"3"}
+						borderRadius="2rem"
+						h="max"
+						bgColor="#2D3748"
+						onClick={nextPage}
+						transition="opacity 0.3s"
+						isDisabled={currentPage === totalPages}
+					>
+						<AiOutlineArrowRight color="#FFF" />
+					</Button>
+				</Flex>
+			)}
 		</Flex>
 	);
-};
-
-export const MarketStudy: FunctionComponent = () => {
-	return <MarketStudyComponent />;
 };

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import { Flex, Button } from "@chakra-ui/react";
 
 interface IOportunitiesNavBar {
@@ -40,23 +40,22 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 				_hover={{ color: "#007D99" }}
 				onClick={() => setPage("detalhamento")}
 			>
-				Detalhamento
+				Detalhamento técnico
 			</Button>
 			<Button
-				bg={page === "resumo" ? "#B1D8DF" : "transparent"}
+				bg={page === "aportes" ? "#B1D8DF" : "transparent"}
 				fontSize={"0.875rem"}
 				fontWeight={"500"}
-				color={page === "resumo" ? "#00262D" : "#718096"}
+				color={page === "aportes" ? "#00262D" : "#718096"}
 				borderRadius={"1rem"}
 				w={"max"}
 				h={"max"}
 				py={"2"}
 				px={"4"}
 				_hover={{ color: "#007D99" }}
-				onClick={() => setPage("resumo")}
-				isDisabled={true}
+				onClick={() => setPage("aportes")}
 			>
-				Resumo
+				Aportes
 			</Button>
 			<Button
 				bg={page === "visao geral" ? "#B1D8DF" : "transparent"}

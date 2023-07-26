@@ -8,7 +8,7 @@ import { Collections } from "./Collections";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { ImovelDetailPage } from "./Pages/ImovelDetail";
 import { ImovelHomePage } from "./Pages/ImovelHomePage";
-import { ImovelMarketPage } from "./Pages/ImovelMarketPage";
+import { ImovelAportesPage } from "./Pages/ImovelAportes";
 import { OportunitiesNavBar } from "./OportunitiesNavBar";
 import { fetchEnterpriseById } from "../../services";
 
@@ -124,8 +124,8 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 								usersId={usersId}
 							/>
 						)}
-						{page === "mercado" && (
-							<ImovelMarketPage
+						{page === "aportes" && (
+							<ImovelAportesPage
 								imovelDetails={imovelDetails}
 								usersId={usersId}
 							/>
