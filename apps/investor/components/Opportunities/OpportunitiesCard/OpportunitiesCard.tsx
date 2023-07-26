@@ -93,15 +93,14 @@ export const OpportunitiesCard: FunctionComponent<
 				imoveisDisponiveis?.map((cards: IOpportunitiesCard) => (
 					<Flex
 						key={cards._id}
-						w="18.125rem"
+						w="19.125rem"
 						h="24.5625rem"
 						background="#FFFFFF"
 						boxShadow="0rem 0rem 0rem 0.0625rem rgba(0, 0, 0, 0.05)"
 						borderRadius="0.75rem"
 						flexDirection="column"
 						_hover={{
-							cursor:
-								cards?.isAvailable || isEnterprise ? "pointer" : "default",
+							cursor: "pointer",
 							boxShadow:
 								"0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)",
 						}}
@@ -114,7 +113,7 @@ export const OpportunitiesCard: FunctionComponent<
 						}
 					>
 						<Flex
-							w="18.125rem"
+							w="100%"
 							h="12.75rem"
 							borderRadius="0.75rem"
 							justifyContent="end"
@@ -122,14 +121,6 @@ export const OpportunitiesCard: FunctionComponent<
 							<Img
 								src={`/api/file/${cards.pictures_enterprise[0]}`}
 								borderRadius="0.75rem"
-								filter={
-									(cards.token_minted === cards.token_supply ||
-										currentTime >= new Date(cards?.sale_end_at) ||
-										!cards?.isAvailable) &&
-									!isEnterprise
-										? "blur(3px)"
-										: "none"
-								}
 							/>
 							<Flex position="absolute" pt="0.625rem" pr="0.75rem">
 								<Flex
@@ -176,13 +167,7 @@ export const OpportunitiesCard: FunctionComponent<
 						</Flex>
 						<Flex mt="1rem" px="1rem" flexDirection="column" pb="0.9375rem">
 							<Flex gap="0.3125rem" flexDirection="column">
-								<Flex
-									gap="0.5rem"
-									alignItems="center"
-									filter={
-										!cards?.isAvailable && !isEnterprise ? "blur(3px)" : "none"
-									}
-								>
+								<Flex gap="0.5rem" alignItems="center">
 									{!cards.isPortfolio && (
 										<Img
 											w={4}
@@ -249,11 +234,6 @@ export const OpportunitiesCard: FunctionComponent<
 										alignItems="center"
 										justifyContent="space-between"
 										w="100%"
-										filter={
-											!cards?.isAvailable && !isEnterprise
-												? "blur(3px)"
-												: "none"
-										}
 									>
 										<Flex flexDirection="column" alignItems="left">
 											<Text
@@ -298,50 +278,25 @@ export const OpportunitiesCard: FunctionComponent<
 											</Text>
 										</Flex>
 									</Flex>
-									{!cards?.isAvailable ? (
-										<Button
-											justifyContent="center"
-											alignItems="center"
-											w="16.125rem"
-											h="max"
-											py="0.125rem"
-											border="0.0625rem solid #007D99"
-											borderRadius="0.375rem"
+									<Flex
+										w="max"
+										background="#E4F2F3"
+										borderRadius="2.6875rem"
+										py="0.125rem"
+										px={language === "pt-br" ? "1" : "3"}
+									>
+										<Text
 											fontFamily="Poppins"
 											fontWeight="500"
 											fontSize="0.75rem"
 											lineHeight="1rem"
-											color="#007D99"
-											bgColor="#ffffff"
-											_hover={{ bgColor: "#EDF2F7" }}
+											color="#00576B"
 										>
-											{currentTime >= new Date(cards?.sale_end_at)
-												? t("opportunities.card.access")
-												: t("opportunities.card.accessTo")}
-										</Button>
-									) : (
-										<Flex
-											justifyContent="center"
-											alignItems="center"
-											w="max"
-											background="#E4F2F3"
-											borderRadius="2.6875rem"
-											py="0.125rem"
-											px={language === "pt-br" ? "1" : "3"}
-										>
-											<Text
-												fontFamily="Poppins"
-												fontWeight="500"
-												fontSize="0.75rem"
-												lineHeight="1rem"
-												color="#00576B"
-											>
-												{t("opportunities.card.expectedp/y", {
-													symbol1: cards?.profitability,
-												})}
-											</Text>
-										</Flex>
-									)}
+											{t("opportunities.card.expectedp/y", {
+												symbol1: cards?.profitability,
+											})}
+										</Text>
+									</Flex>
 								</Flex>
 							)}
 						</Flex>
