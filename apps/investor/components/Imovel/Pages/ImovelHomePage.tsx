@@ -15,7 +15,7 @@ import { MoreAbout } from "../MoreAbout";
 import { PriceCard } from "../PriceCard";
 import { ObraSteps } from "../ObraSteps";
 import { formatDate } from "../../../utils/formatDate";
-import { MarketStudy } from "../MarketStudy";
+import { DocsComponent } from "../DocsComponent";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -303,7 +303,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 							/>
 						</Flex>
 					</Flex>
-					<MarketStudy />
+					<DocsComponent title="Estudos de mercado" />
 					<Flex w="100%" py="4rem" flexDir={"column"}>
 						<Text
 							fontSize={"1.5rem"}
