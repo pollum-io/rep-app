@@ -23,8 +23,18 @@
 		"packages/*"
 	],
 	"dependencies": {
+		"@chakra-ui/next-js": "^2.1.5",
+		"@chakra-ui/react": "^2.8.0",
+		"@emotion/react": "^11.11.1",
+		"@emotion/styled": "^11.11.0",
+		"i18next": "^21.8.16",
+		"i18next-browser-languagedetector": "^6.1.4",
+		"i18next-http-backend": "^1.4.1",
+		"add": "^2.0.6",
+		"framer-motion": "^10.13.2",
 		"husky": "^8.0.3",
-		"keen-slider": "^6.8.6"
+		"keen-slider": "^6.8.6",
+		"yarn": "^1.22.19"
 	},
 	"lint-staged": {
 		"*.tsx": "eslint --fix",
