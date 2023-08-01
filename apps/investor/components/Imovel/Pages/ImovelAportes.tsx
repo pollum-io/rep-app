@@ -6,7 +6,6 @@ import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
 import { IOpportunitiesCard } from "../../../dtos/Oportunities";
 import { UserInfo } from "../../../dtos/GlobalUserInfo";
-import { MoreAbout } from "../MoreAbout";
 import { PriceCard } from "../PriceCard";
 import Table from "../AportesTable";
 import { DocsComponent } from "../DocsComponent";
@@ -163,17 +162,6 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 				</Flex>
 				<Flex py="4rem" flexDir={"column"} justifyContent="center">
 					<DocsComponent title="Informações adicionais" />
-					<Flex w="100%" py="4rem" flexDir={"column"}>
-						<Text
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-							color={"#171923"}
-							mb={"2rem"}
-						>
-							Conheça mais sobre essa oportunidade
-						</Text>
-						<MoreAbout />
-					</Flex>
 				</Flex>
 			</Flex>
 		</>

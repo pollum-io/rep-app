@@ -75,7 +75,7 @@ const PrevFinanceiraTable = () => {
 					<Text
 						fontSize={"0.75rem"}
 						fontWeight={"400"}
-						color={item.fluxo_caixa.charAt(0) === "+" ? "green" : "red"}
+						color={item.fluxo_caixa.charAt(0) === "+" ? "#38A169" : "#E53E3E"}
 					>
 						{item.fluxo_caixa}
 					</Text>
@@ -101,32 +101,32 @@ const PrevFinanceiraTable = () => {
 				borderTopRadius="0.75rem"
 			>
 				<Flex flex="0.7">
-					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"white"}>
+					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
 						Período{" "}
 					</Text>
 				</Flex>
 				<Flex flex="1">
-					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"white"}>
-						Custo (R$){" "}
+					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
+						Custo
 					</Text>
 				</Flex>
 				<Flex flex="1">
-					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"white"}>
-						Recita Total (R$){" "}
+					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
+						Recita Total
 					</Text>
 				</Flex>
 				<Flex flex="1">
-					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"white"}>
+					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
 						Receita total{" "}
 					</Text>
 				</Flex>
 				<Flex flex="1">
-					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"white"}>
+					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
 						Un. vendidas{" "}
 					</Text>
 				</Flex>
 				<Flex flex="1">
-					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"white"}>
+					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
 						Fluxo de caixa{" "}
 					</Text>
 				</Flex>

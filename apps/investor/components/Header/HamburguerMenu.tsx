@@ -37,6 +37,7 @@ export const HamburguerMenu: React.FC = () => {
 					flexDir={"row"}
 					alignItems={"center"}
 					gap="3"
+					w={"max"}
 					border="0.0625rem solid #E2E8F0"
 					rounded={"1rem"}
 				>

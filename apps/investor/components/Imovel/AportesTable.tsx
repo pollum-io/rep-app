@@ -109,13 +109,13 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma }) => {
 				borderBottomRadius="0.75rem"
 			>
 				<Flex flex="0.7">
-					<Text fontSize={"0.875rem"} fontWeight={"600"} color={"white"}>
+					<Text fontSize={"0.875rem"} fontWeight={"semibold"} color={"white"}>
 						Total
 					</Text>
 				</Flex>
 				<Flex flex={"1"} />
 				<Flex flex="1">
-					<Text fontSize={"0.875rem"} fontWeight={"600"} color={"white"}>
+					<Text fontSize={"0.875rem"} fontWeight={"semibold"} color={"white"}>
 						R$ 832.658,88{" "}
 					</Text>
 				</Flex>

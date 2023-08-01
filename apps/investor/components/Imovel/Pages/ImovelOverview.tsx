@@ -6,7 +6,6 @@ import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
 import { IOpportunitiesCard } from "../../../dtos/Oportunities";
 import { UserInfo } from "../../../dtos/GlobalUserInfo";
-import { MoreAbout } from "../MoreAbout";
 import { PriceCard } from "../PriceCard";
 import PrevFinanceiraTable from "../PrevFinanceiraTable";
 import PositiveAndNegativeBarChart from "../FluxoDeCaixaChart";
@@ -270,19 +269,7 @@ export const ImovelOverview: FunctionComponent<IImovelProps> = ({
 						</Text>
 						<PrevisaoDeCaixaChart />
 					</Flex>
-					<DocsComponent title="Estudos de mercado" />
-
-					<Flex w="100%" py="4rem" flexDir={"column"}>
-						<Text
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-							color={"#171923"}
-							mb={"2rem"}
-						>
-							Conheça mais sobre essa oportunidade
-						</Text>
-						<MoreAbout />
-					</Flex>
+					<DocsComponent title="Informações adicionais" />
 				</Flex>
 			</Flex>
 		</>

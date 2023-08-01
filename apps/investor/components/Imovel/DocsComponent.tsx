@@ -112,12 +112,11 @@ export const DocsComponent: FunctionComponent<IDocs> = ({ title }) => {
 					Baixar todas
 				</Button>
 			</Flex>
-			<Flex flexDir={"column"} gap="5">
+			<Flex flexDir={"column"} gap="0.5rem">
 				{currentFiles.map((file, index) => (
 					<MotionFlex
 						key={index}
 						alignItems={"center"}
-						gap={"1.5rem"}
 						bgColor={"#F7FAFC"}
 						p={"1rem"}
 						borderRadius={"1rem"}
@@ -125,16 +124,14 @@ export const DocsComponent: FunctionComponent<IDocs> = ({ title }) => {
 						initial="hidden"
 						animate="visible"
 						variants={pageTransition}
+						justifyContent="space-between"
 					>
-						<Img src={file.icon} />
-						<Text
-							w={"32.3125rem"}
-							fontSize={"0.875rem"}
-							color={"#171923"}
-							fontWeight={"400"}
-						>
-							{file.name}
-						</Text>
+						<Flex alignItems={"center"} gap={"1.5rem"}>
+							<Img src={file.icon} />
+							<Text fontSize={"0.875rem"} color={"#171923"} fontWeight={"400"}>
+								{file.name}
+							</Text>
+						</Flex>
 						<Img src={file.downloadIcon} />
 					</MotionFlex>
 				))}

@@ -9,7 +9,6 @@ import {
 	IOpportunitiesCard,
 } from "../../../dtos/Oportunities";
 import { UserInfo } from "../../../dtos/GlobalUserInfo";
-import { MoreAbout } from "../MoreAbout";
 import { PriceCard } from "../PriceCard";
 import { ObraSteps } from "../ObraSteps";
 import { TimelineComponent } from "../TimelineComponent";
@@ -333,17 +332,6 @@ export const ImovelDetailPage: FunctionComponent<IImovelProps> = ({
 						<Flex maxWidth="70rem">
 							<PlantaCarrousel />
 						</Flex>
-					</Flex>
-					<Flex w="100%" py="4rem" flexDir={"column"}>
-						<Text
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-							color={"#171923"}
-							mb={"2rem"}
-						>
-							Conheça mais sobre essa oportunidade
-						</Text>
-						<MoreAbout />
 					</Flex>
 				</Flex>
 			</Flex>

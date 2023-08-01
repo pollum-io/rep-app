@@ -12,6 +12,7 @@ import { ImovelAportesPage } from "./Pages/ImovelAportes";
 import { OportunitiesNavBar } from "./OportunitiesNavBar";
 import { fetchEnterpriseById } from "../../services";
 import { ImovelOverview } from "./Pages/ImovelOverview";
+import { MoreAbout } from "./MoreAbout";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -34,8 +35,8 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 		setEnterpriseName(name?.data?.enterprise_name);
 	}, [imovelDetails?.enterprise_id]);
 	return (
-		<>
-			<Flex px="5rem" flexDir={"column"} alignItems="center">
+		<Flex margin={"0 auto"}>
+			<Flex flexDir={"column"} alignItems="center">
 				<OportunitiesNavBar page={page} setPage={setPage} />
 				<Collections images={imovelDetails?.pictures_enterprise} />
 				<Flex gap="2.75rem" maxWidth="70rem">
@@ -134,9 +135,20 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 						{page === "visao geral" && (
 							<ImovelOverview imovelDetails={imovelDetails} usersId={usersId} />
 						)}
+						<Flex w="100%" mb="4rem" mt="2rem" flexDir={"column"}>
+							<Text
+								fontSize={"1.5rem"}
+								fontWeight={"600"}
+								color={"#171923"}
+								mb={"2rem"}
+							>
+								Conheça mais sobre essa oportunidade
+							</Text>
+							<MoreAbout page={page} setPage={setPage} />
+						</Flex>
 					</Flex>
 				</Flex>
 			</Flex>
-		</>
+		</Flex>
 	);
 };
