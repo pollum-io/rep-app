@@ -14,6 +14,7 @@ import "../styles/mapsLabel.css";
 import "../styles/tooltipChart.css";
 import "../styles/pieChart.css";
 import "../helpers/i18";
+import "../styles/pageTransition.css";
 
 const toasty = {
 	bg: "#FFFFFF",

@@ -118,8 +118,9 @@ export const DocsComponent: FunctionComponent<IDocs> = ({ title }) => {
 						key={index}
 						alignItems={"center"}
 						bgColor={"#F7FAFC"}
-						p={"1rem"}
-						borderRadius={"1rem"}
+						px={"1rem"}
+						py={"0.5rem"}
+						borderRadius={"0.75rem"}
 						w={"100%"}
 						initial="hidden"
 						animate="visible"

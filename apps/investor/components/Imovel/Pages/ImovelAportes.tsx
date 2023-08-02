@@ -94,7 +94,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 					<Flex
 						flexDirection="column"
 						position="relative"
-						bottom={"12rem"}
+						bottom={"14rem"}
 						h={"59rem"}
 					>
 						<Flex h="58rem" flexDirection="column" gap="1.5rem">

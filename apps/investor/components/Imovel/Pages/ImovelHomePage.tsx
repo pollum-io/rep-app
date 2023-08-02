@@ -210,7 +210,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 					<Flex
 						flexDirection="column"
 						position="relative"
-						bottom={"12rem"}
+						bottom={"14rem"}
 						h={"100rem"}
 					>
 						<Flex h="91rem" flexDirection="column" gap="1.5rem">

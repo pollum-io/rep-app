@@ -1,8 +1,11 @@
 export interface ITimelineSteps {
-	descriptionOne?: string;
-	descriptionTwo?: string;
-	descriptionThree?: string;
-	descriptionFour?: string;
+	title?: string;
+	descriptions?: IDescriptions[];
 	titleWidth?: string;
-	barPercentage?: number | string;
+	status?: string;
+}
+
+interface IDescriptions {
+	text: string;
+	status: string;
 }

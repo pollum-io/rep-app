@@ -53,25 +53,41 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 };
 
 export const MoreAbout: FunctionComponent<IMoreAbout> = ({ setPage }) => {
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
+	};
+
 	return (
 		<Flex gap={"1.5rem"}>
 			<MoreAboutComponent
 				icon="/icons/description.svg"
 				title="Detalhamento técnico"
 				description="Veja o detalhamento técnico do empreendimento"
-				onClick={() => setPage("detalhamento")}
+				onClick={() => {
+					setPage("detalhamento");
+					scrollToTop();
+				}}
 			/>
 			<MoreAboutComponent
 				icon="/icons/opt-resume.svg"
 				title="Resumo da oportunidade"
 				description="Confira o cronograma de aportes, retorno, riscos e condições"
-				onClick={() => setPage("aportes")}
+				onClick={() => {
+					setPage("aportes");
+					scrollToTop();
+				}}
 			/>
 			<MoreAboutComponent
 				icon="/icons/geral.svg"
 				title="Visão geral"
 				description="Veja o detalhamento da estrutura de negócio com previsões financeiras"
-				onClick={() => setPage("visao geral")}
+				onClick={() => {
+					setPage("visao geral");
+					scrollToTop();
+				}}
 			/>
 		</Flex>
 	);

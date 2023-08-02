@@ -180,7 +180,7 @@ export const ImovelOverview: FunctionComponent<IImovelProps> = ({
 					<Flex
 						flexDirection="column"
 						position="relative"
-						bottom={"12rem"}
+						bottom={"14rem"}
 						h={"148rem"}
 					>
 						<Flex h="188rem" flexDirection="column" gap="1.5rem">
