@@ -1,10 +1,9 @@
-import { Flex, Icon, Img, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
 import moment from "moment-timezone";
 import { FunctionComponent, useState } from "react";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
-import { TbInfoSquare } from "react-icons/tb";
 import {
 	IOpportunitiesApprovalProcess,
 	IOpportunitiesCard,
