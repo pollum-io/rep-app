@@ -9,11 +9,11 @@ import {
 	IOpportunitiesCard,
 } from "../../../dtos/Oportunities";
 import { UserInfo } from "../../../dtos/GlobalUserInfo";
-import { MoreAbout } from "../MoreAbout";
 import { PriceCard } from "../PriceCard";
 import { ObraSteps } from "../ObraSteps";
 import { TimelineComponent } from "../TimelineComponent";
 import PlantaCarrousel from "../PlantaCarrouselComponent";
+import { TimelineComponentData } from "../TimelineComponentData";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -59,7 +59,7 @@ export const ImovelDetailPage: FunctionComponent<IImovelProps> = ({
 			<Flex flexDir={"column"} alignItems="flex-start">
 				<Flex
 					flexDir={"column"}
-					pb="1rem"
+					mb="4rem"
 					w={"100%"}
 					position="relative"
 					right={"14.2rem"}
@@ -172,7 +172,7 @@ export const ImovelDetailPage: FunctionComponent<IImovelProps> = ({
 					<Flex
 						flexDirection="column"
 						position="relative"
-						bottom={"19.15rem"}
+						bottom={"24.1rem"}
 						h={"60rem"}
 					>
 						<Flex h="58rem" flexDirection="column" gap="1.5rem">
@@ -250,58 +250,49 @@ export const ImovelDetailPage: FunctionComponent<IImovelProps> = ({
 								<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
 									2022{" "}
 								</Text>
-								{imovelDetails?.incorporation_enrollment?.map(
-									(data: IOpportunitiesApprovalProcess) => (
-										<>
-											<TimelineComponent
-												descriptionOne="Descrição etapa 1"
-												descriptionTwo="Descrição etapa 2"
-												descriptionThree="Descrição etapa 3"
-												descriptionFour="Descrição etapa 4"
-												barPercentage={data.status}
-												titleWidth={"12rem"}
-											/>
-										</>
-									)
-								)}
+								{TimelineComponentData.map((data) => (
+									<>
+										<TimelineComponent
+											key={data.id}
+											status={data.monthStatus}
+											title={data.title}
+											descriptions={data.descriptions}
+											titleWidth={"12rem"}
+										/>
+									</>
+								))}
 							</Flex>
 							<Flex flexDir={"column"} color={"#171923"}>
 								<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
 									2023{" "}
 								</Text>
-								{imovelDetails?.incorporation_enrollment?.map(
-									(data: IOpportunitiesApprovalProcess) => (
-										<>
-											<TimelineComponent
-												descriptionOne="Descrição etapa 1"
-												descriptionTwo="Descrição etapa 2"
-												descriptionThree="Descrição etapa 3"
-												descriptionFour="Descrição etapa 4"
-												barPercentage={data.status}
-												titleWidth={"12rem"}
-											/>
-										</>
-									)
-								)}
+								{TimelineComponentData.map((data) => (
+									<>
+										<TimelineComponent
+											key={data.id}
+											status={data.monthStatus}
+											title={data.title}
+											descriptions={data.descriptions}
+											titleWidth={"12rem"}
+										/>
+									</>
+								))}
 							</Flex>
 							<Flex flexDir={"column"} color={"#171923"}>
 								<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
 									2024{" "}
 								</Text>
-								{imovelDetails?.incorporation_enrollment?.map(
-									(data: IOpportunitiesApprovalProcess) => (
-										<>
-											<TimelineComponent
-												descriptionOne="Descrição etapa 1"
-												descriptionTwo="Descrição etapa 2"
-												descriptionThree="Descrição etapa 3"
-												descriptionFour="Descrição etapa 4"
-												barPercentage={data.status}
-												titleWidth={"18rem"}
-											/>
-										</>
-									)
-								)}
+								{TimelineComponentData.map((data) => (
+									<>
+										<TimelineComponent
+											key={data.id}
+											status={data.monthStatus}
+											title={data.title}
+											descriptions={data.descriptions}
+											titleWidth={"12rem"}
+										/>
+									</>
+								))}
 							</Flex>
 						</Flex>
 					</Flex>
@@ -333,17 +324,6 @@ export const ImovelDetailPage: FunctionComponent<IImovelProps> = ({
 						<Flex maxWidth="70rem">
 							<PlantaCarrousel />
 						</Flex>
-					</Flex>
-					<Flex w="100%" py="4rem" flexDir={"column"}>
-						<Text
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-							color={"#171923"}
-							mb={"2rem"}
-						>
-							Conheça mais sobre essa oportunidade
-						</Text>
-						<MoreAbout />
 					</Flex>
 				</Flex>
 			</Flex>

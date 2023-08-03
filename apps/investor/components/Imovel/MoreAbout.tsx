@@ -7,6 +7,7 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 	icon,
 	title,
 	description,
+	onClick,
 }) => {
 	return (
 		<Flex
@@ -22,6 +23,7 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 					"0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px rgba(0, 0, 0, 0.10);",
 			}}
 			cursor={"pointer"}
+			onClick={onClick}
 		>
 			<Flex flexDir={"row"} w="20.5rem" align={"center"}>
 				<Img src={icon} w={"3rem"} pb={"1rem"} mr={"1rem"} />
@@ -50,23 +52,42 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 	);
 };
 
-export const MoreAbout: FunctionComponent = () => {
+export const MoreAbout: FunctionComponent<IMoreAbout> = ({ setPage }) => {
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
+	};
+
 	return (
 		<Flex gap={"1.5rem"}>
 			<MoreAboutComponent
 				icon="/icons/description.svg"
 				title="Detalhamento técnico"
 				description="Veja o detalhamento técnico do empreendimento"
+				onClick={() => {
+					setPage("detalhamento");
+					scrollToTop();
+				}}
 			/>
 			<MoreAboutComponent
 				icon="/icons/opt-resume.svg"
 				title="Resumo da oportunidade"
 				description="Confira o cronograma de aportes, retorno, riscos e condições"
+				onClick={() => {
+					setPage("aportes");
+					scrollToTop();
+				}}
 			/>
 			<MoreAboutComponent
 				icon="/icons/geral.svg"
 				title="Visão geral"
 				description="Veja o detalhamento da estrutura de negócio com previsões financeiras"
+				onClick={() => {
+					setPage("visao geral");
+					scrollToTop();
+				}}
 			/>
 		</Flex>
 	);

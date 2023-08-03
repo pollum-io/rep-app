@@ -1,17 +1,15 @@
-import { Flex, Icon, Img, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
 import moment from "moment-timezone";
 import { FunctionComponent, useState } from "react";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
-import { TbInfoSquare } from "react-icons/tb";
 import {
 	IOpportunitiesApprovalProcess,
 	IOpportunitiesCard,
 } from "../../../dtos/Oportunities";
 import { UserInfo } from "../../../dtos/GlobalUserInfo";
 import { Carousel } from "../Carousel";
-import { MoreAbout } from "../MoreAbout";
 import { PriceCard } from "../PriceCard";
 import { ObraSteps } from "../ObraSteps";
 import { formatDate } from "../../../utils/formatDate";
@@ -59,7 +57,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="2.75rem" maxWidth="70rem" h={"46rem"}>
+				<Flex gap="2.75rem" maxWidth="70rem" h={"43rem"}>
 					<Flex flexDir={"column"} maxWidth={"70%"}>
 						<Flex flexDir={"column"} pb="3rem">
 							<SimpleGrid
@@ -76,7 +74,11 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 											R$
 										</Text>
 										<Text color="#000000">{`${imovelDetails?.min_investment}`}</Text>
-										<Img src="/icons/info-circle.svg" w={"1rem"} h={"1.3rem"} />
+										<Img
+											src="/icons/info-circle-littlegray.svg"
+											w={"1rem"}
+											h={"1.3rem"}
+										/>
 									</Flex>
 								</Flex>
 								<Flex flexDir={"column"} gap="0.25rem" w="7rem">
@@ -102,7 +104,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 								<Flex
 									flexDir={"column"}
 									gap="0.25rem"
-									w="10.5rem"
+									w="11.5rem"
 									order={["unset", "unset", "unset", "1", "unset"]}
 								>
 									<Text fontSize={"sm"} fontWeight="400" color="#718096">
@@ -113,7 +115,12 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 											{imovelDetails?.profitability}%{" "}
 											{t("opportunitieDetails.perYear")}
 										</Text>
-										<Icon as={TbInfoSquare} color={"#A0AEC0"} w={5} h={5} />
+										<Img
+											src="/icons/info-circle-littlegray.svg"
+											w={"1rem"}
+											h={"1.3rem"}
+											color="#A0AEC0"
+										/>{" "}
 									</Flex>
 								</Flex>
 
@@ -124,7 +131,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 									<Flex gap="0.25rem">
 										<Text color="#000000">2 anos</Text>
 										<Img
-											src="/icons/info-circle.svg"
+											src="/icons/info-circle-littlegray.svg"
 											w={"1rem"}
 											h={"1.3rem"}
 											color="#A0AEC0"
@@ -138,7 +145,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 									<Flex gap="0.25rem">
 										<Text color="#000000">200%</Text>
 										<Img
-											src="/icons/info-circle.svg"
+											src="/icons/info-circle-littlegray.svg"
 											w={"1rem"}
 											h={"1.3rem"}
 											color="#A0AEC0"
@@ -202,10 +209,10 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 					<Flex
 						flexDirection="column"
 						position="relative"
-						bottom={"12rem"}
-						h={"60rem"}
+						bottom={"14rem"}
+						h={"100rem"}
 					>
-						<Flex h="58rem" flexDirection="column" gap="1.5rem">
+						<Flex h="91rem" flexDirection="column" gap="1.5rem">
 							{ended ? (
 								<Flex
 									bgColor="#E2E8F0"
@@ -269,7 +276,8 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 					</Flex>
 				</Flex>
 				<Flex py="4rem" flexDir={"column"} justifyContent="center">
-					<Flex mb={"2rem"} w="100%" maxWidth="70rem">
+					<DocsComponent title="Estudos de mercado" />
+					<Flex mt={"2rem"} mb={"2rem"} w="100%" maxWidth="70rem">
 						<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#171923"}>
 							Localização
 						</Text>
@@ -302,18 +310,6 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 								heightValue="15rem"
 							/>
 						</Flex>
-					</Flex>
-					<DocsComponent title="Estudos de mercado" />
-					<Flex w="100%" py="4rem" flexDir={"column"}>
-						<Text
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-							color={"#171923"}
-							mb={"2rem"}
-						>
-							Conheça mais sobre essa oportunidade
-						</Text>
-						<MoreAbout />
 					</Flex>
 				</Flex>
 			</Flex>
