@@ -2,7 +2,7 @@ import { Box, IconButton, useBreakpointValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import Slider from "react-slick";
-import { apiInstance } from "../../services/api";
+import { apiInstance } from "../../../../apps/investor/services/api";
 
 const settings = {
 	dots: true,
@@ -33,7 +33,7 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 
 	useEffect(() => {
 		if (extra_images) {
-			extra_images.map((picture: string) => {
+			extra_images?.map((picture: string) => {
 				api.get(`/file/${picture}`).then((response) => {
 					setImagesCarousel((prevState) => [
 						...prevState,
@@ -42,7 +42,7 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 				});
 			});
 		} else {
-			modal_images.map((picture: string) => {
+			modal_images?.map((picture: string) => {
 				api.get(`/file/${picture}`).then((response) => {
 					setImagesCarousel((prevState) => [
 						...prevState,

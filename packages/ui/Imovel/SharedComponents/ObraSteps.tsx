@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useMemo } from "react";
 import { Flex, Text, Progress } from "@chakra-ui/react";
 import { BsCheck } from "react-icons/bs";
-import { IObraSteps } from "../../dtos/IObraSteps";
+import { IObraSteps } from "../dtos/IObraSteps";
 
 export const ObraSteps: FunctionComponent<IObraSteps> = ({
 	title,
@@ -9,7 +9,7 @@ export const ObraSteps: FunctionComponent<IObraSteps> = ({
 	titleWidth,
 }) => {
 	const barStatus = useMemo(() => {
-		let status: number;
+		let status = 0;
 
 		if (barPercentage === "Não iniciado") {
 			status = 0;
