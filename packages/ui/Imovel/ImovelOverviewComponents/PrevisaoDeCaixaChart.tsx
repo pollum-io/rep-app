@@ -2,10 +2,29 @@ import React, { useCallback, useState } from "react";
 import { PieChart, Pie, Sector, Cell } from "recharts";
 import { Box, Flex, Text } from "@chakra-ui/react";
 
+interface IActiveShapeProps {
+	cx: number;
+	cy: number;
+	innerRadius: number;
+	outerRadius: number;
+	startAngle: number;
+	endAngle: number;
+	fill: string;
+}
+
+interface ICustomizedLabelProps {
+	cx: number;
+	cy: number;
+	midAngle: number;
+	innerRadius: number;
+	outerRadius: number;
+	percent: number;
+}
+
 export const PrevisaoDeCaixaChart: React.FC = () => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const onPieEnter = useCallback(
-		(_, index) => {
+		(index: number) => {
 			setActiveIndex(index);
 		},
 		[setActiveIndex]
@@ -20,7 +39,7 @@ export const PrevisaoDeCaixaChart: React.FC = () => {
 		innerRadius,
 		outerRadius,
 		percent,
-	}) => {
+	}: ICustomizedLabelProps) => {
 		const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
 		const x = cx + radius * Math.cos(-midAngle * RADIAN);
 		const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -39,7 +58,7 @@ export const PrevisaoDeCaixaChart: React.FC = () => {
 		);
 	};
 
-	const renderActiveShape = (props) => {
+	const renderActiveShape = (props: IActiveShapeProps) => {
 		const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } =
 			props;
 

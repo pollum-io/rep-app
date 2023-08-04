@@ -1,5 +1,6 @@
 import { Flex, Img, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import { CollectionsModal } from "./CollectionsModal";
+
 interface ICollections {
 	images: string[];
 }

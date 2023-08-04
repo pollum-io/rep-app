@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { Flex, Text, Img } from "@chakra-ui/react";
-
-import { IMoreAbout } from "../../dtos/IMoreAbout";
+import { IMoreAbout } from "../dtos/IMoreAbout";
 
 const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 	icon,
@@ -52,7 +51,14 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 	);
 };
 
-export const MoreAbout: FunctionComponent<IMoreAbout> = ({ setPage }) => {
+interface IMoreAbountRender {
+	page?: string;
+	setPage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export const MoreAbout: FunctionComponent<IMoreAbountRender> = ({
+	setPage,
+}) => {
 	const scrollToTop = () => {
 		window.scrollTo({
 			top: 0,

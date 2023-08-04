@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useMemo } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import { BsCheck } from "react-icons/bs";
-import { ITimelineSteps } from "../../dtos/ITimelineSteps";
+import { ITimelineSteps } from "../dtos/ITimelineSteps";
 
 export const TimelineComponent: FunctionComponent<ITimelineSteps> = ({
 	descriptions,
@@ -77,7 +77,7 @@ export const TimelineComponent: FunctionComponent<ITimelineSteps> = ({
 		<Flex gap="0.7762rem" alignItems="start" pb={"1rem"} pr={"2rem"}>
 			{iconStatus}
 			<Flex flexDirection="column" pt="0.1rem" h="100%" gap="0.1913rem">
-				{descriptions.map((description) => {
+				{descriptions?.map((description) => {
 					let textColor = "#A0AEC0";
 					let fontWeight = "400";
 					if (description.status === "Completed") {

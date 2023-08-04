@@ -3,7 +3,7 @@ import { Flex, Button } from "@chakra-ui/react";
 
 interface IOportunitiesNavBar {
 	page?: string;
-	setPage?: React.Dispatch<React.SetStateAction<string>>;
+	setPage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
