@@ -1,19 +1,20 @@
 import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
-import moment from "moment-timezone";
-import { FunctionComponent, useState } from "react";
-import Countdown from "react-countdown";
-import { CountdownRenderProps } from "react-countdown/dist/Countdown";
+import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import {
 	IOpportunitiesApprovalProcess,
 	IOpportunitiesCard,
-} from "../../../dtos/Oportunities";
-import { UserInfo } from "../../../dtos/GlobalUserInfo";
-import { Carousel } from "../Carousel";
-import { PriceCard } from "../PriceCard";
-import { ObraSteps } from "../ObraSteps";
-import { formatDate } from "../../../utils/formatDate";
-import { DocsComponent } from "../DocsComponent";
+} from "../../../../apps/investor/dtos/Oportunities";
+import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
+import { formatDate } from "../../../../apps/investor/utils/formatDate";
+
+import { Carousel } from "../ImovelHomePageComponents";
+import {
+	DocsComponent,
+	ObraSteps,
+	PriceCard,
+	TimeCard,
+} from "../SharedComponents";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -24,35 +25,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
 	usersId,
 }) => {
-	const [dateEndend, setDateEnded] = useState<string>();
-	const [ended, setEnded] = useState<boolean>();
 	const { t } = useTranslation();
-
-	const renderer = ({
-		days,
-		hours,
-		minutes,
-		completed,
-		props: { date },
-	}: CountdownRenderProps) => {
-		const dateFormated = moment(date).format("DD/MM/YYYY");
-		if (completed) {
-			setEnded(true);
-			setDateEnded(dateFormated);
-			return;
-		} else {
-			setEnded(false);
-			return (
-				<Text fontWeight="500" fontSize="1.25rem" lineHeight="2rem" id="timer">
-					{t("opportunitieDetails.timer", {
-						value1: days,
-						value2: hours,
-						value3: minutes,
-					})}
-				</Text>
-			);
-		}
-	};
 
 	return (
 		<>
@@ -210,59 +183,10 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 						flexDirection="column"
 						position="relative"
 						bottom={"14rem"}
-						h={"100rem"}
+						h={"85rem"}
 					>
 						<Flex h="91rem" flexDirection="column" gap="1.5rem">
-							{ended ? (
-								<Flex
-									bgColor="#E2E8F0"
-									py="0.25rem"
-									px="1rem"
-									borderRadius={"4.875rem"}
-									fontSize={"sm"}
-									color="#171923"
-									gap="0.25rem"
-									justifyContent="center"
-								>
-									<Text fontWeight="400">
-										{t("opportunitieDetails.closedIn")}
-									</Text>
-									<Text fontWeight="400">{dateEndend}</Text>
-								</Flex>
-							) : (
-								<Flex
-									flexDirection="column"
-									padding="1.5rem"
-									gap="0.25rem"
-									w="23.125rem"
-									background="#4BA3B7"
-									borderRadius="0.75rem"
-									fontFamily="Poppins"
-									color="#FFFFFF"
-									h="max-content"
-								>
-									<Countdown
-										date={imovelDetails?.sale_end_at}
-										renderer={renderer}
-									/>
-									<Text
-										fontWeight="500"
-										fontSize="1.25rem"
-										lineHeight="2rem"
-										id="timer"
-									>
-										{t("opportunitieDetails.closeSales")}
-									</Text>
-									<Text
-										fontWeight="400"
-										fontSize="0.875rem"
-										lineHeight="1.25rem"
-									>
-										{t("opportunitieDetails.unitPrice")}{" "}
-										{imovelDetails.token_price * 2}
-									</Text>
-								</Flex>
-							)}
+							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								id={imovelDetails?._id}
 								minted={imovelDetails?.token_minted}

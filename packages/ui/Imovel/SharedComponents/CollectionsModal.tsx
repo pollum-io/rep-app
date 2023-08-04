@@ -7,7 +7,7 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { GrFormClose } from "react-icons/gr";
-import { Carousel } from "./Carousel";
+import { Carousel } from "../ImovelHomePageComponents";
 
 interface ICollectionsModal {
 	isOpen: boolean;

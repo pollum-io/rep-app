@@ -10,6 +10,22 @@ import {
 	Rectangle,
 } from "recharts";
 
+interface ICustomBarLabelProps {
+	x?: number;
+	y?: number;
+	width?: number;
+	value?: number;
+}
+
+interface ICustomBarProps {
+	fill?: string;
+	x?: number;
+	y?: number;
+	width?: number;
+	height?: number;
+	value?: number;
+}
+
 const data = [
 	{ name: "Item 1", value: -200000000, fill: "#E53E3E" },
 	{ name: "Item 2", value: -300000000, fill: "#E53E3E" },
@@ -18,31 +34,35 @@ const data = [
 	{ name: "Item 5", value: 400000000, fill: "#38A169" },
 ];
 
-const formatCurrencyValue = (value) => {
+const formatCurrencyValue = (value: number) => {
 	return (value / 100).toLocaleString("pt-BR", {
 		style: "currency",
 		currency: "BRL",
 	});
 };
 
-const getBarColor = (entryValue: string) => {
+const getBarColor = (entryValue: string | number) => {
 	return Number(entryValue) >= 0 ? "#38A169" : "#E53E3E";
 };
 
-const CustomBarLabel = (props) => {
+const CustomBarLabel = (props: ICustomBarLabelProps) => {
 	const { x, y, width, value } = props;
-	const isPositive = value >= 0;
+	const isPositive = (value ? value : 0) >= 0;
 
 	return (
-		<text
-			x={x + width / 2}
-			y={isPositive ? y - -18 : y + -13}
-			fill="white"
-			fontSize={12}
-			textAnchor="middle"
-		>
-			{formatCurrencyValue(value)}
-		</text>
+		<>
+			{x && y && width && value && (
+				<text
+					x={x + width / 2}
+					y={isPositive ? y - -18 : y + -13}
+					fill="white"
+					fontSize={12}
+					textAnchor="middle"
+				>
+					{formatCurrencyValue(value)}
+				</text>
+			)}
+		</>
 	);
 };
 
@@ -87,7 +107,7 @@ const PositiveAndNegativeBarChart = () => {
 				<XAxis hide={true} />
 				<YAxis hide={true} />
 				<Tooltip
-					formatter={(value) => formatCurrencyValue(value)} // Format tooltip value
+					formatter={(value) => formatCurrencyValue(Number(value))} // Format tooltip value
 				/>
 				<Bar dataKey="value" fill={String(getBarColor)} shape={<CustomBar />}>
 					<LabelList dataKey="value" content={<CustomBarLabel />} />
@@ -97,10 +117,10 @@ const PositiveAndNegativeBarChart = () => {
 	);
 };
 
-const CustomBar = (props) => {
+const CustomBar = (props: ICustomBarProps) => {
 	const { fill, x, y, width, height, value } = props;
 	const borderRadius = 8; // Adjust the border radius as needed
-	const isPositive = value >= 0;
+	const isPositive = (value ? value : 0) >= 0;
 
 	return (
 		<g>

@@ -18,6 +18,12 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
+interface IPlants {
+	id: number;
+	imageUrl: string;
+	name: string;
+}
+
 const plants = [
 	{ id: 1, name: "Planta 1", imageUrl: "/images/Map.png" },
 	{ id: 2, name: "Planta 2", imageUrl: "/images/Map.png" },
@@ -31,8 +37,7 @@ const PlantaCarrousel = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [loaded, setLoaded] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedImage, setSelectedImage] = useState(null);
-
+	const [selectedImage, setSelectedImage] = useState<IPlants>();
 	const [sliderRef, instanceRef] = useKeenSlider({
 		mode: "free-snap",
 		slides: {
@@ -160,13 +165,13 @@ const PlantaCarrousel = () => {
 			<Modal isOpen={isModalOpen} onClose={handleCloseModal} size="full">
 				<ModalOverlay />
 				<ModalContent>
-					<ModalHeader>{selectedImage && selectedImage.name}</ModalHeader>
+					<ModalHeader>{selectedImage && selectedImage?.name}</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
 						{selectedImage && (
 							<Image
-								src={selectedImage.imageUrl}
-								alt={selectedImage.name}
+								src={selectedImage?.imageUrl}
+								alt={selectedImage?.name}
 								maxH="80vh"
 								mx="auto"
 								objectFit="contain"

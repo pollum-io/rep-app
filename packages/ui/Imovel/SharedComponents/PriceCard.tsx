@@ -2,15 +2,16 @@ import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useOpportunities } from "../../hooks/useOpportunities";
+import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
+
 interface IPriceCard {
 	id: string;
 	price: number;
 	minted: number;
 	supply: number;
 	oportunitiesAddress: string;
-	investor_pf?: string;
-	investor_pj?: string;
+	investor_pf?: string | null | undefined;
+	investor_pj?: string | null | undefined;
 }
 
 export const PriceCard: React.FC<IPriceCard> = (props) => {
