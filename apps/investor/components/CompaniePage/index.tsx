@@ -83,10 +83,10 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 									whats={companieDetail?.contact_number}
 									phone={companieDetail?.contact_number}
 									email={companieDetail?.email}
-									instagram={companieDetail?.social_media.instagram}
-									twitter={companieDetail?.social_media.twitter}
-									facebook={companieDetail?.social_media.facebook}
-									telegram={companieDetail?.social_media.telegram}
+									instagram={companieDetail?.social_media?.instagram}
+									twitter={companieDetail?.social_media?.twitter}
+									facebook={companieDetail?.social_media?.facebook}
+									telegram={companieDetail?.social_media?.telegram}
 								/>
 							</Flex>
 						</Flex>
