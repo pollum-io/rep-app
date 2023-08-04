@@ -90,29 +90,29 @@ export const CompanieContact: FunctionComponent<ICompanieContact> = ({
 			position="sticky"
 			top="10%"
 		>
-			{infos.map(
+			{infos?.map(
 				(item) =>
-					item.content && (
+					item?.content && (
 						<Link
-							key={item.id}
+							key={item?.id}
 							href={item?.link}
 							target="_blank"
 							_hover={{ textDecoration: "none", bgColor: "transparent" }}
 							_active={{ bgColor: "transparent" }}
 						>
 							<Flex
-								display={item.valid === true ? "flex" : "none"}
+								display={item?.valid === true ? "flex" : "none"}
 								gap="1rem"
 								alignItems="center"
 							>
-								<Flex>{item.icon}</Flex>
+								<Flex>{item?.icon}</Flex>
 								<Text
 									fontFamily="Poppins"
 									fontSize="0.875rem"
 									lineHeight="1.25rem"
 									color="#171923"
 								>
-									{item.content}
+									{item?.content}
 								</Text>
 							</Flex>
 						</Link>
