@@ -200,7 +200,11 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 					</Flex>
 				</Flex>
 				<Flex py="4rem" flexDir={"column"} justifyContent="center">
-					<DocsComponent title="Estudos de mercado" />
+					<DocsComponent
+						title="Estudos de mercado"
+						isInvestPage={false}
+						width="max"
+					/>
 					<Flex mt={"2rem"} mb={"2rem"} w="100%" maxWidth="70rem">
 						<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#171923"}>
 							Localização

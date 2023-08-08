@@ -15,6 +15,7 @@ import "../styles/tooltipChart.css";
 import "../styles/pieChart.css";
 import "../helpers/i18";
 import "../styles/pageTransition.css";
+import "../styles/investModalScrollbar.css";
 
 const toasty = {
 	bg: "#FFFFFF",
@@ -25,19 +26,19 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	const queryClient = new QueryClient({});
 
 	return (
-		<UserProvider>
-			<QueryClientProvider client={queryClient}>
-				<OpportunitiesProvider>
-					<ChakraProvider resetCSS theme={theme}>
+		<ChakraProvider resetCSS theme={theme}>
+			<UserProvider>
+				<QueryClientProvider client={queryClient}>
+					<OpportunitiesProvider>
 						<ToastyProvider {...toasty}>
 							<AppWrapper>
 								<Component {...pageProps} />
 							</AppWrapper>
 						</ToastyProvider>
-					</ChakraProvider>
-				</OpportunitiesProvider>
-			</QueryClientProvider>
-		</UserProvider>
+					</OpportunitiesProvider>
+				</QueryClientProvider>
+			</UserProvider>
+		</ChakraProvider>
 	);
 };
 export default MyApp;

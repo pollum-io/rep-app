@@ -191,7 +191,11 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 						</Text>
 						<PrevisaoDeCaixaChart />
 					</Flex>
-					<DocsComponent title="Informações adicionais" />
+					<DocsComponent
+						title="Informações adicionais"
+						isInvestPage={false}
+						width="max"
+					/>
 				</Flex>
 			</Flex>
 		</>
