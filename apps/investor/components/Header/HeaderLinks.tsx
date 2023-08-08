@@ -18,6 +18,11 @@ export const HeaderLinks: React.FC = () => {
 		},
 		{
 			id: 3,
+			name: "Faturas",
+			url: "/faturas",
+		},
+		{
+			id: 4,
 			name: t("header.companies"),
 			url: "/empresas",
 		},
