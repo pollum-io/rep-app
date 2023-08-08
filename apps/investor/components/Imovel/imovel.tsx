@@ -28,7 +28,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	const [page, setPage] = useState("oportunidade");
 
 	return (
-		<Flex maxW={"70rem"} margin={"0 auto"} justifyContent={"center"}>
+		<Flex w={"100%"} maxW={"80rem"} margin={"0 auto"} justifyContent={"center"}>
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
