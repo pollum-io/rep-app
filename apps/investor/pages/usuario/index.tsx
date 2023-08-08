@@ -36,7 +36,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 
 	const user: UserLogin = jwt_decode(token);
-	const host = req.headers.host;
 
 	if (!user?.investor_pf && !user?.investor_pj) {
 		return {
@@ -49,11 +48,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 
 	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(
-			String(query.id),
-			token,
-			host
-		);
+		const response = await fetchGetInvestorPFById(String(query.id), token);
 
 		return {
 			props: {
@@ -63,11 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 			},
 		};
 	} else if (user?.investor_pj) {
-		const response = await fetchGetInvestorPJById(
-			String(query.id),
-			token,
-			host
-		);
+		const response = await fetchGetInvestorPJById(String(query.id), token);
 
 		return {
 			props: {

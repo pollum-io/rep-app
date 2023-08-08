@@ -1,8 +1,7 @@
-import { apiInstance } from "./api";
+import { api } from "./api";
 
-export async function fetchImovelDetail(id: string, host?: string) {
+export async function fetchImovelDetail(id: string) {
 	try {
-		const api = apiInstance(host);
 		const response = await api.get(`/opportunity/${id}`);
 		return response.data;
 	} catch (error) {

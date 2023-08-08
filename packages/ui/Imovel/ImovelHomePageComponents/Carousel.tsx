@@ -2,7 +2,7 @@ import { Box, IconButton, useBreakpointValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import Slider from "react-slick";
-import { apiInstance } from "../../../../apps/investor/services/api";
+import { api } from "../../../../apps/investor/services/api";
 
 const settings = {
 	dots: true,
@@ -28,7 +28,6 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 	const [slider, setSlider] = React.useState<Slider | null>(null);
 	const top = useBreakpointValue({ base: "90%", md: "50%" });
 	const side = useBreakpointValue({ base: "30%", md: "10px" });
-	const api = apiInstance();
 	const [imagesCarousel, setImagesCarousel] = useState<string[]>([]);
 
 	useEffect(() => {

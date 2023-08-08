@@ -31,9 +31,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 
 	const user: UserLogin = jwt_decode(token);
-	const host = req.headers.host;
 
-	const response = await fetchImovelDetail(String(query.id), host);
+	const response = await fetchImovelDetail(String(query.id));
 
 	return {
 		props: {

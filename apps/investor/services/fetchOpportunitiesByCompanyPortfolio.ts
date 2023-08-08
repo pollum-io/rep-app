@@ -1,10 +1,8 @@
-import { apiInstance } from "./api";
+import { api } from "./api";
 
 export const fetchOpportunitiesByCompanyPortfolio = async (
-	enterpriseId: string,
-	host?: string
+	enterpriseId: string
 ) => {
-	const api = apiInstance(host);
 	const request = await api.get(`/opportunity?investor_pj=${enterpriseId}`);
 
 	return request;

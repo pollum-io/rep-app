@@ -1,11 +1,6 @@
-import { apiInstance } from "./api";
+import { api } from "./api";
 
-export async function fetchEnterpriseInvestment(
-	host?: string,
-	enterpriseId?: string
-) {
-	const api = apiInstance(host);
-
+export async function fetchEnterpriseInvestment(enterpriseId?: string) {
 	const response = await api.get(`/enterprise/${enterpriseId}`);
 	return response.data;
 }

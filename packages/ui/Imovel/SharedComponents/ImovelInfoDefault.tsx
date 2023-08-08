@@ -19,7 +19,7 @@ export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 	const { t } = useTranslation();
 	console.log(imovelDetails);
 	useMemo(async () => {
-		const name = await fetchEnterpriseById(imovelDetails?.enterprise_id, "");
+		const name = await fetchEnterpriseById(imovelDetails?.enterprise_id);
 		setEnterpriseName(name?.data?.enterprise_name);
 	}, [imovelDetails?.enterprise_id]);
 

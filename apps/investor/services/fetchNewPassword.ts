@@ -1,13 +1,11 @@
 import { IChangePasswordData } from "../dtos/ChangePassword";
-import { apiInstance } from "./api";
+import { api } from "./api";
 
 export const fetchNewPassword = async (
 	token: string,
-	request: IChangePasswordData,
-	host?: string
+	request: IChangePasswordData
 ) => {
 	try {
-		const api = apiInstance(host);
 		const response = await api.put("/newPassword", request, {
 			headers: {
 				"Content-Type": "application/json",

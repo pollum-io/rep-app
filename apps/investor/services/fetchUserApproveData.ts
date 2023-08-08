@@ -1,4 +1,4 @@
-import { apiInstance } from "./api";
+import { api } from "./api";
 
 export const fetchUserApproveData = async (
 	opportunity_address: string,
@@ -7,7 +7,6 @@ export const fetchUserApproveData = async (
 	token: string
 ) => {
 	try {
-		const api = apiInstance();
 		const response = await api.post(
 			`/approve/`,
 			{

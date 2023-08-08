@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import { fetchChangePassword } from "../../services/fetchChangePassword";
 import { useToasty } from "../../hooks/useToasty";
 import { useUser } from "../../hooks/useUser";
-import { apiInstance } from "../../services/api";
+import { api } from "../../services/api";
 import PersistentFramework from "../../utils/persistent";
 
 interface ICreatPasswordData {
@@ -42,7 +42,6 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 	const [showPasswordInputTwo, setShowPasswordInputTwo] =
 		useState<boolean>(true);
 	const { toast } = useToasty();
-	const api = apiInstance();
 
 	useMemo(() => {
 		if (buttonScore < 2 || firstPassword !== secondPassword) {

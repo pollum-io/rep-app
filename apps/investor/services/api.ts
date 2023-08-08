@@ -1,10 +1,11 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 
-export const apiInstance = (host?: string): AxiosInstance =>
-	axios.create({
-		baseURL: host ? `http://${host}/api` : "/api",
-		headers: {
-			"content-type": "application/json",
-			accept: "application/json",
-		},
-	});
+const url = process.env.BACKEND_URL as string;
+
+export const api = axios.create({
+	baseURL: `${url}`,
+	headers: {
+		"content-type": "application/json",
+		accept: "application/json",
+	},
+});

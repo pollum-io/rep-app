@@ -27,9 +27,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 	req,
 	query,
 }) => {
-	const host = req.headers.host;
 	const token = req.cookies["livn_auth"];
-	const response = await fetchImovelDetail(String(query.id), host);
+	const response = await fetchImovelDetail(String(query.id));
 	const cotas = query.cotas;
 	const address = query.oportunitiesAddress;
 
