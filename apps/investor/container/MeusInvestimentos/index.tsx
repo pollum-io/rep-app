@@ -55,7 +55,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 				alignItems={"end"}
 			></Flex>
 			<Flex
-				maxW={"80rem"}
+				maxW={"70rem"}
 				flexDir={"column"}
 				justifyContent={"center"}
 				alignContent={"center"}

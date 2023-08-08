@@ -25,10 +25,11 @@ export const Header: React.FC = () => {
 					sm: "24px",
 					md: "5rem",
 					lg: "5rem",
-					xl: "unset",
+					xl: "5rem",
 					"2xl": "unset",
 				}}
-				maxWidth="80rem"
+				margin={"0 auto"}
+				maxWidth="70rem"
 				alignItems={"center"}
 				w={"100%"}
 			>

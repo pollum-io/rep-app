@@ -1,4 +1,4 @@
-import { Flex, Text, Img, Button } from "@chakra-ui/react";
+import { Flex, Text, Button } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 
 const data = [
@@ -36,8 +36,8 @@ const data = [
 	},
 ];
 
-const Table: FunctionComponent = () => {
-	const getStatusColor = (status?: any) => {
+const EmpreendimentoTable: FunctionComponent = () => {
+	const getStatusColor = (status?: string) => {
 		switch (status) {
 			case "Paga":
 				return { bg: "#E4F2F3", color: "#00576B" };
@@ -114,7 +114,7 @@ const Table: FunctionComponent = () => {
 	};
 
 	return (
-		<Flex flexDir={"column"} w={"100%"} borderRadius="0.75rem">
+		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem">
 			<Flex
 				id="table-header"
 				bg={"transparent"}
@@ -161,4 +161,4 @@ const Table: FunctionComponent = () => {
 	);
 };
 
-export default Table;
+export default EmpreendimentoTable;

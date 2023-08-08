@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from "next";
 import { UserLogin } from "../dtos/IUserLogin";
 import { fetchGetInvestorPFById } from "../services";
 import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
-import { FaturasContainer } from "../container/Faturas";
 import { UserDataPF } from "../dtos/UserPF";
 import { UserDataPJ } from "../dtos/UserPJ";
 import { MeusInvestimentosContainer } from "../container/MeusInvestimentos";
