@@ -47,7 +47,7 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 			newPassword: data.newPassword,
 		};
 
-		await fetchNewPassword(token, request);
+		await fetchNewPassword(request);
 		if (isSubmitSuccessful) {
 			toast({
 				id: "toast-edit",

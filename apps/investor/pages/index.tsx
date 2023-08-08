@@ -10,6 +10,8 @@ export default Login;
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["livn_auth"];
 	let user: UserLogin;
+	console.log(user, "user");
+	console.log(token, "token");
 
 	if (!token) {
 		return { props: {} };
@@ -19,7 +21,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	} catch (error) {
 		user = null;
 	}
-
 	return !user
 		? { props: {} }
 		: {

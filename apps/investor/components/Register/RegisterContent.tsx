@@ -132,8 +132,8 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 		}
 
 		await (isPhysical
-			? fetchCreateInvestorPF(dataPF, token)
-			: fetchCreateInvestorPJ(dataPJ, token)
+			? fetchCreateInvestorPF(dataPF)
+			: fetchCreateInvestorPJ(dataPJ)
 		)
 			.then((res) => {
 				if (res) {

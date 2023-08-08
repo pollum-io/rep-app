@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 
 	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(String(query.id), token);
+		const response = await fetchGetInvestorPFById(String(query.id));
 
 		return {
 			props: {
@@ -58,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 			},
 		};
 	} else if (user?.investor_pj) {
-		const response = await fetchGetInvestorPJById(String(query.id), token);
+		const response = await fetchGetInvestorPJById(String(query.id));
 
 		return {
 			props: {

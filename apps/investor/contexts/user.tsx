@@ -31,8 +31,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
 	const getInfos = async (id: string) => {
 		let name = "";
-		const response = await fetchGetInvestorPFById(userInfos, id);
-		const enterprise = await fetchGetInvestorPJById(userInfos, id);
+		const response = await fetchGetInvestorPFById(userInfos);
+		const enterprise = await fetchGetInvestorPJById(userInfos);
 
 		if (response?.data?.full_name) {
 			name = response?.data?.full_name;

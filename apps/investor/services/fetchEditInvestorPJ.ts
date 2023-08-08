@@ -3,15 +3,10 @@ import { api } from "./api";
 
 export const fetchEditInvestorPJ = async (
 	investor_pj: string,
-	data: UserDataPJ,
-	token: string
+	data: UserDataPJ
 ) => {
 	try {
-		const response = await api.put(`/investorPJ/${investor_pj}`, data, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const response = await api.put(`/investorPJ/${investor_pj}`, data);
 		return response.data;
 	} catch (error) {
 		if (error instanceof Error) {

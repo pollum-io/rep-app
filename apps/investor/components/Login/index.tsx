@@ -2,9 +2,9 @@ import { Button, ButtonProps, Flex, Img, Input, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { FunctionComponent, useState } from "react";
 import { useUser } from "../../hooks/useUser";
-import { api } from "../../services/api";
 import { useTranslation } from "react-i18next";
 import { useToasty } from "../../hooks/useToasty";
+import { fetchSignIn } from "../../services";
 
 export const Login: FunctionComponent<ButtonProps> = () => {
 	const { push } = useRouter();
@@ -15,14 +15,10 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 
 	const handleLogin = async () => {
 		try {
-			const data = await api.post("/user/authenticate", {
-				email: email,
-				password: password,
-			});
+			const data = await fetchSignIn(email, password);
+			console.log(data, "data");
 			GetUserId(
-				data?.data?.user?.investor_pf === null
-					? data?.data?.user?.investor_pj
-					: data?.data?.user?.investor_pf
+				data?.investor_pf === null ? data?.investor_pj : data?.investor_pf
 			);
 			// toast({
 			// 	id: "toast-login-suc",
@@ -30,7 +26,13 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 			// 	status: "success",
 			// 	title: "Seja bem-vindo!",
 			// });
-			push(!data?.data?.user?.investor_pf ? "/registrar" : "/oportunidades");
+			if (data?.investor_pf) {
+				push("/oportunidades");
+			} else if (data?.investor_pj) {
+				push("/oportunidades");
+			} else {
+				push("/register");
+			}
 		} catch (error) {
 			if (error instanceof Error) {
 				toast({

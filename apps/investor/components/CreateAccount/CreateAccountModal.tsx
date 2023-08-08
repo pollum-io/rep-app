@@ -33,21 +33,19 @@ export const CreateAccountModal: FunctionComponent<ICreateAccountModal> = (
 	useEffect(() => {
 		const change = async () => {
 			if (investorPF) {
-				await fetchEditInvestorPF(
-					userId,
-					{ ...investorPF, isPerfilCompleted: true },
-					token
-				);
+				await fetchEditInvestorPF(userId, {
+					...investorPF,
+					isPerfilCompleted: true,
+				});
 			} else {
-				await fetchEditInvestorPJ(
-					userId,
-					{ ...investorPJ, isPerfilCompleted: true },
-					token
-				);
+				await fetchEditInvestorPJ(userId, {
+					...investorPJ,
+					isPerfilCompleted: true,
+				});
 			}
 		};
 		change();
-	}, [investorPF, investorPJ, token, userId]);
+	}, [investorPF, investorPJ, userId]);
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
