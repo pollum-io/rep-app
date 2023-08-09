@@ -5,11 +5,17 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 interface IDocs {
 	title?: string;
+	isInvestPage?: boolean;
+	width?: string;
 }
 
 const MotionFlex = motion(Flex);
 
-export const DocsComponent: FunctionComponent<IDocs> = ({ title }) => {
+export const DocsComponent: FunctionComponent<IDocs> = ({
+	title,
+	isInvestPage,
+	width,
+}) => {
 	const filesPerPage = 5;
 	const totalFiles = 10;
 	const [currentPage, setCurrentPage] = useState(1);
@@ -86,32 +92,34 @@ export const DocsComponent: FunctionComponent<IDocs> = ({ title }) => {
 		visible: { opacity: 1 },
 	};
 	return (
-		<Flex flexDir={"column"} maxWidth={"max"} mr={"3.4rem"}>
-			<Flex flexDir={"row"} mt="3rem" gap={"16.5rem"}>
-				<Text
-					w={"max"}
-					mb="2rem"
-					fontWeight={"600"}
-					fontSize="2xl"
-					color={"#171923"}
-				>
-					{title}
-				</Text>
-				<Button
-					h={"max"}
-					w={"max"}
-					py={"2"}
-					px={"6"}
-					borderRadius={"0.6rem"}
-					bgColor={"transparent"}
-					fontSize={"0.875rem"}
-					border="1px solid #1789A3"
-					fontWeight={"500"}
-					color={"#1789A3"}
-				>
-					Baixar todas
-				</Button>
-			</Flex>
+		<Flex flexDir={"column"} width={width} mr={"3.4rem"}>
+			{!isInvestPage && (
+				<Flex flexDir={"row"} mt="3rem" gap={"16.5rem"}>
+					<Text
+						w={"max"}
+						mb="2rem"
+						fontWeight={"600"}
+						fontSize="2xl"
+						color={"#171923"}
+					>
+						{title}
+					</Text>
+					<Button
+						h={"max"}
+						w={"max"}
+						py={"2"}
+						px={"6"}
+						borderRadius={"0.6rem"}
+						bgColor={"transparent"}
+						fontSize={"0.875rem"}
+						border="1px solid #1789A3"
+						fontWeight={"500"}
+						color={"#1789A3"}
+					>
+						Baixar todas
+					</Button>
+				</Flex>
+			)}
 			<Flex flexDir={"column"} gap="0.5rem">
 				{currentFiles.map((file, index) => (
 					<MotionFlex

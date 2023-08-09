@@ -28,7 +28,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	const [page, setPage] = useState("oportunidade");
 
 	return (
-		<Flex margin={"0 auto"}>
+		<Flex w={"100%"} maxW={"70rem"} margin={"0 auto"} justifyContent={"center"}>
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
@@ -39,7 +39,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 				<Flex flexDir={"column"} alignItems="center">
 					<OportunitiesNavBar page={page} setPage={setPage} />
 					<Collections images={imovelDetails?.pictures_enterprise} />
-					<Flex gap="0rem" maxWidth="70rem" flexDir={"column"}>
+					<Flex gap="0rem" flexDir={"column"}>
 						<ImovelInfoDefault imovelDetails={imovelDetails} />
 						<Flex flexDir={"column"}>
 							{page === "oportunidade" && (

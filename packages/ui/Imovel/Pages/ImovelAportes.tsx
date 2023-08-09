@@ -77,7 +77,11 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 					</Flex>
 				</Flex>
 				<Flex py="4rem" flexDir={"column"} justifyContent="center">
-					<DocsComponent title="Informações adicionais" />
+					<DocsComponent
+						title="Informações adicionais"
+						isInvestPage={false}
+						width="max"
+					/>
 				</Flex>
 			</Flex>
 		</>

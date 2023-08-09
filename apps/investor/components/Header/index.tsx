@@ -20,7 +20,19 @@ export const Header: React.FC = () => {
 			borderBottom="0.0625rem solid #E2E8F0"
 			boxShadow="0rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.05)"
 		>
-			<Flex maxWidth="70rem" alignItems={"center"} w={"100%"}>
+			<Flex
+				px={{
+					sm: "24px",
+					md: "5rem",
+					lg: "5rem",
+					xl: "5rem",
+					"2xl": "unset",
+				}}
+				margin={"0 auto"}
+				maxWidth="70rem"
+				alignItems={"center"}
+				w={"100%"}
+			>
 				<Flex
 					onClick={() => push("/oportunidades")}
 					_hover={{ cursor: "pointer" }}
