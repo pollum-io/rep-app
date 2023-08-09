@@ -13,6 +13,16 @@ export const HeaderLinks: React.FC = () => {
 		},
 		{
 			id: 2,
+			name: "Meus investimentos",
+			url: "/meus-investimentos",
+		},
+		{
+			id: 3,
+			name: "Faturas",
+			url: "/faturas",
+		},
+		{
+			id: 4,
 			name: t("header.companies"),
 			url: "/empresas",
 		},
@@ -26,11 +36,11 @@ export const HeaderLinks: React.FC = () => {
 	const { pathname, push } = useRouter();
 
 	return (
-		<Flex gap="1">
+		<Flex gap="8">
 			{links.map((item) => (
 				<Flex
 					key={item.id}
-					w="8rem"
+					w="max"
 					justifyContent="center"
 					transition="0.14s"
 					borderBottom={
