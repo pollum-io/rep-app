@@ -42,11 +42,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 	if (user?.investor_pf) {
 		const response = await fetchGetInvestorPFById(user?.investor_pf);
-		console.log(response, "res");
+
+		console.log(response);
 		return {
 			props: {
 				user,
-				userDataPF: response?.data,
+				userDataPF: null,
 			},
 		};
 	} else if (user?.investor_pj) {
@@ -55,7 +56,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 		return {
 			props: {
 				user,
-				userDataPJ: response?.data,
+				userDataPJ: response,
 			},
 		};
 	}

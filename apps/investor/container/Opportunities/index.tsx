@@ -50,7 +50,7 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 	useEffect(() => {
 		if (
 			props?.user?.investor_pf &&
-			props?.userDataPF?.isPerfilCompleted === false
+			props?.userDataPF?.is_profile_filled === false
 		) {
 			onOpen();
 			return;
@@ -58,7 +58,7 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 
 		if (
 			props?.user?.investor_pj &&
-			props?.userDataPJ?.isPerfilCompleted === false
+			props?.userDataPJ?.is_profile_filled === false
 		) {
 			onOpen();
 			return;
@@ -67,8 +67,8 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 		onOpen,
 		props?.user?.investor_pf,
 		props?.user?.investor_pj,
-		props?.userDataPF?.isPerfilCompleted,
-		props?.userDataPJ?.isPerfilCompleted,
+		props?.userDataPF?.is_profile_filled,
+		props?.userDataPJ?.is_profile_filled,
 	]);
 
 	return (
