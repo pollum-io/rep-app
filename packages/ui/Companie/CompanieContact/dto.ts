@@ -10,6 +10,6 @@ export interface ICompanieContact {
 }
 
 interface ISocial {
-	username: string;
-	url: string;
+	username?: string;
+	url?: string;
 }
