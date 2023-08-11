@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
 					sm: "24px",
 					md: "5rem",
 					lg: "5rem",
-					xl: "5rem",
+					xl: "unset",
 					"2xl": "unset",
 				}}
 				margin={"0 auto"}
