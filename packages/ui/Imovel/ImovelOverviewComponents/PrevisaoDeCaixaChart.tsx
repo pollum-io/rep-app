@@ -3,6 +3,7 @@ import { PieChart, Pie, Sector, Cell } from "recharts";
 import { Box, Flex, Text } from "@chakra-ui/react";
 
 interface IActiveShapeProps {
+	index: number;
 	cx: number;
 	cy: number;
 	innerRadius: number;
@@ -22,13 +23,14 @@ interface ICustomizedLabelProps {
 }
 
 export const PrevisaoDeCaixaChart: React.FC = () => {
-	const [activeIndex, setActiveIndex] = useState(0);
-	const onPieEnter = useCallback(
-		(index: number) => {
-			setActiveIndex(index);
-		},
-		[setActiveIndex]
-	);
+	const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
+	const onMouseOver = useCallback((data: unknown, index: number) => {
+		setActiveIndex(index);
+	}, []);
+	const onMouseLeave = useCallback((data: unknown, index: number) => {
+		setActiveIndex(undefined);
+	}, []);
+
 	const RADIAN = Math.PI / 180;
 	const COLORS = ["#2321C0", "#BCA1FF", "#1BA9EA", "#6E40E7"];
 
@@ -71,7 +73,6 @@ export const PrevisaoDeCaixaChart: React.FC = () => {
 				startAngle={startAngle}
 				endAngle={endAngle}
 				fill={fill}
-				className="recharts-pie-sector-active"
 			/>
 		);
 	};
@@ -100,7 +101,8 @@ export const PrevisaoDeCaixaChart: React.FC = () => {
 						paddingAngle={0}
 						dataKey="value"
 						nameKey="name"
-						onMouseEnter={onPieEnter}
+						onMouseOver={onMouseOver}
+						onMouseLeave={onMouseLeave}
 						label={renderCustomizedLabel}
 						labelLine={false}
 						className="recharts-pie-sector-active"
