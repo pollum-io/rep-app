@@ -6,8 +6,10 @@ import { fetchGetInvestorPJById } from "../../services/fetchGetInvestorPJById";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { UserLogin } from "../../dtos/IUserLogin";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IEditProfile {
+	user: UserInfo;
 	userDataPF: UserDataPF;
 	userDataPJ: UserDataPJ;
 	token: string;

@@ -30,7 +30,7 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 }) => {
 	const { push } = useRouter();
 	const { t } = useTranslation();
-	const { GetUserId } = useUser();
+	const { getUserInfos } = useUser();
 	const emailPage = true;
 	const [buttonScore, setButtonScore] = useState<number>();
 	const [isButtonValid, setIsButtonValid] = useState<boolean>();
@@ -64,7 +64,7 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 
 				PersistentFramework.remove("email");
 
-				GetUserId(
+				getUserInfos(
 					data?.data?.user?.investor_pf === null
 						? data?.data?.user?.investor_pj
 						: data?.data?.user?.investor_pf

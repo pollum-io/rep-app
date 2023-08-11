@@ -6,7 +6,7 @@ export const fetchEditInvestorPJ = async (
 	data: UserDataPJ
 ) => {
 	try {
-		const response = await api.put(`/investorPJ/${investor_pj}`, data);
+		const response = await api.put(`/investor/pj//${investor_pj}`, data);
 		return response.data;
 	} catch (error) {
 		if (error instanceof Error) {

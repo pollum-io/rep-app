@@ -13,7 +13,6 @@ export default Opportunities;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["livn_auth"];
-	console.log(token, "tokenopp");
 
 	if (!token) {
 		return {
@@ -26,7 +25,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	const user: UserLogin = jwt_decode(token);
-	console.log(user, "user");
 
 	if (!user?.investor_pf && !user?.investor_pj) {
 		return {
@@ -41,9 +39,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 		};
 	}
 	if (user?.investor_pf) {
+		console.log(user?.investor_pf, "user?.investor_pf");
+
 		const response = await fetchGetInvestorPFById(user?.investor_pf);
 
-		console.log(response);
+		console.log(response, "asdadsadaa");
 		return {
 			props: {
 				user,

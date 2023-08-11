@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from "react";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import {
 	Button,
 	Flex,
@@ -12,21 +12,25 @@ import {
 import { DefaultTemplate } from "../DefaultTemplate";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { useTranslation } from "react-i18next";
+import { useUser } from "../../hooks/useUser";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IInvest {
 	data: IOpportunitiesCard;
 	cotas: number;
 	oportunitiesAddress: string;
 	token: string;
+	user?: UserInfo;
 }
 
 export const InvestContainer: FunctionComponent<IInvest> = ({
 	data,
 	cotas,
 	oportunitiesAddress,
+	user,
 }) => {
 	const [counter, setCounter] = useState<number>(Number(cotas));
-	// const { approve } = useTransactions();
+	const { getUserInfos } = useUser();
 	const { t } = useTranslation();
 
 	const available = useMemo(() => {
@@ -45,6 +49,12 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 	const buttonText = useMemo(() => {
 		return "Confirmar investimento";
 	}, []);
+
+	useEffect(() => {
+		getUserInfos(
+			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf
+		);
+	}, [getUserInfos, user?.investor_pf, user?.investor_pj]);
 
 	return (
 		<DefaultTemplate>

@@ -4,13 +4,15 @@ import { CompaniesContainer } from "../../container";
 import { fetchEnterprise } from "../../services/fetchEnterprise";
 import { UserLogin } from "../../dtos/IUserLogin";
 import { ICompanieData } from "../../dtos/ICompaniesData";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface ICompanies {
 	companies: ICompanieData[];
+	user: UserInfo;
 }
 
-const Companies: NextPage<ICompanies> = ({ companies }) => (
-	<CompaniesContainer data={companies} />
+const Companies: NextPage<ICompanies> = ({ companies, user }) => (
+	<CompaniesContainer data={companies} user={user} />
 );
 
 export default Companies;

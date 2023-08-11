@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import {
 	Flex,
 	Input,
@@ -11,17 +11,30 @@ import { BiSearch } from "react-icons/bi";
 import { CompaniesCard } from "../../components";
 import { useTranslation } from "react-i18next";
 import { ICompanieData } from "../../dtos/ICompaniesData";
+import { useUser } from "../../hooks/useUser";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface ICompanies {
 	data: ICompanieData[];
+	user: UserInfo;
 }
 
-export const CompaniesContainer: FunctionComponent<ICompanies> = ({ data }) => {
+export const CompaniesContainer: FunctionComponent<ICompanies> = ({
+	data,
+	user,
+}) => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const { t } = useTranslation();
 	const filteredCompanies = data.filter((comp) =>
 		comp.enterprise_name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
+	const { getUserInfos } = useUser();
+
+	useEffect(() => {
+		getUserInfos(
+			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf
+		);
+	}, [getUserInfos, user?.investor_pf, user?.investor_pj]);
 
 	return (
 		<DefaultTemplate>

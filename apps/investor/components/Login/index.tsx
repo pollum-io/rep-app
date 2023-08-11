@@ -10,14 +10,14 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 	const { push } = useRouter();
 	const [email, setEmail] = useState<string>();
 	const [password, setPassword] = useState<string>();
-	const { GetUserId } = useUser();
+	const { getUserInfos } = useUser();
 	const { toast } = useToasty();
 
 	const handleLogin = async () => {
 		try {
 			const data = await fetchSignIn(email, password);
 			console.log(data, "data");
-			GetUserId(
+			getUserInfos(
 				data?.investor_pf === null ? data?.investor_pj : data?.investor_pf
 			);
 			// toast({

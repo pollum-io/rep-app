@@ -6,7 +6,7 @@ export const fetchEditInvestorPF = async (
 	data: UserDataPF
 ) => {
 	try {
-		const response = await api.put(`/investorPF/${investor_pf}`, data, {});
+		const response = await api.put(`/investor/pf/${investor_pf}`, data, {});
 		return response.data;
 	} catch (error) {
 		if (error instanceof Error) {

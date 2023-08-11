@@ -4,20 +4,23 @@ import { InvestContainer } from "../container";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
 import { fetchImovelDetail } from "../services/fetchImovelDetail";
 import { UserLogin } from "../dtos/IUserLogin";
+import { UserInfo } from "../dtos/GlobalUserInfo";
 
 interface IInvest {
 	data: IOpportunitiesCard;
 	cotas: number;
 	address: string;
 	token: string;
+	user: UserInfo;
 }
 
-const Investir: NextPage<IInvest> = ({ data, cotas, address, token }) => (
+const Investir: NextPage<IInvest> = ({ data, cotas, address, token, user }) => (
 	<InvestContainer
 		data={data}
 		cotas={cotas}
 		oportunitiesAddress={address}
 		token={token}
+		user={user}
 	/>
 );
 

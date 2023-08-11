@@ -1,15 +1,18 @@
 import { Button, Flex } from "@chakra-ui/react";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { useTranslation } from "react-i18next";
 import { ChangePassword } from "../../components/EditProfile/Pages/ChangePassword";
 import { PersonalDataComponent } from "../../components/EditProfile/Pages/PersonalDataComponent";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
+import { useUser } from "../../hooks/useUser";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IEditProfile {
 	userDataPF?: UserDataPF;
 	userDataPJ?: UserDataPJ;
+	user: UserInfo;
 	token?: string;
 }
 
@@ -19,6 +22,15 @@ export const Edit_ProfileContainer: FunctionComponent<IEditProfile> = (
 	const { userDataPF, userDataPJ, token } = props;
 	const [pagePath, setPagePath] = useState("personal");
 	const { t } = useTranslation();
+	const { getUserInfos } = useUser();
+
+	useEffect(() => {
+		getUserInfos(
+			props?.user?.investor_pf === null
+				? props?.user?.investor_pj
+				: props?.user?.investor_pf
+		);
+	}, [getUserInfos, props?.user?.investor_pf, props?.user?.investor_pj]);
 
 	return (
 		<DefaultTemplate>

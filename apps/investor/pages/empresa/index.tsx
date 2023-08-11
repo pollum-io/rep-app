@@ -1,14 +1,18 @@
 import { GetServerSideProps, NextPage } from "next";
 import { ICompaniesDetails } from "../../components/Companies/CompaniesCard/dto";
 import { CompanieContainer } from "../../container";
+import { UserLogin } from "../../dtos/IUserLogin";
 import { fetchEnterpriseById } from "../../services/fetchEnterpriseById";
+import jwt_decode from "jwt-decode";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface ICompanieProps {
 	data: ICompaniesDetails;
+	user: UserInfo;
 }
 
-const Companie: NextPage<ICompanieProps> = ({ data }) => {
-	return <CompanieContainer data={data} />;
+const Companie: NextPage<ICompanieProps> = ({ data, user }) => {
+	return <CompanieContainer data={data} user={user} />;
 };
 
 export default Companie;
@@ -28,11 +32,14 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {},
 		};
 	}
+	const user: UserLogin = jwt_decode(token);
+
 	const response = await fetchEnterpriseById(String(query.enterprise_id));
 
 	return {
 		props: {
 			data: response?.data,
+			user,
 		},
 	};
 };

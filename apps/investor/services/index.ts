@@ -19,7 +19,6 @@ export * from "./fetchLogin";
 export * from "./fetchLogout";
 export * from "./fetchNewPassword";
 export * from "./fetchOpportunitiesByCompany";
-export * from "./fetchOpportunitiesByCompanyPortfolio";
 export * from "./fetchOpportunity";
 export * from "./fetchTurnPerfilEdit";
 export * from "./fetchUserApproveData";

@@ -4,8 +4,7 @@ import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
 import PersistentFramework from "../utils/persistent";
 interface IRegister {
 	setUserInfos: React.Dispatch<React.SetStateAction<string>>;
-	GetUserId: (id: string) => Promise<void>;
-	getInfos: (id: string) => Promise<void>;
+	getUserInfos: (id: string) => Promise<void>;
 	userInfos: string;
 	username: string;
 	isInvestor: boolean;
@@ -23,30 +22,21 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 	const [userInfos, setUserInfos] = useState<string>();
 	const [username, setUsername] = useState<string>();
 
-	const GetUserId = async (id: string) => {
+	const getUserInfos = async (id: string) => {
+		let name = "";
 		setUserInfos(id);
 
+		const investorPF = await fetchGetInvestorPFById(userInfos);
+		const investorPJ = await fetchGetInvestorPJById(userInfos);
+
+		name = investorPF
+			? investorPF?.data?.full_name
+			: investorPJ?.data?.full_name;
+		setUsername(name);
+		setIsInvestor(true);
+		PersistentFramework.add("name", String(name));
+		PersistentFramework.add("isInvestor", { isInvestor: true });
 		PersistentFramework.add("id", String(id));
-	};
-
-	const getInfos = async (id: string) => {
-		let name = "";
-		const response = await fetchGetInvestorPFById(userInfos);
-		const enterprise = await fetchGetInvestorPJById(userInfos);
-
-		if (response?.data?.full_name) {
-			name = response?.data?.full_name;
-			setUsername(name);
-			setIsInvestor(true);
-			PersistentFramework.add("name", String(name));
-			PersistentFramework.add("isInvestor", { isInvestor: true });
-		} else {
-			name = enterprise?.data?.full_name;
-			setUsername(name);
-			setIsInvestor(false);
-			PersistentFramework.add("name", String(name));
-			PersistentFramework.add("isInvestor", { isInvestor: false });
-		}
 	};
 
 	useEffect(() => {
@@ -82,10 +72,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			isUserLogged,
 			setIsUserLogged,
 			userInfos,
-			getInfos,
+			getUserInfos,
 			username,
 			setUserInfos,
-			GetUserId,
 			isInvestor,
 			setIsInvestor,
 		}),
