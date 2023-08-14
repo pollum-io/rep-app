@@ -4,9 +4,31 @@ import { OpportunitiesContainer } from "../../container";
 import { UserLogin } from "../../dtos/IUserLogin";
 import { fetchGetInvestorPFById } from "../../services";
 import { fetchGetInvestorPJById } from "../../services/fetchGetInvestorPJById";
+import { UserDataPF } from "../../dtos/UserPF";
+import { UserDataPJ } from "../../dtos/UserPJ";
 
-const Opportunities: NextPage = (props) => (
-	<OpportunitiesContainer {...props} />
+interface IOpportunities {
+	token: string;
+	investor_pj?: string;
+	investor_pf?: string;
+	userDataPF: UserDataPF;
+	userDataPJ: UserDataPJ;
+}
+
+const Opportunities: NextPage<IOpportunities> = ({
+	token,
+	userDataPF,
+	userDataPJ,
+	investor_pf,
+	investor_pj,
+}) => (
+	<OpportunitiesContainer
+		token={token}
+		userDataPF={userDataPF}
+		userDataPJ={userDataPJ}
+		investor_pf={investor_pf}
+		investor_pj={investor_pj}
+	/>
 );
 
 export default Opportunities;
@@ -39,15 +61,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 		};
 	}
 	if (user?.investor_pf) {
-		console.log(user?.investor_pf, "user?.investor_pf");
+		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
 
-		const response = await fetchGetInvestorPFById(user?.investor_pf);
-
-		console.log(response, "asdadsadaa");
 		return {
 			props: {
-				user,
-				userDataPF: null,
+				investor_pf: user?.investor_pf,
+				userDataPF: response?.data,
+				token: token,
 			},
 		};
 	} else if (user?.investor_pj) {
@@ -55,8 +75,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
 		return {
 			props: {
-				user,
-				userDataPJ: response,
+				investor_pj: user?.investor_pj,
+				userDataPJ: response?.data,
+				token: token,
 			},
 		};
 	}

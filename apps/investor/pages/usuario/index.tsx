@@ -15,8 +15,18 @@ interface IEditProfile {
 	token: string;
 }
 
-const Editar_Perfil: NextPage<IEditProfile> = (props) => (
-	<Edit_ProfileContainer {...props} />
+const Editar_Perfil: NextPage<IEditProfile> = ({
+	token,
+	user,
+	userDataPF,
+	userDataPJ,
+}) => (
+	<Edit_ProfileContainer
+		user={user}
+		token={token}
+		userDataPF={userDataPF}
+		userDataPJ={userDataPJ}
+	/>
 );
 
 export default Editar_Perfil;
@@ -50,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 
 	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(String(query.id));
+		const response = await fetchGetInvestorPFById(String(query.id), token);
 
 		return {
 			props: {

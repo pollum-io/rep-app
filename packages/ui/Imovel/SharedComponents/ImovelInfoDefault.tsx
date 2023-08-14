@@ -17,7 +17,7 @@ export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 	const { hasToken } = useOpportunities();
 	const [cota] = useState<number>(0);
 	const { t } = useTranslation();
-	console.log(imovelDetails);
+
 	useMemo(async () => {
 		const name = await fetchEnterpriseById(imovelDetails?.enterprise_id);
 		setEnterpriseName(name?.data?.enterprise_name);

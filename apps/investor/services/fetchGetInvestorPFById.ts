@@ -1,9 +1,15 @@
 import { api } from "./api";
 
-export const fetchGetInvestorPFById = async (investor_pf: string) => {
+export const fetchGetInvestorPFById = async (
+	investor_pf: string,
+	token: string
+) => {
 	try {
-		const response = await api.get(`/investor/pf/${investor_pf}`);
-		console.log(response, "alo");
+		const response = await api.get(`/investor/pf/${investor_pf}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 
 		return response;
 	} catch (error) {

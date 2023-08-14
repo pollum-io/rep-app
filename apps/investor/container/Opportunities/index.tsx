@@ -23,7 +23,9 @@ interface UserData {
 	userDataPJ: UserDataPJ;
 }
 
-export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
+export const OpportunitiesContainer: FunctionComponent<UserData> = (
+	props: UserData
+) => {
 	const { getUserInfos } = useUser();
 	const [bannerRes] = useMediaQuery("(max-width: 1110px)");
 	const { t } = useTranslation();
@@ -31,7 +33,8 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 
 	useEffect(() => {
 		getUserInfos(
-			props?.investor_pf === null ? props?.investor_pj : props?.investor_pf
+			props?.investor_pf === null ? props?.investor_pj : props?.investor_pf,
+			props?.token
 		);
 	}, [
 		getUserInfos,

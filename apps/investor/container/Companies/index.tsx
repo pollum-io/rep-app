@@ -16,6 +16,7 @@ import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface ICompanies {
 	data: ICompanieData[];
+	token: string;
 	user: UserInfo;
 }
 
@@ -25,7 +26,7 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({
 }) => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const { t } = useTranslation();
-	const filteredCompanies = data.filter((comp) =>
+	const filteredCompanies = data?.filter((comp) =>
 		comp.enterprise_name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 	const { getUserInfos } = useUser();
@@ -97,7 +98,7 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({
 						</Text>
 					</Flex>
 					<Flex flexDirection={"column"} gap="1.5rem" w="100%">
-						{filteredCompanies.map((comp) => (
+						{filteredCompanies?.map((comp) => (
 							// eslint-disable-next-line react/jsx-key
 							<CompaniesCard
 								key={comp._id}

@@ -8,11 +8,12 @@ import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface ICompanies {
 	companies: ICompanieData[];
+	token?: string;
 	user: UserInfo;
 }
 
-const Companies: NextPage<ICompanies> = ({ companies, user }) => (
-	<CompaniesContainer data={companies} user={user} />
+const Companies: NextPage<ICompanies> = ({ companies, user, token }) => (
+	<CompaniesContainer data={companies} token={token} user={user} />
 );
 
 export default Companies;
@@ -48,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 		props: {
 			user,
 			token,
-			companies: requestAllCompanies.data,
+			companies: requestAllCompanies?.enterprises,
 		},
 	};
 };

@@ -15,7 +15,19 @@ interface UserData {
 	userDataPJ: UserDataPJ;
 }
 
-const Faturas: NextPage<UserData> = (props) => <FaturasContainer {...props} />;
+const Faturas: NextPage<UserData> = ({
+	token,
+	user,
+	userDataPF,
+	userDataPJ,
+}) => (
+	<FaturasContainer
+		token={token}
+		user={user}
+		userDataPF={userDataPF}
+		userDataPJ={userDataPJ}
+	/>
+);
 
 export default Faturas;
 
@@ -49,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(user?.investor_pf);
+		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
 
 		return {
 			props: {

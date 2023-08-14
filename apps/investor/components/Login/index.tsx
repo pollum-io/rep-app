@@ -16,7 +16,6 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 	const handleLogin = async () => {
 		try {
 			const data = await fetchSignIn(email, password);
-			console.log(data, "data");
 			getUserInfos(
 				data?.investor_pf === null ? data?.investor_pj : data?.investor_pf
 			);

@@ -45,7 +45,7 @@ export const OpportunitiesCard: FunctionComponent<
 
 	const { data: user } = query(
 		["user"],
-		() => fetchGetInvestorPFById(investorId),
+		() => fetchGetInvestorPFById(investorId, token),
 		{
 			refetchOnWindowFocus: false,
 			refetchInterval: false,

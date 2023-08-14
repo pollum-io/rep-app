@@ -15,8 +15,18 @@ interface UserData {
 	userDataPJ: UserDataPJ;
 }
 
-const Meus_Investimentos: NextPage<UserData> = (props) => (
-	<MeusInvestimentosContainer {...props} />
+const Meus_Investimentos: NextPage<UserData> = ({
+	token,
+	user,
+	userDataPF,
+	userDataPJ,
+}) => (
+	<MeusInvestimentosContainer
+		token={token}
+		user={user}
+		userDataPF={userDataPF}
+		userDataPJ={userDataPJ}
+	/>
 );
 
 export default Meus_Investimentos;
@@ -50,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(user?.investor_pf);
+		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
 
 		return {
 			props: {
