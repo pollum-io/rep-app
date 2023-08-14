@@ -10,8 +10,8 @@ import {
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { fetchEmailVerify } from "../../services/fetchEmailVerify";
 import PersistentFramework from "../../utils/persistent";
+import { fetchSendEmailVerify } from "../../services/fetchSendEmailVerify";
 
 export const CreateAccountContainer: FunctionComponent = () => {
 	const [emailPage, setEmailPage] = useState<boolean>(true);
@@ -21,7 +21,7 @@ export const CreateAccountContainer: FunctionComponent = () => {
 	const { t } = useTranslation();
 
 	const handleSentEmailToVerify = async (email: string) => {
-		await fetchEmailVerify(email);
+		await fetchSendEmailVerify(email);
 	};
 
 	return (

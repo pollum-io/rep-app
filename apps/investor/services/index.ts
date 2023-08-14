@@ -5,7 +5,7 @@ export * from "./fetchCreateInvestor";
 export * from "./fetchCreateInvestorPJ";
 export * from "./fetchEditInvestorPF";
 export * from "./fetchEditInvestorPJ";
-export * from "./fetchEmailVerify";
+export * from "./fetchSendEmailVerify";
 export * from "./fetchEnterprise";
 export * from "./fetchEnterpriseById";
 export * from "./fetchEnterpriseInvestmet";
