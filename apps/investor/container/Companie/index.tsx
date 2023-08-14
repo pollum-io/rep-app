@@ -10,19 +10,22 @@ import { DefaultTemplate } from "../DefaultTemplate";
 interface ICompanieProps {
 	data: ICompaniesDetails;
 	user: UserInfo;
+	token: string;
 }
 
 export const CompanieContainer: FunctionComponent<ICompanieProps> = ({
 	data,
 	user,
+	token,
 }) => {
 	const { getUserInfos } = useUser();
 
 	useEffect(() => {
 		getUserInfos(
-			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf
+			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf,
+			token
 		);
-	}, [getUserInfos, user?.investor_pf, user?.investor_pj]);
+	}, [getUserInfos, token, user?.investor_pf, user?.investor_pj]);
 
 	return (
 		<DefaultTemplate>

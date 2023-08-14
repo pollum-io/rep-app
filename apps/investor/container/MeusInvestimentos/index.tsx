@@ -43,14 +43,20 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 ) => {
 	const [state, setState] = useState("todos");
 	const { getUserInfos } = useUser();
-
+	console.log(props);
 	useEffect(() => {
 		getUserInfos(
 			props?.user?.investor_pf === null
 				? props?.user?.investor_pj
-				: props?.user?.investor_pf
+				: props?.user?.investor_pf,
+			props?.token
 		);
-	}, [getUserInfos, props?.user?.investor_pf, props?.user?.investor_pj]);
+	}, [
+		getUserInfos,
+		props?.token,
+		props?.user?.investor_pf,
+		props?.user?.investor_pj,
+	]);
 
 	return (
 		<DefaultTemplate>

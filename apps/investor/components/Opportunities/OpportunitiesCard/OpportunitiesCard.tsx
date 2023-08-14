@@ -24,12 +24,11 @@ interface IOpportunitiesCompaniesCard {
 
 export const OpportunitiesCard: FunctionComponent<
 	IOpportunitiesCompaniesCard
-> = ({ id, investorId, token }) => {
+> = ({ id }) => {
 	const currentTime = new Date();
 	const router = useRouter();
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
-	const isEnterprise = investorId ? false : true;
 
 	const { data: cardsInfo } = query(
 		["oportunity", router.query],
@@ -37,15 +36,6 @@ export const OpportunitiesCard: FunctionComponent<
 			id
 				? fetchOpportunitiesByCompany(router.query)
 				: fetchOpportunity(router.query),
-		{
-			refetchOnWindowFocus: false,
-			refetchInterval: false,
-		}
-	);
-
-	const { data: user } = query(
-		["user"],
-		() => fetchGetInvestorPFById(investorId, token),
 		{
 			refetchOnWindowFocus: false,
 			refetchInterval: false,
@@ -76,21 +66,10 @@ export const OpportunitiesCard: FunctionComponent<
 		}
 	};
 
-	const imoveisDisponiveis = useMemo(() => {
-		const userOpportunties = user?.data?.opportunities_avaliable;
-		const imoveisDisponiveis = cardsInfo?.data?.map(
-			(imovel: IOpportunitiesCard) => {
-				const isDisponivel = userOpportunties?.includes(imovel._id);
-				return { ...imovel, isAvailable: isDisponivel };
-			}
-		);
-		return imoveisDisponiveis;
-	}, [cardsInfo?.data, user?.data?.opportunities_avaliable]);
-
 	return (
 		<>
 			{cardsInfo !== undefined ? (
-				imoveisDisponiveis?.map((cards: IOpportunitiesCard) => (
+				cardsInfo?.opportunities?.map((cards: IOpportunitiesCard) => (
 					<Flex
 						key={cards._id}
 						w="19.125rem"
@@ -107,8 +86,7 @@ export const OpportunitiesCard: FunctionComponent<
 						transition="150ms"
 						onClick={() =>
 							router.push({
-								pathname: `/oportunidades/${cards._id}`,
-								query: { id: cards._id },
+								pathname: `/oportunidades/${cards.name}`,
 							})
 						}
 					>

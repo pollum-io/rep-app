@@ -22,7 +22,8 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 		getUserInfos(
 			props?.user?.investor_pf === null
 				? props?.user?.investor_pj
-				: props?.user?.investor_pf
+				: props?.user?.investor_pf,
+			props?.token
 		);
 	}, [getUserInfos, props?.user?.investor_pf, props?.user?.investor_pj]);
 

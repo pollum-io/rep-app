@@ -8,11 +8,13 @@ import { useUser } from "../../hooks/useUser";
 interface IImovelProps {
 	imovel: IOpportunitiesCard;
 	usersId: UserInfo;
+	token: string;
 }
 
 export const ImovelContainer: FunctionComponent<IImovelProps> = ({
 	imovel,
 	usersId,
+	token,
 }) => {
 	const { getUserInfos } = useUser();
 
@@ -20,9 +22,10 @@ export const ImovelContainer: FunctionComponent<IImovelProps> = ({
 		getUserInfos(
 			usersId?.investor_pf === null
 				? usersId?.investor_pj
-				: usersId?.investor_pf
+				: usersId?.investor_pf,
+			token
 		);
-	}, [getUserInfos, usersId?.investor_pf, usersId?.investor_pj]);
+	}, [getUserInfos, token, usersId?.investor_pf, usersId?.investor_pj]);
 
 	return (
 		<DefaultTemplate>

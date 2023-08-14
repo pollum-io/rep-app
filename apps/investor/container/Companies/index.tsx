@@ -23,6 +23,7 @@ interface ICompanies {
 export const CompaniesContainer: FunctionComponent<ICompanies> = ({
 	data,
 	user,
+	token,
 }) => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const { t } = useTranslation();
@@ -33,9 +34,10 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({
 
 	useEffect(() => {
 		getUserInfos(
-			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf
+			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf,
+			token
 		);
-	}, [getUserInfos, user?.investor_pf, user?.investor_pj]);
+	}, [getUserInfos, token, user?.investor_pf, user?.investor_pj]);
 
 	return (
 		<DefaultTemplate>
