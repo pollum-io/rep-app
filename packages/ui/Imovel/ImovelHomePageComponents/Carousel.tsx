@@ -9,9 +9,9 @@ const settings = {
 	arrows: false,
 	fade: true,
 	infinite: true,
-	autoplay: true,
+	autoplay: false,
 	speed: 500,
-	autoplaySpeed: 5000,
+	autoplaySpeed: 0,
 	slidesToShow: 1,
 	slidesToScroll: 1,
 };
@@ -21,27 +21,28 @@ interface ICarousel {
 	heightValue: string;
 	extra_images?: string[];
 	modal_images?: string[];
+	selectedImage?: string;
 }
 
 export const Carousel: React.FC<ICarousel> = (props) => {
-	const { widthValue, heightValue, extra_images, modal_images } = props;
+	const { widthValue, heightValue, extra_images, modal_images, selectedImage } =
+		props;
 	const [slider, setSlider] = React.useState<Slider | null>(null);
 	const top = useBreakpointValue({ base: "90%", md: "50%" });
 	const side = useBreakpointValue({ base: "30%", md: "10px" });
 	const [imagesCarousel, setImagesCarousel] = useState<string[]>([]);
 
 	useEffect(() => {
-		if (extra_images) {
-			extra_images?.map((picture: string) => {
-				api.get(`/file/${picture}`).then((response) => {
-					setImagesCarousel((prevState) => [
-						...prevState,
-						response.request?.responseURL,
-					]);
-				});
-			});
-		} else {
-			modal_images?.map((picture: string) => {
+		if (extra_images || modal_images) {
+			const allImages = extra_images || modal_images || [];
+
+			// Reorder images so that selected image comes first
+			const orderedImages = [
+				selectedImage,
+				...allImages.filter((img) => img !== selectedImage),
+			];
+
+			orderedImages.map((picture?: string) => {
 				api.get(`/file/${picture}`).then((response) => {
 					setImagesCarousel((prevState) => [
 						...prevState,
@@ -51,7 +52,7 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [extra_images, modal_images]);
+	}, [extra_images, modal_images, selectedImage]);
 
 	return (
 		<Box
@@ -105,7 +106,7 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 				<MdArrowForwardIos color="#ffffff" size={50} />
 			</IconButton>
 			<Slider {...settings} ref={(slider) => setSlider(slider)}>
-				{imagesCarousel?.map((url: string, index: number) => (
+				{imagesCarousel.map((url: string, index: number) => (
 					<Box
 						key={index}
 						height={heightValue}
