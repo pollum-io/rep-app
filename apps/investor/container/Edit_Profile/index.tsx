@@ -28,9 +28,15 @@ export const Edit_ProfileContainer: FunctionComponent<IEditProfile> = (
 		getUserInfos(
 			props?.user?.investor_pf === null
 				? props?.user?.investor_pj
-				: props?.user?.investor_pf
+				: props?.user?.investor_pf,
+			props?.token
 		);
-	}, [getUserInfos, props?.user?.investor_pf, props?.user?.investor_pj]);
+	}, [
+		getUserInfos,
+		props?.token,
+		props?.user?.investor_pf,
+		props?.user?.investor_pj,
+	]);
 
 	return (
 		<DefaultTemplate>
