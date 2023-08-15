@@ -13,17 +13,18 @@ interface ICollectionsModal {
 	isOpen: boolean;
 	onClose: () => void;
 	images: string[];
+	selectedImage: string;
 }
 
 export const CollectionsModal: React.FC<ICollectionsModal> = (props) => {
-	const { isOpen, onClose, images } = props;
+	const { isOpen, onClose, images, selectedImage } = props;
 
 	return (
 		<>
 			<Modal blockScrollOnMount size="full" isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
-				<ModalContent bgColor={"#ffffff"} h="100%">
-					<ModalBody>
+				<ModalContent bgColor={"#ffffff"}>
+					<ModalBody height="inherit">
 						<Flex
 							justifyContent="center"
 							alignItems="center"
@@ -48,6 +49,7 @@ export const CollectionsModal: React.FC<ICollectionsModal> = (props) => {
 							</Flex>
 							<Carousel
 								modal_images={images}
+								selectedImage={selectedImage}
 								widthValue="55.8125rem"
 								heightValue="37.5rem"
 							/>
