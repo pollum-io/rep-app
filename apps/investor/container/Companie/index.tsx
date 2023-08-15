@@ -26,7 +26,6 @@ export const CompanieContainer: FunctionComponent<ICompanieProps> = ({
 			token
 		);
 	}, [getUserInfos, token, user?.investor_pf, user?.investor_pj]);
-
 	return (
 		<DefaultTemplate>
 			<CompaniePage companieDetail={data} />

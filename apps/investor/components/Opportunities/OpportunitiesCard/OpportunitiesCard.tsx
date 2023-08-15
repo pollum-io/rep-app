@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent } from "react";
 import { Button, Flex, Img, Text, SimpleGrid } from "@chakra-ui/react";
 import { IOpportunitiesCard } from "./dto";
 import { useRouter } from "next/router";
@@ -8,7 +8,6 @@ import { useQuery as query } from "react-query";
 import { formatDate } from "../../../utils/formatDate";
 import { fetchOpportunitiesByCompany } from "../../../services/fetchOpportunitiesByCompany";
 import { Oval } from "react-loader-spinner";
-import { fetchGetInvestorPFById } from "../../../services";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";

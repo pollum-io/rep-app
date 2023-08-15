@@ -43,7 +43,6 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 ) => {
 	const [state, setState] = useState("todos");
 	const { getUserInfos } = useUser();
-	console.log(props);
 	useEffect(() => {
 		getUserInfos(
 			props?.user?.investor_pf === null

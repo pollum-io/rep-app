@@ -25,6 +25,7 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({
 	user,
 	token,
 }) => {
+	console.log(data);
 	const [searchTerm, setSearchTerm] = useState("");
 	const { t } = useTranslation();
 	const filteredCompanies = data?.filter((comp) =>
