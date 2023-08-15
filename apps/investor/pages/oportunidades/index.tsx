@@ -11,8 +11,8 @@ interface IOpportunities {
 	token: string;
 	investor_pj?: string;
 	investor_pf?: string;
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
 const Opportunities: NextPage<IOpportunities> = ({
@@ -71,7 +71,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 			},
 		};
 	} else if (user?.investor_pj) {
-		const response = await fetchGetInvestorPJById(String(user?.investor_pj));
+		const response = await fetchGetInvestorPJById(
+			String(user?.investor_pj),
+			token
+		);
 
 		return {
 			props: {

@@ -11,8 +11,8 @@ import { UserInfo } from "../dtos/GlobalUserInfo";
 interface UserData {
 	token: string;
 	user: UserInfo;
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
 const Meus_Investimentos: NextPage<UserData> = ({
@@ -70,7 +70,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 			},
 		};
 	} else if (user?.investor_pj) {
-		const response = await fetchGetInvestorPJById(String(user?.investor_pj));
+		const response = await fetchGetInvestorPJById(
+			String(user?.investor_pj),
+			token
+		);
 
 		return {
 			props: {

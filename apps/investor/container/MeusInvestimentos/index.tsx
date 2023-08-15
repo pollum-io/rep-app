@@ -34,8 +34,8 @@ const PrevisaoDeCaixaChart = dynamic(
 interface UserData {
 	token: string;
 	user: UserInfo;
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
 export const MeusInvestimentosContainer: FunctionComponent<UserData> = (

@@ -10,8 +10,8 @@ import { UserInfo } from "../../dtos/GlobalUserInfo";
 interface UserData {
 	token: string;
 	user: UserInfo;
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
 export const FaturasContainer: FunctionComponent<UserData> = (props) => {
@@ -25,7 +25,12 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 				: props?.user?.investor_pf,
 			props?.token
 		);
-	}, [getUserInfos, props?.user?.investor_pf, props?.user?.investor_pj]);
+	}, [
+		getUserInfos,
+		props?.token,
+		props?.user?.investor_pf,
+		props?.user?.investor_pj,
+	]);
 
 	return (
 		<DefaultTemplate>

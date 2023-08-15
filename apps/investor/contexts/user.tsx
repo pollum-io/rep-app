@@ -27,7 +27,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 		setUserInfos(id);
 
 		const investorPF = await fetchGetInvestorPFById(id, token);
-		const investorPJ = await fetchGetInvestorPJById(id);
+		const investorPJ = await fetchGetInvestorPJById(id, token);
 
 		name = investorPF
 			? investorPF?.data?.full_name

@@ -19,8 +19,8 @@ interface UserData {
 	token: string;
 	investor_pj?: string;
 	investor_pf?: string;
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
 export const OpportunitiesContainer: FunctionComponent<UserData> = (

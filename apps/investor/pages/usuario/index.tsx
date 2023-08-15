@@ -10,8 +10,8 @@ import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IEditProfile {
 	user: UserInfo;
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 	token: string;
 }
 
@@ -70,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 			},
 		};
 	} else if (user?.investor_pj) {
-		const response = await fetchGetInvestorPJById(String(query.id));
+		const response = await fetchGetInvestorPJById(String(query.id), token);
 
 		return {
 			props: {
