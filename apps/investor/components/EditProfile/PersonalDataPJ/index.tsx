@@ -45,7 +45,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 			is_profile_filled: true,
 		};
 
-		await fetchEditInvestorPJ(userInfos, request)
+		await fetchEditInvestorPJ(userInfos, request, token)
 			.then((res) => {
 				if (res) {
 					toast({

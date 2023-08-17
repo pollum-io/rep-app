@@ -83,7 +83,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			is_profile_filled: true,
 		};
 
-		await fetchEditInvestorPF(userInfos, request)
+		await fetchEditInvestorPF(userInfos, request, token)
 			.then((res) => {
 				if (res) {
 					toast({

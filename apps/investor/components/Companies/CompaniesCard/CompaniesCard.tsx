@@ -14,7 +14,6 @@ export const CompaniesCard: FunctionComponent<ICompaniesCard> = ({
 }) => {
 	const { push } = useRouter();
 	const { t } = useTranslation();
-	console.log(opportunities_available);
 	return (
 		<Flex
 			w="100%"

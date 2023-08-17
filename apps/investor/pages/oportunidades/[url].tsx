@@ -30,14 +30,13 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {},
 		};
 	}
-
 	const user: UserLogin = jwt_decode(token);
 
-	const response = await fetchImovelDetail(String(query.id));
+	const response = await fetchImovelDetail(String(query?.url));
 
 	return {
 		props: {
-			data: response?.data,
+			data: response,
 			users: user,
 			token,
 		},

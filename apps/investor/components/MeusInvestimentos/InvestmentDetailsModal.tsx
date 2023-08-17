@@ -2,13 +2,9 @@ import React from "react";
 import {
 	Button,
 	Flex,
-	Icon,
 	Img,
 	Modal,
-	ModalBody,
-	ModalCloseButton,
 	ModalContent,
-	ModalHeader,
 	ModalOverlay,
 	Text,
 } from "@chakra-ui/react";
@@ -124,7 +120,7 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 							>
 								Contrato
 							</Text>
-							<DocsComponent isInvestPage={true} width="60%" />
+							<DocsComponent isInvestPage={true} width="60%" data={null} />
 						</Flex>
 						<Flex justifyContent={"center"}>
 							<Button

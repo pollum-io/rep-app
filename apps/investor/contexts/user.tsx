@@ -27,16 +27,26 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 		setUserInfos(id);
 
 		const investorPF = await fetchGetInvestorPFById(id, token);
-		const investorPJ = await fetchGetInvestorPJById(id, token);
 
-		name = investorPF
-			? investorPF?.data?.full_name
-			: investorPJ?.data?.full_name;
-		setUsername(name);
-		setIsInvestor(true);
-		PersistentFramework.add("name", String(name));
-		PersistentFramework.add("isInvestor", { isInvestor: true });
-		PersistentFramework.add("id", String(id));
+		if (investorPF) {
+			name = investorPF.data?.full_name;
+			setUsername(name);
+			setIsInvestor(true);
+			PersistentFramework.add("name", String(name));
+			PersistentFramework.add("isInvestor", { isInvestor: true });
+			PersistentFramework.add("id", String(id));
+			return;
+		}
+
+		const investorPJ = await fetchGetInvestorPJById(id, token);
+		if (investorPJ) {
+			name = investorPJ.data?.full_name;
+			setUsername(name);
+			setIsInvestor(true);
+			PersistentFramework.add("name", String(name));
+			PersistentFramework.add("isInvestor", { isInvestor: true });
+			PersistentFramework.add("id", String(id));
+		}
 	};
 
 	useEffect(() => {

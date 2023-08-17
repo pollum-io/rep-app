@@ -85,7 +85,7 @@ export const OpportunitiesCard: FunctionComponent<
 						transition="150ms"
 						onClick={() =>
 							router.push({
-								pathname: `/oportunidades/${cards.name}`,
+								pathname: `/oportunidades/${cards.url}`,
 							})
 						}
 					>

@@ -67,10 +67,8 @@ export const InputBase: ForwardRefRenderFunction<
 				value={rest.value}
 				onBlur={rest.onBlur}
 				onChange={rest.onChange}
-				maskChar={null}
 			>
 				<ChakraInput
-					disableUnderline={true}
 					id={name}
 					name={name}
 					ref={ref}
