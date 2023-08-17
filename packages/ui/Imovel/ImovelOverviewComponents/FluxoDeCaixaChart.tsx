@@ -1,5 +1,5 @@
 import { Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { FunctionComponent } from "react";
 import {
 	BarChart,
 	Bar,
@@ -26,13 +26,18 @@ interface ICustomBarProps {
 	value?: number;
 }
 
-const data = [
-	{ name: "Item 1", value: -200000000, fill: "#E53E3E" },
-	{ name: "Item 2", value: -300000000, fill: "#E53E3E" },
-	{ name: "Item 3", value: 200000000, fill: "#38A169" },
-	{ name: "Item 4", value: 300000000, fill: "#38A169" },
-	{ name: "Item 5", value: 400000000, fill: "#38A169" },
-];
+interface IScheduleItem {
+	period?: number;
+	cost: number;
+	total_revenue: number;
+	total_revenue_percentage: number;
+	units_sold: number;
+	cash_flow: number;
+}
+
+interface IPositiveAndNegativeBarChart {
+	data?: IScheduleItem[];
+}
 
 const formatCurrencyValue = (value: number) => {
 	return (value / 100).toLocaleString("pt-BR", {
@@ -53,7 +58,7 @@ const CustomBarLabel = (props: ICustomBarLabelProps) => {
 		<>
 			{x && y && width && value && (
 				<text
-					x={x + width / 2}
+					x={x + width / 2.2}
 					y={isPositive ? y - -18 : y + -13}
 					fill="white"
 					fontSize={12}
@@ -66,7 +71,15 @@ const CustomBarLabel = (props: ICustomBarLabelProps) => {
 	);
 };
 
-const PositiveAndNegativeBarChart = () => {
+const PositiveAndNegativeBarChart: FunctionComponent<
+	IPositiveAndNegativeBarChart
+> = ({ data }) => {
+	const chartData = data?.map((item, index) => ({
+		name: `Item ${index + 1}`,
+		value: item.cash_flow,
+		fill: getBarColor(item.cash_flow),
+	}));
+
 	return (
 		<Flex flexDir={"column"}>
 			<Flex
@@ -77,33 +90,15 @@ const PositiveAndNegativeBarChart = () => {
 				py={"1rem"}
 				mb={"2rem"}
 			>
-				<Flex width={"8.7rem"} justifyContent={"center"}>
-					<Text textAlign={"center"} color="#171923" fontSize={"0.875rem"}>
-						2023
-					</Text>
-				</Flex>
-				<Flex width={"8.7rem"} justifyContent={"center"}>
-					<Text textAlign={"center"} color="#171923" fontSize={"0.875rem"}>
-						2024
-					</Text>
-				</Flex>
-				<Flex width={"8.7rem"} justifyContent={"center"}>
-					<Text textAlign={"center"} color="#171923" fontSize={"0.875rem"}>
-						2025
-					</Text>
-				</Flex>
-				<Flex width={"8.7rem"} justifyContent={"center"}>
-					<Text textAlign={"center"} color="#171923" fontSize={"0.875rem"}>
-						2026
-					</Text>
-				</Flex>
-				<Flex width={"8.7rem"} justifyContent={"center"}>
-					<Text textAlign={"center"} color="#171923" fontSize={"0.875rem"}>
-						2027
-					</Text>
-				</Flex>
+				{data?.map((data, index) => (
+					<Flex key={index} width={"8.2rem"} justifyContent={"center"}>
+						<Text textAlign={"center"} color="#171923" fontSize={"0.875rem"}>
+							{data?.period}
+						</Text>
+					</Flex>
+				))}
 			</Flex>
-			<BarChart width={710} height={400} data={data}>
+			<BarChart width={280} height={400} data={chartData}>
 				<XAxis hide={true} />
 				<YAxis hide={true} />
 				<Tooltip
@@ -127,7 +122,7 @@ const CustomBar = (props: ICustomBarProps) => {
 			<Rectangle
 				x={x}
 				y={y}
-				width={width}
+				width={105}
 				height={height}
 				radius={
 					isPositive

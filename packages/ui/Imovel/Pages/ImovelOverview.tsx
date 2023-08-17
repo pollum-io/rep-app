@@ -6,7 +6,7 @@ import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import PrevFinanceiraTable from "../ImovelOverviewComponents/PrevFinanceiraTable";
 import PositiveAndNegativeBarChart from "../ImovelOverviewComponents/FluxoDeCaixaChart";
 import { PrevisaoDeCaixaChart } from "../ImovelOverviewComponents/PrevisaoDeCaixaChart";
-import { DocsComponent, PriceCard, TimeCard } from "../SharedComponents";
+import { PriceCard, TimeCard } from "../SharedComponents";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -20,7 +20,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="2.75rem" maxWidth="70rem" h={"42rem"}>
+				<Flex gap="1rem" maxWidth="70rem">
 					<Flex flexDir={"column"} maxWidth={"70%"} mr={"0em"}>
 						<Flex flexDir={"row"} mt="1rem" justifyContent={"space-between"}>
 							<Text
@@ -34,7 +34,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 						</Flex>
 						<Flex flexDir={"column"}>
 							<Flex
-								w={"44.125rem"}
+								w={"46.125rem"}
 								bg={"#1789A3"}
 								alignItems={"center"}
 								justifyContent={"center"}
@@ -131,7 +131,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 							>
 								Previsão Financeira{" "}
 							</Text>
-							<PrevFinanceiraTable />
+							<PrevFinanceiraTable data={imovelDetails?.schedule_table} />
 							<Text
 								fontSize={"0.875rem"}
 								fontWeight={"400"}
@@ -141,16 +141,34 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 								* Espaço para disclaimer: um texto que escreveremos sobre os
 								valores já terem impostos descontados, comissão de venda, etc.
 							</Text>
+							<Flex w="100%" py="4rem" flexDir={"column"}>
+								<Text
+									fontSize={"1.5rem"}
+									fontWeight={"600"}
+									color={"#171923"}
+									mb={"2rem"}
+								>
+									Fluxo de caixa
+								</Text>
+								<PositiveAndNegativeBarChart
+									data={imovelDetails?.schedule_table}
+								/>
+							</Flex>
+							<Flex w="100%" pb="3rem" flexDir={"column"}>
+								<Text
+									fontSize={"1.5rem"}
+									fontWeight={"600"}
+									color={"#171923"}
+									mb={"1rem"}
+								>
+									Previsão de caixa
+								</Text>
+								<PrevisaoDeCaixaChart />
+							</Flex>
 						</Flex>
 					</Flex>{" "}
-					<Flex
-						flexDirection="column"
-						position="relative"
-						bottom={"14rem"}
-						h={"148rem"}
-					>
+					<Flex flexDirection="column" position="relative" bottom={"14rem"}>
 						<Flex
-							h="188rem"
 							flexDirection="column"
 							gap="1.5rem"
 							className="page-transition"
@@ -158,44 +176,14 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								id={imovelDetails?._id}
-								minted={imovelDetails?.token_minted}
-								price={imovelDetails?.token_price}
-								supply={imovelDetails?.token_supply}
-								oportunitiesAddress={imovelDetails?.token_address}
+								oportunitiesAddress={imovelDetails?._id}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
+								heightDefault="9.5%"
+								pageSize="lg"
 							/>{" "}
 						</Flex>
 					</Flex>{" "}
-				</Flex>
-				<Flex py="4rem" flexDir={"column"} justifyContent="center">
-					<Flex w="100%" py="4rem" flexDir={"column"}>
-						<Text
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-							color={"#171923"}
-							mb={"2rem"}
-						>
-							Fluxo de caixa
-						</Text>
-						<PositiveAndNegativeBarChart />
-					</Flex>
-					<Flex w="100%" py="0rem" flexDir={"column"}>
-						<Text
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-							color={"#171923"}
-							mb={"1rem"}
-						>
-							Previsão de caixa
-						</Text>
-						<PrevisaoDeCaixaChart />
-					</Flex>
-					<DocsComponent
-						title="Informações adicionais"
-						isInvestPage={false}
-						width="max"
-					/>
 				</Flex>
 			</Flex>
 		</>

@@ -1,49 +1,79 @@
 export interface IOpportunitiesCard {
-	__v: number;
-	_id: string;
-	address: IOpportunitieAddress;
-	profitability: number;
-	pictures_enterprise: string[];
+	_id?: string;
 	name: string;
+	url?: string;
+	address?: IOpportunitieAddress;
+	bank_details?: { pix_key: string | null };
 	enterprise_id: string;
-	enterprise_logo: string;
-	enterprise_name: string;
-	enterprise_type: string;
-	expected_delivery_date: string; // ou data
+	enterprise_logo?: string;
 	min_investment: number;
-	isPortfolio?: boolean;
-	cub_expected: number;
+	init_date: string;
+	expected_delivery_date: string;
+	end_date: string;
+	profitability: number;
+	cub_current?: number;
+	cub_expected?: number;
 	description: string;
-	end_date: string; // ou data
-	investor_pj: string;
-	general_info: string[];
-	init_date: string; // ou data
+	event_ensuing?: object;
 	neighbor_description: string;
-	pictures_extra: string[];
 	pictures_neighbor: string[];
-	token_price: number;
-	token_minted: number;
-	token_supply: number;
-	token_address: string;
-	createdAt: string; // ou data
-	updatedAt: string; // ou data
-	blocked?: boolean;
-	finished?: boolean;
-	sale_end_at: string;
-	approval_process?: IOpportunitiesApprovalProcess[];
-	licensing_process?: IOpportunitiesApprovalProcess[];
-	incorporation_enrollment?: IOpportunitiesApprovalProcess[];
+	pictures_enterprise: string[];
+	sale_end_at?: string;
+	enterprise_type: string;
+	description_extra?: string;
+	picture_extra?: string[];
+	enterprise_name?: string;
+	tags?: string[];
+	blueprints?: Array<{ file: string; name: string }>;
+	oppportunities_details?: {
+		constructed_area: number;
+		estimated_vgv: number;
+		total_units: number;
+		available_units: number;
+		average_price: number;
+	};
+	estimated_conogram?: Array<{ name: string; status: string }>;
+	complementary_addresses?: IOpportunitieAddress[];
+	opportunity_resume?: {
+		percentage_final_return: number;
+		total_deadline: number;
+		min_investment: number;
+		disbursement_schedule: Array<{ date: Date; value: number }>;
+		return_descritption: string;
+		return_schedule: Array<{ date: Date; value: number }>;
+	};
+	opportunity_resume_files?: Array<{ file: string; name: string }>;
+	business_details?: {
+		business_structure: string;
+		description_flows_raised: Array<{ item: string; value: number }>;
+		additional_files: Array<{ file: string; name: string }>;
+	};
+	schedule_table?: IScheduleTable[];
 	sub_categories?: string[];
+	approval_process?: IProcessStatus[];
+	licensing_process?: IProcessStatus[];
+	incorporation_enrollment?: IProcessStatus[];
 }
 
-export interface IOpportunitiesApprovalProcess {
-	name?: string;
-	status?: string;
+export interface IScheduleTable {
+	period: number;
+	cost: number;
+	total_revenue: number;
+	total_revenue_percentage: number;
+	units_sold: number;
+	cash_flow: number;
 }
+
 export interface IOpportunitieAddress {
 	state: string;
+	state_alias: string;
+	city: string;
 	neighborhood: string;
 	street: string;
-	address: number;
-	state_alias?: string;
+	number: number;
+}
+
+export interface IProcessStatus {
+	name: string;
+	status: string;
 }

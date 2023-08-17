@@ -28,7 +28,7 @@ export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 			<Flex gap="0.5rem" pb="0.5rem">
 				<Img w="6" h="6" src={`/api/file/${imovelDetails?.enterprise_logo}`} />
 				<Text fontWeight={"400"} color="#171923">
-					{enterpriseName}
+					{imovelDetails?.enterprise_name}
 				</Text>
 			</Flex>
 			<Flex
@@ -56,18 +56,21 @@ export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 					>
 						{imovelDetails?.enterprise_type}
 					</Text>
-					<Text
-						fontSize={"sm"}
-						fontWeight="400"
-						color="#171923"
-						bgColor="#F0E8FF"
-						py="0.25rem"
-						px="1rem"
-						borderRadius={"4.875rem"}
-						w="max"
-					>
-						{imovelDetails?.sub_categories}
-					</Text>
+					{imovelDetails?.sub_categories?.map((cat: string, index: number) => (
+						<Text
+							key={index}
+							fontSize={"sm"}
+							fontWeight="400"
+							color="#171923"
+							bgColor="#F0E8FF"
+							py="0.25rem"
+							px="1rem"
+							borderRadius={"4.875rem"}
+							w="max"
+						>
+							{cat}
+						</Text>
+					))}
 					{cota > 0 && (
 						<Flex
 							bgColor="#F0E8FF"

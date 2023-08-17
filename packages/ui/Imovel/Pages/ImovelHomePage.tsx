@@ -1,13 +1,10 @@
 import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
-import {
-	IOpportunitiesApprovalProcess,
-	IOpportunitiesCard,
-} from "../../../../apps/investor/dtos/Oportunities";
+import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities";
 import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import { formatDate } from "../../../../apps/investor/utils/formatDate";
-
+import { Maps } from "../../../../apps/investor/components/Maps/index";
 import { Carousel } from "../ImovelHomePageComponents";
 import {
 	DocsComponent,
@@ -30,7 +27,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="2.75rem" maxWidth="70rem" h={"43rem"}>
+				<Flex gap="2.75rem" maxWidth="70rem">
 					<Flex flexDir={"column"} maxWidth={"70%"}>
 						<Flex flexDir={"column"} pb="3rem">
 							<SimpleGrid
@@ -102,7 +99,9 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 										Prazo total invest.
 									</Text>
 									<Flex gap="0.25rem">
-										<Text color="#000000">2 anos</Text>
+										<Text color="#000000">
+											{imovelDetails?.opportunity_resume?.total_deadline} anos
+										</Text>
 										<Img
 											src="/icons/info-circle-littlegray.svg"
 											w={"1rem"}
@@ -116,7 +115,13 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 										Retorno final{" "}
 									</Text>
 									<Flex gap="0.25rem">
-										<Text color="#000000">200%</Text>
+										<Text color="#000000">
+											{
+												imovelDetails?.opportunity_resume
+													?.percentage_final_return
+											}
+											%
+										</Text>
 										<Img
 											src="/icons/info-circle-littlegray.svg"
 											w={"1rem"}
@@ -146,73 +151,65 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 										<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
 											Processo de aprovação
 										</Text>
-										{imovelDetails?.approval_process?.map(
-											(data: IOpportunitiesApprovalProcess) => (
-												<>
-													<ObraSteps
-														title={data.name}
-														barPercentage={data.status}
-													/>
-												</>
-											)
-										)}
+										{imovelDetails?.approval_process?.map((data, index) => (
+											<>
+												<ObraSteps
+													key={index}
+													title={data.name}
+													barPercentage={data.status}
+												/>
+											</>
+										))}
 									</Flex>
 									<Flex flexDir={"column"} color={"#171923"}>
 										<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
 											Processo de aprovação
 										</Text>
-										{imovelDetails?.licensing_process?.map(
-											(data: IOpportunitiesApprovalProcess) => (
-												<>
-													<ObraSteps
-														title={data.name}
-														barPercentage={data.status}
-													/>
-												</>
-											)
-										)}
+										{imovelDetails?.licensing_process?.map((data, index) => (
+											<>
+												<ObraSteps
+													key={index}
+													title={data.name}
+													barPercentage={data.status}
+												/>
+											</>
+										))}
 									</Flex>
 								</Flex>
 							</Flex>
 							<Flex gap="8rem">
 								<Flex flexDir={"column"} color={"#171923"}></Flex>
 							</Flex>
+							<DocsComponent
+								title="Estudos de mercado"
+								isInvestPage={false}
+								width="max"
+								data={imovelDetails?.opportunity_resume_files}
+							/>
 						</Flex>
 					</Flex>
-					<Flex
-						flexDirection="column"
-						position="relative"
-						bottom={"14rem"}
-						h={"85rem"}
-					>
-						<Flex h="91rem" flexDirection="column" gap="1.5rem">
+					<Flex flexDirection="column" position="relative" bottom={"14rem"}>
+						<Flex flexDirection="column" gap="1.5rem">
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								id={imovelDetails?._id}
-								minted={imovelDetails?.token_minted}
-								price={imovelDetails?.token_price}
-								supply={imovelDetails?.token_supply}
-								oportunitiesAddress={imovelDetails?.token_address}
+								oportunitiesAddress={imovelDetails?._id}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
+								heightDefault="18%"
+								pageSize="md"
 							/>{" "}
 						</Flex>
 					</Flex>
 				</Flex>
 				<Flex py="4rem" flexDir={"column"} justifyContent="center">
-					<DocsComponent
-						title="Estudos de mercado"
-						isInvestPage={false}
-						width="max"
-					/>
 					<Flex mt={"2rem"} mb={"2rem"} w="100%" maxWidth="70rem">
 						<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#171923"}>
 							Localização
 						</Text>
 					</Flex>
 					<Flex maxWidth="70rem">
-						{/* <Maps localization={imovelDetails?.address} /> */}
-						<Img src="/images/Map.png" />
+						<Maps localization={imovelDetails?.address} />
 					</Flex>
 					<Flex
 						mt="2rem"

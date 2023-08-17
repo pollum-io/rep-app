@@ -33,8 +33,8 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 	const [imagesCarousel, setImagesCarousel] = useState<string[]>([]);
 
 	useEffect(() => {
-		if (extra_images || modal_images) {
-			const allImages = extra_images || modal_images || [];
+		if (modal_images) {
+			const allImages = modal_images || [];
 
 			// Reorder images so that selected image comes first
 			const orderedImages = [
@@ -43,6 +43,15 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 			];
 
 			orderedImages.map((picture?: string) => {
+				api.get(`/file/${picture}`).then((response) => {
+					setImagesCarousel((prevState) => [
+						...prevState,
+						response.request?.responseURL,
+					]);
+				});
+			});
+		} else {
+			extra_images?.map((picture: string) => {
 				api.get(`/file/${picture}`).then((response) => {
 					setImagesCarousel((prevState) => [
 						...prevState,

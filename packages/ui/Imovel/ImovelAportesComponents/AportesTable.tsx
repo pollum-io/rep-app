@@ -1,33 +1,32 @@
 import { Flex, Text, Img } from "@chakra-ui/react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useMemo } from "react";
+import { getYearFromDate } from "../../utils/getYearFromDate";
+import { getMonthNameFromDate } from "../../utils/getMonthNameFromDate";
+import { formatCurrency } from "../../utils/BRCurrency";
 
-const data = [
-	{ ano: "2023", mes: "Fevereiro", aporte: "R$ 90.000,00" },
-	{ ano: "2023", mes: "Março", aporte: "R$ 85.000,00" },
-	{ ano: "2023", mes: "Abril", aporte: "R$ 95.000,00" },
-	{ ano: "2023", mes: "Maio", aporte: "R$ 100.000,00" },
-	{ ano: "2023", mes: "Junho", aporte: "R$ 80.000,00" },
-	{ ano: "2023", mes: "Julho", aporte: "R$ 75.000,00" },
-	{ ano: "2023", mes: "Agosto", aporte: "R$ 90.000,00" },
-	{ ano: "2023", mes: "Setembro", aporte: "R$ 110.000,00" },
-	{ ano: "2023", mes: "Outubro", aporte: "R$ 120.000,00" },
-	{ ano: "2023", mes: "Novembro", aporte: "R$ 105.000,00" },
-	{ ano: "2023", mes: "Dezembro", aporte: "R$ 95.000,00" },
-	{ ano: "2024", mes: "Janeiro", aporte: "R$ 100.000,00" },
-	{ ano: "2024", mes: "Fevereiro", aporte: "R$ 110.000,00" },
-	{ ano: "2024", mes: "Março", aporte: "R$ 115.000,00" },
-	{ ano: "2024", mes: "Abril", aporte: "R$ 120.000,00" },
-	{ ano: "2024", mes: "Maio", aporte: "R$ 125.000,00" },
-	{ ano: "2024", mes: "Junho", aporte: "R$ 130.000,00" },
-];
-
+type schedule = {
+	date?: string;
+	value?: number;
+};
 interface IValueTable {
 	isCronograma?: boolean;
+	data?: any[];
 }
 
-const Table: FunctionComponent<IValueTable> = ({ isCronograma }) => {
+const Table: FunctionComponent<IValueTable> = ({ isCronograma, data }) => {
+	const calculateTotalFromArray = useMemo(() => {
+		const total = data?.reduce((accumulator, currentValue) => {
+			if (currentValue.value !== undefined) {
+				return accumulator + currentValue.value;
+			}
+			return accumulator;
+		}, 0);
+
+		return total;
+	}, [data]);
+
 	const renderRows = () => {
-		return data.map((item, index) => (
+		return data?.map((item: schedule, index) => (
 			<Flex
 				key={index}
 				px="1rem"
@@ -38,12 +37,12 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma }) => {
 			>
 				<Flex flex="0.7" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#4BA3B7"}>
-						{item.ano}
+						{getYearFromDate(item?.date)}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
-						{item.mes}
+						{getMonthNameFromDate(item.date)}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
@@ -52,7 +51,9 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma }) => {
 						fontWeight={isCronograma ? "400" : "500"}
 						color={"#171923"}
 					>
-						{isCronograma ? item.aporte : `+ ${item.aporte}`}
+						{isCronograma
+							? formatCurrency(item.value)
+							: `+ ${formatCurrency(item.value)}`}
 					</Text>
 					<Img src="/icons/info-circle-gray.svg" />
 				</Flex>
@@ -116,7 +117,7 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma }) => {
 				<Flex flex={"1"} />
 				<Flex flex="1">
 					<Text fontSize={"0.875rem"} fontWeight={"semibold"} color={"white"}>
-						R$ 832.658,88{" "}
+						{formatCurrency(calculateTotalFromArray)}
 					</Text>
 				</Flex>
 			</Flex>
