@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from "react";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import {
 	Button,
 	Flex,
@@ -12,30 +12,26 @@ import {
 import { DefaultTemplate } from "../DefaultTemplate";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { useTranslation } from "react-i18next";
+import { useUser } from "../../hooks/useUser";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IInvest {
 	data: IOpportunitiesCard;
 	cotas: number;
 	oportunitiesAddress: string;
 	token: string;
+	user?: UserInfo;
 }
 
 export const InvestContainer: FunctionComponent<IInvest> = ({
 	data,
 	cotas,
 	oportunitiesAddress,
+	user,
 }) => {
 	const [counter, setCounter] = useState<number>(Number(cotas));
-	// const { approve } = useTransactions();
+	const { getUserInfos } = useUser();
 	const { t } = useTranslation();
-
-	const available = useMemo(() => {
-		if (data.token_supply > data.token_minted) {
-			return data.token_supply - data.token_minted;
-		} else {
-			return data.token_minted - data.token_supply;
-		}
-	}, [data.token_minted, data.token_supply]);
 
 	const formatter = new Intl.NumberFormat("pt-br", {
 		style: "currency",
@@ -45,6 +41,12 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 	const buttonText = useMemo(() => {
 		return "Confirmar investimento";
 	}, []);
+
+	useEffect(() => {
+		getUserInfos(
+			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf
+		);
+	}, [getUserInfos, user?.investor_pf, user?.investor_pj]);
 
 	return (
 		<DefaultTemplate>
@@ -160,7 +162,7 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 											lineHeight="1rem"
 											color="#2D3748"
 										>
-											R$ {data.token_price}
+											R$ valor
 										</Text>
 									</Flex>
 									<Flex flexDirection="column" gap="0.1875rem">
@@ -211,7 +213,6 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 												justifyContent="center"
 												alignItems="center"
 												w="2.5rem"
-												isDisabled={counter > available}
 												border="0.0625rem solid #E2E8F0"
 												borderLeft="0.0625rem solid #E2E8F0"
 												color="#171923"
@@ -225,9 +226,7 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 														: { bgColor: "#f4f7fa" }
 												}
 												onClick={() =>
-													setCounter(
-														counter === available ? counter : counter + 1
-													)
+													setCounter(counter === 1 ? counter : counter + 1)
 												}
 												h="2rem"
 												fontSize="0.875rem"
@@ -269,7 +268,7 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 										5
 									)}...${oportunitiesAddress?.slice(38)}`}
 								</Text>
-								<Text>R${data.token_price}</Text>
+								<Text>R$valor</Text>
 							</Flex>
 							<Flex
 								justifyContent="space-between"
@@ -278,7 +277,7 @@ export const InvestContainer: FunctionComponent<IInvest> = ({
 								fontWeight="500"
 							>
 								<Text>Total</Text>
-								<Text>{formatter.format(counter * data.token_price)}</Text>
+								<Text>{formatter.format(counter)}</Text>
 							</Flex>
 							<Flex w="100%" bgColor="#4BA3B7" h="0.0625rem" />
 							{/* <Input

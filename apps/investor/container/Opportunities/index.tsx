@@ -17,58 +17,49 @@ import { UserDataPF } from "../../dtos/UserPF";
 
 interface UserData {
 	token: string;
-	user: {
-		investor_pj?: string;
-		investor_pf?: string;
-	};
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	investor_pj?: string;
+	investor_pf?: string;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
-export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
-	const { GetUserId, getInfos } = useUser();
+export const OpportunitiesContainer: FunctionComponent<UserData> = (
+	props: UserData
+) => {
+	const { getUserInfos } = useUser();
 	const [bannerRes] = useMediaQuery("(max-width: 1110px)");
 	const { t } = useTranslation();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	useEffect(() => {
-		GetUserId(
-			props?.user?.investor_pf === null
-				? props?.user?.investor_pj
-				: props?.user?.investor_pf
+		getUserInfos(
+			props?.investor_pf === null ? props?.investor_pj : props?.investor_pf,
+			props?.token
 		);
-		getInfos(props.token);
 	}, [
-		getInfos,
-		GetUserId,
+		getUserInfos,
 		props.token,
-		props?.user?.investor_pj,
-		props?.user?.investor_pf,
+		props?.investor_pj,
+		props?.investor_pf,
 		onOpen,
 	]);
 
 	useEffect(() => {
-		if (
-			props?.user?.investor_pf &&
-			props?.userDataPF?.isPerfilCompleted === false
-		) {
+		if (props?.investor_pf && props?.userDataPF?.is_profile_filled === false) {
 			onOpen();
 			return;
 		}
 
-		if (
-			props?.user?.investor_pj &&
-			props?.userDataPJ?.isPerfilCompleted === false
-		) {
+		if (props?.investor_pj && props?.userDataPJ?.is_profile_filled === false) {
 			onOpen();
 			return;
 		}
 	}, [
 		onOpen,
-		props?.user?.investor_pf,
-		props?.user?.investor_pj,
-		props?.userDataPF?.isPerfilCompleted,
-		props?.userDataPJ?.isPerfilCompleted,
+		props?.investor_pf,
+		props?.investor_pj,
+		props?.userDataPF?.is_profile_filled,
+		props?.userDataPJ?.is_profile_filled,
 	]);
 
 	return (
@@ -82,11 +73,7 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 				<CreateAccountModal
 					isOpen={isOpen}
 					onClose={onClose}
-					userId={
-						props?.user?.investor_pf
-							? props?.user?.investor_pf
-							: props?.user?.investor_pj
-					}
+					userId={props?.investor_pf ? props?.investor_pf : props?.investor_pj}
 					token={props.token}
 					investorPF={props?.userDataPF}
 					investorPJ={props?.userDataPJ}
@@ -250,7 +237,7 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 					</Flex>
 					<Flex mt="2.9375rem" w="100%" justifyContent="center">
 						<OpportunitiesCards
-							investorId={props?.user?.investor_pf}
+							investorId={props?.investor_pf}
 							token={props.token}
 						/>
 					</Flex>

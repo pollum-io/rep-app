@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import { fetchChangePassword } from "../../services/fetchChangePassword";
 import { useToasty } from "../../hooks/useToasty";
 import { useUser } from "../../hooks/useUser";
-import { apiInstance } from "../../services/api";
+import { api } from "../../services/api";
 import PersistentFramework from "../../utils/persistent";
 
 interface ICreatPasswordData {
@@ -30,7 +30,7 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 }) => {
 	const { push } = useRouter();
 	const { t } = useTranslation();
-	const { GetUserId } = useUser();
+	const { getUserInfos } = useUser();
 	const emailPage = true;
 	const [buttonScore, setButtonScore] = useState<number>();
 	const [isButtonValid, setIsButtonValid] = useState<boolean>();
@@ -42,7 +42,6 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 	const [showPasswordInputTwo, setShowPasswordInputTwo] =
 		useState<boolean>(true);
 	const { toast } = useToasty();
-	const api = apiInstance();
 
 	useMemo(() => {
 		if (buttonScore < 2 || firstPassword !== secondPassword) {
@@ -65,7 +64,7 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 
 				PersistentFramework.remove("email");
 
-				GetUserId(
+				getUserInfos(
 					data?.data?.user?.investor_pf === null
 						? data?.data?.user?.investor_pj
 						: data?.data?.user?.investor_pf

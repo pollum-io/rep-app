@@ -19,7 +19,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	} catch (error) {
 		user = null;
 	}
-
 	return !user
 		? { props: {} }
 		: {

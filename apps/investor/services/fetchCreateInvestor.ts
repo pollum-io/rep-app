@@ -1,17 +1,9 @@
 import { ICreateInvestorPF } from "../dtos/ICreateInvestorPF";
-import { apiInstance } from "./api";
+import { api } from "./api";
 
-export const fetchCreateInvestorPF = async (
-	data: ICreateInvestorPF,
-	token: string
-) => {
+export const fetchCreateInvestorPF = async (data: ICreateInvestorPF) => {
 	try {
-		const api = apiInstance();
-		const response = await api.post("/investorPF", data, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const response = await api.post("/investor/pf", data);
 		return response.data;
 	} catch (error) {
 		if (error instanceof Error) {

@@ -9,10 +9,11 @@ import { UserInfo } from "../../dtos/GlobalUserInfo";
 interface IImovelProps {
 	data: IOpportunitiesCard;
 	users: UserInfo;
+	token: string;
 }
 
-const Imovel: NextPage<IImovelProps> = ({ data, users }) => {
-	return <ImovelContainer imovel={data} usersId={users} />;
+const Imovel: NextPage<IImovelProps> = ({ data, users, token }) => {
+	return <ImovelContainer imovel={data} usersId={users} token={token} />;
 };
 export const getServerSideProps: GetServerSideProps = async ({
 	req,
@@ -29,16 +30,15 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {},
 		};
 	}
-
 	const user: UserLogin = jwt_decode(token);
-	const host = req.headers.host;
 
-	const response = await fetchImovelDetail(String(query.id), host);
+	const response = await fetchImovelDetail(String(query?.url));
 
 	return {
 		props: {
-			data: response?.data,
+			data: response,
 			users: user,
+			token,
 		},
 	};
 };

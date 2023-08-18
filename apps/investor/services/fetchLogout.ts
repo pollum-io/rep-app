@@ -1,10 +1,9 @@
 import { NextRouter } from "next/router";
-import { apiInstance } from "./api";
+import { api } from "./api";
 
 export const logout = async (push: NextRouter["push"]) => {
 	try {
-		const api = apiInstance();
-		const response = await api.get("/user/logout");
+		const response = await api.get("/signout");
 		if (response.status === 200) {
 			push("/");
 		}

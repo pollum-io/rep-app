@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { DefaultTemplate } from "../DefaultTemplate";
@@ -8,7 +8,6 @@ import {
 	Img,
 	Input,
 	InputGroup,
-	InputLeftElement,
 	InputRightElement,
 	Text,
 } from "@chakra-ui/react";
@@ -17,6 +16,8 @@ import ImoveisTable from "../../components/MeusInvestimentos/ImoveisTable/Imovei
 import { Maps } from "../../components/Maps";
 import dynamic from "next/dynamic";
 import { BiSearch } from "react-icons/bi";
+import { useUser } from "../../hooks/useUser";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 const PrevisaoDeCaixaChart = dynamic(
 	async () => {
@@ -32,18 +33,29 @@ const PrevisaoDeCaixaChart = dynamic(
 
 interface UserData {
 	token: string;
-	user: {
-		investor_pj?: string;
-		investor_pf?: string;
-	};
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	user: UserInfo;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
 export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 	props
 ) => {
 	const [state, setState] = useState("todos");
+	const { getUserInfos } = useUser();
+	useEffect(() => {
+		getUserInfos(
+			props?.user?.investor_pf === null
+				? props?.user?.investor_pj
+				: props?.user?.investor_pf,
+			props?.token
+		);
+	}, [
+		getUserInfos,
+		props?.token,
+		props?.user?.investor_pf,
+		props?.user?.investor_pj,
+	]);
 
 	return (
 		<DefaultTemplate>

@@ -1,12 +1,17 @@
-import React, { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { Flex, Text, Img, Button } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
+type FileData = {
+	file?: string;
+	name?: string;
+};
 interface IDocs {
 	title?: string;
 	isInvestPage?: boolean;
 	width?: string;
+	data?: FileData[];
 }
 
 const MotionFlex = motion(Flex);
@@ -15,6 +20,7 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 	title,
 	isInvestPage,
 	width,
+	data,
 }) => {
 	const filesPerPage = 5;
 	const totalFiles = 10;
@@ -33,60 +39,8 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 
 	const indexOfLastFile = currentPage * filesPerPage;
 	const indexOfFirstFile = indexOfLastFile - filesPerPage;
-	const files = [
-		{
-			name: "Nome do documento/estudo 1",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 2",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 3",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 4",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 5",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 6",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 7",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 8",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 9",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-		{
-			name: "Nome do documento/estudo 10",
-			icon: "/icons/folder.svg",
-			downloadIcon: "/icons/downloand.svg",
-		},
-	];
-	const currentFiles = files.slice(indexOfFirstFile, indexOfLastFile);
-	const totalPages = Math.ceil(totalFiles / filesPerPage);
+	const currentFiles = data?.slice(indexOfFirstFile, indexOfLastFile);
+	const totalPages = Math?.ceil(totalFiles / filesPerPage);
 	const pageTransition = {
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
@@ -121,7 +75,7 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 				</Flex>
 			)}
 			<Flex flexDir={"column"} gap="0.5rem">
-				{currentFiles.map((file, index) => (
+				{currentFiles?.map((data, index) => (
 					<MotionFlex
 						key={index}
 						alignItems={"center"}
@@ -136,16 +90,16 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 						justifyContent="space-between"
 					>
 						<Flex alignItems={"center"} gap={"1.5rem"}>
-							<Img src={file.icon} />
+							<Img src={"/icons/folder.svg"} />
 							<Text fontSize={"0.875rem"} color={"#171923"} fontWeight={"400"}>
-								{file.name}
+								{data?.name}
 							</Text>
 						</Flex>
-						<Img src={file.downloadIcon} />
+						<Img src={"/icons/downloand.svg"} />
 					</MotionFlex>
 				))}
 			</Flex>
-			{files.length > 5 && (
+			{data && data?.length > 5 && (
 				<Flex gap={"1.5rem"} mt="2rem" justifyContent={"center"}>
 					<Button
 						bgColor="#2D3748"

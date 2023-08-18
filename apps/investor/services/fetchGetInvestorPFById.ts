@@ -1,18 +1,17 @@
-import { apiInstance } from "./api";
+import { api } from "./api";
 
 export const fetchGetInvestorPFById = async (
 	investor_pf: string,
-	token?: string,
-	host?: string
+	token: string
 ) => {
 	try {
-		const api = apiInstance(host);
-		const response = await api.get(`/investorPF/${investor_pf}`, {
+		const response = await api.get(`/investor/pf/${investor_pf}`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		return response.data;
+
+		return response;
 	} catch (error) {
 		if (error instanceof Error) {
 			console.log(error.message);

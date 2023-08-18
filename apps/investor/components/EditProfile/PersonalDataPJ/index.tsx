@@ -42,7 +42,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 				?.replace(/[^\w]/gi, "")
 				?.replace(/\s+/g, ""),
 			address: data?.address,
-			isPerfilCompleted: true,
+			is_profile_filled: true,
 		};
 
 		await fetchEditInvestorPJ(userInfos, request, token)

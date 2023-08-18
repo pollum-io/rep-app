@@ -6,18 +6,28 @@ import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
 import { FaturasContainer } from "../container/Faturas";
 import { UserDataPF } from "../dtos/UserPF";
 import { UserDataPJ } from "../dtos/UserPJ";
+import { UserInfo } from "../dtos/GlobalUserInfo";
 
 interface UserData {
 	token: string;
-	user: {
-		investor_pj?: string;
-		investor_pf?: string;
-	};
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	user: UserInfo;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
-const Faturas: NextPage<UserData> = (props) => <FaturasContainer {...props} />;
+const Faturas: NextPage<UserData> = ({
+	token,
+	user,
+	userDataPF,
+	userDataPJ,
+}) => (
+	<FaturasContainer
+		token={token}
+		user={user}
+		userDataPF={userDataPF}
+		userDataPJ={userDataPJ}
+	/>
+);
 
 export default Faturas;
 
@@ -51,11 +61,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(
-			user?.investor_pf,
-			token,
-			host
-		);
+		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
 
 		return {
 			props: {
@@ -67,8 +73,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	} else if (user?.investor_pj) {
 		const response = await fetchGetInvestorPJById(
 			String(user?.investor_pj),
-			token,
-			host
+			token
 		);
 
 		return {

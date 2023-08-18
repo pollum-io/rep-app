@@ -1,43 +1,78 @@
 import { Flex, Text } from "@chakra-ui/react";
+import { FunctionComponent, useEffect, useState } from "react";
+import {
+	formatCurrency,
+	formatCurrencyWithoutSymbol,
+} from "../../utils/BRCurrency";
 
-const data = [
-	{
-		periodo: "2023",
-		custo: "R$ 1.000.000,00",
-		receita_total: "R$ 90.000,00",
-		receita_vendas: "7,81 %",
-		unidades_vendidas: "1",
-		fluxo_caixa: "- R$ 500.000,00",
-	},
-	{
-		periodo: "2024",
-		custo: "R$ 2.000.000,00",
-		receita_total: "R$ 1.160.000,00",
-		receita_vendas: "25,00 %",
-		unidades_vendidas: "3",
-		fluxo_caixa: "- R$ 400.000,00",
-	},
-	{
-		periodo: "2025",
-		custo: "R$ 500.000,00",
-		receita_total: "R$ 2.160.000,00",
-		receita_vendas: "39,06 %",
-		unidades_vendidas: "5",
-		fluxo_caixa: "+ R$ 1.500.000,00",
-	},
-	{
-		periodo: "2026",
-		custo: "R$ 1.000.000,00",
-		receita_total: "R$ 1.060.000,00",
-		receita_vendas: "28,13 %",
-		unidades_vendidas: "3",
-		fluxo_caixa: "+ R$ 1.300.000,00",
-	},
-];
+interface IScheduleItem {
+	period?: number;
+	cost: number;
+	total_revenue: number;
+	total_revenue_percentage: number;
+	units_sold: number;
+	cash_flow: number;
+}
 
-const PrevFinanceiraTable = () => {
+interface IPrevFinanceira {
+	data?: IScheduleItem[];
+}
+
+const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
+	const [totalData, setTotalData] = useState<IScheduleItem | null>(null);
+
+	useEffect(() => {
+		const calculateTotal = (data: IScheduleItem[]) => {
+			const initialTotal = {
+				cost: 0,
+				total_revenue: 0,
+				total_revenue_percentage: 0,
+				units_sold: 0,
+				cash_flow: 0,
+			};
+
+			return data.reduce((total, item) => {
+				total.cost += parseFloat(
+					item.cost
+						.toString()
+						.replace("R$", "")
+						.replace(".", "")
+						.replace(",", "")
+				);
+				total.total_revenue += parseFloat(
+					item.total_revenue
+						.toString()
+						.replace("R$", "")
+						.replace(".", "")
+						.replace(",", "")
+				);
+				total.total_revenue_percentage += parseFloat(
+					item.total_revenue_percentage
+						.toString()
+						.replace(" %", "")
+						.replace(",", "")
+				);
+				total.units_sold += item.units_sold;
+				total.cash_flow += parseFloat(
+					item.cash_flow
+						.toString()
+						.replace("R$", "")
+						.replace(".", "")
+						.replace(",", "")
+				);
+
+				return total;
+			}, initialTotal);
+		};
+
+		if (data) {
+			const calculatedTotal = calculateTotal(data);
+			setTotalData(calculatedTotal);
+		}
+	}, [data]);
+
 	const renderRows = () => {
-		return data.map((item, index) => (
+		return data?.map((item: IScheduleItem, index: number) => (
 			<Flex
 				key={index}
 				px="1rem"
@@ -48,36 +83,38 @@ const PrevFinanceiraTable = () => {
 			>
 				<Flex flex="0.7" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#4BA3B7"}>
-						{item.periodo}
+						{item?.period}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
-						{item.custo}
+						{formatCurrencyWithoutSymbol(item?.cost)}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
-						{item.receita_total}
+						{formatCurrencyWithoutSymbol(item.total_revenue)}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
-						{item.receita_vendas}
+						{item.total_revenue_percentage}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
-						{item.unidades_vendidas}
+						{item.units_sold}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
 					<Text
 						fontSize={"0.75rem"}
 						fontWeight={"400"}
-						color={item.fluxo_caixa.charAt(0) === "+" ? "#38A169" : "#E53E3E"}
+						color={item.cash_flow > 0 ? "#38A169" : "#E53E3E"}
 					>
-						{item.fluxo_caixa}
+						{item.cash_flow > 0
+							? `+ ${formatCurrencyWithoutSymbol(item.cash_flow)}`
+							: `- ${formatCurrencyWithoutSymbol(item.cash_flow)}`}
 					</Text>
 				</Flex>
 			</Flex>
@@ -148,27 +185,27 @@ const PrevFinanceiraTable = () => {
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.75rem"} fontWeight={"600"} color={"white"}>
-						4.600.000,00{" "}
+						{formatCurrencyWithoutSymbol(totalData?.cost)}{" "}
 					</Text>
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.75rem"} fontWeight={"600"} color={"white"}>
-						6.400.000,00{" "}
+						{formatCurrencyWithoutSymbol(totalData?.total_revenue)}{" "}
 					</Text>
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.75rem"} fontWeight={"600"} color={"white"}>
-						100 %{" "}
+						{totalData?.total_revenue_percentage} %
 					</Text>
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.75rem"} fontWeight={"600"} color={"white"}>
-						12{" "}
+						{totalData?.units_sold}
 					</Text>
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.75rem"} fontWeight={"600"} color={"white"}>
-						R$ 1.900.000,00{" "}
+						{formatCurrency(totalData?.cash_flow)}
 					</Text>
 				</Flex>
 			</Flex>
