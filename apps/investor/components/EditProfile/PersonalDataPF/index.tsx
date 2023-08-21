@@ -39,31 +39,27 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	const onSubmitForm = async (data: UserDataPF) => {
 		let request: UserDataPF;
 		let value: MaritalStatus;
-
+		console.log(data, "data");
 		// eslint-disable-next-line prefer-const
 		value = isMerried
 			? {
 					status: maritalStatus,
-					equity_regime: isMerried ? equityRegime : null,
-					spouse_name: isMerried ? data?.marital_status?.spouse_name : null,
-					spouse_cpf: isMerried ? data?.marital_status?.spouse_cpf : null,
-					spouse_rg: isMerried ? data?.marital_status?.spouse_rg : null,
-					spouse_address: isMerried
-						? data?.marital_status?.spouse_address
-						: null,
+					equity_regime: isMerried ? equityRegime : "",
+					spouse_name: isMerried ? data?.marital_status?.spouse_name : "",
+					spouse_cpf: isMerried ? data?.marital_status?.spouse_cpf : "",
+					spouse_rg: isMerried ? data?.marital_status?.spouse_rg : "",
+					spouse_address: isMerried ? data?.marital_status?.spouse_address : "",
 			  }
 			: {
 					status: maritalStatus,
 					partners_name: isStableUnion
 						? data?.marital_status?.partners_name
-						: null,
-					partners_cpf: isStableUnion
-						? data?.marital_status?.partners_cpf
-						: null,
-					partners_rg: isStableUnion ? data?.marital_status?.partners_rg : null,
+						: "",
+					partners_cpf: isStableUnion ? data?.marital_status?.partners_cpf : "",
+					partners_rg: isStableUnion ? data?.marital_status?.partners_rg : "",
 					partners_address: isStableUnion
 						? data?.marital_status?.partners_address
-						: null,
+						: "",
 			  };
 
 		// eslint-disable-next-line prefer-const
@@ -96,7 +92,16 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 				}
 			})
 			.catch((err) => {
-				console.log({ err });
+				if (err) {
+					toast({
+						id: "toast-edit",
+						position: "top-right",
+						status: "success",
+						title: "Preencha as informações corretamente!",
+						description:
+							"Verifique se existe algum campo que nao foi preenchido ainda",
+					});
+				}
 			});
 	};
 

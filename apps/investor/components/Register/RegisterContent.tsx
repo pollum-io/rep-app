@@ -18,6 +18,7 @@ import { fetchCreateInvestorPF, fetchEnterprise, logout } from "../../services";
 import { fetchCreateInvestorPJ } from "../../services/fetchCreateInvestorPJ";
 import { ICreateInvestorPF } from "../../dtos/ICreateInvestorPF";
 import { ICreateInvestorPJ } from "../../dtos/ICreateInvestorPJ";
+import PersistentFramework from "../../utils/persistent";
 
 interface IRegisterContent {
 	token: string;
@@ -118,7 +119,6 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				birthday_date: new Date(data?.birthday_date),
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
-				isPerfilCompleted: false,
 			};
 		} else {
 			dataPJ = {
@@ -127,7 +127,6 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				uf: Object?.values(inputValuesUf)[0],
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
-				isPerfilCompleted: false,
 			};
 		}
 
@@ -145,6 +144,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 						description:
 							"Você receberá no e-mail informado mais informações em breve.",
 					});
+					PersistentFramework.add("popUp", true);
 					push("/oportunidades");
 				}
 			})

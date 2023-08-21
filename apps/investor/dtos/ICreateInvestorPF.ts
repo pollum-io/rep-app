@@ -4,5 +4,4 @@ export interface ICreateInvestorPF {
 	birthday_date: Date;
 	is_legal_entity?: boolean;
 	invited_by: string;
-	isPerfilCompleted: boolean;
 }

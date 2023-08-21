@@ -19,6 +19,7 @@ export interface IOpportunitiesCard {
 	pictures_neighbor: string[];
 	pictures_enterprise: string[];
 	sale_end_at?: string;
+	geolocation?: { lat: number; lng: number };
 	enterprise_type: string;
 	description_extra?: string;
 	picture_extra?: string[];

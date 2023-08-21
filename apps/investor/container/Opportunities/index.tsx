@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { CreateAccountModal } from "../../components/CreateAccount/CreateAccountModal";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { UserDataPF } from "../../dtos/UserPF";
+import PersistentFramework from "../../utils/persistent";
 
 interface UserData {
 	token: string;
@@ -45,12 +46,14 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 	]);
 
 	useEffect(() => {
-		if (props?.investor_pf && props?.userDataPF?.is_profile_filled === false) {
+		const pops = PersistentFramework.get("popUp");
+
+		if (props?.investor_pf && pops === true) {
 			onOpen();
 			return;
 		}
 
-		if (props?.investor_pj && props?.userDataPJ?.is_profile_filled === false) {
+		if (props?.investor_pj && pops === true) {
 			onOpen();
 			return;
 		}

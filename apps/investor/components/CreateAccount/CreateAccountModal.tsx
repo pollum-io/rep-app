@@ -10,10 +10,9 @@ import {
 	Button,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { fetchEditInvestorPF } from "../../services";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { UserDataPF } from "../../dtos/UserPF";
-import { fetchEditInvestorPJ } from "../../services/fetchEditInvestorPJ";
+import PersistentFramework from "../../utils/persistent";
 
 interface ICreateAccountModal {
 	isOpen: boolean;
@@ -27,36 +26,16 @@ interface ICreateAccountModal {
 export const CreateAccountModal: FunctionComponent<ICreateAccountModal> = (
 	props
 ) => {
-	const { isOpen, onClose, userId, token, investorPF, investorPJ } = props;
+	const { isOpen, onClose, userId } = props;
 	const { push } = useRouter();
 
-	useEffect(() => {
-		const change = async () => {
-			if (investorPF) {
-				await fetchEditInvestorPF(
-					userId,
-					{
-						...investorPF,
-						is_profile_filled: true,
-					},
-					token
-				);
-			} else {
-				await fetchEditInvestorPJ(
-					userId,
-					{
-						...investorPJ,
-						is_profile_filled: true,
-					},
-					token
-				);
-			}
-		};
-		change();
-	}, [investorPF, investorPJ, token, userId]);
+	const handleClose = () => {
+		PersistentFramework.add("popUp", false);
+		onClose();
+	};
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
+		<Modal isOpen={isOpen} onClose={handleClose} size={"3xl"}>
 			<ModalOverlay />
 			<ModalContent
 				my={"auto"}

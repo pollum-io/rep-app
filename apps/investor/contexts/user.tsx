@@ -9,6 +9,8 @@ interface IRegister {
 	username: string;
 	isInvestor: boolean;
 	setIsInvestor: React.Dispatch<React.SetStateAction<boolean>>;
+	firstAccess: boolean;
+	setFirstAccess?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const UserContext = createContext({} as IRegister);
@@ -21,6 +23,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
 	const [userInfos, setUserInfos] = useState<string>();
 	const [username, setUsername] = useState<string>();
+	const [firstAccess, setFirstAccess] = useState<boolean>();
 
 	const getUserInfos = async (id: string, token?: string) => {
 		let name = "";
@@ -87,6 +90,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			setUserInfos,
 			isInvestor,
 			setIsInvestor,
+			firstAccess,
+			setFirstAccess,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[isUserLogged, userInfos, username]
