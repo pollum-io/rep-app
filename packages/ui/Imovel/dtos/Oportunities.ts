@@ -53,6 +53,13 @@ export interface IOpportunitiesCard {
 	approval_process?: IProcessStatus[];
 	licensing_process?: IProcessStatus[];
 	incorporation_enrollment?: IProcessStatus[];
+	estimated_timeline?: Array<{
+		year: number;
+		data: Array<{
+			quarter: string;
+			info: Array<{ name: string; status: string }>;
+		}>;
+	}>;
 }
 
 export interface IScheduleTable {

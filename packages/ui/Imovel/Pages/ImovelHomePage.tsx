@@ -23,7 +23,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	usersId,
 }) => {
 	const { t } = useTranslation();
-
+	console.log(imovelDetails);
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
@@ -209,7 +209,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 						</Text>
 					</Flex>
 					<Flex maxWidth="70rem">
-						<Maps localization={imovelDetails?.address} />
+						<Maps localization={imovelDetails?.geolocation} />
 					</Flex>
 					<Flex
 						mt="2rem"

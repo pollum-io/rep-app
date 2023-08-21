@@ -1,11 +1,10 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
-import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities";
 import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
-import { TimelineComponentData } from "../ImovelDetailComponents/TimelineComponentData";
 import PlantaCarrousel from "../ImovelDetailComponents/PlantaCarrouselComponent";
 import { TimelineComponent } from "../ImovelDetailComponents";
 import { ObraSteps, PriceCard, TimeCard } from "../SharedComponents";
+import { IOpportunitiesCard } from "../dtos/Oportunities";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -16,7 +15,6 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
 	usersId,
 }) => {
-	console.log(imovelDetails, "as");
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
@@ -145,55 +143,16 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 									</Text>
 								</Flex>
 								<Flex maxWidth="70rem">
-									<Flex>
-										<Flex flexDir={"column"} color={"#171923"}>
-											<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
-												2022{" "}
-											</Text>
-											{TimelineComponentData.map((data) => (
-												<>
-													<TimelineComponent
-														key={data.id}
-														status={data.monthStatus}
-														title={data.title}
-														descriptions={data.descriptions}
-														titleWidth={"12rem"}
-													/>
-												</>
-											))}
-										</Flex>
-										<Flex flexDir={"column"} color={"#171923"}>
-											<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
-												2023{" "}
-											</Text>
-											{TimelineComponentData.map((data) => (
-												<>
-													<TimelineComponent
-														key={data.id}
-														status={data.monthStatus}
-														title={data.title}
-														descriptions={data.descriptions}
-														titleWidth={"12rem"}
-													/>
-												</>
-											))}
-										</Flex>
-										<Flex flexDir={"column"} color={"#171923"}>
-											<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
-												2024{" "}
-											</Text>
-											{TimelineComponentData.map((data) => (
-												<>
-													<TimelineComponent
-														key={data.id}
-														status={data.monthStatus}
-														title={data.title}
-														descriptions={data.descriptions}
-														titleWidth={"12rem"}
-													/>
-												</>
-											))}
-										</Flex>
+									<Flex flexDir={"row"}>
+										{imovelDetails?.estimated_timeline?.map((data, index) => (
+											<>
+												<TimelineComponent
+													key={index}
+													titleWidth={"12rem"}
+													data={data}
+												/>
+											</>
+										))}
 									</Flex>
 								</Flex>
 							</Flex>
@@ -212,7 +171,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 								oportunitiesAddress={imovelDetails?._id}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault="13%"
+								heightDefault="15%"
 								pageSize="md"
 							/>{" "}
 						</Flex>

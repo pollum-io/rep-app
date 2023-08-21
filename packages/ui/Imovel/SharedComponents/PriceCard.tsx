@@ -42,36 +42,35 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			let breakpoints: number[] = [];
-			let top: string[] = [];
+			const breakpoints: Record<string, number[]> = {
+				sm: [350, 560, 740, 900],
+				md: [350, 560, 740, 900],
+				lg: [400, 850, 1100, 1300],
+			};
+
+			const topValues: Record<string, string[]> = {
+				sm: ["29%", "50%", "75%", "80%"],
+				md: ["25%", "50%", "75%", "90%"],
+				lg: ["15%", "40%", "65%", "80%"],
+			};
+
 			const scrollY = window.scrollY;
+			const currentBreakpoints = breakpoints[pageSize || "sm"] || [];
+			const currentTopValues = topValues[pageSize || "sm"] || [];
 
-			if (pageSize === "sm") {
-				breakpoints = [350, 560, 740, 900];
-				top = ["29%", "50%", "75%", "80%"];
-			} else if (pageSize === "md") {
-				breakpoints = [350, 560, 740, 900];
-				top = ["25%", "50%", "75%", "90%"];
-			} else if (pageSize === "lg") {
-				breakpoints = [400, 850, 1100, 1300];
-				top = ["15%", "40%", "65%", "80%"];
+			let containerPosition = false;
+			let scrollYValue = "0%";
+
+			for (let i = currentBreakpoints.length - 1; i >= 0; i--) {
+				if (scrollY >= currentBreakpoints[i]) {
+					containerPosition = true;
+					scrollYValue = currentTopValues[i];
+					break;
+				}
 			}
 
-			if (scrollY >= breakpoints[3]) {
-				setContainerPosition(true);
-				setScrollY(top[3]);
-			} else if (scrollY >= breakpoints[2]) {
-				setContainerPosition(true);
-				setScrollY(top[2]);
-			} else if (scrollY >= breakpoints[1]) {
-				setContainerPosition(true);
-				setScrollY(top[1]);
-			} else if (scrollY >= breakpoints[0]) {
-				setContainerPosition(true);
-				setScrollY(top[0]);
-			} else {
-				setContainerPosition(false);
-			}
+			setContainerPosition(containerPosition);
+			setScrollY(scrollYValue);
 		};
 
 		window.addEventListener("scroll", handleScroll);
