@@ -18,9 +18,9 @@ export const PersonalDataComponent: React.FC<IChangePassword> = (props) => {
 	return (
 		<Flex w="100%" justifyContent="end">
 			{userDataPF ? (
-				<PersonalDataPF data={userDataPF} token={token} />
+				<PersonalDataPF isCheckout={false} data={userDataPF} token={token} />
 			) : (
-				<PersonalDataPJ data={userDataPJ} token={token} />
+				<PersonalDataPJ isCheckout={false} data={userDataPJ} token={token} />
 			)}
 		</Flex>
 	);

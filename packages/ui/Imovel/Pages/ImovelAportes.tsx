@@ -17,7 +17,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="1rem" maxWidth="70rem">
+				<Flex gap="1rem" maxWidth="75rem">
 					<Flex flexDir={"column"}>
 						<Flex flexDir={"row"} maxWidth={"70%"} mr={"0rem"} gap={"1.7rem"}>
 							<Flex flexDir={"column"}>
@@ -72,11 +72,11 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 						<Flex flexDirection="column" gap="1.5rem">
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
-								id={imovelDetails?._id}
-								oportunitiesAddress={imovelDetails?._id}
+								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
 								heightDefault={"30%"}
+								unitPrice={imovelDetails?.min_investment}
 								pageSize="sm"
 							/>{" "}
 						</Flex>

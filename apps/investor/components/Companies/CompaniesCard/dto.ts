@@ -23,6 +23,7 @@ export interface ICompaniesDetails {
 	team: ICompaniesTeam[];
 	enterprise_info: ICompaniesInfo;
 	investments: string[];
+	payment_info?: ICompaniesBankDatails;
 	createdAt: string;
 	updatedAt: string;
 	__v: number;
@@ -40,6 +41,12 @@ interface ICompaniesAddress {
 	neighborhood: string;
 	street: string;
 	address: string;
+}
+interface ICompaniesBankDatails {
+	pix_key: string;
+	bank_account: string;
+	branch: string;
+	account: string;
 }
 
 export interface ICompaniesTeam {
