@@ -1,8 +1,7 @@
-import { apiInstance } from "./api";
+import { api } from "./api";
 
-export const fetchCodeVerify = async (code?: string, host?: string) => {
+export const fetchCodeVerify = async (code?: string) => {
 	try {
-		const api = apiInstance(host);
 		const response = await api.get(`/codeVerify?code=${code}`);
 
 		return response;

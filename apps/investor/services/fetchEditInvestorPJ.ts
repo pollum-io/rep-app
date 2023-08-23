@@ -1,5 +1,5 @@
 import { UserDataPJ } from "../dtos/UserPJ";
-import { apiInstance } from "./api";
+import { api } from "./api";
 
 export const fetchEditInvestorPJ = async (
 	investor_pj: string,
@@ -7,8 +7,7 @@ export const fetchEditInvestorPJ = async (
 	token: string
 ) => {
 	try {
-		const api = apiInstance();
-		const response = await api.put(`/investorPJ/${investor_pj}`, data, {
+		const response = await api.put(`/investor/pj//${investor_pj}`, data, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

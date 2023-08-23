@@ -1,11 +1,7 @@
 import qs from "qs";
-import { apiInstance } from "./api";
+import { api } from "./api";
 
-export const fetchOpportunitiesByCompany = async (
-	query: object,
-	host?: string
-) => {
-	const api = apiInstance(host);
+export const fetchOpportunitiesByCompany = async (query: object) => {
 	const params = query ? `?${qs.stringify(query)}` : "";
 
 	const response = await api.get(`/opportunity${params}`, {
@@ -14,6 +10,6 @@ export const fetchOpportunitiesByCompany = async (
 			Accept: "application/json",
 		},
 	});
-
+	console.log(response, "response");
 	return response.data;
 };

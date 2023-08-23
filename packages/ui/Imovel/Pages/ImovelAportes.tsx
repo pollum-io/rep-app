@@ -17,7 +17,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="2.75rem" maxWidth="70rem" h={"50rem"}>
+				<Flex gap="1rem" maxWidth="70rem">
 					<Flex flexDir={"column"}>
 						<Flex flexDir={"row"} maxWidth={"70%"} mr={"0rem"} gap={"1.7rem"}>
 							<Flex flexDir={"column"}>
@@ -32,7 +32,12 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 									</Text>
 									<Img src="/icons/info-circle-littlegray.svg" />
 								</Flex>
-								<Table isCronograma={true} />
+								<Table
+									isCronograma={true}
+									data={
+										imovelDetails?.opportunity_resume?.disbursement_schedule
+									}
+								/>
 							</Flex>
 							<Flex flexDir={"column"}>
 								<Text
@@ -43,45 +48,39 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 								>
 									Previsão de retorno
 								</Text>
-								<Table isCronograma={false} />
+								<Table
+									isCronograma={false}
+									data={imovelDetails?.opportunity_resume?.return_schedule}
+								/>{" "}
 							</Flex>
 						</Flex>
 						<Flex mt={"1.5rem"} mb={"1rem"} w={"95%"}>
 							<Text fontSize={"0.875rem"}>
-								Os retornos serão reembolsados a partir das receitas advindas
-								das vendas. Os valores aportados como adiantamento serão
-								devolvidos corrigidos pelo IPCA. Ao final, os resultados obtidos
-								(lucros) serão divididos em igualdade entre grupo gestor e grupo
-								investidor.
+								{imovelDetails?.opportunity_resume?.return_descritption}
 							</Text>
 						</Flex>
+						<Flex pb="4rem" flexDir={"column"} justifyContent="center">
+							<DocsComponent
+								title="Informações adicionais"
+								isInvestPage={false}
+								width="max"
+								data={imovelDetails?.opportunity_resume_files}
+							/>
+						</Flex>
 					</Flex>
-					<Flex
-						flexDirection="column"
-						position="relative"
-						bottom={"14rem"}
-						h={"92rem"}
-					>
-						<Flex h="92rem" flexDirection="column" gap="1.5rem">
+					<Flex flexDirection="column" position="relative" bottom={"14rem"}>
+						<Flex flexDirection="column" gap="1.5rem">
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								id={imovelDetails?._id}
-								minted={imovelDetails?.token_minted}
-								price={imovelDetails?.token_price}
-								supply={imovelDetails?.token_supply}
-								oportunitiesAddress={imovelDetails?.token_address}
+								oportunitiesAddress={imovelDetails?._id}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
+								heightDefault={"30%"}
+								pageSize="sm"
 							/>{" "}
 						</Flex>
 					</Flex>
-				</Flex>
-				<Flex py="4rem" flexDir={"column"} justifyContent="center">
-					<DocsComponent
-						title="Informações adicionais"
-						isInvestPage={false}
-						width="max"
-					/>
 				</Flex>
 			</Flex>
 		</>

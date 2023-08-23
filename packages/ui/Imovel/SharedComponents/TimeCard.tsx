@@ -80,7 +80,6 @@ export const TimeCard: React.FC<ITimeCard> = ({ imovelDetails }) => {
 					</Text>
 					<Text fontWeight="400" fontSize="0.875rem" lineHeight="1.25rem">
 						{t("opportunitieDetails.unitPrice")}{" "}
-						{imovelDetails?.token_price && imovelDetails?.token_price * 2}
 					</Text>
 				</Flex>
 			)}

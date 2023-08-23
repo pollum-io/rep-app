@@ -1,39 +1,85 @@
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
 
 interface IPriceCard {
-	id: string;
-	price: number;
-	minted: number;
-	supply: number;
-	oportunitiesAddress: string;
+	id?: string;
+	price?: number;
+	minted?: number;
+	supply?: number;
+	oportunitiesAddress?: string;
 	investor_pf?: string | null | undefined;
 	investor_pj?: string | null | undefined;
+	heightDefault?: string;
+	pageSize?: string;
 }
 
 export const PriceCard: React.FC<IPriceCard> = (props) => {
-	const { id, price, minted, supply, oportunitiesAddress, investor_pf } = props;
+	const {
+		id,
+		price,
+		minted,
+		oportunitiesAddress,
+		investor_pf,
+		heightDefault,
+		pageSize,
+	} = props;
 	const [isInvestidor] = useState(investor_pf ? true : false);
 	const { ended, hasToken } = useOpportunities();
 	const { push } = useRouter();
 	const [cotas, setCotas] = useState<number>(0);
 	const { t } = useTranslation();
 
-	const avalible = useMemo(() => {
-		if (supply > minted) {
-			return supply - minted;
-		} else {
-			return minted - supply;
-		}
-	}, [minted, supply]);
+	// const formatter = new Intl.NumberFormat("pt-br", {
+	// 	style: "currency",
+	// 	currency: "BRL",
+	// });
 
-	const formatter = new Intl.NumberFormat("pt-br", {
-		style: "currency",
-		currency: "BRL",
-	});
+	const [containerPosition, setContainerPosition] = useState(false);
+	const [scroll, setScrollY] = useState("");
+
+	useEffect(() => {
+		const handleScroll = () => {
+			let breakpoints: number[] = [];
+			let top: string[] = [];
+			const scrollY = window.scrollY;
+
+			if (pageSize === "sm") {
+				breakpoints = [350, 560, 740, 900];
+				top = ["29%", "50%", "75%", "80%"];
+			} else if (pageSize === "md") {
+				breakpoints = [350, 560, 740, 900];
+				top = ["25%", "50%", "75%", "90%"];
+			} else if (pageSize === "lg") {
+				breakpoints = [400, 850, 1100, 1300];
+				top = ["15%", "40%", "65%", "80%"];
+			}
+
+			if (scrollY >= breakpoints[3]) {
+				setContainerPosition(true);
+				setScrollY(top[3]);
+			} else if (scrollY >= breakpoints[2]) {
+				setContainerPosition(true);
+				setScrollY(top[2]);
+			} else if (scrollY >= breakpoints[1]) {
+				setContainerPosition(true);
+				setScrollY(top[1]);
+			} else if (scrollY >= breakpoints[0]) {
+				setContainerPosition(true);
+				setScrollY(top[0]);
+			} else {
+				setContainerPosition(false);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, [pageSize]);
 
 	return (
 		<Flex
@@ -43,8 +89,9 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 			p="1.5rem"
 			flexDir={"column"}
 			borderRadius="0.75rem"
-			position={"sticky"}
-			top={"10%"}
+			position={"absolute"}
+			top={containerPosition ? scroll : heightDefault}
+			transition="top 1s ease-out"
 			boxShadow="0px 20px 25px rgba(31, 41, 55, 0.1), 0px 10px 10px rgba(31, 41, 55, 0.04);"
 			color="#ffffff"
 		>
@@ -82,7 +129,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									transition: "all 0.4s",
 								}}
 								src={"/icons/PlusIcon.png"}
-								onClick={() => setCotas(cotas === avalible ? cotas : cotas + 1)}
+								onClick={() => setCotas(cotas === 1 ? cotas : cotas + 1)}
 							/>
 							<Img
 								_hover={{
@@ -111,7 +158,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									: t("opportunitieDetails.total")}
 							</Text>
 							<Text fontWeight={"500"} display={ended ? "none" : "flex"}>
-								{formatter.format(cotas * price)}
+								valor a definir
 							</Text>
 						</Flex>
 
@@ -199,7 +246,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						{t("opportunitieDetails.available")}
 					</Text>
 					<Text fontSize={"md"} fontWeight="400">
-						{avalible}
+						teste
 					</Text>
 				</Flex>
 			</Flex>

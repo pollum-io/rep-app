@@ -28,9 +28,6 @@ const plants = [
 	{ id: 1, name: "Planta 1", imageUrl: "/images/Map.png" },
 	{ id: 2, name: "Planta 2", imageUrl: "/images/Map.png" },
 	{ id: 3, name: "Planta 3", imageUrl: "/images/Map.png" },
-	{ id: 4, name: "Planta 4", imageUrl: "/images/Map.png" },
-	{ id: 5, name: "Planta 5", imageUrl: "/images/Map.png" },
-	{ id: 6, name: "Planta 6", imageUrl: "/images/Map.png" },
 ];
 
 const PlantaCarrousel = () => {
@@ -41,7 +38,7 @@ const PlantaCarrousel = () => {
 	const [sliderRef, instanceRef] = useKeenSlider({
 		mode: "free-snap",
 		slides: {
-			perView: 3.5,
+			perView: 3,
 			spacing: 15,
 		},
 		slideChanged(slider) {

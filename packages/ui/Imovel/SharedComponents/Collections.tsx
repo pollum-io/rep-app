@@ -1,4 +1,5 @@
 import { Flex, Img, SimpleGrid, useDisclosure } from "@chakra-ui/react";
+import { useState } from "react";
 import { CollectionsModal } from "./CollectionsModal";
 
 interface ICollections {
@@ -8,6 +9,7 @@ interface ICollections {
 export const Collections: React.FC<ICollections> = (props) => {
 	const { images } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [selectedImage, setSelectedImage] = useState<any>();
 
 	return (
 		<Flex
@@ -19,8 +21,18 @@ export const Collections: React.FC<ICollections> = (props) => {
 			onClick={onOpen}
 			justifyContent="center"
 		>
-			<CollectionsModal images={images} isOpen={isOpen} onClose={onClose} />
-			<Flex onClick={onOpen}>
+			<CollectionsModal
+				images={images}
+				isOpen={isOpen}
+				onClose={onClose}
+				selectedImage={selectedImage}
+			/>
+			<Flex
+				onClick={() => {
+					onOpen;
+					setSelectedImage(images[0]);
+				}}
+			>
 				<Img
 					width="34.75rem"
 					height="25rem"
@@ -35,7 +47,10 @@ export const Collections: React.FC<ICollections> = (props) => {
 					w="17.125rem"
 					h="12.25rem"
 					src={`/api/file/${images[1]}`}
-					onClick={onOpen}
+					onClick={() => {
+						onOpen;
+						setSelectedImage(images[1]);
+					}}
 					_hover={{ cursor: "pointer", filter: "brightness(90%)" }}
 					transition="200ms"
 				/>
@@ -44,7 +59,10 @@ export const Collections: React.FC<ICollections> = (props) => {
 					h="12.25rem"
 					src={`/api/file/${images[2]}`}
 					borderTopRightRadius="0.75rem"
-					onClick={onOpen}
+					onClick={() => {
+						onOpen;
+						setSelectedImage(images[2]);
+					}}
 					_hover={{ cursor: "pointer", filter: "brightness(90%)" }}
 					transition="200ms"
 				/>
@@ -52,7 +70,10 @@ export const Collections: React.FC<ICollections> = (props) => {
 					w="17.125rem"
 					h="12.25rem"
 					src={`/api/file/${images[3]}`}
-					onClick={onOpen}
+					onClick={() => {
+						onOpen;
+						setSelectedImage(images[3]);
+					}}
 					_hover={{ cursor: "pointer", filter: "brightness(90%)" }}
 					transition="200ms"
 				/>
@@ -61,7 +82,10 @@ export const Collections: React.FC<ICollections> = (props) => {
 					h="12.25rem"
 					src={`/api/file/${images[4]}`}
 					borderBottomRightRadius="0.75rem"
-					onClick={onOpen}
+					onClick={() => {
+						onOpen;
+						setSelectedImage(images[4]);
+					}}
 					_hover={{ cursor: "pointer", filter: "brightness(90%)" }}
 					transition="200ms"
 				/>

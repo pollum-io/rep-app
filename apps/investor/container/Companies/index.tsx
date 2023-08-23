@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import {
 	Flex,
 	Input,
@@ -11,17 +11,33 @@ import { BiSearch } from "react-icons/bi";
 import { CompaniesCard } from "../../components";
 import { useTranslation } from "react-i18next";
 import { ICompanieData } from "../../dtos/ICompaniesData";
+import { useUser } from "../../hooks/useUser";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface ICompanies {
 	data: ICompanieData[];
+	token: string;
+	user: UserInfo;
 }
 
-export const CompaniesContainer: FunctionComponent<ICompanies> = ({ data }) => {
+export const CompaniesContainer: FunctionComponent<ICompanies> = ({
+	data,
+	user,
+	token,
+}) => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const { t } = useTranslation();
-	const filteredCompanies = data.filter((comp) =>
+	const filteredCompanies = data?.filter((comp) =>
 		comp.enterprise_name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
+	const { getUserInfos } = useUser();
+
+	useEffect(() => {
+		getUserInfos(
+			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf,
+			token
+		);
+	}, [getUserInfos, token, user?.investor_pf, user?.investor_pj]);
 
 	return (
 		<DefaultTemplate>
@@ -84,7 +100,7 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({ data }) => {
 						</Text>
 					</Flex>
 					<Flex flexDirection={"column"} gap="1.5rem" w="100%">
-						{filteredCompanies.map((comp) => (
+						{filteredCompanies?.map((comp) => (
 							// eslint-disable-next-line react/jsx-key
 							<CompaniesCard
 								key={comp._id}

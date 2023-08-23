@@ -35,13 +35,19 @@ export const CreateAccountModal: FunctionComponent<ICreateAccountModal> = (
 			if (investorPF) {
 				await fetchEditInvestorPF(
 					userId,
-					{ ...investorPF, isPerfilCompleted: true },
+					{
+						...investorPF,
+						is_profile_filled: true,
+					},
 					token
 				);
 			} else {
 				await fetchEditInvestorPJ(
 					userId,
-					{ ...investorPJ, isPerfilCompleted: true },
+					{
+						...investorPJ,
+						is_profile_filled: true,
+					},
 					token
 				);
 			}

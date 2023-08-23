@@ -17,8 +17,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	req,
 	query,
 }) => {
-	const host = req.headers.host;
-	const response = await fetchCodeVerify(String(query.code), host);
+	const response = await fetchCodeVerify(String(query.code));
 
 	if (!response?.data?.isValid) {
 		return {

@@ -6,26 +6,33 @@ import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
 import { UserDataPF } from "../dtos/UserPF";
 import { UserDataPJ } from "../dtos/UserPJ";
 import { MeusInvestimentosContainer } from "../container/MeusInvestimentos";
+import { UserInfo } from "../dtos/GlobalUserInfo";
 
 interface UserData {
 	token: string;
-	user: {
-		investor_pj?: string;
-		investor_pf?: string;
-	};
-	userDataPF: UserDataPF;
-	userDataPJ: UserDataPJ;
+	user: UserInfo;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
-const Meus_Investimentos: NextPage<UserData> = (props) => (
-	<MeusInvestimentosContainer {...props} />
+const Meus_Investimentos: NextPage<UserData> = ({
+	token,
+	user,
+	userDataPF,
+	userDataPJ,
+}) => (
+	<MeusInvestimentosContainer
+		token={token}
+		user={user}
+		userDataPF={userDataPF}
+		userDataPJ={userDataPJ}
+	/>
 );
 
 export default Meus_Investimentos;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["livn_auth"];
-	const host = req.headers.host;
 
 	if (!token) {
 		return {
@@ -53,11 +60,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	}
 
 	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(
-			user?.investor_pf,
-			token,
-			host
-		);
+		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
 
 		return {
 			props: {
@@ -69,8 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	} else if (user?.investor_pj) {
 		const response = await fetchGetInvestorPJById(
 			String(user?.investor_pj),
-			token,
-			host
+			token
 		);
 
 		return {

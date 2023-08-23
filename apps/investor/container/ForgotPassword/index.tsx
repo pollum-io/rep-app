@@ -20,7 +20,7 @@ export const Recover_PasswordContainer: FunctionComponent = () => {
 	const { t } = useTranslation();
 
 	const handleSentEmailToVerify = async (email: string) => {
-		await fetchEmailVerify(email, "");
+		await fetchEmailVerify(email);
 	};
 
 	return (
