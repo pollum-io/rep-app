@@ -6,13 +6,13 @@ import { useUser } from "../../hooks/useUser";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { InvestSteps } from "../../components/Invest/PaymentMethods/InvestSteps";
 import { InvestCheckout } from "../../components/Invest/Pages/InvestCheckout";
-import { useRegister } from "../../hooks";
+import { useRegisterSteps } from "../../hooks";
 import { InvestContractSign } from "../../components/Invest/Pages/InvestContractSign";
 import { InvestPayment } from "../../components/Invest/Pages/InvestPayment";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { useOpportunities } from "../../hooks/useOpportunities";
-import { motion } from "framer-motion"; // Import motion from framer-motion
+import { motion } from "framer-motion";
 import { ICompaniesDetails } from "../../components/Companies/CompaniesCard/dto";
 
 interface IInvest {
@@ -29,8 +29,8 @@ interface IInvest {
 
 export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 	const { getUserInfos } = useUser();
-	const { firstStep, secondStep } = useRegister();
-	const { cotas, setCotas } = useOpportunities();
+	const { firstStep, secondStep } = useRegisterSteps();
+	const { cotas } = useOpportunities();
 
 	useEffect(() => {
 		getUserInfos(

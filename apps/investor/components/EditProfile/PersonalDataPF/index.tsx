@@ -184,6 +184,35 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									{...register("rg")}
 									defaultValue={data?.rg}
 								/>
+								<InputComponent
+									placeholderText={t("inputs.insertHere") as string}
+									label={t("editProfile.address") as string}
+									type="text"
+									{...register("address")}
+									defaultValue={data?.address}
+								/>
+								<InputComponent
+									placeholderText={t("inputs.insertHere") as string}
+									label={t("editProfile.occupation") as string}
+									type="text"
+									{...register("profession")}
+									defaultValue={data?.profession}
+								/>
+								<InputComponent
+									placeholderText={t("inputs.insertHere") as string}
+									label={t("editProfile.email") as string}
+									type="email"
+									{...register("email")}
+									defaultValue={data?.email}
+								/>
+								<InputComponent
+									placeholderText={t("inputs.insertHere") as string}
+									label={t("editProfile.phone") as string}
+									type="text"
+									maskType={"Telefone"}
+									{...register("phone_number")}
+									defaultValue={formatPhoneNumber(data?.phone_number)}
+								/>
 							</Flex>
 						</Flex>
 						<Flex
@@ -355,35 +384,6 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									defaultValue={data?.marital_status?.partners_address}
 								/>
 							</Collapse>
-							<InputComponent
-								placeholderText={t("inputs.insertHere") as string}
-								label={t("editProfile.address") as string}
-								type="text"
-								{...register("address")}
-								defaultValue={data?.address}
-							/>
-							<InputComponent
-								placeholderText={t("inputs.insertHere") as string}
-								label={t("editProfile.occupation") as string}
-								type="text"
-								{...register("profession")}
-								defaultValue={data?.profession}
-							/>
-							<InputComponent
-								placeholderText={t("inputs.insertHere") as string}
-								label={t("editProfile.email") as string}
-								type="email"
-								{...register("email")}
-								defaultValue={data?.email}
-							/>
-							<InputComponent
-								placeholderText={t("inputs.insertHere") as string}
-								label={t("editProfile.phone") as string}
-								type="text"
-								maskType={"Telefone"}
-								{...register("phone_number")}
-								defaultValue={formatPhoneNumber(data?.phone_number)}
-							/>
 						</Flex>
 					</Flex>
 					{isStableUnion && (

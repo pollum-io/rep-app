@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { useTranslation } from "react-i18next";
-import { useRegister } from "../../../hooks";
+import { useRegisterSteps } from "../../../hooks";
 import { PersonalDataPF } from "../../EditProfile/PersonalDataPF";
 import { UserDataPF } from "../../../dtos/UserPF";
 import { UserDataPJ } from "../../../dtos/UserPJ";
@@ -23,7 +23,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 	imovel,
 }) => {
 	const { t } = useTranslation();
-	const { setFirstStep, setSecondStep } = useRegister();
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { cotas, setCotas } = useOpportunities();
 
 	return (

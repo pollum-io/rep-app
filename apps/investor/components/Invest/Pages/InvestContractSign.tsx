@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { Oval } from "react-loader-spinner";
-import { useRegister } from "../../../hooks";
+import { useRegisterSteps } from "../../../hooks";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { useOpportunities } from "../../../hooks/useOpportunities";
@@ -11,7 +11,7 @@ interface IContractSign {
 }
 
 export const InvestContractSign: React.FC<IContractSign> = ({ imovel }) => {
-	const { setFirstStep, setSecondStep } = useRegister();
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { cotas } = useOpportunities();
 
 	useEffect(() => {

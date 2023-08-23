@@ -6,7 +6,7 @@ import { formatCurrency } from "ui/utils/BRCurrency";
 import { useOpportunities } from "../../../hooks/useOpportunities";
 import { ICompaniesDetails } from "../../Companies/CompaniesCard/dto";
 import { formatCNPJ } from "../../../utils/formatCnpj";
-import { useRegister } from "../../../hooks";
+import { useRegisterSteps } from "../../../hooks";
 
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
@@ -18,7 +18,7 @@ export const InvestPayment: React.FC<IContractSign> = ({
 	enterprise,
 }) => {
 	const { cotas } = useOpportunities();
-	const { setFirstStep, setSecondStep } = useRegister();
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
 
 	return (
 		<Flex w="100%" gap="5%" justifyContent="space-between" mb="12rem">

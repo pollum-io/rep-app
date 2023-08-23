@@ -3,7 +3,7 @@ import { Flex, Text, Progress } from "@chakra-ui/react";
 import { BsCheck } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
 import { ISteps } from "./stepsdto";
-import { useRegister } from "../../../hooks";
+import { useRegisterSteps } from "../../../hooks";
 
 const InvestStepsComponent: FunctionComponent<ISteps> = ({
 	step,
@@ -69,7 +69,7 @@ const InvestStepsComponent: FunctionComponent<ISteps> = ({
 };
 
 export const InvestSteps: FunctionComponent = () => {
-	const { firstStep, secondStep } = useRegister();
+	const { firstStep, secondStep } = useRegisterSteps();
 	const { t } = useTranslation();
 
 	return (

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import { Flex, Checkbox, Button, Text, SlideFade } from "@chakra-ui/react";
-import { useRegister } from "../../hooks/useRegister";
+import { useRegisterSteps } from "../../hooks/useRegisterSteps";
 import { useToasty } from "../../hooks/useToasty";
 import { InputComponent } from "../Inputs/DeafultInput/InputComponent";
 import { useForm } from "react-hook-form";
@@ -61,7 +61,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 		setFirstStep,
 		setSecondStep,
 		setIsPhysical,
-	} = useRegister();
+	} = useRegisterSteps();
 	const { register, handleSubmit, reset, getValues } = useForm();
 	const { push } = useRouter();
 	const { toast } = useToasty();
