@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
+import { useRegisterSteps } from "../../../../apps/investor/hooks/useRegisterSteps";
 import { formatCurrency } from "../../utils/BRCurrency";
 
 interface IPriceCard {
@@ -34,6 +35,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const { ended, hasToken, cotas, setCotas } = useOpportunities();
 	const { push } = useRouter();
 	const { t } = useTranslation();
+	const { setFirstStep } = useRegisterSteps();
 
 	const [containerPosition, setContainerPosition] = useState(false);
 	const [scroll, setScrollY] = useState("");
@@ -77,7 +79,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, [pageSize]);
-	console.log(unitPrice);
+
 	return (
 		<Flex
 			w="23.125rem"
@@ -175,12 +177,13 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 										? { opacity: "0.3" }
 										: { bgColor: "#F7FAFC" }
 								}
-								onClick={() =>
+								onClick={() => {
 									push({
 										pathname: "/investir",
 										query: { id: url },
-									})
-								}
+									}),
+										setFirstStep(true);
+								}}
 							>
 								{ended
 									? hasToken
