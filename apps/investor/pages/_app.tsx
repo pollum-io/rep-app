@@ -16,6 +16,7 @@ import "../styles/pieChart.css";
 import "../helpers/i18";
 import "../styles/pageTransition.css";
 import "../styles/investModalScrollbar.css";
+import "../styles/appScrollbar.css";
 
 const toasty = {
 	bg: "#FFFFFF",

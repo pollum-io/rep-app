@@ -4,23 +4,42 @@ import { InvestContainer } from "../container";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
 import { fetchImovelDetail } from "../services/fetchImovelDetail";
 import { UserLogin } from "../dtos/IUserLogin";
-import { UserInfo } from "../dtos/GlobalUserInfo";
+import {
+	fetchEnterpriseById,
+	fetchGetInvestorPFById,
+	fetchGetInvestorPJById,
+} from "../services";
+import { UserDataPF } from "../dtos/UserPF";
+import { UserDataPJ } from "../dtos/UserPJ";
+import { ICompaniesDetails } from "../components/Companies/CompaniesCard/dto";
 
 interface IInvest {
-	data: IOpportunitiesCard;
-	cotas: number;
-	address: string;
 	token: string;
-	user: UserInfo;
+	investor_pj?: string;
+	investor_pf?: string;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
+	imovel?: IOpportunitiesCard;
+	enterprise?: ICompaniesDetails;
 }
 
-const Investir: NextPage<IInvest> = ({ data, cotas, address, token, user }) => (
+const Investir: NextPage<IInvest> = ({
+	imovel,
+	token,
+	userDataPF,
+	userDataPJ,
+	investor_pf,
+	investor_pj,
+	enterprise,
+}) => (
 	<InvestContainer
-		data={data}
-		cotas={cotas}
-		oportunitiesAddress={address}
+		imovel={imovel}
 		token={token}
-		user={user}
+		userDataPF={userDataPF}
+		userDataPJ={userDataPJ}
+		investor_pf={investor_pf}
+		investor_pj={investor_pj}
+		enterprise={enterprise}
 	/>
 );
 
@@ -31,9 +50,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 	query,
 }) => {
 	const token = req.cookies["livn_auth"];
-	const response = await fetchImovelDetail(String(query.id));
-	const cotas = query.cotas;
-	const address = query.oportunitiesAddress;
 
 	if (!token) {
 		return {
@@ -56,14 +72,35 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {},
 		};
 	}
+	const imovel = await fetchImovelDetail(String(query.id));
+	const enterprise = await fetchEnterpriseById(String(imovel.enterprise_id));
 
-	return {
-		props: {
-			user,
-			token,
-			data: response.data,
-			cotas,
-			address,
-		},
-	};
+	if (user?.investor_pf) {
+		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
+
+		return {
+			props: {
+				investor_pf: user?.investor_pf,
+				userDataPF: response?.data,
+				token: token,
+				imovel,
+				enterprise,
+			},
+		};
+	} else if (user?.investor_pj) {
+		const response = await fetchGetInvestorPJById(
+			String(user?.investor_pj),
+			token
+		);
+
+		return {
+			props: {
+				investor_pj: user?.investor_pj,
+				userDataPJ: response?.data,
+				token: token,
+				imovel,
+				enterprise,
+			},
+		};
+	}
 };

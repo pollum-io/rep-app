@@ -110,8 +110,7 @@ export const OpportunitiesCard: FunctionComponent<
 									px="0.5rem"
 									py="0.125rem"
 								>
-									{cards.token_minted === cards.token_supply ||
-									currentTime >= new Date(cards?.sale_end_at) ? (
+									{currentTime >= new Date(cards?.sale_end_at) ? (
 										<Text
 											fontFamily="Poppins"
 											fontWeight="500"

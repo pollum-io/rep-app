@@ -28,6 +28,8 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 	const { widthValue, heightValue, extra_images, modal_images, selectedImage } =
 		props;
 	const [slider, setSlider] = React.useState<Slider | null>(null);
+	const [clicked, setClicked] = useState<boolean>(false);
+
 	const top = useBreakpointValue({ base: "90%", md: "50%" });
 	const side = useBreakpointValue({ base: "30%", md: "10px" });
 	const [imagesCarousel, setImagesCarousel] = useState<string[]>([]);
@@ -37,10 +39,10 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 			const allImages = modal_images || [];
 
 			// Reorder images so that selected image comes first
-			const orderedImages = [
-				selectedImage,
-				...allImages.filter((img) => img !== selectedImage),
-			];
+
+			const orderedImages = clicked
+				? modal_images.filter((img) => img)
+				: [selectedImage, ...allImages.filter((img) => img)];
 
 			orderedImages.map((picture?: string) => {
 				api.get(`/file/${picture}`).then((response) => {
@@ -92,7 +94,10 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 				top={top}
 				transform={"translate(0%, -50%)"}
 				zIndex={2}
-				onClick={() => slider?.slickPrev()}
+				onClick={() => {
+					slider?.slickPrev();
+					setClicked(true);
+				}}
 				bgColor="transparent"
 				_hover={{}}
 				_focus={{ bgColor: "transparent", boxShadow: "none" }}
@@ -107,7 +112,10 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 				top={top}
 				transform={"translate(0%, -50%)"}
 				zIndex={2}
-				onClick={() => slider?.slickNext()}
+				onClick={() => {
+					slider?.slickNext();
+					setClicked(true);
+				}}
 				bgColor="transparent"
 				_hover={{}}
 				_focus={{ bgColor: "transparent", boxShadow: "none" }}

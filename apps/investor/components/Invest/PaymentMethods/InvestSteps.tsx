@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Text, Progress } from "@chakra-ui/react";
-import { IRegisterSteps } from "./dto";
-import { useRegisterSteps } from "../../hooks/useRegisterSteps";
 import { BsCheck } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
+import { ISteps } from "./stepsdto";
+import { useRegisterSteps } from "../../../hooks";
 
-const RegisterStep: FunctionComponent<IRegisterSteps> = ({
+const InvestStepsComponent: FunctionComponent<ISteps> = ({
 	step,
 	title,
 	barPercentage,
@@ -50,6 +50,7 @@ const RegisterStep: FunctionComponent<IRegisterSteps> = ({
 					fontStyle="normal"
 					fontWeight={barPercentage !== 0 ? "500" : "400"}
 					fontSize="0.75rem"
+					w={"max"}
 					lineHeight="1rem"
 				>
 					{title}
@@ -67,27 +68,25 @@ const RegisterStep: FunctionComponent<IRegisterSteps> = ({
 	);
 };
 
-export const RegisterSteps: FunctionComponent = () => {
-	const { firstStep, secondStep, isPhysical } = useRegisterSteps();
+export const InvestSteps: FunctionComponent = () => {
+	const { firstStep, secondStep } = useRegisterSteps();
 	const { t } = useTranslation();
 
 	return (
 		<Flex gap="3.875rem">
-			<RegisterStep
+			<InvestStepsComponent
 				step={1}
-				title={
-					isPhysical ? t("register.personalData") : t("register.companyData")
-				}
+				title={"Confirmar dados"}
 				barPercentage={firstStep ? 50 : 100}
 			/>
-			<RegisterStep
+			<InvestStepsComponent
 				step={2}
-				title={t("register.acceptTerms")}
+				title={"Assinar contratodados"}
 				barPercentage={secondStep ? 50 : firstStep ? 0 : 100}
 			/>
-			<RegisterStep
+			<InvestStepsComponent
 				step={3}
-				title={t("register.submit")}
+				title={"Efetuar pagamento"}
 				barPercentage={!firstStep && !secondStep ? 50 : 0}
 			/>
 		</Flex>

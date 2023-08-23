@@ -3,39 +3,39 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
+import { useRegisterSteps } from "../../../../apps/investor/hooks/useRegisterSteps";
+import { formatCurrency } from "../../utils/BRCurrency";
 
 interface IPriceCard {
-	id?: string;
-	price?: number;
-	minted?: number;
-	supply?: number;
-	oportunitiesAddress?: string;
+	url?: string;
 	investor_pf?: string | null | undefined;
 	investor_pj?: string | null | undefined;
 	heightDefault?: string;
 	pageSize?: string;
+	unitPrice?: number;
+	oppportunitiesDetails?: {
+		constructed_area: number;
+		estimated_vgv: number;
+		total_units: number;
+		available_units: number;
+		average_price: number;
+	};
 }
 
 export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const {
-		id,
-		price,
-		minted,
-		oportunitiesAddress,
+		url,
+		oppportunitiesDetails,
 		investor_pf,
 		heightDefault,
 		pageSize,
+		unitPrice,
 	} = props;
 	const [isInvestidor] = useState(investor_pf ? true : false);
-	const { ended, hasToken } = useOpportunities();
+	const { ended, hasToken, cotas, setCotas } = useOpportunities();
 	const { push } = useRouter();
-	const [cotas, setCotas] = useState<number>(0);
 	const { t } = useTranslation();
-
-	// const formatter = new Intl.NumberFormat("pt-br", {
-	// 	style: "currency",
-	// 	currency: "BRL",
-	// });
+	const { setFirstStep } = useRegisterSteps();
 
 	const [containerPosition, setContainerPosition] = useState(false);
 	const [scroll, setScrollY] = useState("");
@@ -128,7 +128,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									transition: "all 0.4s",
 								}}
 								src={"/icons/PlusIcon.png"}
-								onClick={() => setCotas(cotas === 1 ? cotas : cotas + 1)}
+								onClick={() => setCotas(cotas + 1)}
 							/>
 							<Img
 								_hover={{
@@ -157,7 +157,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									: t("opportunitieDetails.total")}
 							</Text>
 							<Text fontWeight={"500"} display={ended ? "none" : "flex"}>
-								valor a definir
+								{formatCurrency(cotas * (unitPrice ?? 0))}
 							</Text>
 						</Flex>
 
@@ -177,12 +177,13 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 										? { opacity: "0.3" }
 										: { bgColor: "#F7FAFC" }
 								}
-								onClick={() =>
+								onClick={() => {
 									push({
 										pathname: "/investir",
-										query: { id, cotas, oportunitiesAddress },
-									})
-								}
+										query: { id: url },
+									}),
+										setFirstStep(true);
+								}}
 							>
 								{ended
 									? hasToken
@@ -215,7 +216,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 				>
 					<Flex justifyContent="space-between" w="100%">
 						<Text>{t("opportunitieDetails.unit")}</Text>
-						<Text>{price}</Text>
+						<Text>R${unitPrice}</Text>
 					</Flex>
 					<Flex w="100%" border="1px solid #4BA3B7" my="1rem" />
 				</Flex>
@@ -229,15 +230,16 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						{t("opportunitieDetails.unit")}
 					</Text>
 					<Text fontSize={"md"} fontWeight="400">
-						R${price}
+						{formatCurrency(unitPrice)}
 					</Text>
 				</Flex>
 				<Flex justifyContent={"space-between"}>
 					<Text fontSize={"md"} fontWeight="400">
 						{t("opportunitieDetails.shares")}
 					</Text>
-					<Text fontSize={"md"} fontWeight="400">
-						{minted}
+					<Text fontSize="md" fontWeight="400">
+						{(oppportunitiesDetails?.total_units ?? 0) -
+							(oppportunitiesDetails?.available_units ?? 0)}
 					</Text>
 				</Flex>
 				<Flex justifyContent={"space-between"}>
@@ -245,7 +247,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						{t("opportunitieDetails.available")}
 					</Text>
 					<Text fontSize={"md"} fontWeight="400">
-						teste
+						{oppportunitiesDetails?.available_units}
 					</Text>
 				</Flex>
 			</Flex>

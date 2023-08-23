@@ -175,12 +175,12 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 						>
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
-								id={imovelDetails?._id}
-								oportunitiesAddress={imovelDetails?._id}
+								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
 								heightDefault="9.5%"
 								pageSize="lg"
+								unitPrice={imovelDetails?.min_investment}
 							/>{" "}
 						</Flex>
 					</Flex>{" "}

@@ -6,6 +6,7 @@ import { DefaultTemplate } from "../DefaultTemplate";
 import EmpreendimentoTable from "../../components/Faturas/Table";
 import { useUser } from "../../hooks/useUser";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
+import { motion } from "framer-motion"; // Import motion from framer-motion
 
 interface UserData {
 	token: string;
@@ -155,128 +156,150 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 					</Flex>
 				</Flex>
 				<Flex flexDir={"column"} pb={".8125rem"}>
-					<Flex flexDir={"column"} pb={"11.8125rem"}>
-						<Text
-							color={"#171923"}
-							fontWeight={"600"}
-							fontSize={"1.5rem"}
-							mb={"2rem"}
-						>
-							Resumo de faturas
-						</Text>
-						<Flex gap={"1.5rem"}>
-							<Flex
-								flexDir={"column"}
-								gap={"0.75rem"}
-								px={"1.5rem"}
-								py={"1rem"}
-								w={"27.125rem"}
-								h={"max"}
-								border={"1px solid #EDF2F7"}
-								borderRadius={"0.75rem"}
+					<motion.div
+						initial={{ opacity: 0, y: 40 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5 }}
+					>
+						<Flex flexDir={"column"} pb={"11.8125rem"}>
+							<Text
+								color={"#171923"}
+								fontWeight={"600"}
+								fontSize={"1.5rem"}
+								mb={"2rem"}
 							>
-								<Text fontSize={"0.875rem"} color={"#1A202C"}>
-									Valor de todas as faturas abertas
-								</Text>
-								<Text color={"#865DF0"} fontWeight={"600"} fontSize={"1.5rem"}>
-									R$ 80.000,00
-								</Text>
-								<Text color={"#718096"} fontSize={"0.75rem"}>
-									Efetue o pagamento conforme as datas de vencimento para evitar
-									multas e garantir o investimento.
-								</Text>
-							</Flex>
-							<Flex
-								flexDir={"column"}
-								px={"1.5rem"}
-								py={"1rem"}
-								w={"12.8125rem"}
-								border={"1px solid #EDF2F7"}
-								borderRadius={"0.75rem"}
-								gap={"0.5rem"}
-							>
-								<Img w={"3.8125rem"} src="/icons/proxima-fatura.svg" />
-								<Flex gap={"0.5rem"}>
+								Resumo de faturas
+							</Text>
+							<Flex gap={"1.5rem"}>
+								<Flex
+									flexDir={"column"}
+									gap={"0.75rem"}
+									px={"1.5rem"}
+									py={"1rem"}
+									w={"27.125rem"}
+									h={"max"}
+									border={"1px solid #EDF2F7"}
+									borderRadius={"0.75rem"}
+								>
 									<Text fontSize={"0.875rem"} color={"#1A202C"}>
-										Próxima fatura
+										Valor de todas as faturas abertas
 									</Text>
-									<Img src="/icons/info-circle-littlegray.svg" />
+									<Text
+										color={"#865DF0"}
+										fontWeight={"600"}
+										fontSize={"1.5rem"}
+									>
+										R$ 80.000,00
+									</Text>
+									<Text color={"#718096"} fontSize={"0.75rem"}>
+										Efetue o pagamento conforme as datas de vencimento para
+										evitar multas e garantir o investimento.
+									</Text>
 								</Flex>
-								<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-									01/01/2024
-								</Text>
+								<Flex
+									flexDir={"column"}
+									px={"1.5rem"}
+									py={"1rem"}
+									w={"12.8125rem"}
+									border={"1px solid #EDF2F7"}
+									borderRadius={"0.75rem"}
+									gap={"0.5rem"}
+								>
+									<Img w={"3.8125rem"} src="/icons/proxima-fatura.svg" />
+									<Flex gap={"0.5rem"}>
+										<Text fontSize={"0.875rem"} color={"#1A202C"}>
+											Próxima fatura
+										</Text>
+										<Img src="/icons/info-circle-littlegray.svg" />
+									</Flex>
+									<Text
+										fontSize={"1.5rem"}
+										fontWeight={"600"}
+										color={"#1A202C"}
+									>
+										01/01/2024
+									</Text>
+								</Flex>
+								<Flex
+									flexDir={"column"}
+									px={"1.5rem"}
+									py={"1rem"}
+									w={"12.8125rem"}
+									border={"1px solid #EDF2F7"}
+									borderRadius={"0.75rem"}
+									gap={"0.5rem"}
+								>
+									<Img w={"3.8125rem"} src="/icons/ultimo-pagamento.svg" />
+									<Flex gap={"0.5rem"} w={"max"}>
+										<Text fontSize={"0.875rem"} color={"#1A202C"}>
+											Último pagamento{" "}
+										</Text>
+										<Img src="/icons/info-circle-littlegray.svg" />
+									</Flex>
+									<Text
+										fontSize={"1.5rem"}
+										fontWeight={"600"}
+										color={"#1A202C"}
+									>
+										01/12/2024{" "}
+									</Text>
+								</Flex>
+								<Flex
+									flexDir={"column"}
+									px={"1.5rem"}
+									py={"1rem"}
+									w={"12.8125rem"}
+									border={"1px solid #EDF2F7"}
+									borderRadius={"0.75rem"}
+									gap={"0.5rem"}
+								>
+									<Img w={"3.8125rem"} src="/icons/contratos-pendentes.svg" />
+									<Flex gap={"0.5rem"} w={"max"}>
+										<Text fontSize={"0.875rem"} color={"#1A202C"}>
+											Contratos pendentes{" "}
+										</Text>
+										<Img src="/icons/info-circle-littlegray.svg" />
+									</Flex>
+									<Text
+										fontSize={"1.5rem"}
+										fontWeight={"600"}
+										color={"#1A202C"}
+									>
+										02{" "}
+									</Text>
+								</Flex>
 							</Flex>
-							<Flex
-								flexDir={"column"}
-								px={"1.5rem"}
-								py={"1rem"}
-								w={"12.8125rem"}
-								border={"1px solid #EDF2F7"}
-								borderRadius={"0.75rem"}
-								gap={"0.5rem"}
-							>
-								<Img w={"3.8125rem"} src="/icons/ultimo-pagamento.svg" />
-								<Flex gap={"0.5rem"} w={"max"}>
-									<Text fontSize={"0.875rem"} color={"#1A202C"}>
-										Último pagamento{" "}
-									</Text>
-									<Img src="/icons/info-circle-littlegray.svg" />
-								</Flex>
-								<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-									01/12/2024{" "}
-								</Text>
+							<Flex gap={"1rem"} mt={"2rem"} mb={"1.5rem"}>
+								<Button
+									borderRadius={"624.9375rem"}
+									px={"0.75rem"}
+									py={"0.5rem"}
+									color={state === "aberta" ? "#00262D" : "#718096"}
+									bgColor={state === "aberta" ? "#B1D8DF" : "transparent"}
+									fontWeight={"500"}
+									onClick={() => setState("aberta")}
+									_hover={{ opacity: 0.7 }}
+								>
+									Abertas
+								</Button>
+								<Button
+									borderRadius={"624.9375rem"}
+									px={"0.75rem"}
+									py={"0.5rem"}
+									color={state === "pagas" ? "#00262D" : "#718096"}
+									bgColor={state === "pagas" ? "#B1D8DF" : "transparent"}
+									fontWeight={"500"}
+									onClick={() => setState("pagas")}
+									_hover={{ opacity: 0.7 }}
+								>
+									Pagas{" "}
+								</Button>
 							</Flex>
-							<Flex
-								flexDir={"column"}
-								px={"1.5rem"}
-								py={"1rem"}
-								w={"12.8125rem"}
-								border={"1px solid #EDF2F7"}
-								borderRadius={"0.75rem"}
-								gap={"0.5rem"}
-							>
-								<Img w={"3.8125rem"} src="/icons/contratos-pendentes.svg" />
-								<Flex gap={"0.5rem"} w={"max"}>
-									<Text fontSize={"0.875rem"} color={"#1A202C"}>
-										Contratos pendentes{" "}
-									</Text>
-									<Img src="/icons/info-circle-littlegray.svg" />
-								</Flex>
-								<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-									02{" "}
-								</Text>
+							<Flex w={"100%"}>
+								<EmpreendimentoTable />
 							</Flex>
 						</Flex>
-						<Flex gap={"1rem"} mt={"2rem"} mb={"1.5rem"}>
-							<Button
-								borderRadius={"624.9375rem"}
-								px={"0.75rem"}
-								py={"0.5rem"}
-								color={state === "aberta" ? "#00262D" : "#718096"}
-								bgColor={state === "aberta" ? "#B1D8DF" : "transparent"}
-								fontWeight={"500"}
-								onClick={() => setState("aberta")}
-								_hover={{ opacity: 0.7 }}
-							>
-								Abertas
-							</Button>
-							<Button
-								borderRadius={"624.9375rem"}
-								px={"0.75rem"}
-								py={"0.5rem"}
-								color={state === "pagas" ? "#00262D" : "#718096"}
-								bgColor={state === "pagas" ? "#B1D8DF" : "transparent"}
-								fontWeight={"500"}
-								onClick={() => setState("pagas")}
-								_hover={{ opacity: 0.7 }}
-							>
-								Pagas{" "}
-							</Button>
-						</Flex>
-						<Flex w={"100%"}>
-							<EmpreendimentoTable />
-						</Flex>
-					</Flex>
+					</motion.div>
 				</Flex>{" "}
 			</Flex>
 		</DefaultTemplate>

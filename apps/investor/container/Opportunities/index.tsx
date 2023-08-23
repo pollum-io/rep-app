@@ -15,6 +15,7 @@ import { CreateAccountModal } from "../../components/CreateAccount/CreateAccount
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { UserDataPF } from "../../dtos/UserPF";
 import PersistentFramework from "../../utils/persistent";
+import { motion } from "framer-motion"; // Import motion from framer-motion
 
 interface UserData {
 	token: string;
@@ -187,31 +188,18 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 						</Flex>
 					</Flex>
 				</Flex>
-				<Flex
-					px="1.5rem"
-					mt="2.9375rem"
-					flexDirection="column"
-					justifyContent="center"
-					alignItems="center"
+				<motion.div
+					initial={{ opacity: 0, y: 40 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5 }}
 				>
 					<Flex
-						alignItems={[
-							"unset",
-							"unset",
-							"unset",
-							"start",
-							"center",
-							"center",
-						]}
-						flexWrap="wrap"
-						gap="1.5rem"
-						flexDirection={["unset", "unset", "unset", "column", "row", "row"]}
-						fontFamily="Poppins"
+						px="1.5rem"
+						mt="2.9375rem"
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="center"
 					>
-						<Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
-							{t("opportunities.orderBy")}
-						</Text>
-
 						<Flex
 							alignItems={[
 								"unset",
@@ -222,7 +210,7 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 								"center",
 							]}
 							flexWrap="wrap"
-							gap="1.9375rem"
+							gap="1.5rem"
 							flexDirection={[
 								"unset",
 								"unset",
@@ -231,20 +219,46 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 								"row",
 								"row",
 							]}
+							fontFamily="Poppins"
 						>
-							<MenuInputs />
-							{/* <Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
+							<Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
+								{t("opportunities.orderBy")}
+							</Text>
+
+							<Flex
+								alignItems={[
+									"unset",
+									"unset",
+									"unset",
+									"start",
+									"center",
+									"center",
+								]}
+								flexWrap="wrap"
+								gap="1.9375rem"
+								flexDirection={[
+									"unset",
+									"unset",
+									"unset",
+									"column",
+									"row",
+									"row",
+								]}
+							>
+								<MenuInputs />
+								{/* <Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
 								1 resultados
 							</Text> */}
+							</Flex>
+						</Flex>
+						<Flex mt="2.9375rem" w="100%" justifyContent="center">
+							<OpportunitiesCards
+								investorId={props?.investor_pf}
+								token={props.token}
+							/>
 						</Flex>
 					</Flex>
-					<Flex mt="2.9375rem" w="100%" justifyContent="center">
-						<OpportunitiesCards
-							investorId={props?.investor_pf}
-							token={props.token}
-						/>
-					</Flex>
-				</Flex>
+				</motion.div>
 			</Flex>
 		</DefaultTemplate>
 	);

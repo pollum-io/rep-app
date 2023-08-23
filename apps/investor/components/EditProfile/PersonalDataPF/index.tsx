@@ -1,4 +1,14 @@
-import { Button, Collapse, Flex, Img, Text } from "@chakra-ui/react";
+import {
+	Button,
+	Checkbox,
+	Collapse,
+	Flex,
+	Img,
+	Radio,
+	RadioGroup,
+	Stack,
+	Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -16,6 +26,7 @@ import { MaritalStatus, UserDataPF } from "../../../dtos/UserPF";
 interface IPersonalDataPF {
 	data?: UserDataPF;
 	token?: string;
+	isCheckout?: boolean;
 }
 
 export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
@@ -33,13 +44,13 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	const { userInfos } = useUser();
 	const { toast } = useToasty();
 	const dataFormatada = new Date(data?.birthday_date)
-		.toISOString()
-		.split("T")[0];
+		?.toISOString()
+		?.split("T")[0];
+	const [value, setValue] = useState("1");
 
 	const onSubmitForm = async (data: UserDataPF) => {
 		let request: UserDataPF;
 		let value: MaritalStatus;
-		console.log(data, "data");
 		// eslint-disable-next-line prefer-const
 		value = isMerried
 			? {
@@ -76,7 +87,6 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			profession: data.profession,
 			address: data.address,
 			marital_status: value,
-			is_profile_filled: true,
 		};
 
 		await fetchEditInvestorPF(userInfos, request, token)
@@ -108,19 +118,21 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	return (
 		<Flex w="100%" justifyContent="end">
 			<Flex flexDirection="column" gap="2.75rem" w="100%" maxWidth="47.4375rem">
-				<Flex gap="1.5rem" alignItems="center">
-					<Img src="/icons/Avatar.png" w="6rem" h="6rem" />
-					<Text
-						fontFamily="Poppins"
-						fontWeight="600"
-						fontSize="1.5rem"
-						lineHeight="2rem"
-						alignItems="center"
-						color="#171923"
-					>
-						{t("editProfile.edit")}
-					</Text>
-				</Flex>
+				{!props?.isCheckout && (
+					<Flex gap="1.5rem" alignItems="center">
+						<Img src="/icons/Avatar.png" w="6rem" h="6rem" />
+						<Text
+							fontFamily="Poppins"
+							fontWeight="600"
+							fontSize="1.5rem"
+							lineHeight="2rem"
+							alignItems="center"
+							color="#171923"
+						>
+							{t("editProfile.edit")}
+						</Text>
+					</Flex>
+				)}
 
 				<form onSubmit={handleSubmit(onSubmitForm)}>
 					<Flex justifyContent="space-between" w="100%">
@@ -172,6 +184,35 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									{...register("rg")}
 									defaultValue={data?.rg}
 								/>
+								<InputComponent
+									placeholderText={t("inputs.insertHere") as string}
+									label={t("editProfile.address") as string}
+									type="text"
+									{...register("address")}
+									defaultValue={data?.address}
+								/>
+								<InputComponent
+									placeholderText={t("inputs.insertHere") as string}
+									label={t("editProfile.occupation") as string}
+									type="text"
+									{...register("profession")}
+									defaultValue={data?.profession}
+								/>
+								<InputComponent
+									placeholderText={t("inputs.insertHere") as string}
+									label={t("editProfile.email") as string}
+									type="email"
+									{...register("email")}
+									defaultValue={data?.email}
+								/>
+								<InputComponent
+									placeholderText={t("inputs.insertHere") as string}
+									label={t("editProfile.phone") as string}
+									type="text"
+									maskType={"Telefone"}
+									{...register("phone_number")}
+									defaultValue={formatPhoneNumber(data?.phone_number)}
+								/>
 							</Flex>
 						</Flex>
 						<Flex
@@ -200,6 +241,47 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									selectValue={estadosRegimesPatrimoniais}
 									{...register("equity_regime")}
 								/>
+								<Flex flexDir={"column"} my={"1.5rem"}>
+									<Text
+										fontStyle="normal"
+										fontWeight="500"
+										fontSize="0.875rem"
+										lineHeight="1.25rem"
+										color={"#2D3748"}
+									>
+										{" "}
+										Quem será o contratante no contrato?
+									</Text>
+									<RadioGroup onChange={setValue} mt={"0.75rem"}>
+										<Stack direction="column" gap={"0.75rem"}>
+											<Radio value="1" colorScheme={"cyan"}>
+												<Text color={"#171923"} fontSize={"0.875rem"}>
+													Apenas você
+												</Text>
+											</Radio>
+											<Radio
+												color={"#171923"}
+												fontSize={"0.875rem"}
+												value="2"
+												colorScheme={"cyan"}
+											>
+												<Text color={"#171923"} fontSize={"0.875rem"}>
+													Apenas seu cônjuge{" "}
+												</Text>
+											</Radio>
+											<Radio
+												color={"#171923"}
+												fontSize={"0.875rem"}
+												value="3"
+												colorScheme={"cyan"}
+											>
+												<Text color={"#171923"} fontSize={"0.875rem"}>
+													Ambos{" "}
+												</Text>
+											</Radio>
+										</Stack>
+									</RadioGroup>
+								</Flex>
 								<InputComponent
 									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.spousesName") as string}
@@ -238,6 +320,47 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									{...register("partners_name")}
 									defaultValue={data?.marital_status?.partners_name}
 								/>
+								<Flex flexDir={"column"} my={"1.5rem"}>
+									<Text
+										fontStyle="normal"
+										fontWeight="500"
+										fontSize="0.875rem"
+										lineHeight="1.25rem"
+										color={"#2D3748"}
+									>
+										{" "}
+										Quem será o contratante no contrato?
+									</Text>
+									<RadioGroup onChange={setValue} mt={"0.75rem"}>
+										<Stack direction="column" gap={"0.75rem"}>
+											<Radio value="1" colorScheme={"cyan"}>
+												<Text color={"#171923"} fontSize={"0.875rem"}>
+													Apenas você
+												</Text>
+											</Radio>
+											<Radio
+												color={"#171923"}
+												fontSize={"0.875rem"}
+												value="2"
+												colorScheme={"cyan"}
+											>
+												<Text color={"#171923"} fontSize={"0.875rem"}>
+													Apenas seu cônjuge{" "}
+												</Text>
+											</Radio>
+											<Radio
+												color={"#171923"}
+												fontSize={"0.875rem"}
+												value="3"
+												colorScheme={"cyan"}
+											>
+												<Text color={"#171923"} fontSize={"0.875rem"}>
+													Ambos{" "}
+												</Text>
+											</Radio>
+										</Stack>
+									</RadioGroup>
+								</Flex>
 								<InputComponent
 									placeholderText={t("inputs.insertHere") as string}
 									label={t("editProfile.partnersSocialNumber") as string}
@@ -261,37 +384,22 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									defaultValue={data?.marital_status?.partners_address}
 								/>
 							</Collapse>
-							<InputComponent
-								placeholderText={t("inputs.insertHere") as string}
-								label={t("editProfile.address") as string}
-								type="text"
-								{...register("address")}
-								defaultValue={data?.address}
-							/>
-							<InputComponent
-								placeholderText={t("inputs.insertHere") as string}
-								label={t("editProfile.occupation") as string}
-								type="text"
-								{...register("profession")}
-								defaultValue={data?.profession}
-							/>
-							<InputComponent
-								placeholderText={t("inputs.insertHere") as string}
-								label={t("editProfile.email") as string}
-								type="email"
-								{...register("email")}
-								defaultValue={data?.email}
-							/>
-							<InputComponent
-								placeholderText={t("inputs.insertHere") as string}
-								label={t("editProfile.phone") as string}
-								type="text"
-								maskType={"Telefone"}
-								{...register("phone_number")}
-								defaultValue={formatPhoneNumber(data?.phone_number)}
-							/>
 						</Flex>
 					</Flex>
+					{isStableUnion && (
+						<Checkbox mt={"1.5rem"} mb={"2rem"}>
+							<Text fontSize={"0.875rem"} color={"#2D3748"}>
+								Declaro que estou em união estável.
+							</Text>
+						</Checkbox>
+					)}
+					{!isMerried && !isStableUnion && (
+						<Checkbox mt={"1.5rem"} mb={"2rem"}>
+							<Text fontSize={"0.875rem"} color={"#2D3748"}>
+								Declaro que não estou em uma convivência de união estável.
+							</Text>
+						</Checkbox>
+					)}
 					<Flex w="100%" justifyContent="flex-start">
 						<Button
 							w="13.375rem"

@@ -11,6 +11,8 @@ interface IRegister {
 	setIsInvestor: React.Dispatch<React.SetStateAction<boolean>>;
 	firstAccess: boolean;
 	setFirstAccess?: React.Dispatch<React.SetStateAction<boolean>>;
+	isInvestorPerfilCompleted?: boolean;
+	setIsInvestorPerfilCompleted?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const UserContext = createContext({} as IRegister);
@@ -20,6 +22,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
 	const [isUserLogged, setIsUserLogged] = useState<boolean>(false);
 	const [isInvestor, setIsInvestor] = useState<boolean>(false);
+	const [isInvestorPerfilCompleted, setIsInvestorPerfilCompleted] =
+		useState<boolean>(false);
 
 	const [userInfos, setUserInfos] = useState<string>();
 	const [username, setUsername] = useState<string>();
@@ -35,6 +39,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			name = investorPF.data?.full_name;
 			setUsername(name);
 			setIsInvestor(true);
+			setIsInvestorPerfilCompleted(
+				investorPF?.data?.is_profile_filled === true ? true : false
+			);
 			PersistentFramework.add("name", String(name));
 			PersistentFramework.add("isInvestor", { isInvestor: true });
 			PersistentFramework.add("id", String(id));
@@ -46,6 +53,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			name = investorPJ.data?.full_name;
 			setUsername(name);
 			setIsInvestor(true);
+			setIsInvestorPerfilCompleted(
+				investorPJ?.data?.is_profile_filled === true ? true : false
+			);
 			PersistentFramework.add("name", String(name));
 			PersistentFramework.add("isInvestor", { isInvestor: true });
 			PersistentFramework.add("id", String(id));
@@ -92,6 +102,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			setIsInvestor,
 			firstAccess,
 			setFirstAccess,
+			isInvestorPerfilCompleted,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[isUserLogged, userInfos, username]
