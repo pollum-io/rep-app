@@ -70,6 +70,14 @@ export const TimeCard: React.FC<ITimeCard> = ({ imovelDetails }) => {
 					h="max-content"
 				>
 					<Countdown date={imovelDetails?.sale_end_at} renderer={renderer} />
+					<Text
+						fontWeight="500"
+						fontSize="1.25rem"
+						lineHeight="2rem"
+						id="timer"
+					>
+						{t("opportunitieDetails.closeSales")}
+					</Text>
 				</Flex>
 			)}
 		</>
