@@ -10,6 +10,5 @@ export const fetchOpportunitiesByCompany = async (query: object) => {
 			Accept: "application/json",
 		},
 	});
-	console.log(response, "response");
 	return response.data;
 };

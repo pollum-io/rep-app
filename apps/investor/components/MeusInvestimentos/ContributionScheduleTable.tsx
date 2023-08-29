@@ -1,117 +1,143 @@
 import { Flex, Text, Img, Button } from "@chakra-ui/react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useMemo } from "react";
+import { formatCurrency } from "ui/utils/BRCurrency";
+import { formatDate, formatFullDate } from "../../utils/formatDate";
 
-const data = [
-	{
-		data: "02 de Dezembro de 2025",
-		aporte: "R$ 90.000,00",
-		status: "Paga",
-		acao: "Baixar comprovante",
-	},
-	{
-		data: "02 de Janeiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "Pagamento pendente",
-		acao: "Realizar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-	{
-		data: "02 de Fevereiro de 2026",
-		aporte: "R$ 90.000,00",
-		status: "A vencer",
-		acao: "Adiantar pagamento",
-	},
-];
+// const data = [
+// 	{
+// 		data: "02 de Dezembro de 2025",
+// 		aporte: "R$ 90.000,00",
+// 		status: "Paga",
+// 		acao: "Baixar comprovante",
+// 	},
+// 	{
+// 		data: "02 de Janeiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "Pagamento pendente",
+// 		acao: "Realizar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// 	{
+// 		data: "02 de Fevereiro de 2026",
+// 		aporte: "R$ 90.000,00",
+// 		status: "A vencer",
+// 		acao: "Adiantar pagamento",
+// 	},
+// ];
 
 interface IValueTable {
 	isCronograma?: boolean;
+	data?: any; //TODO
 }
 
 export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 	isCronograma,
+	data,
 }) => {
-	const getStatusColor = (status?: any) => {
-		switch (status) {
-			case "Paga":
-				return { bg: "#E4F2F3", color: "#00576B" };
-			case "Pagamento pendente":
-				return { bg: "#FED7D7", color: "#E53E3E" };
-			case "Assinatura pendente":
-				return { bg: "#F0E8FF", color: "#6E40E7" };
-			case "A vencer":
-				return { bg: "#FEEBCB", color: "#B7791F" };
-			default:
-				return { bg: "white", color: "black" };
-		}
-	};
+	const getStatusColorAndText = useMemo(() => {
+		const getStatusColor = (status: string) => {
+			switch (status) {
+				case "CONFIRMED":
+					return {
+						bg: "#E4F2F3",
+						color: "#00576B",
+						statusText: "Pago",
+						action: "Realizar pagamento",
+					};
+				case "OVERDUE":
+					return {
+						bg: "#FED7D7",
+						color: "#E53E3E",
+						statusText: "Atrasado",
+						action: "Realizar pagamento",
+					};
+				case "PENDING":
+					return {
+						bg: "#F0E8FF",
+						color: "#6E40E7",
+						statusText: "Em aberto",
+						action: "Realizar pagamento",
+					};
+				default:
+					return {
+						bg: "#FEEBCB",
+						color: "#B7791F",
+						statusText: "Em Analise	",
+						action: "Realizar pagamento",
+					};
+			}
+		};
+
+		return getStatusColor;
+	}, []);
 
 	const renderRows = () => {
-		return data.map((item, index) => (
+		return data?.data?.disbursement_schedule?.map((item, index) => (
 			<Flex
 				key={index}
 				px="1rem"
@@ -123,12 +149,12 @@ export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 			>
 				<Flex flex="1.1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
-						{item.data}
+						{formatFullDate(item.date)}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"#171923"}>
-						{item.aporte}
+						{formatCurrency(item.value)}
 					</Text>
 				</Flex>
 				<Flex flex="1.2" alignItems="center">
@@ -139,12 +165,12 @@ export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 						textAlign={"center"}
 						borderRadius={"2.625rem"}
 						fontSize={"0.75rem"}
-						bg={getStatusColor(item?.status)?.bg}
-						color={getStatusColor(item?.status)?.color}
+						bg={getStatusColorAndText(item?.status)?.bg}
+						color={getStatusColorAndText(item?.status)?.color}
 						fontWeight={"500"}
 						_hover={{}}
 					>
-						{item?.status}
+						{getStatusColorAndText(item?.status)?.statusText}
 					</Button>
 				</Flex>
 				<Flex flex="1">
@@ -160,7 +186,7 @@ export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 						_hover={{}}
 						m={"0"}
 					>
-						{item?.acao}
+						{getStatusColorAndText(item?.status)?.action}
 					</Button>
 				</Flex>
 			</Flex>

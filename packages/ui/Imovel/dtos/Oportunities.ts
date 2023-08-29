@@ -24,6 +24,7 @@ export interface IOpportunitiesCard {
 	picture_extra?: string[];
 	enterprise_name?: string;
 	tags?: string[];
+	geolocation?: { lat: number; lng: number };
 	blueprints?: Array<{ file: string; name: string }>;
 	oppportunities_details?: {
 		constructed_area: number;

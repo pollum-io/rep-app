@@ -1,73 +1,20 @@
-import { Flex, Text, Button, Img, useDisclosure } from "@chakra-ui/react";
+import { Flex, useDisclosure } from "@chakra-ui/react";
 import { FunctionComponent, useState } from "react";
 import { ImoveisTableRow } from "./Row";
-import { IEmpreendimentoData } from "../../../dtos/IEmpreendimentoMeuInvestimento";
-import { InvestmentDetailsModal } from "../InvestmentDetailsModal";
+import { InvestmentDetailsModal } from "../Modal/InvestmentDetailsModal";
 import { ImoveisTableHeader } from "./ImoveisTableHeader";
+import { InvestmentModel } from "../../../dtos/IInvestment";
 
-const data = [
-	{
-		empreendimento: "Nome do empreendimento grande pra",
-		tipoDoEmpreendiment0: "Tipo do empreendimento",
-		inicioInvest: "-",
-		cotas: "02 cotas",
-		totalInvestido: "R$ 200.000,00",
-		porcentagem: "0,2% do portfolio",
-		conclusao: "Dez 2026",
-		prev: "(previsão)",
-		lucratividade: "12%",
-		descLucratividade: "ao ano",
-		status: "Assinatura pendente",
-		acao: "Realizar pagamento",
-	},
-	{
-		empreendimento: "Nome do empreendimento grande pra",
-		tipoDoEmpreendiment0: "Tipo do empreendimento",
-		inicioInvest: "-",
-		cotas: "02 cotas",
-		totalInvestido: "R$ 200.000,00",
-		porcentagem: "0,2% do portfolio",
-		conclusao: "Dez 2026",
-		prev: "(previsão)",
-		lucratividade: "12%",
-		descLucratividade: "ao ano",
-		status: "Pagamento pendente",
-		acao: "Realizar pagamento",
-	},
-	{
-		empreendimento: "Nome do empreendimento grande pra",
-		tipoDoEmpreendiment0: "Tipo do empreendimento",
-		inicioInvest: "-",
-		cotas: "02 cotas",
-		totalInvestido: "R$ 200.000,00",
-		porcentagem: "0,2% do portfolio",
-		conclusao: "Dez 2026",
-		prev: "(previsão)",
-		lucratividade: "12%",
-		descLucratividade: "ao ano",
-		status: "Concluído",
-		acao: "Realizar pagamento",
-	},
-	{
-		empreendimento: "Nome do empreendimento grande pra",
-		tipoDoEmpreendiment0: "Tipo do empreendimento",
-		inicioInvest: "-",
-		cotas: "02 cotas",
-		totalInvestido: "R$ 200.000,00",
-		porcentagem: "0,2% do portfolio",
-		conclusao: "Dez 2026",
-		prev: "(previsão)",
-		lucratividade: "12%",
-		descLucratividade: "ao ano",
-		status: "Em andamento",
-		acao: "Realizar pagamento",
-	},
-];
+interface IImoveisTable {
+	data: InvestmentModel[];
+	token: string;
+}
 
-const ImoveisTable: FunctionComponent = () => {
-	const [empreendimento, setEmpreendimento] =
-		useState<IEmpreendimentoData | null>(null);
+const ImoveisTable: FunctionComponent<IImoveisTable> = ({ data, token }) => {
 	const { isOpen, onClose, onOpen } = useDisclosure();
+	const [empreendimento, setEmpreendimento] = useState<InvestmentModel | null>(
+		null
+	);
 
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"0.75rem"}>
@@ -75,20 +22,31 @@ const ImoveisTable: FunctionComponent = () => {
 			{data.map((data, index) => (
 				<ImoveisTableRow
 					key={index}
-					acao={data.acao}
-					conclusao={data.conclusao}
-					cotas={data.cotas}
-					descLucratividade={data.descLucratividade}
-					empreendimento={data.empreendimento}
-					inicioInvest={data.inicioInvest}
-					lucratividade={data.lucratividade}
-					porcentagem={data.porcentagem}
-					prev={data.prev}
-					status={data.status}
-					tipoDoEmpreendiment0={data.tipoDoEmpreendiment0}
-					totalInvestido={data.totalInvestido}
-					setEmpreendimento={setEmpreendimento}
 					modalOpen={onOpen}
+					cota_price={data?.cota_price}
+					enterprise_type={data?.enterprise_type}
+					expected_delivery_date={data?.expected_delivery_date}
+					expected_rentability={data?.expected_rentability}
+					final_invoice={data?.final_invoice}
+					investor_id={data?.investor_id}
+					last_invoice_paid={data?.last_invoice_paid}
+					name={data?.name}
+					next_invoice={data?.next_invoice}
+					num_cotas={data?.num_cotas}
+					num_installments={data?.num_installments}
+					opportunity_id={data?.opportunity_id}
+					opportunity_url={data?.opportunity_url}
+					paid_installments={data?.paid_installments}
+					profitability={data?.profitability}
+					return_realized={data?.return_realized}
+					status={data?.status}
+					total_invested={data?.total_invested}
+					setEmpreendimento={setEmpreendimento}
+					pictures_enterprise={data?.pictures_enterprise}
+					document_key={data?.document_key}
+					url_unsigned_document={data?.url_unsigned_document}
+					token={token}
+					_id={data?._id}
 				/>
 			))}
 			<InvestmentDetailsModal

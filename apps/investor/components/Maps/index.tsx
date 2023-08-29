@@ -1,41 +1,73 @@
 import { Flex } from "@chakra-ui/react";
 import { GoogleMap, MarkerF, useLoadScript } from "@react-google-maps/api";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { Oval } from "react-loader-spinner";
+import { InvestmentModel } from "../../dtos/IInvestment";
 interface IMaps {
 	localization?: { lat: number; lng: number };
-	localizations?: any;
+	investmentData?: InvestmentModel[];
 }
 
 export const Maps: FunctionComponent<IMaps> = ({
 	localization,
-	localizations,
+	investmentData,
 }) => {
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_APY_KEY as string,
 	});
+	const [uniqueGeolocations, setUniqueGeolocations] = useState([]);
+
+	useEffect(() => {
+		if (investmentData?.length) {
+			const geolocationsSet = investmentData?.reduce((set, item) => {
+				if (item.geolocation) {
+					const geolocationString = JSON.stringify(item.geolocation);
+					set.add(geolocationString);
+				}
+				return set;
+			}, new Set());
+
+			const uniqueGeolocationsArray = Array.from(geolocationsSet).map(
+				(str: string) => JSON.parse(str)
+			);
+
+			setUniqueGeolocations(
+				uniqueGeolocationsArray.map((geolocation) => ({
+					...geolocation,
+					name: investmentData.find(
+						(item) =>
+							JSON.stringify(item.geolocation) === JSON.stringify(geolocation)
+					).name,
+				}))
+			);
+		}
+	}, [investmentData]);
 
 	return (
 		<>
 			{isLoaded ? (
-				localizations?.length ? (
+				investmentData?.length ? (
 					<GoogleMap
 						zoom={16}
-						center={localizations?.length ? localizations : localizations}
+						center={uniqueGeolocations[0]}
 						mapContainerClassName="map-container"
 					>
-						<MarkerF
-							icon={{
-								url: "/images/icons/Home-Maps.svg",
-								scaledSize: new google.maps.Size(57, 57),
-								labelOrigin: new google.maps.Point(30, -32),
-							}}
-							label={{
-								text: "Crypto Plaza",
-								className: "map-label",
-							}}
-							position={localizations}
-						/>
+						{uniqueGeolocations.map((places: any, index: any) => (
+							// eslint-disable-next-line react/jsx-key
+							<MarkerF
+								key={index}
+								icon={{
+									url: "/images/icons/Home-Maps.svg",
+									scaledSize: new google.maps.Size(57, 57),
+									labelOrigin: new google.maps.Point(30, -32),
+								}}
+								label={{
+									text: places?.name,
+									className: "map-label",
+								}}
+								position={places}
+							/>
+						))}
 					</GoogleMap>
 				) : (
 					<GoogleMap

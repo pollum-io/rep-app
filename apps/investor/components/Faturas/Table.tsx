@@ -1,59 +1,68 @@
 import { Flex, Text, Button } from "@chakra-ui/react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useMemo } from "react";
+import { formatDateOnlyDayMonthYear } from "../../utils/formatDate";
+import { formatCurrency } from "ui/utils/BRCurrency";
 
-const data = [
-	{
-		empreendimento: "Nome do empreendimento grande pra",
-		parcela: "02 de 08",
-		vencimento: "01 de jan 2024",
-		valor: "R$ 40.000,00",
-		status: "Em aberto",
-		arquivos: "Realizar pagamento",
-	},
-	{
-		empreendimento: "Nome do empreendimento grande pra",
-		parcela: "02 de 08",
-		vencimento: "01 de jan 2024",
-		valor: "R$ 40.000,00",
-		status: "Atrasada",
-		arquivos: "Realizar pagamento",
-	},
-	{
-		empreendimento: "Nome do empreendimento grande pra",
-		parcela: "02 de 08",
-		vencimento: "01 de jan 2024",
-		valor: "R$ 40.000,00",
-		status: "Atrasada",
-		arquivos: "Realizar pagamento",
-	},
-	{
-		empreendimento: "Nome do empreendimento grande pra",
-		parcela: "02 de 08",
-		vencimento: "01 de jan 2024",
-		valor: "R$ 40.000,00",
-		status: "Paga",
-		arquivos: "Realizar pagamento",
-	},
-];
+type EmpreendimentoTable = {
+	name?: string;
+	id: string;
+	type?: string;
+	numInstallments?: number;
+	numPaidInstallments?: number;
+	value: number;
+	date?: string;
+	status: string;
+};
 
-const EmpreendimentoTable: FunctionComponent = () => {
-	const getStatusColor = (status?: string) => {
-		switch (status) {
-			case "Paga":
-				return { bg: "#E4F2F3", color: "#00576B" };
-			case "Atrasada":
-				return { bg: "#FED7D7", color: "#E53E3E" };
-			case "Em aberto":
-				return { bg: "#FEEBCB", color: "#B7791F" };
-			default:
-				return { bg: "white", color: "black" };
-		}
-	};
+const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
+	name,
+	type,
+	numInstallments,
+	numPaidInstallments,
+	value,
+	date,
+	status,
+}) => {
+	const getStatusColorAndText = useMemo(() => {
+		const getStatusColor = (status: string) => {
+			switch (status) {
+				case "CONFIRMED":
+					return {
+						bg: "#E4F2F3",
+						color: "#00576B",
+						statusText: "Pago",
+						action: "Realizar pagamento",
+					};
+				case "OVERDUE":
+					return {
+						bg: "#FED7D7",
+						color: "#E53E3E",
+						statusText: "Atrasado",
+						action: "Realizar pagamento",
+					};
+				case "PENDING":
+					return {
+						bg: "#F0E8FF",
+						color: "#6E40E7",
+						statusText: "Em aberto",
+						action: "Realizar pagamento",
+					};
+				default:
+					return {
+						bg: "#FEEBCB",
+						color: "#B7791F",
+						statusText: "Em Analise	",
+						action: "Realizar pagamento",
+					};
+			}
+		};
+
+		return getStatusColor;
+	}, []);
 
 	const renderRows = () => {
-		return data.map((item, index) => (
+		return (
 			<Flex
-				key={index}
 				px="1rem"
 				h={"3.9375rem"}
 				justifyContent="space-between"
@@ -67,95 +76,59 @@ const EmpreendimentoTable: FunctionComponent = () => {
 						"0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.10);",
 				}}
 			>
-				<Flex flex="1" alignItems="center">
+				<Flex flex="1" alignItems="start" flexDir={"column"}>
 					<Text fontSize={"0.875rem"} fontWeight={"400"} color={"#171923"}>
-						{item.empreendimento}
+						{name}
+					</Text>
+					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#2D3748"}>
+						{type}
 					</Text>
 				</Flex>
-				<Flex flex="0.5" alignItems="center">
+				<Flex flex="0.4" alignItems="center" gap={"1"}>
+					<Text fontSize={"0.875rem"} fontWeight={"600"} color={"#171923"}>
+						{numPaidInstallments}
+					</Text>
 					<Text fontSize={"0.875rem"} fontWeight={"400"} color={"#171923"}>
-						<strong>{item.parcela.substr(0, 2)}</strong>
-						{item.parcela.substr(2)}
+						de {numInstallments}
 					</Text>
 				</Flex>
 				<Flex flex="0.5" alignItems="center">
 					<Text fontSize={"0.875rem"} color={"#171923"}>
-						{item.vencimento}
+						{formatDateOnlyDayMonthYear(date)}
 					</Text>
 				</Flex>
 				<Flex flex="0.5" alignItems="center">
 					<Text fontSize={"0.875rem"} color={"#171923"}>
-						{item.valor}
+						{formatCurrency(value)}
 					</Text>
 				</Flex>
-				<Flex flex="0.5" alignItems="center">
+				<Flex flex="0.8" alignItems="center">
 					<Button
 						p={"0.5rem"}
-						w={"8.375rem"}
+						w={"9.125rem"}
 						h={"1.25rem"}
 						textAlign={"center"}
 						borderRadius={"2.625rem"}
-						fontSize={"0.875rem"}
-						bg={getStatusColor(item.status).bg}
-						color={getStatusColor(item.status).color}
+						fontSize={"0.75rem"}
+						bg={getStatusColorAndText(status).bg}
+						color={getStatusColorAndText(status).color}
 						fontWeight={"500"}
 						_hover={{}}
 					>
-						{item.status}
+						{getStatusColorAndText(status)?.statusText}
 					</Button>
 				</Flex>
 				<Flex flex="0.5" alignItems="center">
 					<Text fontSize={"0.875rem"} color={"#007D99"} fontWeight={"500"}>
-						{item.arquivos}
+						{getStatusColorAndText(status)?.action}
 					</Text>
 				</Flex>
 			</Flex>
-		));
+		);
 	};
 
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem">
-			<Flex
-				id="table-header"
-				bg={"transparent"}
-				px="1rem"
-				py={"0.75rem"}
-				justifyContent="space-between"
-				alignItems="center"
-				borderTopRadius="0.75rem"
-				color={"#171923"}
-			>
-				<Flex flex="1">
-					<Text fontSize={"0.875rem"} fontWeight={"500"}>
-						Empreendimento
-					</Text>
-				</Flex>
-				<Flex flex="0.5">
-					<Text fontSize={"0.875rem"} fontWeight={"500"}>
-						Parcela
-					</Text>
-				</Flex>
-				<Flex flex="0.5">
-					<Text fontSize={"0.875rem"} fontWeight={"500"}>
-						Vencimento
-					</Text>
-				</Flex>
-				<Flex flex="0.5">
-					<Text fontSize={"0.875rem"} fontWeight={"500"}>
-						Valor
-					</Text>
-				</Flex>
-				<Flex flex="0.5">
-					<Text fontSize={"0.875rem"} fontWeight={"500"}>
-						Status
-					</Text>
-				</Flex>
-				<Flex flex="0.5">
-					<Text fontSize={"0.875rem"} fontWeight={"500"}>
-						Arquivos
-					</Text>
-				</Flex>
-			</Flex>
 			{renderRows()}
 		</Flex>
 	);

@@ -4,6 +4,7 @@ import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities"
 import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import Table from "../ImovelAportesComponents/AportesTable";
 import { DocsComponent, PriceCard, TimeCard } from "../SharedComponents";
+import { PrevRetornoComponent } from "../ImovelAportesComponents";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -19,6 +20,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 			<Flex flexDir={"column"} alignItems="flex-start">
 				<Flex gap="1rem" maxWidth="75rem">
 					<Flex flexDir={"column"}>
+						<PrevRetornoComponent isMyInvest={false} />
 						<Flex flexDir={"row"} maxWidth={"70%"} mr={"0rem"} gap={"1.7rem"}>
 							<Flex flexDir={"column"}>
 								<Flex alignItems={"baseline"} gap={"1.5"}>
@@ -38,20 +40,6 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 										imovelDetails?.opportunity_resume?.disbursement_schedule
 									}
 								/>
-							</Flex>
-							<Flex flexDir={"column"}>
-								<Text
-									fontSize={"1.5rem"}
-									fontWeight={"600"}
-									color={"#171923"}
-									mb={"2rem"}
-								>
-									Previsão de retorno
-								</Text>
-								<Table
-									isCronograma={false}
-									data={imovelDetails?.opportunity_resume?.return_schedule}
-								/>{" "}
 							</Flex>
 						</Flex>
 						<Flex mt={"1.5rem"} mb={"1rem"} w={"95%"}>

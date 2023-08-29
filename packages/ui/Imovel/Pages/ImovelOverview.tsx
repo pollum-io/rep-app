@@ -5,9 +5,18 @@ import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities"
 import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import PrevFinanceiraTable from "../ImovelOverviewComponents/PrevFinanceiraTable";
 import PositiveAndNegativeBarChart from "../ImovelOverviewComponents/FluxoDeCaixaChart";
-import { PrevisaoDeCaixaChart } from "../ImovelOverviewComponents/PrevisaoDeCaixaChart";
 import { PriceCard, TimeCard } from "../SharedComponents";
+import dynamic from "next/dynamic";
 
+const PieChartComponent = dynamic(
+	async () => {
+		const mod = await import("ui/Imovel/ImovelOverviewComponents/");
+		return mod.PieChartComponent;
+	},
+	{
+		ssr: false,
+	}
+);
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
 	usersId: UserInfo;
@@ -163,7 +172,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 								>
 									Previsão de caixa
 								</Text>
-								<PrevisaoDeCaixaChart />
+								<PieChartComponent opData={imovelDetails} />
 							</Flex>
 						</Flex>
 					</Flex>{" "}
