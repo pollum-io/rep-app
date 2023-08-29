@@ -59,7 +59,9 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
 					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-						{formatDateBirthday(contribution?.next_invoice)}
+						{contribution?.next_invoice
+							? formatDateBirthday(contribution?.next_invoice)
+							: "-"}
 					</Text>
 				</Flex>
 				<Flex
@@ -99,7 +101,9 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
 					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-						{contribution?.pendingContracts}
+						{contribution?.pendingContracts
+							? contribution?.pendingContracts
+							: "0"}
 					</Text>
 				</Flex>
 			</Flex>

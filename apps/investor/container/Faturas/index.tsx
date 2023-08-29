@@ -96,9 +96,23 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 						transition={{ duration: 0.5 }}
 					>
 						<ResumoFaturasComponent contribution={props?.contribution} />
-						<EmpreendimentoComponent contribution={props?.contribution} />
+
+						{props?.contribution?.contributions ? (
+							<EmpreendimentoComponent contribution={props?.contribution} />
+						) : (
+							<Flex
+								flexDir={"column"}
+								alignItems={"center"}
+								justifyContent={"center"}
+							>
+								<Text color={"#171923"} textAlign={"center"} w={"54%"}>
+									Você não possui faturas em aberto no momento, futuras parcelas
+									a serem pagas serão demonstradas aqui.
+								</Text>
+							</Flex>
+						)}
 					</motion.div>
-				</Flex>{" "}
+				</Flex>
 			</Flex>
 		</DefaultTemplate>
 	);
