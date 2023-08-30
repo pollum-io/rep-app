@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useLayoutEffect, useState } from "react";
 import {
 	Flex,
 	Input,
@@ -33,13 +33,13 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({
 	);
 	const { getUserInfos } = useUser();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getUserInfos(
 			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf,
 			token
 		);
 	}, [getUserInfos, token, user?.investor_pf, user?.investor_pj]);
-
+	console.log(filteredCompanies);
 	return (
 		<DefaultTemplate>
 			<motion.div

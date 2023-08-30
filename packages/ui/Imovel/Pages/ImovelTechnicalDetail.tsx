@@ -170,7 +170,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault="15%"
+								heightDefault="12%"
 								pageSize="md"
 								unitPrice={imovelDetails?.min_investment}
 							/>{" "}

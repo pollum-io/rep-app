@@ -187,7 +187,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault="9.5%"
+								heightDefault="8%"
 								pageSize="lg"
 								unitPrice={imovelDetails?.min_investment}
 							/>{" "}

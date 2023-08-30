@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { ImovelDetail } from "../../components/Imovel/imovel";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
@@ -18,7 +18,7 @@ export const ImovelContainer: FunctionComponent<IImovelProps> = ({
 }) => {
 	const { getUserInfos } = useUser();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getUserInfos(
 			usersId?.investor_pf === null
 				? usersId?.investor_pj

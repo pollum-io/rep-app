@@ -93,10 +93,12 @@ import { formatDate, formatFullDate } from "../../utils/formatDate";
 interface IValueTable {
 	isCronograma?: boolean;
 	data?: any; //TODO
+	total_invested: number;
 }
 
 export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 	isCronograma,
+	total_invested,
 	data,
 }) => {
 	const getStatusColorAndText = useMemo(() => {
@@ -253,7 +255,7 @@ export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.875rem"} fontWeight={"semibold"} color={"white"}>
-						R$ 832.658,88{" "}
+						{formatCurrency(total_invested)}
 					</Text>
 				</Flex>
 				<Flex flex={"1"} />

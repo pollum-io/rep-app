@@ -176,7 +176,16 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 					</Text>
 				</Flex>
 			</Flex>
-			<Flex flex="1">
+			<Flex
+				flex="1"
+				as={"a"}
+				href={
+					getStatusColorAndText(props?.status)?.action === "Assinar contrato"
+						? props?.url_unsigned_document
+						: null
+				}
+				target="_blank"
+			>
 				<Button
 					p={"0.5rem"}
 					w={"9.125rem"}
@@ -194,13 +203,6 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 			</Flex>
 			<Flex flex="1">
 				<Button
-					as={"a"}
-					href={
-						getStatusColorAndText(props?.status)?.action === "Assinar contrato"
-							? props?.url_unsigned_document
-							: null
-					}
-					target="_blank"
 					p={"0.5rem"}
 					w={"8.375rem"}
 					h={"1.25rem"}

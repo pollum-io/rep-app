@@ -4,10 +4,12 @@ import { ContributionScheduleTable } from "../ContributionScheduleTable";
 
 type ComponentProps = {
 	data?: any;
+	total_invested?: number;
 };
 
 export const CronogramaAportesComponent: React.FC<ComponentProps> = ({
 	data,
+	total_invested,
 }) => {
 	return (
 		<Flex mb={"2rem"} flexDir={"column"} gap={"0.75rem"}>
@@ -17,7 +19,7 @@ export const CronogramaAportesComponent: React.FC<ComponentProps> = ({
 				</Text>
 				<Img src="/icons/info-circle-littlegray.svg" />
 			</Flex>
-			<ContributionScheduleTable data={data} />
+			<ContributionScheduleTable data={data} total_invested={total_invested} />
 			<Text fontSize={"0.875rem"} color={"#171923"} w={"60%"} mt={"1rem"}>
 				Espaço pra alguma explicação se necessário. Lorem ipsum dolor sit amet
 				consectetur. A molestie at lacus lobortis orci id tellus mi. Adipiscing

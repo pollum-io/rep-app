@@ -5,7 +5,7 @@ import {
 	useDisclosure,
 	useMediaQuery,
 } from "@chakra-ui/react";
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { MenuInputs } from "../../components";
 import { OpportunitiesCards } from "../../components";
@@ -33,7 +33,7 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 	const { t } = useTranslation();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getUserInfos(
 			props?.investor_pf === null ? props?.investor_pj : props?.investor_pf,
 			props?.token

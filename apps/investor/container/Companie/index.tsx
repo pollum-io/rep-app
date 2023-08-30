@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { CompaniePage } from "../../components/CompaniePage";
 import { ICompaniesDetails } from "../../components/Companies/CompaniesCard/dto";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
@@ -19,7 +19,7 @@ export const CompanieContainer: FunctionComponent<ICompanieProps> = ({
 }) => {
 	const { getUserInfos } = useUser();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getUserInfos(
 			user?.investor_pf === null ? user?.investor_pj : user?.investor_pf,
 			token

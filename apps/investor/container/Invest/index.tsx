@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { Flex } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
@@ -32,7 +32,7 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 	const { firstStep, secondStep } = useRegisterSteps();
 	const { cotas } = useOpportunities();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getUserInfos(
 			props?.investor_pf === null ? props?.investor_pj : props?.investor_pf,
 			props?.token

@@ -20,17 +20,20 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 	props
 ) => {
 	const [data, setData] = useState();
-	useMemo(() => {
-		const get = async () => {
-			const request = await fetchGetInvestmentDetailByUser(
-				props?.data?.token,
-				props?.data?._id
-			);
-			setData(request);
-		};
 
-		get();
-	}, [props?.data?._id, props?.data?.token]);
+	useMemo(() => {
+		if (props.isOpen) {
+			const get = async () => {
+				const request = await fetchGetInvestmentDetailByUser(
+					props?.data?.token,
+					props?.data?._id
+				);
+				setData(request);
+			};
+
+			get();
+		} else console.log();
+	}, [props?.data?._id, props?.data?.token, props.isOpen]);
 
 	return (
 		<Modal isOpen={props.isOpen} onClose={props.onClose} size={"6xl"}>
@@ -99,11 +102,17 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 									}
 								/>
 								<PrevRetornoComponent data={data} isMyInvest={true} />
-								<CronogramaAportesComponent data={data} />
+								<CronogramaAportesComponent
+									data={data}
+									total_invested={props?.data?.total_invested}
+								/>
 							</>
 						) : (
 							<>
-								<CronogramaAportesComponent data={data} />
+								<CronogramaAportesComponent
+									data={data}
+									total_invested={props?.data?.total_invested}
+								/>
 								<PrevRetornoComponent data={data} isMyInvest={true} />
 								<ContratoComponent />
 							</>

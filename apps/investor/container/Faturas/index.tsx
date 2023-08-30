@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { Flex, Text } from "@chakra-ui/react";
@@ -24,7 +24,7 @@ interface UserData {
 export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 	const { getUserInfos } = useUser();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getUserInfos(
 			props?.user?.investor_pf === null
 				? props?.user?.investor_pj

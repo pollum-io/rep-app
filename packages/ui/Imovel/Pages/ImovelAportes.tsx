@@ -15,6 +15,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
 	usersId,
 }) => {
+	console.log(imovelDetails);
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
@@ -63,7 +64,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault={"30%"}
+								heightDefault={"18%"}
 								unitPrice={imovelDetails?.min_investment}
 								pageSize="sm"
 							/>{" "}

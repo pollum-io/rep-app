@@ -1,5 +1,5 @@
 import { Button, Flex } from "@chakra-ui/react";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useLayoutEffect, useState } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { useTranslation } from "react-i18next";
 import { ChangePassword } from "../../components/EditProfile/Pages/ChangePassword";
@@ -25,7 +25,7 @@ export const Edit_ProfileContainer: FunctionComponent<IEditProfile> = (
 	const { t } = useTranslation();
 	const { getUserInfos } = useUser();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getUserInfos(
 			props?.user?.investor_pf === null
 				? props?.user?.investor_pj

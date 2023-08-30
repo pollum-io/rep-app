@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useEffect, useMemo } from "react";
+import React, {
+	FunctionComponent,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+} from "react";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { DefaultTemplate } from "../DefaultTemplate";
@@ -29,7 +34,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 	const currentDate = new Date();
 	const formattedDate = format(currentDate, "dd/MMM/yy", { locale: ptBR });
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getUserInfos(
 			props?.user?.investor_pf === null
 				? props?.user?.investor_pj

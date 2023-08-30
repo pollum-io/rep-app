@@ -7,6 +7,7 @@ type ComponentProps = {
 };
 
 export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
+	console.log(contribution?.paid_installments);
 	return (
 		<Flex
 			justifyContent={"end"}
@@ -44,15 +45,10 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 				</Flex>
 				<Flex gap={"1.5"}>
 					<Text fontSize={"1.125rem"} fontWeight={"600"}>
-						{contribution?.num_installments
-							? contribution?.num_installments
-							: "-"}
+						{contribution?.num_installments}
 					</Text>
 					<Text fontSize={"1.125rem"}>
-						de{" "}
-						{contribution?.paid_installments
-							? contribution?.paid_installments
-							: ""}
+						de {contribution?.paid_installments}
 					</Text>
 				</Flex>
 			</Flex>
@@ -63,9 +59,7 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 					</Text>
 					<Img src="/icons/info-circle-littlegray.svg" />
 				</Flex>
-				<Text fontSize={"1.125rem"}>
-					{contribution?.num_cotas ? contribution?.num_cotas : "0"}
-				</Text>
+				<Text fontSize={"1.125rem"}>{contribution?.num_cotas}</Text>
 			</Flex>
 			<Flex flexDir={"column"} gap={"0.25rem"}>
 				<Flex gap={"0.5rem"}>

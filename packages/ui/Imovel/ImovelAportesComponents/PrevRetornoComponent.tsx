@@ -59,7 +59,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 			<Text
 				fontSize={"0.875rem"}
 				color={"#171923"}
-				w={isMyInvest === true ? "max " : "65%"}
+				w={isMyInvest === true ? "65% " : "80%"}
 			>
 				Os retornos serão reembolsados a partir das receitas advindas das
 				vendas. Os valores aportados como adiantamento serão devolvidos
