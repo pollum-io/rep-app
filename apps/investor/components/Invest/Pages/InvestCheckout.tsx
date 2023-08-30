@@ -8,12 +8,16 @@ import { UserDataPF } from "../../../dtos/UserPF";
 import { UserDataPJ } from "../../../dtos/UserPJ";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 import { useOpportunities } from "../../../hooks/useOpportunities";
+import { fetchSignContract } from "../../../services/fetchSignContract";
+import { useUser } from "../../../hooks/useUser";
+import PersistentFramework from "../../../utils/persistent";
 
 interface IInvestCheckout {
 	imovel?: IOpportunitiesCard;
 	isPerfilCompleted?: boolean;
 	userDataPF?: UserDataPF;
 	userDataPJ?: UserDataPJ;
+	token: string;
 }
 
 export const InvestCheckout: React.FC<IInvestCheckout> = ({
@@ -21,10 +25,29 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 	userDataPF,
 	userDataPJ,
 	imovel,
+	token,
 }) => {
 	const { t } = useTranslation();
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { cotas, setCotas } = useOpportunities();
+	const { setInvestmentId } = useUser();
+
+	const handleSignContract = async () => {
+		const contractData = {
+			templateKey: imovel?.template_key,
+			enterpriseId: imovel?.enterprise_id,
+			opportunityId: imovel?._id,
+			num_cotas: cotas,
+			totalInvested: cotas * (imovel?.min_investment ?? 0),
+		};
+
+		await fetchSignContract(contractData, token).then((res) => {
+			console.log(res?.investment_id);
+			setInvestmentId(res?.investment_id);
+		});
+		setSecondStep(true);
+		setFirstStep(false);
+	};
 
 	return (
 		<Flex w="100%" gap="5%" justifyContent="space-between" mb="12rem">
@@ -218,10 +241,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 							_hover={{ bgColor: "#EDF2F7" }}
 							_active={{ bgColor: "#E2E8F0" }}
 							isDisabled={!isPerfilCompleted || !cotas}
-							onClick={() => {
-								setSecondStep(true);
-								setFirstStep(false);
-							}}
+							onClick={() => handleSignContract()}
 						>
 							Confirmar e prosseguir
 						</Button>

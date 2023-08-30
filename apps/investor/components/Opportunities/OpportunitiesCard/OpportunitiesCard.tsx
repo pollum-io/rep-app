@@ -11,6 +11,7 @@ import { Oval } from "react-loader-spinner";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
+import { useRegisterSteps } from "../../../hooks";
 
 interface IOpportunitiesCompaniesCard {
 	id?: string;
@@ -28,6 +29,7 @@ export const OpportunitiesCard: FunctionComponent<
 	const router = useRouter();
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
 
 	const { data: cardsInfo } = query(
 		["oportunity", router.query],
@@ -83,11 +85,13 @@ export const OpportunitiesCard: FunctionComponent<
 								"0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)",
 						}}
 						transition="150ms"
-						onClick={() =>
+						onClick={() => {
 							router.push({
 								pathname: `/oportunidades/${cards.url}`,
-							})
-						}
+							});
+							setFirstStep(true);
+							setSecondStep(false);
+						}}
 					>
 						<Flex
 							w="100%"

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
+import React, { FunctionComponent, useLayoutEffect } from "react";
 import { Flex } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
@@ -11,7 +11,6 @@ import { InvestContractSign } from "../../components/Invest/Pages/InvestContract
 import { InvestPayment } from "../../components/Invest/Pages/InvestPayment";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
-import { useOpportunities } from "../../hooks/useOpportunities";
 import { motion } from "framer-motion";
 import { ICompaniesDetails } from "../../components/Companies/CompaniesCard/dto";
 
@@ -30,7 +29,6 @@ interface IInvest {
 export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 	const { getUserInfos } = useUser();
 	const { firstStep, secondStep } = useRegisterSteps();
-	const { cotas } = useOpportunities();
 
 	useLayoutEffect(() => {
 		getUserInfos(
@@ -66,6 +64,7 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 									? props?.userDataPF?.is_profile_filled
 									: props?.userDataPJ?.is_profile_filled
 							}
+							token={props?.token}
 						/>
 					)}
 				</motion.div>
@@ -74,7 +73,9 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 					animate={secondStep ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
 					transition={{ duration: 0.5 }}
 				>
-					{secondStep && cotas && <InvestContractSign imovel={props?.imovel} />}
+					{secondStep && (
+						<InvestContractSign imovel={props?.imovel} token={props?.token} />
+					)}
 				</motion.div>
 
 				<motion.div
@@ -90,6 +91,12 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 						<InvestPayment
 							imovel={props?.imovel}
 							enterprise={props?.enterprise}
+							token={props?.token}
+							investor={
+								props?.investor_pf === null
+									? props?.investor_pj
+									: props?.investor_pf
+							}
 						/>
 					)}
 				</motion.div>

@@ -61,6 +61,7 @@ export interface IOpportunitiesCard {
 			info: Array<{ name: string; status: string }>;
 		}>;
 	}>;
+	template_key?: string;
 }
 
 export interface IScheduleTable {

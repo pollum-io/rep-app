@@ -5,25 +5,70 @@ import { useRegisterSteps } from "../../../hooks";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { useOpportunities } from "../../../hooks/useOpportunities";
+import { useUser } from "../../../hooks/useUser";
+import { fetchGetInvestmentById } from "../../../services/fetchGetInvestmentById";
+import PersistentFramework from "../../../utils/persistent";
 
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
+	token: string;
 }
 
-export const InvestContractSign: React.FC<IContractSign> = ({ imovel }) => {
+export const InvestContractSign: React.FC<IContractSign> = ({
+	imovel,
+	token,
+}) => {
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { cotas } = useOpportunities();
+	const { docLink, investmentId } = useUser();
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
-			setFirstStep(false);
-			setSecondStep(false);
-		}, 3000);
+			const openLinkInNewTab = () => {
+				if (docLink) {
+					window.open(docLink, "_blank");
+				}
+			};
+			openLinkInNewTab();
+		}, 1000);
 
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [setFirstStep, setSecondStep]);
+	}, [docLink]);
+
+	// useEffect(() => {
+	// 	const intervalId = setInterval(async () => {
+	// 		try {
+	// 			const res = await fetchGetInvestmentById(investmentId, token);
+
+	// 			PersistentFramework.add("contributionId", res?.contribution_id);
+	// 			console.log(res?.status, "outside");
+	// 			if (res?.status === "PendingPayment") {
+	// 				console.log(res?.status, "inside");
+
+	// 				setFirstStep(false);
+	// 				setSecondStep(false);
+	// 				clearInterval(intervalId);
+	// 			}
+	// 		} catch (error) {
+	// 			console.error("Erro ao buscar investimento:", error);
+	// 		}
+	// 	}, 5000);
+	// 	return () => {
+	// 		clearInterval(intervalId);
+	// 	};
+	// }, [investmentId, setFirstStep, setSecondStep, token]);
+
+	useEffect(() => {
+		const openLinkInNewTab = async () => {
+			console.log(investmentId, "investmentId");
+			const res = await fetchGetInvestmentById(investmentId, token);
+			console.log(res?.status, "outside");
+		};
+
+		openLinkInNewTab();
+	}, []);
 
 	return (
 		<Flex w="100%" gap="5%" justifyContent="space-between" mb="12rem">

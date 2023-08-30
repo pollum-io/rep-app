@@ -35,7 +35,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const { ended, hasToken, cotas, setCotas } = useOpportunities();
 	const { push } = useRouter();
 	const { t } = useTranslation();
-	const { setFirstStep } = useRegisterSteps();
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
 
 	const [containerPosition, setContainerPosition] = useState(false);
 	const [scroll, setScrollY] = useState("");
@@ -183,6 +183,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 										query: { id: url },
 									}),
 										setFirstStep(true);
+									setSecondStep(false);
 								}}
 							>
 								{ended
