@@ -1,22 +1,15 @@
-import React, {
-	FunctionComponent,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-} from "react";
+import React, { FunctionComponent, useLayoutEffect, useMemo } from "react";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { DefaultTemplate } from "../DefaultTemplate";
-
 import { useUser } from "../../hooks/useUser";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { InvestmentModel } from "../../dtos/IInvestment";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Img, Text } from "@chakra-ui/react";
 import { MeusInvestimentosPage } from "../../components/MeusInvestimentos/Page/MeusInvestimentosPage";
 import { formatCurrency } from "ui/utils/BRCurrency";
-import { useRouter } from "next/router";
 import { EmptyInvest } from "../../components/MeusInvestimentos/EmptyInvest";
 
 interface UserData {

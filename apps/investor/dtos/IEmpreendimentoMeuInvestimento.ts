@@ -2,7 +2,12 @@ export interface IEmpreendimentoData {
 	name?: string;
 	investor_id?: string;
 	opportunity_id?: string;
-	status?: "PendingSignature" | "PendingPayment" | "InProgress" | "Concluded";
+	status?:
+		| "PendingSignature"
+		| "PendingPayment"
+		| "InProgress"
+		| "Concluded"
+		| "Recieved";
 	expected_rentability?: number;
 	return_realized?: number;
 	num_cotas?: number;

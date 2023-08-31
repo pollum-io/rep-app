@@ -72,8 +72,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {},
 		};
 	}
-	const imovel = await fetchImovelDetail(String(query.id));
-	const enterprise = await fetchEnterpriseById(String(imovel.enterprise_id));
+	const imovel = await fetchImovelDetail(String(query?.id));
+	const enterprise = await fetchEnterpriseById(String(imovel?.enterprise_id));
 
 	if (user?.investor_pf) {
 		const response = await fetchGetInvestorPFById(user?.investor_pf, token);

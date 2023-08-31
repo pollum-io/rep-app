@@ -4,12 +4,18 @@ import { IEmpreendimentoData } from "../../../dtos/IEmpreendimentoMeuInvestiment
 import { formatDateOnlyMonthYear } from "../../../utils/formatDate";
 import { useRouter } from "next/router";
 import { formatCurrency } from "ui/utils/BRCurrency";
+import { motion } from "framer-motion";
+
+const MotionFlex = motion(Flex);
 
 export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 	props
 ) => {
 	const router = useRouter();
-
+	const pageTransition = {
+		hidden: { opacity: 0 },
+		visible: { opacity: 1 },
+	};
 	const getStatusColorAndText = useMemo(() => {
 		const getStatusColor = (status: string) => {
 			switch (status) {
@@ -61,7 +67,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 	}, [props?.status]);
 
 	return (
-		<Flex
+		<MotionFlex
 			pr="1rem"
 			h={"4.25rem"}
 			justifyContent="space-between"
@@ -148,7 +154,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 						data{" "}
 					</Text>
 					<Text fontSize={"0.875rem"} fontWeight={"400"} color={"#171923"}>
-						{props?.num_cotas}
+						{props?.num_cotas} cotas
 					</Text>
 				</Flex>
 				<Flex flex="0.8" flexDir={"column"}>
@@ -217,6 +223,6 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 					{getStatusColorAndText(props?.status)?.action}
 				</Button>
 			</Flex>
-		</Flex>
+		</MotionFlex>
 	);
 };

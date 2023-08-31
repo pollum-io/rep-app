@@ -46,3 +46,8 @@ export const formatDateBirthday = (value: string | Date) => {
 
 	return valor;
 };
+
+export const formattedDateWithYour = (value: number | undefined | string) => {
+	const formattedDate = moment(value).format("DD MMM YYYY - HH:mm");
+	return formattedDate;
+};

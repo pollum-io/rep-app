@@ -1,7 +1,12 @@
 export interface InvestmentModel {
 	investor_id: string;
 	opportunity_id: string;
-	status: "PendingSignature" | "PendingPayment" | "InProgress" | "Concluded";
+	status:
+		| "PendingSignature"
+		| "PendingPayment"
+		| "InProgress"
+		| "Concluded"
+		| "Recieved";
 	expected_rentability: number;
 	return_realized: number;
 	num_cotas: number;
@@ -22,7 +27,6 @@ export interface InvestmentModel {
 	document_key?: string;
 	opportunity_url?: string;
 	url_unsigned_document?: string;
-
 	_id?: string;
 }
 interface IOpportunitieAddress {

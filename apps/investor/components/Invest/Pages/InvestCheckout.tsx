@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { useTranslation } from "react-i18next";
@@ -10,7 +10,7 @@ import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 import { useOpportunities } from "../../../hooks/useOpportunities";
 import { fetchSignContract } from "../../../services/fetchSignContract";
 import { useUser } from "../../../hooks/useUser";
-import PersistentFramework from "../../../utils/persistent";
+import { Oval } from "react-loader-spinner";
 
 interface IInvestCheckout {
 	imovel?: IOpportunitiesCard;
@@ -30,9 +30,12 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 	const { t } = useTranslation();
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { cotas, setCotas } = useOpportunities();
-	const { setInvestmentId } = useUser();
+	const { setInvestmentId, setDocLink } = useUser();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleSignContract = async () => {
+		setIsLoading(true); // Start loading
+
 		const contractData = {
 			templateKey: imovel?.template_key,
 			enterpriseId: imovel?.enterprise_id,
@@ -40,13 +43,16 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 			num_cotas: cotas,
 			totalInvested: cotas * (imovel?.min_investment ?? 0),
 		};
+		try {
+			await fetchSignContract(contractData, token).then((res) => {
+				setDocLink(res?.url);
+				setInvestmentId(res?.investment_id);
+			});
+			setIsLoading(false); // Start loading
 
-		await fetchSignContract(contractData, token).then((res) => {
-			console.log(res?.investment_id);
-			setInvestmentId(res?.investment_id);
-		});
-		setSecondStep(true);
-		setFirstStep(false);
+			setSecondStep(true);
+			setFirstStep(false);
+		} catch {}
 	};
 
 	return (
@@ -189,21 +195,25 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 						<Flex gap="0.3125rem">
 							<Img
 								_hover={{
-									cursor: "pointer",
-									opacity: 0.5,
+									cursor: isLoading ? "default" : "pointer",
+									opacity: isLoading ? 0.2 : 0.5,
 									transition: "all 0.4s",
 								}}
+								opacity={isLoading ? "0.2" : "1"}
 								src={"/icons/PlusIcon.png"}
-								onClick={() => setCotas(cotas + 1)}
+								onClick={() => (isLoading ? setCotas(cotas + 1) : null)}
 							/>
 							<Img
 								_hover={{
-									cursor: "pointer",
-									opacity: 0.5,
+									cursor: isLoading ? "default" : "pointer",
+									opacity: isLoading ? 0.2 : 0.5,
 									transition: "all 0.4s",
 								}}
+								opacity={isLoading ? "0.2" : "1"}
 								src={"/icons/MinusIcon.png"}
-								onClick={() => setCotas(cotas === 0 ? 0 : cotas - 1)}
+								onClick={() =>
+									isLoading ? setCotas(cotas === 0 ? 0 : cotas - 1) : null
+								}
 							/>
 						</Flex>
 					</Flex>
@@ -231,7 +241,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 							alignItems="center"
 							w="100%"
 							h="2.5rem"
-							bgColor="#FFFFFF"
+							bgColor={isLoading ? "rgba(255, 255, 255, 0.80)" : "#FFFFFF"}
 							borderRadius="0.5rem"
 							fontFamily="Poppins"
 							fontWeight="500"
@@ -244,6 +254,22 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 							onClick={() => handleSignContract()}
 						>
 							Confirmar e prosseguir
+							{isLoading && (
+								<Flex pl={"0.625rem"}>
+									<Oval
+										height={18}
+										width={18}
+										color="#1789A3"
+										wrapperStyle={{}}
+										wrapperClass=""
+										visible={true}
+										ariaLabel="oval-loading"
+										secondaryColor="#EDF2F7"
+										strokeWidth={4}
+										strokeWidthSecondary={4}
+									/>
+								</Flex>
+							)}
 						</Button>
 						<Text fontWeight={"400"} fontSize={"xs"} display={"flex"}>
 							{t("opportunitieDetails.wontBe")}

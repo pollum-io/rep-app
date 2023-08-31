@@ -32,9 +32,10 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 			};
 
 			get();
-		} else console.log();
+			return;
+		}
 	}, [props?.data?._id, props?.data?.token, props.isOpen]);
-
+	console.log(data, "data");
 	return (
 		<Modal isOpen={props.isOpen} onClose={props.onClose} size={"6xl"}>
 			<ModalOverlay />
