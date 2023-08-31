@@ -12,6 +12,7 @@ import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
 import { useRegisterSteps } from "../../../hooks";
+import { useOpportunities } from "../../../hooks/useOpportunities";
 
 interface IOpportunitiesCompaniesCard {
 	id?: string;
@@ -30,6 +31,7 @@ export const OpportunitiesCard: FunctionComponent<
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
+	const { setCotas } = useOpportunities();
 
 	const { data: cardsInfo } = query(
 		["oportunity", router.query],
@@ -91,6 +93,7 @@ export const OpportunitiesCard: FunctionComponent<
 							});
 							setFirstStep(true);
 							setSecondStep(false);
+							setCotas(0);
 						}}
 					>
 						<Flex

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { Oval } from "react-loader-spinner";
 import { useRegisterSteps } from "../../../hooks";
@@ -7,6 +7,7 @@ import { formatCurrency } from "ui/utils/BRCurrency";
 import { useOpportunities } from "../../../hooks/useOpportunities";
 import { useUser } from "../../../hooks/useUser";
 import { fetchGetInvestmentById } from "../../../services/fetchGetInvestmentById";
+import { FiCheckCircle } from "react-icons/fi";
 
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
@@ -20,6 +21,17 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { cotas } = useOpportunities();
 	const { docLink, investmentId, setContributionId } = useUser();
+	const [isConfirmed, setIsConfirmed] = useState(false);
+	const [showConfirmation, setShowConfirmation] = useState(false); // Variável que ficará true após 1s
+
+	useEffect(() => {
+		if (isConfirmed === true) {
+			const timer = setTimeout(() => {
+				setShowConfirmation(true);
+			}, 1500); // Define o tempo para 1s (1000ms)
+			return () => clearTimeout(timer); // Limpa o timer se o componente for desmontado
+		}
+	}, [isConfirmed]);
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
@@ -41,11 +53,15 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 			try {
 				const res = await fetchGetInvestmentById(investmentId, token);
 				setContributionId(res?.contribution_id);
+				setIsConfirmed(false);
 
 				if (res?.status === "PendingPayment") {
-					setFirstStep(false);
-					setSecondStep(false);
-					clearInterval(intervalId);
+					setIsConfirmed(true);
+					if (showConfirmation === true) {
+						setFirstStep(false);
+						setSecondStep(false);
+						clearInterval(intervalId);
+					}
 				}
 			} catch (error) {
 				console.error("Erro ao buscar investimento:", error);
@@ -54,7 +70,14 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 		return () => {
 			clearInterval(intervalId);
 		};
-	}, [investmentId, setContributionId, setFirstStep, setSecondStep, token]);
+	}, [
+		investmentId,
+		setContributionId,
+		setFirstStep,
+		setSecondStep,
+		showConfirmation,
+		token,
+	]);
 
 	return (
 		<Flex w="100%" gap="5%" justifyContent="space-between" mb="12rem">
@@ -89,18 +112,22 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 					flexDir={"row"}
 					alignItems={"center"}
 				>
-					<Oval
-						height={35}
-						width={35}
-						color="#1789A3"
-						wrapperStyle={{}}
-						wrapperClass=""
-						visible={true}
-						ariaLabel="oval-loading"
-						secondaryColor="#bdbdbd"
-						strokeWidth={4}
-						strokeWidthSecondary={4}
-					/>
+					{isConfirmed === false ? (
+						<Oval
+							height={35}
+							width={35}
+							color="#1789A3"
+							wrapperStyle={{}}
+							wrapperClass=""
+							visible={true}
+							ariaLabel="oval-loading"
+							secondaryColor="#bdbdbd"
+							strokeWidth={4}
+							strokeWidthSecondary={4}
+						/>
+					) : (
+						<FiCheckCircle className="confirmed-icon" />
+					)}
 					<Text color={"#718096"} fontSize={"0.875rem"}>
 						Aguardando assinatura...
 					</Text>

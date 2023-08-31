@@ -97,6 +97,7 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 									? props?.investor_pj
 									: props?.investor_pf
 							}
+							isCheckout={true}
 						/>
 					)}
 				</motion.div>

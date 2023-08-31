@@ -1,7 +1,10 @@
 import { Flex, Text, Button, Img } from "@chakra-ui/react";
 import { FunctionComponent, useMemo } from "react";
 import { IEmpreendimentoData } from "../../../dtos/IEmpreendimentoMeuInvestimento";
-import { formatDateOnlyMonthYear } from "../../../utils/formatDate";
+import {
+	formatDateOnlyDayMonthYear,
+	formatDateOnlyMonthYear,
+} from "../../../utils/formatDate";
 import { useRouter } from "next/router";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { motion } from "framer-motion";
@@ -11,11 +14,13 @@ const MotionFlex = motion(Flex);
 export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 	props
 ) => {
-	const router = useRouter();
+	const { push } = useRouter();
+
 	const pageTransition = {
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
 	};
+
 	const getStatusColorAndText = useMemo(() => {
 		const getStatusColor = (status: string) => {
 			switch (status) {
@@ -66,6 +71,26 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 		}
 	}, [props?.status]);
 
+	const statusAction = getStatusColorAndText(props?.status)?.action;
+	const isAssinarContrato = statusAction === "Assinar contrato";
+	const isRealizarPagamento = statusAction === "Realizar pagamento";
+	const isVerAportesRetornos =
+		statusAction === "Ver aportes e retornos" && !props.isModal;
+
+	const handleButtonClick = () => {
+		if (isAssinarContrato) {
+			window.open(props?.url_unsigned_document, "_blank");
+		} else if (isRealizarPagamento) {
+			push({
+				pathname: `/pagamento/`,
+				search: `?id=${props?.opportunity_url}`,
+			});
+		} else if (isVerAportesRetornos) {
+			props.setEmpreendimento(props);
+			props.modalOpen();
+		}
+	};
+
 	return (
 		<MotionFlex
 			pr="1rem"
@@ -91,7 +116,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 				flexDir={"row"}
 				alignItems={"center"}
 				onClick={() =>
-					router.push({
+					push({
 						pathname: `/oportunidades/${props?.opportunity_url}`,
 					})
 				}
@@ -151,7 +176,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 			>
 				<Flex flex="0.7" flexDir={"column"}>
 					<Text fontSize={"0.875rem"} fontWeight={"400"} color={"#171923"}>
-						data{" "}
+						{formatDateOnlyDayMonthYear(props?.dataInvest)}
 					</Text>
 					<Text fontSize={"0.875rem"} fontWeight={"400"} color={"#171923"}>
 						{props?.num_cotas} cotas
@@ -162,7 +187,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 						{formatCurrency(props?.total_invested)}
 					</Text>
 					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"#2D3748"}>
-						falta ainda
+						{props?.percentageInvestment?.toFixed(2)} % do portfólio
 					</Text>
 				</Flex>
 				<Flex flex="0.6" flexDir={"column"}>
@@ -185,11 +210,8 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 			<Flex
 				flex="1"
 				as={"a"}
-				href={
-					getStatusColorAndText(props?.status)?.action === "Assinar contrato"
-						? props?.url_unsigned_document
-						: null
-				}
+				href={isAssinarContrato ? props?.url_unsigned_document : null}
+				onClick={() => handleButtonClick()}
 				target="_blank"
 			>
 				<Button
@@ -209,6 +231,8 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 			</Flex>
 			<Flex flex="1">
 				<Button
+					as={"a"}
+					target="_blank"
 					p={"0.5rem"}
 					w={"8.375rem"}
 					h={"1.25rem"}
@@ -219,6 +243,8 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 					color={"#007D99"}
 					fontWeight={"500"}
 					_hover={{}}
+					href={isAssinarContrato ? props?.url_unsigned_document : null}
+					onClick={() => handleButtonClick()}
 				>
 					{getStatusColorAndText(props?.status)?.action}
 				</Button>

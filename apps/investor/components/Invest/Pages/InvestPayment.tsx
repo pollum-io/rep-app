@@ -20,6 +20,7 @@ interface IContractSign {
 	enterprise?: ICompaniesDetails;
 	token?: string;
 	investor?: string;
+	isCheckout?: boolean;
 }
 
 export const InvestPayment: React.FC<IContractSign> = ({
@@ -27,6 +28,7 @@ export const InvestPayment: React.FC<IContractSign> = ({
 	enterprise,
 	token,
 	investor,
+	isCheckout,
 }) => {
 	const [qrCodeImage, setQRCodeImage] = useState<string | null>(null);
 	const [pixDate, setPixDate] = useState<string | null>(null);
@@ -59,8 +61,6 @@ export const InvestPayment: React.FC<IContractSign> = ({
 				title: "QRCode Copiado",
 				description: "",
 			});
-		} else {
-			console.log("erro");
 		}
 	}, [copied, toast]);
 
@@ -84,9 +84,14 @@ export const InvestPayment: React.FC<IContractSign> = ({
 			try {
 				const res = await fetchGetInvestmentById(investmentId, token);
 
-				if (res?.status === "Recieved") {
-					setFirstStep(true);
-					setSecondStep(false);
+				if (res?.status === "InProgress") {
+					toast({
+						id: "toast-edit",
+						position: "top-right",
+						status: "success",
+						title: "Pagamento realizado!",
+						description: "Seu pagamento foi realizado com sucesso!",
+					});
 					clearInterval(intervalId);
 					push("/meus-investimentos");
 				}
@@ -97,19 +102,49 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		return () => {
 			clearInterval(intervalId);
 		};
-	}, [investmentId, setContributionId, setFirstStep, setSecondStep, token]);
+	}, [
+		investmentId,
+		push,
+		setContributionId,
+		setFirstStep,
+		setSecondStep,
+		toast,
+		token,
+	]);
 
 	return (
-		<Flex w="100%" gap="5%" justifyContent="space-between" mb="12rem">
+		<Flex
+			w="100%"
+			gap="5%"
+			justifyContent="space-between"
+			mb="12rem"
+			mt={isCheckout === false ? "7.875rem" : "unset"}
+		>
 			<Flex flexDir={"column"}>
 				<Flex flexDir={"column"}>
+					{isCheckout === false && (
+						<Flex
+							mb={"1.4688rem"}
+							color={"#00576B"}
+							fontSize={"0.75rem"}
+							fontWeight={"500"}
+							bgColor={"#E4F2F3"}
+							borderRadius={"2.6875rem"}
+							px={"2rem"}
+							py={"0.1rem"}
+							h={"max"}
+							w={"max"}
+						>
+							Parcela 12 de 18
+						</Flex>
+					)}
 					<Text
 						mb={"1.4688rem"}
 						color={"#171923"}
 						fontSize={"1.5rem"}
 						fontWeight={"600"}
 					>
-						Enviar {formatCurrency(imovel?.min_investment * cotas)}
+						Enviar {formatCurrency(imovel?.min_investment * cotas)} para:
 					</Text>
 					<Flex flexDir={"column"} mb={"1rem"}>
 						<Text

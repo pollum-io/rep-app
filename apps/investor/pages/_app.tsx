@@ -17,6 +17,7 @@ import "../helpers/i18";
 import "../styles/pageTransition.css";
 import "../styles/investModalScrollbar.css";
 import "../styles/appScrollbar.css";
+import "../styles/confirmedAnimation.css";
 
 const toasty = {
 	bg: "#FFFFFF",

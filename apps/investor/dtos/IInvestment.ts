@@ -28,6 +28,8 @@ export interface InvestmentModel {
 	opportunity_url?: string;
 	url_unsigned_document?: string;
 	_id?: string;
+	createdAt?: string;
+	percentage_of_investment?: number;
 }
 interface IOpportunitieAddress {
 	state: string;

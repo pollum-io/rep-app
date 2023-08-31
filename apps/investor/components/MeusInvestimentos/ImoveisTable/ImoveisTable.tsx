@@ -40,7 +40,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({ data, token }) => {
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
 	};
-
+	console.log(currentFiles);
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"0.75rem"}>
 			<ImoveisTableHeader />
@@ -72,9 +72,11 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({ data, token }) => {
 					url_unsigned_document={data?.url_unsigned_document}
 					token={token}
 					_id={data?._id}
+					dataInvest={data?.createdAt}
+					percentageInvestment={data?.percentage_of_investment}
 				/>
 			))}
-			{data && data?.length > 5 && (
+			{data && data?.length > 10 && (
 				<Flex gap={"1.5rem"} mt="2rem" justifyContent={"center"}>
 					<Button
 						bgColor="#2D3748"
