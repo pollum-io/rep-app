@@ -1,6 +1,6 @@
 import React, { createContext, useState, useMemo } from "react";
 
-interface IRegister {
+interface IRegisterSteps {
 	firstStep: boolean;
 	setFirstStep: React.Dispatch<React.SetStateAction<boolean>>;
 	secondStep: boolean;
@@ -9,9 +9,9 @@ interface IRegister {
 	setIsPhysical: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const RegisterContext = createContext({} as IRegister);
+export const RegisterStepsContext = createContext({} as IRegisterSteps);
 
-export const RegisterProvider: React.FC<{ children: React.ReactNode }> = ({
+export const RegisterStepsProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
 	const [firstStep, setFirstStep] = useState<boolean>(true);
@@ -37,8 +37,8 @@ export const RegisterProvider: React.FC<{ children: React.ReactNode }> = ({
 	);
 
 	return (
-		<RegisterContext.Provider value={providerValue}>
+		<RegisterStepsContext.Provider value={providerValue}>
 			{children}
-		</RegisterContext.Provider>
+		</RegisterStepsContext.Provider>
 	);
 };

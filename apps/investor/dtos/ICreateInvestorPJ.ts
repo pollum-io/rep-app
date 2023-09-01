@@ -4,5 +4,5 @@ export interface ICreateInvestorPJ {
 	uf: string;
 	is_legal_entity?: boolean;
 	invited_by: string;
-	isPerfilCompleted: boolean;
+	email: string;
 }

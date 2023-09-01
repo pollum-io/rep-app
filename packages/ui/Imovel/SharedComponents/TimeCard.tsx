@@ -78,9 +78,6 @@ export const TimeCard: React.FC<ITimeCard> = ({ imovelDetails }) => {
 					>
 						{t("opportunitieDetails.closeSales")}
 					</Text>
-					<Text fontWeight="400" fontSize="0.875rem" lineHeight="1.25rem">
-						{t("opportunitieDetails.unitPrice")}{" "}
-					</Text>
 				</Flex>
 			)}
 		</>

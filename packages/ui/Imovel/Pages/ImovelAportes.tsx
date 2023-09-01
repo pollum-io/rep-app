@@ -4,6 +4,7 @@ import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities"
 import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import Table from "../ImovelAportesComponents/AportesTable";
 import { DocsComponent, PriceCard, TimeCard } from "../SharedComponents";
+import { PrevRetornoComponent } from "../ImovelAportesComponents";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -14,11 +15,13 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
 	usersId,
 }) => {
+	console.log(imovelDetails);
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="1rem" maxWidth="70rem">
+				<Flex gap="1rem" maxWidth="75rem">
 					<Flex flexDir={"column"}>
+						<PrevRetornoComponent isMyInvest={false} />
 						<Flex flexDir={"row"} maxWidth={"70%"} mr={"0rem"} gap={"1.7rem"}>
 							<Flex flexDir={"column"}>
 								<Flex alignItems={"baseline"} gap={"1.5"}>
@@ -39,20 +42,6 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 									}
 								/>
 							</Flex>
-							<Flex flexDir={"column"}>
-								<Text
-									fontSize={"1.5rem"}
-									fontWeight={"600"}
-									color={"#171923"}
-									mb={"2rem"}
-								>
-									Previsão de retorno
-								</Text>
-								<Table
-									isCronograma={false}
-									data={imovelDetails?.opportunity_resume?.return_schedule}
-								/>{" "}
-							</Flex>
 						</Flex>
 						<Flex mt={"1.5rem"} mb={"1rem"} w={"95%"}>
 							<Text fontSize={"0.875rem"}>
@@ -72,11 +61,11 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 						<Flex flexDirection="column" gap="1.5rem">
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
-								id={imovelDetails?._id}
-								oportunitiesAddress={imovelDetails?._id}
+								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault={"30%"}
+								heightDefault={"18%"}
+								unitPrice={imovelDetails?.min_investment}
 								pageSize="sm"
 							/>{" "}
 						</Flex>

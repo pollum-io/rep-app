@@ -12,5 +12,5 @@ export const formatCurrencyWithoutSymbol = (value?: number) => {
 		currency: "BRL",
 	});
 
-	return formattedValue?.substring(3); // Remove o símbolo de cifrão e o espaço
+	return formattedValue?.substring(3);
 };

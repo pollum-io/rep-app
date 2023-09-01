@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Text, Progress } from "@chakra-ui/react";
 import { IRegisterSteps } from "./dto";
-import { useRegister } from "../../hooks/useRegister";
+import { useRegisterSteps } from "../../hooks/useRegisterSteps";
 import { BsCheck } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
 
@@ -68,7 +68,7 @@ const RegisterStep: FunctionComponent<IRegisterSteps> = ({
 };
 
 export const RegisterSteps: FunctionComponent = () => {
-	const { firstStep, secondStep, isPhysical } = useRegister();
+	const { firstStep, secondStep, isPhysical } = useRegisterSteps();
 	const { t } = useTranslation();
 
 	return (

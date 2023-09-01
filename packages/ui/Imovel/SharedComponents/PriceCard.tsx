@@ -3,75 +3,74 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
+import { useRegisterSteps } from "../../../../apps/investor/hooks/useRegisterSteps";
+import { formatCurrency } from "../../utils/BRCurrency";
 
 interface IPriceCard {
-	id?: string;
-	price?: number;
-	minted?: number;
-	supply?: number;
-	oportunitiesAddress?: string;
+	url?: string;
 	investor_pf?: string | null | undefined;
 	investor_pj?: string | null | undefined;
 	heightDefault?: string;
 	pageSize?: string;
+	unitPrice?: number;
+	oppportunitiesDetails?: {
+		constructed_area: number;
+		estimated_vgv: number;
+		total_units: number;
+		available_units: number;
+		average_price: number;
+	};
 }
 
 export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const {
-		id,
-		price,
-		minted,
-		oportunitiesAddress,
+		url,
+		oppportunitiesDetails,
 		investor_pf,
 		heightDefault,
 		pageSize,
+		unitPrice,
 	} = props;
 	const [isInvestidor] = useState(investor_pf ? true : false);
-	const { ended, hasToken } = useOpportunities();
+	const { ended, hasToken, cotas, setCotas } = useOpportunities();
 	const { push } = useRouter();
-	const [cotas, setCotas] = useState<number>(0);
 	const { t } = useTranslation();
-
-	// const formatter = new Intl.NumberFormat("pt-br", {
-	// 	style: "currency",
-	// 	currency: "BRL",
-	// });
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
 
 	const [containerPosition, setContainerPosition] = useState(false);
 	const [scroll, setScrollY] = useState("");
 
 	useEffect(() => {
 		const handleScroll = () => {
-			let breakpoints: number[] = [];
-			let top: string[] = [];
+			const breakpoints: Record<string, number[]> = {
+				sm: [350, 560, 740, 900],
+				md: [350, 560, 740, 900],
+				lg: [400, 850, 1100, 1300],
+			};
+
+			const topValues: Record<string, string[]> = {
+				sm: ["29%", "50%", "75%", "80%"],
+				md: ["25%", "50%", "75%", "90%"],
+				lg: ["15%", "40%", "65%", "80%"],
+			};
+
 			const scrollY = window.scrollY;
+			const currentBreakpoints = breakpoints[pageSize || "sm"] || [];
+			const currentTopValues = topValues[pageSize || "sm"] || [];
 
-			if (pageSize === "sm") {
-				breakpoints = [350, 560, 740, 900];
-				top = ["29%", "50%", "75%", "80%"];
-			} else if (pageSize === "md") {
-				breakpoints = [350, 560, 740, 900];
-				top = ["25%", "50%", "75%", "90%"];
-			} else if (pageSize === "lg") {
-				breakpoints = [400, 850, 1100, 1300];
-				top = ["15%", "40%", "65%", "80%"];
+			let containerPosition = false;
+			let scrollYValue = "0%";
+
+			for (let i = currentBreakpoints.length - 1; i >= 0; i--) {
+				if (scrollY >= currentBreakpoints[i]) {
+					containerPosition = true;
+					scrollYValue = currentTopValues[i];
+					break;
+				}
 			}
 
-			if (scrollY >= breakpoints[3]) {
-				setContainerPosition(true);
-				setScrollY(top[3]);
-			} else if (scrollY >= breakpoints[2]) {
-				setContainerPosition(true);
-				setScrollY(top[2]);
-			} else if (scrollY >= breakpoints[1]) {
-				setContainerPosition(true);
-				setScrollY(top[1]);
-			} else if (scrollY >= breakpoints[0]) {
-				setContainerPosition(true);
-				setScrollY(top[0]);
-			} else {
-				setContainerPosition(false);
-			}
+			setContainerPosition(containerPosition);
+			setScrollY(scrollYValue);
 		};
 
 		window.addEventListener("scroll", handleScroll);
@@ -129,7 +128,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									transition: "all 0.4s",
 								}}
 								src={"/icons/PlusIcon.png"}
-								onClick={() => setCotas(cotas === 1 ? cotas : cotas + 1)}
+								onClick={() => setCotas(cotas + 1)}
 							/>
 							<Img
 								_hover={{
@@ -158,7 +157,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									: t("opportunitieDetails.total")}
 							</Text>
 							<Text fontWeight={"500"} display={ended ? "none" : "flex"}>
-								valor a definir
+								{formatCurrency(cotas * (unitPrice ?? 0))}
 							</Text>
 						</Flex>
 
@@ -178,12 +177,14 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 										? { opacity: "0.3" }
 										: { bgColor: "#F7FAFC" }
 								}
-								onClick={() =>
+								onClick={() => {
 									push({
 										pathname: "/investir",
-										query: { id, cotas, oportunitiesAddress },
-									})
-								}
+										query: { id: url },
+									}),
+										setFirstStep(true);
+									setSecondStep(false);
+								}}
 							>
 								{ended
 									? hasToken
@@ -216,7 +217,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 				>
 					<Flex justifyContent="space-between" w="100%">
 						<Text>{t("opportunitieDetails.unit")}</Text>
-						<Text>{price}</Text>
+						<Text>R${unitPrice}</Text>
 					</Flex>
 					<Flex w="100%" border="1px solid #4BA3B7" my="1rem" />
 				</Flex>
@@ -230,15 +231,16 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						{t("opportunitieDetails.unit")}
 					</Text>
 					<Text fontSize={"md"} fontWeight="400">
-						R${price}
+						{formatCurrency(unitPrice)}
 					</Text>
 				</Flex>
 				<Flex justifyContent={"space-between"}>
 					<Text fontSize={"md"} fontWeight="400">
 						{t("opportunitieDetails.shares")}
 					</Text>
-					<Text fontSize={"md"} fontWeight="400">
-						{minted}
+					<Text fontSize="md" fontWeight="400">
+						{(oppportunitiesDetails?.total_units ?? 0) -
+							(oppportunitiesDetails?.available_units ?? 0)}
 					</Text>
 				</Flex>
 				<Flex justifyContent={"space-between"}>
@@ -246,7 +248,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						{t("opportunitieDetails.available")}
 					</Text>
 					<Text fontSize={"md"} fontWeight="400">
-						teste
+						{oppportunitiesDetails?.available_units}
 					</Text>
 				</Flex>
 			</Flex>

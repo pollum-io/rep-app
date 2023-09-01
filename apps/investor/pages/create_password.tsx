@@ -1,5 +1,4 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { fetchCodeVerify } from "../services/fetchCodeVerify";
 import { CreatePasswordContainer } from "../container/CreatePassword";
 
 interface ICreatePasswordData {
@@ -13,13 +12,8 @@ const Create_Password: NextPage<ICreatePasswordData> = ({ code, isValid }) => (
 
 export default Create_Password;
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
-	const response = await fetchCodeVerify(String(query.code));
-
-	if (!response?.data?.isValid) {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	if (!query?.code) {
 		return {
 			redirect: {
 				permanent: false,
@@ -32,7 +26,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 	return {
 		props: {
 			code: query.code,
-			isValid: response?.data?.isValid,
 		},
 	};
 };

@@ -1,5 +1,5 @@
 import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities";
 import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
@@ -23,11 +23,10 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	usersId,
 }) => {
 	const { t } = useTranslation();
-
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="2.75rem" maxWidth="70rem">
+				<Flex gap="2.75rem" maxWidth="75rem">
 					<Flex flexDir={"column"} maxWidth={"70%"}>
 						<Flex flexDir={"column"} pb="3rem">
 							<SimpleGrid
@@ -192,12 +191,13 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 						<Flex flexDirection="column" gap="1.5rem">
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
-								id={imovelDetails?._id}
-								oportunitiesAddress={imovelDetails?._id}
+								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault="18%"
+								heightDefault="15%"
 								pageSize="md"
+								unitPrice={imovelDetails?.min_investment}
+								oppportunitiesDetails={imovelDetails?.oppportunities_details}
 							/>{" "}
 						</Flex>
 					</Flex>
@@ -209,7 +209,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 						</Text>
 					</Flex>
 					<Flex maxWidth="70rem">
-						<Maps localization={imovelDetails?.address} />
+						<Maps localization={imovelDetails?.geolocation} />
 					</Flex>
 					<Flex
 						mt="2rem"

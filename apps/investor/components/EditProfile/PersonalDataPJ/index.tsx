@@ -14,6 +14,7 @@ import { fetchEditInvestorPJ } from "../../../services/fetchEditInvestorPJ";
 interface IChangePassword {
 	data?: UserDataPJ;
 	token?: string;
+	isCheckout: boolean;
 }
 
 type UfData = {
@@ -65,19 +66,21 @@ export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 	return (
 		<Flex w="100%" justifyContent="end">
 			<Flex flexDirection="column" gap="2.75rem" w="100%" maxWidth="47.4375rem">
-				<Flex gap="1.5rem" alignItems="center">
-					<Img src="/icons/Avatar.png" w="6rem" h="6rem" />
-					<Text
-						fontFamily="Poppins"
-						fontWeight="600"
-						fontSize="1.5rem"
-						lineHeight="2rem"
-						alignItems="center"
-						color="#171923"
-					>
-						{t("editProfile.edit")}
-					</Text>
-				</Flex>
+				{!props?.isCheckout && (
+					<Flex gap="1.5rem" alignItems="center">
+						<Img src="/icons/Avatar.png" w="6rem" h="6rem" />
+						<Text
+							fontFamily="Poppins"
+							fontWeight="600"
+							fontSize="1.5rem"
+							lineHeight="2rem"
+							alignItems="center"
+							color="#171923"
+						>
+							{t("editProfile.edit")}
+						</Text>
+					</Flex>
+				)}
 
 				<form onSubmit={handleSubmit(onSubmitForm)}>
 					<Flex justifyContent="space-between" w="100%">

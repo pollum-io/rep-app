@@ -24,6 +24,7 @@ export interface IOpportunitiesCard {
 	picture_extra?: string[];
 	enterprise_name?: string;
 	tags?: string[];
+	geolocation?: { lat: number; lng: number };
 	blueprints?: Array<{ file: string; name: string }>;
 	oppportunities_details?: {
 		constructed_area: number;
@@ -53,6 +54,14 @@ export interface IOpportunitiesCard {
 	approval_process?: IProcessStatus[];
 	licensing_process?: IProcessStatus[];
 	incorporation_enrollment?: IProcessStatus[];
+	estimated_timeline?: Array<{
+		year: number;
+		data: Array<{
+			quarter: string;
+			info: Array<{ name: string; status: string }>;
+		}>;
+	}>;
+	template_key?: string;
 }
 
 export interface IScheduleTable {
