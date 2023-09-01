@@ -10,7 +10,7 @@ import {
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { fetchEmailVerify } from "../../services/fetchEmailVerify";
+import { fetchRegisterWhitelisted } from "../../services/fetchRegisterWhitelisted";
 import PersistentFramework from "../../utils/persistent";
 
 export const CreateAccountContainer: FunctionComponent = () => {
@@ -21,7 +21,7 @@ export const CreateAccountContainer: FunctionComponent = () => {
 	const { t } = useTranslation();
 
 	const handleSentEmailToVerify = async (email: string) => {
-		await fetchEmailVerify(email);
+		await fetchRegisterWhitelisted(email);
 	};
 
 	return (

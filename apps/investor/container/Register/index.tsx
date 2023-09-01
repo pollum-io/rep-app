@@ -3,15 +3,17 @@ import { RegisterSteps } from "../../components/Register/RegisterSteps";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { RegisterContent } from "../../components/Register/RegisterContent";
 import { useTranslation } from "react-i18next";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IRegisterContainer {
 	token: string;
+	user: UserInfo;
 }
 
 export const RegisterContainer: FunctionComponent = (
 	props: IRegisterContainer
 ) => {
-	const { token } = props;
+	const { token, user } = props;
 	const { t } = useTranslation();
 
 	return (
@@ -49,7 +51,7 @@ export const RegisterContainer: FunctionComponent = (
 					</Flex>
 				</Flex>
 				<Flex w="100%" h="100%" alignItems="center" flexDirection="column">
-					<RegisterContent token={token} />
+					<RegisterContent token={token} user={user} />
 				</Flex>
 			</Flex>
 		</Flex>

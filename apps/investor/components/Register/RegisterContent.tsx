@@ -19,9 +19,11 @@ import { fetchCreateInvestorPJ } from "../../services/fetchCreateInvestorPJ";
 import { ICreateInvestorPF } from "../../dtos/ICreateInvestorPF";
 import { ICreateInvestorPJ } from "../../dtos/ICreateInvestorPJ";
 import PersistentFramework from "../../utils/persistent";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
 
 interface IRegisterContent {
 	token: string;
+	user: UserInfo;
 }
 
 type UfData = {
@@ -50,7 +52,9 @@ interface IRequestData {
 }
 
 export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
-	const { token } = props;
+	const { user } = props;
+
+	console.log(props);
 	const [canSend, setCanSend] = useState(false);
 	const [buttonDisabled, setButtonDisabled] = useState("");
 	const [inputValuesUf, setInputValuesUf] = useState<UfData>();
@@ -72,18 +76,18 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 			? getValues(["cpf"])
 			: getValues(["enterprise_name", "cnpj"]);
 
-		const req = await fetchEnterprise();
-		const cnpjExistentes = req.data.map(
-			(values: ExistingPjData) => values.cnpj
-		);
-		const enterpriseNameExistentes = req.data.map(
-			(values: ExistingPjData) => values.full_name
-		);
-
 		if (isPhysical) {
 			//TODO: Retornar lista completa de cpfs dos usuarios
 			return setSecondStep(true), setFirstStep(false);
 		} else {
+			const req = await fetchEnterprise();
+			const cnpjExistentes = req.data.map(
+				(values: ExistingPjData) => values.cnpj
+			);
+			const enterpriseNameExistentes = req.data.map(
+				(values: ExistingPjData) => values.full_name
+			);
+
 			if (enterpriseNameExistentes.includes(data?.[0])) {
 				toast({
 					id: "toast-nome-empresarial-error",
@@ -119,6 +123,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				birthday_date: new Date(data?.birthday_date),
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
+				email: user.email,
 			};
 		} else {
 			dataPJ = {
@@ -127,6 +132,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				uf: Object?.values(inputValuesUf)[0],
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
+				email: user.email,
 			};
 		}
 

@@ -13,11 +13,8 @@ import React, { FunctionComponent, useMemo, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
-import { fetchChangePassword } from "../../services/fetchChangePassword";
 import { useToasty } from "../../hooks/useToasty";
-import { useUser } from "../../hooks/useUser";
-import { api } from "../../services/api";
-import PersistentFramework from "../../utils/persistent";
+import { fetchCreatePassword } from "../../services/fetchCreatePassword";
 
 interface ICreatPasswordData {
 	code?: string;
@@ -26,11 +23,9 @@ interface ICreatPasswordData {
 
 export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 	code,
-	isValid,
 }) => {
 	const { push } = useRouter();
 	const { t } = useTranslation();
-	const { getUserInfos } = useUser();
 	const emailPage = true;
 	const [buttonScore, setButtonScore] = useState<number>();
 	const [isButtonValid, setIsButtonValid] = useState<boolean>();
@@ -53,40 +48,17 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 	}, [buttonScore, firstPassword, secondPassword]);
 
 	const handleVerifyPasswordChange = async () => {
-		if (isValid) {
-			await fetchChangePassword(code, password).then(async () => {
-				const email = PersistentFramework.get("email");
+		await fetchCreatePassword({ password, code });
 
-				const data = await api.post("/user/authenticate", {
-					email: email,
-					password: password,
-				});
+		toast({
+			id: "toast-login-suc",
+			position: "top-right",
+			status: "success",
+			title: "Senha criada com sucesso!",
+			description: "Texto loren alguma coisa ipsun",
+		});
 
-				PersistentFramework.remove("email");
-
-				getUserInfos(
-					data?.data?.user?.investor_pf === null
-						? data?.data?.user?.investor_pj
-						: data?.data?.user?.investor_pf
-				);
-				toast({
-					id: "toast-login-suc",
-					position: "top-right",
-					status: "success",
-					title: "Senha criada com sucesso!",
-					description: "Texto loren alguma coisa ipsun",
-				});
-				push("/registrar");
-			});
-		} else {
-			toast({
-				id: "toast-login-err",
-				position: "top-right",
-				status: "error",
-				title: "Algo deu errado",
-				description: "Informe seu email novamente e tente novamente.",
-			});
-		}
+		push("/registrar");
 	};
 
 	return (
