@@ -74,6 +74,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({ data, token }) => {
 					_id={data?._id}
 					dataInvest={data?.createdAt}
 					percentageInvestment={data?.percentage_of_investment}
+					documentKey={data?.document_key}
 				/>
 			))}
 			{data && data?.length > 10 && (

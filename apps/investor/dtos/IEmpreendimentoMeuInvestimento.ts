@@ -1,5 +1,3 @@
-import { NumberValue } from "d3";
-
 export interface IEmpreendimentoData {
 	name?: string;
 	investor_id?: string;
@@ -39,5 +37,6 @@ export interface IEmpreendimentoData {
 	dataInvest?: string;
 	percentageInvestment?: number;
 	modalOpen?: () => void;
+	documentKey?: string;
 	isModal?: boolean;
 }

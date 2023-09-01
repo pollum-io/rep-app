@@ -15,7 +15,6 @@ export async function fetchContributionById(
 				},
 			}
 		);
-
 		return response.data;
 	} catch (error) {
 		console.error(error);

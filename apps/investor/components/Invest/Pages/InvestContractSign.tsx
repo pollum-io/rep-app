@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { Oval } from "react-loader-spinner";
 import { useRegisterSteps } from "../../../hooks";
@@ -8,6 +8,7 @@ import { useOpportunities } from "../../../hooks/useOpportunities";
 import { useUser } from "../../../hooks/useUser";
 import { fetchGetInvestmentById } from "../../../services/fetchGetInvestmentById";
 import { FiCheckCircle } from "react-icons/fi";
+import { useQuery } from "react-query";
 
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
@@ -22,16 +23,6 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 	const { cotas } = useOpportunities();
 	const { docLink, investmentId, setContributionId } = useUser();
 	const [isConfirmed, setIsConfirmed] = useState(false);
-	const [showConfirmation, setShowConfirmation] = useState(false); // Variável que ficará true após 1s
-
-	useEffect(() => {
-		if (isConfirmed === true) {
-			const timer = setTimeout(() => {
-				setShowConfirmation(true);
-			}, 1500); // Define o tempo para 1s (1000ms)
-			return () => clearTimeout(timer); // Limpa o timer se o componente for desmontado
-		}
-	}, [isConfirmed]);
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
@@ -48,35 +39,46 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 		};
 	}, [docLink]);
 
-	useEffect(() => {
-		const intervalId = setInterval(async () => {
+	const {
+		data: investment,
+		isError,
+		isLoading,
+	} = useQuery(
+		["investment", investmentId],
+		async () => {
 			try {
 				const res = await fetchGetInvestmentById(investmentId, token);
-				setContributionId(res?.contribution_id);
-				setIsConfirmed(false);
+				setContributionId(res.contribution_id);
 
-				if (res?.status === "PendingPayment") {
-					setIsConfirmed(true);
-					if (showConfirmation === true) {
-						setFirstStep(false);
-						setSecondStep(false);
-						clearInterval(intervalId);
-					}
-				}
+				return res;
 			} catch (error) {
-				console.error("Erro ao buscar investimento:", error);
+				throw new Error("Erro ao buscar investimento");
 			}
-		}, 5000);
-		return () => {
-			clearInterval(intervalId);
-		};
+		},
+		{
+			refetchInterval: 3000, // Refetch a cada 5 segundos
+			onError: (error) => {
+				console.error("Erro ao buscar investimento:", error);
+			},
+		}
+	);
+
+	useEffect(() => {
+		if (
+			investment?.status === "PendingPayment" &&
+			investment?.contribution_id
+		) {
+			setContributionId(investment.contribution_id);
+			setIsConfirmed(true);
+			setFirstStep(false);
+			setSecondStep(false);
+		}
 	}, [
-		investmentId,
+		investment,
 		setContributionId,
+		setIsConfirmed,
 		setFirstStep,
 		setSecondStep,
-		showConfirmation,
-		token,
 	]);
 
 	return (

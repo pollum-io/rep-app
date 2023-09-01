@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { fetchGetDocumentLinks } from "../../../services/fetchGetDocumentLinks";
 
 type ComponentProps = {
 	document?: string;
 	isPending?: boolean;
+	token?: string;
+	documentKey: string;
 };
 
 const MotionFlex = motion(Flex);
@@ -12,7 +15,21 @@ const MotionFlex = motion(Flex);
 export const ContratoComponent: React.FC<ComponentProps> = ({
 	document,
 	isPending,
+	token,
+	documentKey,
 }) => {
+	const [docDownload, setDocDownload] = useState();
+
+	const getDocLinks = async (status: string) => {
+		const req = await fetchGetDocumentLinks(token, documentKey);
+		if (status === "baixar") {
+			setDocDownload(req?.original_file_url);
+			window.open(req?.original_file_url);
+		} else {
+			window.open(req?.signed_file_url, "_blank");
+		}
+	};
+
 	return (
 		<Flex mb={"2rem"} flexDir={"column"} w={"100%"}>
 			<Text
@@ -51,6 +68,7 @@ export const ContratoComponent: React.FC<ComponentProps> = ({
 								p={"0.5rem 3.75rem"}
 								h={"max"}
 								color={"#007D99"}
+								onClick={() => getDocLinks("visualizar")}
 							>
 								Visualizar
 							</Button>
@@ -79,7 +97,8 @@ export const ContratoComponent: React.FC<ComponentProps> = ({
 									h={"max"}
 									fontWeight={"500"}
 									color={"#007D99"}
-									href=""
+									href={docDownload}
+									onClick={() => getDocLinks("baixar")}
 								>
 									Baixar
 								</Button>

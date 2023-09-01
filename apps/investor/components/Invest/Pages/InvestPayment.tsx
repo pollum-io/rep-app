@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { Oval } from "react-loader-spinner";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
@@ -6,7 +6,6 @@ import { formatCurrency } from "ui/utils/BRCurrency";
 import { useOpportunities } from "../../../hooks/useOpportunities";
 import { ICompaniesDetails } from "../../Companies/CompaniesCard/dto";
 import { formatCNPJ } from "../../../utils/formatCnpj";
-import { useRegisterSteps } from "../../../hooks";
 import { fetchContributionById } from "../../../services/fetchContributionById";
 import { useUser } from "../../../hooks/useUser";
 import Base64Image from "../qrcode";
@@ -14,6 +13,8 @@ import { formattedDateWithYour } from "../../../utils/formatDate";
 import { fetchGetInvestmentById } from "../../../services/fetchGetInvestmentById";
 import { useToasty } from "../../../hooks/useToasty";
 import { useRouter } from "next/router";
+import { useQuery } from "react-query";
+import { fetchForcePayment } from "../../../services/fetchForcePayment";
 
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
@@ -21,6 +22,7 @@ interface IContractSign {
 	token?: string;
 	investor?: string;
 	isCheckout?: boolean;
+	imovelPayment?: any;
 }
 
 export const InvestPayment: React.FC<IContractSign> = ({
@@ -29,6 +31,7 @@ export const InvestPayment: React.FC<IContractSign> = ({
 	token,
 	investor,
 	isCheckout,
+	imovelPayment,
 }) => {
 	const [qrCodeImage, setQRCodeImage] = useState<string | null>(null);
 	const [pixDate, setPixDate] = useState<string | null>(null);
@@ -36,10 +39,8 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		null
 	);
 	const [copied, setCopied] = useState(false);
-
-	const { contributionId, investmentId, setContributionId } = useUser();
+	const { contributionId, investmentId } = useUser();
 	const { cotas } = useOpportunities();
-	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { toast } = useToasty();
 	const { push } = useRouter();
 
@@ -51,6 +52,102 @@ export const InvestPayment: React.FC<IContractSign> = ({
 			console.error("Failed to copy to clipboard:", error);
 		}
 	};
+
+	const {
+		data: contribution,
+		isError,
+		isLoading,
+	} = useQuery(
+		isCheckout
+			? ["contributionOnCheckout", contributionId]
+			: ["contributionMyInvestPayment", imovelPayment?.contribution?._id],
+		async () => {
+			try {
+				return isCheckout
+					? await fetchContributionById(token, investor, contributionId)
+					: await fetchContributionById(
+							token,
+							investor,
+							imovelPayment?.contribution?._id
+					  );
+			} catch (error) {
+				throw new Error("Erro ao buscar contribuição");
+			}
+		},
+		{}
+	);
+	console.log(contribution, "c");
+	console.log(
+		contribution,
+		"contributionIdcontributionIdcontributionIdcontributionIdcontributionId"
+	);
+
+	useMemo(() => {
+		if (!isLoading && !isError && contribution) {
+			console.log(contribution, "c");
+			setPixDate(contribution.due_date);
+			const dataURL = `data:image/png;base64,${contribution.pix_qr_code}`;
+			setQRCodeImage(dataURL);
+			setCopyQrCodeAddress(contribution.pix_payload);
+		}
+	}, [isLoading, isError, contribution]);
+
+	const {
+		data: investment,
+		isError: isErrorInvestment,
+		isLoading: isLoadingInvestment,
+	} = useQuery(
+		["investment", investmentId, isCheckout],
+		async () => {
+			try {
+				if (isCheckout) {
+					return await fetchGetInvestmentById(investmentId, token);
+				} else {
+					return await fetchGetInvestmentById(
+						imovelPayment?.contribution?.investment_id,
+						token
+					);
+				}
+			} catch (error) {
+				throw new Error("Erro ao buscar investimento");
+			}
+		},
+		{
+			refetchInterval: 3000, // Refetch a cada 5 segundos
+			onError: (error) => {
+				console.error("Erro ao buscar investimento:", error);
+			},
+		}
+	);
+
+	const {
+		data: forcePayment,
+		isError: isForcePaymentError,
+		isLoading: isForcePaymentLoading,
+	} = useQuery(
+		["forcePayment", isCheckout],
+		async () => {
+			try {
+				if (!isCheckout) {
+					return await fetchForcePayment(
+						imovelPayment?.contribution?.amount,
+						imovelPayment?.contribution?.invoice_key,
+						token
+					);
+				} else {
+					return;
+				}
+			} catch (error) {
+				throw new Error("Erro ao buscar investimento");
+			}
+		},
+		{
+			refetchInterval: 3000, // Refetch a cada 5 segundos
+			onError: (error) => {
+				console.error("Erro ao buscar investimento:", error);
+			},
+		}
+	);
 
 	useMemo(() => {
 		if (copied) {
@@ -64,53 +161,22 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		}
 	}, [copied, toast]);
 
-	useEffect(() => {
-		const openLinkInNewTab = async () => {
-			const request = await fetchContributionById(
-				token,
-				investor,
-				contributionId
-			);
-			setPixDate(request?.due_date);
-			const dataURL = `data:image/png;base64,${request?.pix_qr_corde}`;
-			setQRCodeImage(dataURL);
-			setCopyQrCodeAddress(request?.pix_payload);
-		};
-		openLinkInNewTab();
-	}, [contributionId, investor, token]);
-
-	useEffect(() => {
-		const intervalId = setInterval(async () => {
-			try {
-				const res = await fetchGetInvestmentById(investmentId, token);
-
-				if (res?.status === "InProgress") {
-					toast({
-						id: "toast-edit",
-						position: "top-right",
-						status: "success",
-						title: "Pagamento realizado!",
-						description: "Seu pagamento foi realizado com sucesso!",
-					});
-					clearInterval(intervalId);
-					push("/meus-investimentos");
-				}
-			} catch (error) {
-				console.error("Erro ao buscar investimento:", error);
-			}
-		}, 5000);
-		return () => {
-			clearInterval(intervalId);
-		};
-	}, [
-		investmentId,
-		push,
-		setContributionId,
-		setFirstStep,
-		setSecondStep,
-		toast,
-		token,
-	]);
+	useMemo(() => {
+		if (
+			!isErrorInvestment &&
+			!isLoadingInvestment &&
+			investment?.status === "InProgress"
+		) {
+			toast({
+				id: "toast-edit",
+				position: "top-right",
+				status: "success",
+				title: "Pagamento realizado!",
+				description: "Seu pagamento foi realizado com sucesso!",
+			});
+			push("/meus-investimentos");
+		}
+	}, [investment?.status, isErrorInvestment, isLoadingInvestment, push, toast]);
 
 	return (
 		<Flex
@@ -135,7 +201,8 @@ export const InvestPayment: React.FC<IContractSign> = ({
 							h={"max"}
 							w={"max"}
 						>
-							Parcela 12 de 18
+							Parcela {imovelPayment?.contribution?.installment} de{" "}
+							{imovelPayment?.num_installments}
 						</Flex>
 					)}
 					<Text
@@ -144,7 +211,11 @@ export const InvestPayment: React.FC<IContractSign> = ({
 						fontSize={"1.5rem"}
 						fontWeight={"600"}
 					>
-						Enviar {formatCurrency(imovel?.min_investment * cotas)} para:
+						Enviar{" "}
+						{isCheckout
+							? formatCurrency(imovel?.min_investment * cotas)
+							: formatCurrency(imovelPayment?.contribution?.amount)}{" "}
+						para:
 					</Text>
 					<Flex flexDir={"column"} mb={"1rem"}>
 						<Text
@@ -165,7 +236,9 @@ export const InvestPayment: React.FC<IContractSign> = ({
 								Banco:
 							</Text>
 							<Text fontSize={"0.875rem"} color={"#000"}>
-								{enterprise?.payment_info?.bank_account}
+								{isCheckout
+									? enterprise?.payment_info?.bank_account
+									: imovelPayment?.bank_account}
 							</Text>
 						</Flex>
 						<Flex flexDir={"row"} gap={"0.4rem"}>
@@ -173,7 +246,9 @@ export const InvestPayment: React.FC<IContractSign> = ({
 								Agencia:
 							</Text>
 							<Text fontSize={"0.875rem"} color={"#000"}>
-								{enterprise?.payment_info?.branch}
+								{isCheckout
+									? enterprise?.payment_info?.branch
+									: imovelPayment?.branch}
 							</Text>
 						</Flex>
 						<Flex flexDir={"row"} gap={"0.4rem"}>
@@ -181,7 +256,9 @@ export const InvestPayment: React.FC<IContractSign> = ({
 								Conta:
 							</Text>
 							<Text fontSize={"0.875rem"} color={"#000"}>
-								{enterprise?.payment_info?.account}
+								{isCheckout
+									? enterprise?.payment_info?.account
+									: imovelPayment?.account}
 							</Text>
 						</Flex>
 					</Flex>

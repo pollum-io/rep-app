@@ -76,7 +76,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 
 		return investDashboard;
 	}, [props?.investments]);
-
+	console.log(props?.investments);
 	return (
 		<DefaultTemplate>
 			<>

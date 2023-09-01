@@ -28,9 +28,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	const queryClient = new QueryClient({});
 
 	return (
-		<ChakraProvider resetCSS theme={theme}>
-			<UserProvider>
-				<QueryClientProvider client={queryClient}>
+		<QueryClientProvider client={queryClient}>
+			<ChakraProvider resetCSS theme={theme}>
+				<UserProvider>
 					<OpportunitiesProvider>
 						<ToastyProvider {...toasty}>
 							<AppWrapper>
@@ -38,9 +38,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 							</AppWrapper>
 						</ToastyProvider>
 					</OpportunitiesProvider>
-				</QueryClientProvider>
-			</UserProvider>
-		</ChakraProvider>
+				</UserProvider>
+			</ChakraProvider>{" "}
+		</QueryClientProvider>
 	);
 };
 export default MyApp;

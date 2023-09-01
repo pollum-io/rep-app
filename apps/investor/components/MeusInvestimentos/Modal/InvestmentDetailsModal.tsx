@@ -101,6 +101,8 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 									isPending={
 										props?.data?.status === "PendingSignature" ? true : false
 									}
+									token={props?.token}
+									documentKey={props?.data?.documentKey}
 								/>
 								<PrevRetornoComponent data={data} isMyInvest={true} />
 								<CronogramaAportesComponent
@@ -115,7 +117,14 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 									total_invested={props?.data?.total_invested}
 								/>
 								<PrevRetornoComponent data={data} isMyInvest={true} />
-								<ContratoComponent />
+								<ContratoComponent
+									document={props?.data?.url_unsigned_document}
+									documentKey={props?.data?.documentKey}
+									isPending={
+										props?.data?.status === "InProgress" ? true : false
+									}
+									token={props?.token}
+								/>
 							</>
 						)}
 

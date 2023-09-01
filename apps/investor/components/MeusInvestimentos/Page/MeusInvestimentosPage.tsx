@@ -39,7 +39,7 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 		{ buttonstate: "pedentes", label: "Pendentes" },
 		{ buttonstate: "concluidos", label: "Concluídos" },
 	];
-
+	console.log(props?.investments);
 	const setFilter = useCallback(() => {
 		let newArray = [];
 

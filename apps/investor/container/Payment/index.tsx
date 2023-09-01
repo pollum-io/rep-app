@@ -1,18 +1,15 @@
 import React, { FunctionComponent, useLayoutEffect } from "react";
 import { Flex } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
-import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { useUser } from "../../hooks/useUser";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { InvestPayment } from "../../components/Invest/Pages/InvestPayment";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { motion } from "framer-motion";
-import { ICompaniesDetails } from "../../components/Companies/CompaniesCard/dto";
 
 interface IPayment {
-	imovel?: IOpportunitiesCard;
-	enterprise?: ICompaniesDetails;
+	imovelPayment?: any;
 	oportunitiesAddress?: string;
 	user?: UserInfo;
 	token: string;
@@ -49,8 +46,7 @@ export const PaymentContainer: FunctionComponent<IPayment> = (
 					transition={{ duration: 0.5 }}
 				>
 					<InvestPayment
-						imovel={props?.imovel}
-						enterprise={props?.enterprise}
+						imovelPayment={props?.imovelPayment}
 						token={props?.token}
 						investor={
 							props?.investor_pf === null

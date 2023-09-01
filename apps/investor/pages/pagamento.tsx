@@ -12,6 +12,7 @@ import { UserDataPF } from "../dtos/UserPF";
 import { UserDataPJ } from "../dtos/UserPJ";
 import { ICompaniesDetails } from "../components/Companies/CompaniesCard/dto";
 import { PaymentContainer } from "../container/Payment";
+import { fetchGetPayment } from "../services/fetchGetPayment";
 
 interface IPayment {
 	token: string;
@@ -19,27 +20,24 @@ interface IPayment {
 	investor_pf?: string;
 	userDataPF?: UserDataPF;
 	userDataPJ?: UserDataPJ;
-	imovel?: IOpportunitiesCard;
-	enterprise?: ICompaniesDetails;
+	imovelPayment?: any;
 }
 
 const Pagamento: NextPage<IPayment> = ({
-	imovel,
+	imovelPayment,
 	token,
 	userDataPF,
 	userDataPJ,
 	investor_pf,
 	investor_pj,
-	enterprise,
 }) => (
 	<PaymentContainer
-		imovel={imovel}
+		imovelPayment={imovelPayment}
 		token={token}
 		userDataPF={userDataPF}
 		userDataPJ={userDataPJ}
 		investor_pf={investor_pf}
 		investor_pj={investor_pj}
-		enterprise={enterprise}
 	/>
 );
 
@@ -72,8 +70,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {},
 		};
 	}
-	const imovel = await fetchImovelDetail(String(query?.id));
-	const enterprise = await fetchEnterpriseById(String(imovel?.enterprise_id));
+	const imovelPayment = await fetchGetPayment(String(query?.id), token);
 
 	if (user?.investor_pf) {
 		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
@@ -83,8 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 				investor_pf: user?.investor_pf,
 				userDataPF: response?.data,
 				token: token,
-				imovel,
-				enterprise,
+				imovelPayment,
 			},
 		};
 	} else if (user?.investor_pj) {
@@ -98,8 +94,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 				investor_pj: user?.investor_pj,
 				userDataPJ: response?.data,
 				token: token,
-				imovel,
-				enterprise,
+				imovelPayment,
 			},
 		};
 	}

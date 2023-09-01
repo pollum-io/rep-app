@@ -83,7 +83,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 		} else if (isRealizarPagamento) {
 			push({
 				pathname: `/pagamento/`,
-				search: `?id=${props?.opportunity_url}`,
+				query: { id: props?._id },
 			});
 		} else if (isVerAportesRetornos) {
 			props.setEmpreendimento(props);
@@ -208,46 +208,50 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 				</Flex>
 			</Flex>
 			<Flex
-				flex="1"
+				flex="2"
 				as={"a"}
 				href={isAssinarContrato ? props?.url_unsigned_document : null}
 				onClick={() => handleButtonClick()}
 				target="_blank"
+				h={"100%"}
+				alignItems={"center"}
 			>
-				<Button
-					p={"0.5rem"}
-					w={"9.125rem"}
-					h={"1.25rem"}
-					textAlign={"center"}
-					borderRadius={"2.625rem"}
-					fontSize={"0.75rem"}
-					bg={getStatusColorAndText(props?.status)?.bg}
-					color={getStatusColorAndText(props?.status)?.color}
-					fontWeight={"500"}
-					_hover={{}}
-				>
-					{getStatusColorAndText(props?.status)?.statusText}
-				</Button>
-			</Flex>
-			<Flex flex="1">
-				<Button
-					as={"a"}
-					target="_blank"
-					p={"0.5rem"}
-					w={"8.375rem"}
-					h={"1.25rem"}
-					textAlign={"center"}
-					borderRadius={"2.625rem"}
-					fontSize={"0.75rem"}
-					bg={"transparent"}
-					color={"#007D99"}
-					fontWeight={"500"}
-					_hover={{}}
-					href={isAssinarContrato ? props?.url_unsigned_document : null}
-					onClick={() => handleButtonClick()}
-				>
-					{getStatusColorAndText(props?.status)?.action}
-				</Button>
+				<Flex flex="1">
+					<Button
+						p={"0.5rem"}
+						w={"9.125rem"}
+						h={"1.25rem"}
+						textAlign={"center"}
+						borderRadius={"2.625rem"}
+						fontSize={"0.75rem"}
+						bg={getStatusColorAndText(props?.status)?.bg}
+						color={getStatusColorAndText(props?.status)?.color}
+						fontWeight={"500"}
+						_hover={{}}
+					>
+						{getStatusColorAndText(props?.status)?.statusText}
+					</Button>
+				</Flex>
+				<Flex flex="1">
+					<Button
+						as={"a"}
+						target="_blank"
+						p={"0.5rem"}
+						w={"8.375rem"}
+						h={"1.25rem"}
+						textAlign={"center"}
+						borderRadius={"2.625rem"}
+						fontSize={"0.75rem"}
+						bg={"transparent"}
+						color={"#007D99"}
+						fontWeight={"500"}
+						_hover={{}}
+						href={isAssinarContrato ? props?.url_unsigned_document : null}
+						onClick={() => handleButtonClick()}
+					>
+						{getStatusColorAndText(props?.status)?.action}
+					</Button>
+				</Flex>
 			</Flex>
 		</MotionFlex>
 	);
