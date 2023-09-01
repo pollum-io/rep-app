@@ -5,6 +5,9 @@ export interface IContribution {
 	num_cotas: number;
 	next_invoice: string;
 	pendingContracts: number;
+	last_payment?: string;
+	amount_open_invoices?: number;
+	final_invoice?: string;
 }
 
 interface IContributionData {

@@ -38,6 +38,7 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 		props?.user?.investor_pj,
 	]);
 
+	console.log(props?.contribution);
 	return (
 		<DefaultTemplate>
 			<Flex
@@ -97,13 +98,14 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 					>
 						<ResumoFaturasComponent contribution={props?.contribution} />
 
-						{props?.contribution?.contributions ? (
+						{props?.contribution?.contributions.length ? (
 							<EmpreendimentoComponent contribution={props?.contribution} />
 						) : (
 							<Flex
 								flexDir={"column"}
 								alignItems={"center"}
 								justifyContent={"center"}
+								mt={"5rem"}
 							>
 								<Text color={"#171923"} textAlign={"center"} w={"54%"}>
 									Você não possui faturas em aberto no momento, futuras parcelas

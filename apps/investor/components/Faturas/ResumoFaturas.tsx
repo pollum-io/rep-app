@@ -2,6 +2,7 @@ import React from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { formatDateBirthday } from "../../utils/formatDate";
 import { IContribution } from "ui";
+import { formatCurrency } from "ui/utils/BRCurrency";
 
 type ComponentProps = {
 	contribution: IContribution;
@@ -10,6 +11,7 @@ type ComponentProps = {
 export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 	contribution,
 }) => {
+	console.log(contribution?.next_invoice?.length);
 	return (
 		<Flex flexDir={"column"}>
 			<Text
@@ -35,7 +37,9 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 						Valor de todas as faturas abertas
 					</Text>
 					<Text color={"#865DF0"} fontWeight={"600"} fontSize={"1.5rem"}>
-						-
+						{contribution?.amount_open_invoices
+							? formatCurrency(contribution?.amount_open_invoices)
+							: "-"}
 					</Text>
 					<Text color={"#718096"} fontSize={"0.75rem"}>
 						Efetue o pagamento conforme as datas de vencimento para evitar
@@ -59,7 +63,7 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
 					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-						{contribution?.next_invoice
+						{contribution?.next_invoice?.length
 							? formatDateBirthday(contribution?.next_invoice)
 							: "-"}
 					</Text>
@@ -81,7 +85,9 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
 					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-						-{" "}
+						{contribution?.last_payment?.length
+							? formatDateBirthday(contribution?.last_payment)
+							: "-"}
 					</Text>
 				</Flex>
 				<Flex

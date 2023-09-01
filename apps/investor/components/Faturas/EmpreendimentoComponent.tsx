@@ -28,7 +28,7 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 
 		return filteredArray;
 	};
-
+	console.log(contribution);
 	return (
 		<>
 			<Flex gap={"1rem"} mt={"2rem"} mb={"1.5rem"}>

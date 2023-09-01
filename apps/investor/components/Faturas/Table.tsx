@@ -2,6 +2,7 @@ import { Flex, Text, Button } from "@chakra-ui/react";
 import { FunctionComponent, useMemo } from "react";
 import { formatDateOnlyDayMonthYear } from "../../utils/formatDate";
 import { formatCurrency } from "ui/utils/BRCurrency";
+import { useRouter } from "next/router";
 
 type EmpreendimentoTable = {
 	name?: string;
@@ -16,6 +17,7 @@ type EmpreendimentoTable = {
 
 const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 	name,
+	id,
 	type,
 	numInstallments,
 	numPaidInstallments,
@@ -23,6 +25,8 @@ const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 	date,
 	status,
 }) => {
+	const { push } = useRouter();
+
 	const getStatusColorAndText = useMemo(() => {
 		const getStatusColor = (status: string) => {
 			switch (status) {
@@ -42,15 +46,15 @@ const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 					};
 				case "PENDING":
 					return {
-						bg: "#F0E8FF",
-						color: "#6E40E7",
+						bg: "#FEEBCB",
+						color: "#B7791F",
 						statusText: "Em aberto",
 						action: "Realizar pagamento",
 					};
 				default:
 					return {
-						bg: "#FEEBCB",
-						color: "#B7791F",
+						bg: "#F0E8FF",
+						color: "#6E40E7",
 						statusText: "Em Analise	",
 						action: "Realizar pagamento",
 					};
@@ -59,6 +63,13 @@ const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 
 		return getStatusColor;
 	}, []);
+
+	const handleButtonClick = () => {
+		push({
+			pathname: `/pagamento/`,
+			query: { id: id },
+		});
+	};
 
 	const renderRows = () => {
 		return (
@@ -118,7 +129,11 @@ const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 						{getStatusColorAndText(status)?.statusText}
 					</Button>
 				</Flex>
-				<Flex flex="0.5" alignItems="center">
+				<Flex
+					flex="0.5"
+					alignItems="center"
+					onClick={() => handleButtonClick()}
+				>
 					<Text fontSize={"0.875rem"} color={"#007D99"} fontWeight={"500"}>
 						{getStatusColorAndText(status)?.action}
 					</Text>
