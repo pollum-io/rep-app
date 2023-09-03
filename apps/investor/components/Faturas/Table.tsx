@@ -13,6 +13,7 @@ type EmpreendimentoTable = {
 	value: number;
 	date?: string;
 	status: string;
+	comprovante?: string;
 };
 
 const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
@@ -24,40 +25,33 @@ const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 	value,
 	date,
 	status,
+	comprovante,
 }) => {
 	const { push } = useRouter();
 
 	const getStatusColorAndText = useMemo(() => {
 		const getStatusColor = (status: string) => {
-			switch (status) {
-				case "CONFIRMED":
-					return {
-						bg: "#E4F2F3",
-						color: "#00576B",
-						statusText: "Pago",
-						action: "Realizar pagamento",
-					};
-				case "OVERDUE":
-					return {
-						bg: "#FED7D7",
-						color: "#E53E3E",
-						statusText: "Atrasado",
-						action: "Realizar pagamento",
-					};
-				case "PENDING":
-					return {
-						bg: "#FEEBCB",
-						color: "#B7791F",
-						statusText: "Em aberto",
-						action: "Realizar pagamento",
-					};
-				default:
-					return {
-						bg: "#F0E8FF",
-						color: "#6E40E7",
-						statusText: "Em Analise	",
-						action: "Realizar pagamento",
-					};
+			if (status === "RECEIVED") {
+				return {
+					bg: "#E4F2F3",
+					color: "#00576B",
+					statusText: "Pago",
+					action: "Ver comprovante",
+				};
+			} else if (status === "OVERDUE") {
+				return {
+					bg: "#FED7D7",
+					color: "#E53E3E",
+					statusText: "Atrasado",
+					action: "Realizar pagamento",
+				};
+			} else {
+				return {
+					bg: "#FEEBCB",
+					color: "#B7791F",
+					statusText: "Em aberto",
+					action: "Realizar pagamento",
+				};
 			}
 		};
 
@@ -65,10 +59,14 @@ const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 	}, []);
 
 	const handleButtonClick = () => {
-		push({
-			pathname: `/pagamento/`,
-			query: { id: id },
-		});
+		if (status === "RECEIVED") {
+			window.open(comprovante);
+		} else {
+			push({
+				pathname: `/pagamento/`,
+				query: { id: id },
+			});
+		}
 	};
 
 	const renderRows = () => {
@@ -113,7 +111,11 @@ const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 						{formatCurrency(value)}
 					</Text>
 				</Flex>
-				<Flex flex="0.8" alignItems="center">
+				<Flex
+					flex="0.8"
+					alignItems="center"
+					onClick={() => handleButtonClick()}
+				>
 					<Button
 						p={"0.5rem"}
 						w={"9.125rem"}

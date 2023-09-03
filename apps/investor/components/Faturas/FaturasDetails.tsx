@@ -45,11 +45,9 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 				</Flex>
 				<Flex gap={"1.5"}>
 					<Text fontSize={"1.125rem"} fontWeight={"600"}>
-						{contribution?.num_installments}
+						{contribution?.paid_installments}
 					</Text>
-					<Text fontSize={"1.125rem"}>
-						de {contribution?.paid_installments}
-					</Text>
+					<Text fontSize={"1.125rem"}>de {contribution?.num_installments}</Text>
 				</Flex>
 			</Flex>
 			<Flex flexDir={"column"} gap={"0.25rem"}>

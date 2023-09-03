@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button, Flex, Text } from "@chakra-ui/react";
 import EmpreendimentoTable from "./Table";
 import { IContribution } from "ui";
@@ -11,23 +11,20 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 	contribution,
 }) => {
 	const [state, setState] = useState("abertas");
-	const [filteredArray, setFilteredArray] = useState(
-		contribution?.contributions
-	);
+	const [filteredArray, setFilteredArray] = useState<any[]>([]);
 
-	const setFilter = () => {
+	const setFilter = useMemo(() => {
 		const newArray =
-			state === "abertas"
+			state === "pagas"
 				? contribution?.contributions?.filter(
-						(contr) => contr?.status === "CONFIRMED"
+						(contr) => contr?.status === "RECEIVED"
 				  )
 				: contribution?.contributions?.filter(
-						(contr) => contr?.status === "PENDING"
+						(contr) => contr?.status !== "RECEIVED"
 				  );
 		setFilteredArray(newArray);
+	}, [contribution?.contributions, state]);
 
-		return filteredArray;
-	};
 	console.log(contribution);
 	return (
 		<>
@@ -36,12 +33,12 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 					borderRadius={"624.9375rem"}
 					px={"0.75rem"}
 					py={"0.5rem"}
-					color={state === "aberta" ? "#00262D" : "#718096"}
-					bgColor={state === "aberta" ? "#B1D8DF" : "transparent"}
+					color={state === "abertas" ? "#00262D" : "#718096"}
+					bgColor={state === "abertas" ? "#B1D8DF" : "transparent"}
 					fontWeight={"500"}
 					onClick={() => {
 						setState("abertas");
-						setFilter();
+						setFilter;
 					}}
 					_hover={{ opacity: 0.7 }}
 				>
@@ -56,7 +53,7 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 					fontWeight={"500"}
 					onClick={() => {
 						setState("pagas");
-						setFilter();
+						setFilter;
 					}}
 					_hover={{ opacity: 0.7 }}
 				>
@@ -116,6 +113,7 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 						date={cnt?.due_date}
 						numInstallments={cnt?.num_installments}
 						numPaidInstallments={cnt?.paid_installments}
+						comprovante={cnt?.invoice_url}
 					/>
 				))}
 			</Flex>
