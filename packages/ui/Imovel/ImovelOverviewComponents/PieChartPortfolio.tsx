@@ -75,7 +75,7 @@ export const PieChartComponent: React.FC<IPieChart> = (props) => {
 
 	const countEnterpriseTypes = (data: any) => {
 		const typesCount: any = {};
-		data.forEach((item: any) => {
+		data?.forEach((item: any) => {
 			const type = item.enterprise_type;
 			typesCount[type] = (typesCount[type] || 0) + 1;
 		});

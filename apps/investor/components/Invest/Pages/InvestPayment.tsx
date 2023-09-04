@@ -126,6 +126,10 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		}
 	);
 
+	console.log(imovelPayment?.contribution?.invoice_key, "1");
+	console.log(imovelPayment?.contribution?.amount, "2");
+	console.log(imovelPayment?.contribution?.due_date);
+
 	const {
 		data: forcePayment,
 		isError: isForcePaymentError,
@@ -136,8 +140,10 @@ export const InvestPayment: React.FC<IContractSign> = ({
 			try {
 				if (!isCheckout) {
 					return await fetchForcePayment(
-						imovelPayment?.contribution?.amount,
 						imovelPayment?.contribution?.invoice_key,
+						imovelPayment?.contribution?.due_date,
+						imovelPayment?.contribution?.amount,
+
 						token
 					);
 				} else {

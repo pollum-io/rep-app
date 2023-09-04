@@ -25,7 +25,7 @@ export interface IEmpreendimentoData {
 	document_key?: string;
 	acao?: string;
 	token?: string;
-	_id?: string;
+	contributionId?: string;
 	opportunity_url?: string;
 	url_unsigned_document?: string;
 	setEmpreendimento?: React.Dispatch<
@@ -39,4 +39,5 @@ export interface IEmpreendimentoData {
 	modalOpen?: () => void;
 	documentKey?: string;
 	isModal?: boolean;
+	_id?: string;
 }

@@ -27,6 +27,7 @@ const PieChartComponent = dynamic(
 type ComponentProps = {
 	investments?: InvestmentModel[];
 	token: string;
+	isMoreThenOnePage: boolean;
 };
 
 export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
@@ -39,7 +40,7 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 		{ buttonstate: "pedentes", label: "Pendentes" },
 		{ buttonstate: "concluidos", label: "Concluídos" },
 	];
-	console.log(props?.investments);
+
 	const setFilter = useCallback(() => {
 		let newArray = [];
 
@@ -148,7 +149,11 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 							</Flex>
 						</Flex>
 						<Flex>
-							<ImoveisTable data={filteredArray} token={props?.token} />
+							<ImoveisTable
+								data={filteredArray}
+								token={props?.token}
+								isMoreThenOnePage={props?.isMoreThenOnePage}
+							/>
 						</Flex>
 						<Flex mt={"4rem"} flexDir={"column"}>
 							<Text

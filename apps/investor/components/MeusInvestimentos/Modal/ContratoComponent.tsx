@@ -99,6 +99,7 @@ export const ContratoComponent: React.FC<ComponentProps> = ({
 									color={"#007D99"}
 									href={docDownload}
 									onClick={() => getDocLinks("baixar")}
+									cursor={"pointer"}
 								>
 									Baixar
 								</Button>

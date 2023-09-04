@@ -20,7 +20,7 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 	props
 ) => {
 	const [data, setData] = useState();
-
+	console.log(props);
 	useMemo(() => {
 		if (props.isOpen) {
 			const get = async () => {
@@ -91,6 +91,7 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 								setEmpreendimento={props?.setEmpreendimento}
 								pictures_enterprise={props?.data?.pictures_enterprise}
 								isModal={true}
+								_id={props?.data?._id}
 							/>
 						</Flex>
 						{props?.data?.status === "PendingSignature" ||
@@ -121,7 +122,7 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 									document={props?.data?.url_unsigned_document}
 									documentKey={props?.data?.documentKey}
 									isPending={
-										props?.data?.status === "InProgress" ? true : false
+										props?.data?.status === "InProgress" ? false : true
 									}
 									token={props?.token}
 								/>

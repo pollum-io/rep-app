@@ -63,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 			},
 		};
 	}
-	const investments = await fetchInvestmentByUser(token);
+	// const investments = await fetchInvestmentByUser(token);
 
 	if (user?.investor_pf) {
 		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 				user,
 				token,
 				userDataPF: response?.data,
-				investments: investments?.data?.investments,
+				// investments: investments?.data?.investments,
 			},
 		};
 	} else if (user?.investor_pj) {
@@ -87,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 				user,
 				token,
 				userDataPJ: response?.data,
-				investments: investments?.data?.investments,
+				// investments: investments?.data?.investments,
 			},
 		};
 	}

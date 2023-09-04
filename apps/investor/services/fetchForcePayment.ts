@@ -1,20 +1,27 @@
+import { date } from "zod";
 import { api } from "./api";
 
 export const fetchForcePayment = async (
-	amount?: number,
 	invoice?: string,
+	date?: string,
+	amount?: number,
+
 	token?: string
 ) => {
 	try {
-		const data = {
-			invoice_key: invoice,
-			amount: amount,
-		};
-		const response = await api.post(`/force_payment`, data, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		console.log(amount, "amount");
+		console.log(invoice, "invoice");
+		console.log(date, "date");
+
+		const response = await api.post(
+			`/force_payment`,
+			{ invoice_key: invoice, due_date: date, amount: amount },
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 		return response;
 	} catch (error) {
 		if (error instanceof Error) {
