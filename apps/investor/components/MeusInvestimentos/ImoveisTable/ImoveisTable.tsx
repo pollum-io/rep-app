@@ -78,6 +78,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 						dataInvest={data?.createdAt}
 						percentageInvestment={data?.percentage_of_investment}
 						documentKey={data?.document_key}
+						_id={data?._id}
 					/>
 				</MotionFlex>
 			))}

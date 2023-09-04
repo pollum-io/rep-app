@@ -55,7 +55,7 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 			position: "top-right",
 			status: "success",
 			title: "Senha criada com sucesso!",
-			description: "Texto loren alguma coisa ipsun",
+			description: "",
 		});
 
 		push("/registrar");

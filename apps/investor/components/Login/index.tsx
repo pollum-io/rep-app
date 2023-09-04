@@ -30,7 +30,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 			} else if (data?.investor_pj) {
 				push("/oportunidades");
 			} else {
-				push("/register");
+				push("/registrar");
 			}
 		} catch (error) {
 			if (error instanceof Error) {

@@ -56,7 +56,7 @@ export const ContratoComponent: React.FC<ComponentProps> = ({
 						<Flex alignItems={"center"} gap={"1.5rem"}>
 							<Img src={"/icons/folder.svg"} />
 							<Text fontSize={"0.875rem"} color={"#171923"} fontWeight={"400"}>
-								Nome do documento/data assinatura
+								SCP Modelo
 							</Text>
 						</Flex>
 						<Flex gap={"1.5rem"}>
