@@ -15,7 +15,7 @@ const InvestorPFSchema = new mongoose.Schema(
 		email: {
 			type: String,
 		},
-		phone_number: {
+		contact_number: {
 			type: String,
 		},
 		city_of_birth: {

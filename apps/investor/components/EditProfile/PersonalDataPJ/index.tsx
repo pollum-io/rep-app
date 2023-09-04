@@ -133,7 +133,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 									label={t("editProfile.phone") as string}
 									type="text"
 									maskType={"Telefone"}
-									{...register("phone_number")}
+									{...register("contact_number")}
 									defaultValue={formatPhoneNumber(data?.contact_number)}
 								/>
 							</Flex>

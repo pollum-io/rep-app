@@ -7,7 +7,7 @@ export const fetchEditInvestorPJ = async (
 	token: string
 ) => {
 	try {
-		const response = await api.put(`/investor/pj//${investor_pj}`, data, {
+		const response = await api.put(`/investor/pj/${investor_pj}`, data, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

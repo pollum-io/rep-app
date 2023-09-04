@@ -79,7 +79,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			birthday_date: new Date(data.birthday_date),
 			cpf: data.cpf.replace(/[^\w]/gi, "").replace(/\s+/g, ""),
 			email: data.email,
-			phone_number: data.phone_number
+			contact_number: data.contact_number
 				.replace(/[^\w]/gi, "")
 				.replace(/\s+/g, ""),
 			city_of_birth: data.city_of_birth,
@@ -210,8 +210,8 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									label={t("editProfile.phone") as string}
 									type="text"
 									maskType={"Telefone"}
-									{...register("phone_number")}
-									defaultValue={formatPhoneNumber(data?.phone_number)}
+									{...register("contact_number")}
+									defaultValue={formatPhoneNumber(data?.contact_number)}
 								/>
 							</Flex>
 						</Flex>
