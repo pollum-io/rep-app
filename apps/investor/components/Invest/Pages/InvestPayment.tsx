@@ -23,6 +23,7 @@ interface IContractSign {
 	investor?: string;
 	isCheckout?: boolean;
 	imovelPayment?: any;
+	contributionIdCheck?: any;
 }
 
 export const InvestPayment: React.FC<IContractSign> = ({
@@ -32,6 +33,7 @@ export const InvestPayment: React.FC<IContractSign> = ({
 	investor,
 	isCheckout,
 	imovelPayment,
+	contributionIdCheck,
 }) => {
 	const [qrCodeImage, setQRCodeImage] = useState<string | null>(null);
 	const [pixDate, setPixDate] = useState<string | null>(null);
@@ -64,7 +66,11 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		async () => {
 			try {
 				return isCheckout
-					? await fetchContributionById(token, investor, contributionId)
+					? await fetchContributionById(
+							token,
+							investor,
+							contributionIdCheck || contributionId
+					  )
 					: await fetchContributionById(
 							token,
 							investor,

@@ -13,11 +13,13 @@ import { useQuery } from "react-query";
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
 	token: string;
+	setContribution: any;
 }
 
 export const InvestContractSign: React.FC<IContractSign> = ({
 	imovel,
 	token,
+	setContribution,
 }) => {
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { cotas } = useOpportunities();
@@ -49,7 +51,7 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 			try {
 				const res = await fetchGetInvestmentById(investmentId, token);
 				setContributionId(res.contribution_id);
-
+				setContribution(res.contribution_id);
 				return res;
 			} catch (error) {
 				throw new Error("Erro ao buscar investimento");
@@ -65,9 +67,11 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 
 	useEffect(() => {
 		if (
+			!isLoading &&
 			investment?.status === "PendingPayment" &&
 			investment?.contribution_id
 		) {
+			setContribution(investment.contribution_id);
 			setContributionId(investment.contribution_id);
 			setIsConfirmed(true);
 			setFirstStep(false);
@@ -79,6 +83,8 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 		setIsConfirmed,
 		setFirstStep,
 		setSecondStep,
+		setContribution,
+		isLoading,
 	]);
 
 	return (
