@@ -9,7 +9,7 @@ export interface UserDataPF {
 	invited_by?: string;
 	is_legal_entity?: boolean;
 	marital_status?: MaritalStatus;
-	phone_number?: string;
+	contact_number?: string;
 	profession?: string;
 	rg?: string;
 	updatedAt?: string;
