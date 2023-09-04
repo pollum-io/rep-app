@@ -162,6 +162,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 							<PersonalDataPF
 								isCheckout={true}
 								data={userDataPF ? userDataPF : userDataPJ}
+								token={token}
 							/>
 						</Flex>
 					</Flex>
