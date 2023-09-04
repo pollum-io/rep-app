@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useLayoutEffect } from "react";
+import React, { FunctionComponent, useLayoutEffect, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
@@ -29,6 +29,8 @@ interface IInvest {
 export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 	const { getUserInfos } = useUser();
 	const { firstStep, secondStep } = useRegisterSteps();
+
+	const [contributionIdCheck, setContributionIdCheck] = useState();
 
 	useLayoutEffect(() => {
 		getUserInfos(
@@ -74,7 +76,11 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 					transition={{ duration: 0.5 }}
 				>
 					{secondStep && (
-						<InvestContractSign imovel={props?.imovel} token={props?.token} />
+						<InvestContractSign
+							imovel={props?.imovel}
+							token={props?.token}
+							setContribution={setContributionIdCheck}
+						/>
 					)}
 				</motion.div>
 
@@ -97,6 +103,7 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 									? props?.investor_pj
 									: props?.investor_pf
 							}
+							contributionIdCheck={contributionIdCheck}
 							isCheckout={true}
 						/>
 					)}

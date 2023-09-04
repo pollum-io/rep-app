@@ -1,12 +1,15 @@
 import { api } from "./api";
 
-export async function fetchInvestmentByUser(token: string) {
+export async function fetchInvestmentByUser(token: string, page?: number) {
 	try {
-		const response = await api.get(`/investment`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const response = await api.get(
+			`/investment?limit=10&page=${page ? page : 1}`,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 		return response;
 	} catch (error) {
 		console.error(error);

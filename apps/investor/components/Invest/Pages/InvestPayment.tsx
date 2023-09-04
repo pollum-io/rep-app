@@ -23,6 +23,7 @@ interface IContractSign {
 	investor?: string;
 	isCheckout?: boolean;
 	imovelPayment?: any;
+	contributionIdCheck?: any;
 }
 
 export const InvestPayment: React.FC<IContractSign> = ({
@@ -32,6 +33,7 @@ export const InvestPayment: React.FC<IContractSign> = ({
 	investor,
 	isCheckout,
 	imovelPayment,
+	contributionIdCheck,
 }) => {
 	const [qrCodeImage, setQRCodeImage] = useState<string | null>(null);
 	const [pixDate, setPixDate] = useState<string | null>(null);
@@ -64,7 +66,11 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		async () => {
 			try {
 				return isCheckout
-					? await fetchContributionById(token, investor, contributionId)
+					? await fetchContributionById(
+							token,
+							investor,
+							contributionIdCheck || contributionId
+					  )
 					: await fetchContributionById(
 							token,
 							investor,
@@ -120,6 +126,10 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		}
 	);
 
+	console.log(imovelPayment?.contribution?.invoice_key, "1");
+	console.log(imovelPayment?.contribution?.amount, "2");
+	console.log(imovelPayment?.contribution?.due_date);
+
 	const {
 		data: forcePayment,
 		isError: isForcePaymentError,
@@ -130,8 +140,10 @@ export const InvestPayment: React.FC<IContractSign> = ({
 			try {
 				if (!isCheckout) {
 					return await fetchForcePayment(
-						imovelPayment?.contribution?.amount,
 						imovelPayment?.contribution?.invoice_key,
+						imovelPayment?.contribution?.due_date,
+						imovelPayment?.contribution?.amount,
+
 						token
 					);
 				} else {

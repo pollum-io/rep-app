@@ -16,11 +16,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 ) => {
 	const { push } = useRouter();
 
-	const pageTransition = {
-		hidden: { opacity: 0 },
-		visible: { opacity: 1 },
-	};
-
+	console.log(props?.contributionId, "props?._id");
 	const getStatusColorAndText = useMemo(() => {
 		const getStatusColor = (status: string) => {
 			switch (status) {
@@ -83,7 +79,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 		} else if (isRealizarPagamento) {
 			push({
 				pathname: `/pagamento/`,
-				query: { id: props?._id },
+				query: { id: props?.contributionId },
 			});
 		} else if (isVerAportesRetornos) {
 			props.setEmpreendimento(props);
@@ -97,6 +93,8 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 			h={"4.25rem"}
 			justifyContent="space-between"
 			alignItems="center"
+			initial="hidden"
+			animate="visible"
 			borderRadius={"0.75rem"}
 			mb={"0.75rem"}
 			cursor={!props.isModal ? "pointer" : "unset"}

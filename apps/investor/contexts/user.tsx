@@ -139,7 +139,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			setContributionId,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isUserLogged, userInfos, username, investmentId, contributionId, docLink]
+		[
+			isUserLogged,
+			userInfos,
+			username,
+			investmentId,
+			contributionId,
+			docLink,
+			isInvestorPerfilCompleted,
+		]
 	);
 
 	return (

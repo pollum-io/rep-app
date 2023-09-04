@@ -71,7 +71,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 	const imovelPayment = await fetchGetPayment(String(query?.id), token);
-
+	console.log(imovelPayment, "aaaaaaaaaaaa");
 	if (user?.investor_pf) {
 		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
 

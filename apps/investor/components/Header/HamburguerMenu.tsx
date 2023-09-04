@@ -115,7 +115,7 @@ export const HamburguerMenu: React.FC = () => {
 						)}
 					</Flex>
 				</MenuItem>
-				<Accordion allowMultiple>
+				{/* <Accordion allowMultiple>
 					<AccordionItem border="none">
 						<AccordionButton
 							background="none"
@@ -193,7 +193,7 @@ export const HamburguerMenu: React.FC = () => {
 							</Flex>
 						</AccordionPanel>
 					</AccordionItem>
-				</Accordion>
+				</Accordion> */}
 				<MenuItem
 					fontFamily="Poppins"
 					fontSize="0.875rem"

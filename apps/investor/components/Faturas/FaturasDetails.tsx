@@ -1,13 +1,13 @@
 import React from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { IContribution } from "ui";
+import { formatDateOnlyMonthYear } from "../../utils/formatDate";
 
 type ComponentProps = {
 	contribution?: IContribution;
 };
 
 export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
-	console.log(contribution?.paid_installments);
 	return (
 		<Flex
 			justifyContent={"end"}
@@ -45,11 +45,9 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 				</Flex>
 				<Flex gap={"1.5"}>
 					<Text fontSize={"1.125rem"} fontWeight={"600"}>
-						{contribution?.num_installments}
+						{contribution?.paid_installments}
 					</Text>
-					<Text fontSize={"1.125rem"}>
-						de {contribution?.paid_installments}
-					</Text>
+					<Text fontSize={"1.125rem"}>de {contribution?.num_installments}</Text>
 				</Flex>
 			</Flex>
 			<Flex flexDir={"column"} gap={"0.25rem"}>
@@ -68,7 +66,9 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 					</Text>
 					<Img src="/icons/info-circle-littlegray.svg" />
 				</Flex>
-				<Text fontSize={"1.125rem"}>-</Text>
+				<Text fontSize={"1.125rem"}>
+					{formatDateOnlyMonthYear(contribution?.final_invoice)}
+				</Text>
 			</Flex>
 		</Flex>
 	);
