@@ -53,8 +53,6 @@ interface IRequestData {
 
 export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 	const { user } = props;
-
-	console.log(props);
 	const [canSend, setCanSend] = useState(false);
 	const [buttonDisabled, setButtonDisabled] = useState("");
 	const [inputValuesUf, setInputValuesUf] = useState<UfData>();
@@ -75,7 +73,6 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 		const data: ExistingData = isPhysical
 			? getValues(["cpf"])
 			: getValues(["enterprise_name", "cnpj"]);
-
 		if (isPhysical) {
 			//TODO: Retornar lista completa de cpfs dos usuarios
 			return setSecondStep(true), setFirstStep(false);
@@ -152,10 +149,24 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 					});
 					PersistentFramework.add("popUp", true);
 					push("/oportunidades");
+				} else {
+					toast({
+						id: "toast1",
+						position: "top-right",
+						status: "error",
+						title: "Dado(s) invalidos!",
+						description: "Revise as informações preenchidas.",
+					});
 				}
 			})
 			.catch((err) => {
-				console.log({ err });
+				toast({
+					id: "toast1",
+					position: "top-right",
+					status: "error",
+					title: "Dado(s) invalidos!",
+					description: "Revise as informações preenchidas.",
+				});
 			});
 	};
 
@@ -172,12 +183,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 	};
 
 	return (
-		<Flex
-			w="100%"
-			alignItems="center"
-			justifyContent="flex-start"
-			pl={"42.12rem"}
-		>
+		<Flex w="100%">
 			<form onSubmit={handleSubmit(onSubmitForm)}>
 				{firstStep ? (
 					<SlideFade in={firstStep} offsetY="-30px">

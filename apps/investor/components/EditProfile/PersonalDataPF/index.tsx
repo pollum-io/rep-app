@@ -22,6 +22,7 @@ import { formatCPF } from "../../../utils/formatCpf";
 import { estadosCivis } from "../mockedData/estadosCivis";
 import { estadosRegimesPatrimoniais } from "../mockedData/estadosRegimesPatrimoniais";
 import { MaritalStatus, UserDataPF } from "../../../dtos/UserPF";
+import { useQuery } from "react-query";
 
 interface IPersonalDataPF {
 	data?: UserDataPF;
@@ -89,30 +90,30 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			marital_status: value,
 		};
 
-		await fetchEditInvestorPF(userInfos, request, token)
-			.then((res) => {
-				if (res) {
-					toast({
-						id: "toast-edit",
-						position: "top-right",
-						status: "success",
-						title: t("editProfile.toastTitle"),
-						description: t("editProfile.toastDescription"),
-					});
-				}
-			})
-			.catch((err) => {
-				if (err) {
-					toast({
-						id: "toast-edit",
-						position: "top-right",
-						status: "success",
-						title: "Preencha as informações corretamente!",
-						description:
-							"Verifique se existe algum campo que nao foi preenchido ainda",
-					});
-				}
-			});
+		// await fetchEditInvestorPF(userInfos, request, token)
+		// 	.then((res) => {
+		// 		if (res) {
+		// 			toast({
+		// 				id: "toast-edit",
+		// 				position: "top-right",
+		// 				status: "success",
+		// 				title: t("editProfile.toastTitle"),
+		// 				description: t("editProfile.toastDescription"),
+		// 			});
+		// 		}
+		// 	})
+		// 	.catch((err) => {
+		// 		if (err) {
+		// 			toast({
+		// 				id: "toast-edit",
+		// 				position: "top-right",
+		// 				status: "success",
+		// 				title: "Preencha as informações corretamente!",
+		// 				description:
+		// 					"Verifique se existe algum campo que nao foi preenchido ainda",
+		// 			});
+		// 		}
+		// 	});
 	};
 
 	return (

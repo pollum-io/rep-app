@@ -17,11 +17,22 @@ export const RegisterContainer: FunctionComponent = (
 	const { t } = useTranslation();
 
 	return (
-		<Flex w="100vw" h="100vh" bgColor="#ffffff" justifyContent="center">
-			<Flex w="100%" h="100%" flexDirection="column" gap="2.875rem">
+		<Flex
+			w="100%"
+			h="100vh"
+			bgColor="#ffffff"
+			justifyContent="center"
+			margin="0 auto"
+		>
+			<Flex
+				w="100%"
+				h="100%"
+				flexDirection="column"
+				gap="2.875rem"
+				margin="0 auto"
+			>
 				<Flex flexDirection="column" gap="2.75rem">
 					<Flex
-						w="100%"
 						h="9.8125rem"
 						bgColor="#1789A3"
 						borderRadius="0px 0px 12px 12px"
@@ -50,7 +61,7 @@ export const RegisterContainer: FunctionComponent = (
 						<RegisterSteps />
 					</Flex>
 				</Flex>
-				<Flex w="100%" h="100%" alignItems="center" flexDirection="column">
+				<Flex alignItems="center" flexDirection="column" margin="0 auto">
 					<RegisterContent token={token} user={user} />
 				</Flex>
 			</Flex>
