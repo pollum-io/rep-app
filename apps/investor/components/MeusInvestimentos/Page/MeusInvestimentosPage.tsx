@@ -14,6 +14,8 @@ import { MenuPieChartChart } from "../MenuPieChart";
 import { Maps } from "../../Maps";
 import { InvestmentModel } from "../../../dtos/IInvestment";
 import ImoveisTable from "../ImoveisTable/ImoveisTable";
+import { useQuery } from "react-query";
+import { fetchInvestmentByUser } from "../../../services/fetchInvestmentByUser";
 
 const PieChartComponent = dynamic(
 	async () => {
@@ -25,14 +27,33 @@ const PieChartComponent = dynamic(
 	}
 );
 type ComponentProps = {
-	investments?: InvestmentModel[];
 	token: string;
-	isMoreThenOnePage: boolean;
 };
 
 export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
+	const {
+		data: investment,
+		isError: isErrorInvestment,
+		isLoading: isLoadingInvestment,
+	} = useQuery(
+		["investment", props?.token],
+		async () => {
+			try {
+				return await fetchInvestmentByUser(props?.token);
+			} catch (error) {
+				throw new Error("Erro ao buscar investimento");
+			}
+		},
+		{
+			refetchInterval: 3000, // Refetch a cada 5 segundos
+			onError: (error) => {
+				console.error("Erro ao buscar investimento:", error);
+			},
+		}
+	);
+
 	const [buttonstate, setButtonState] = useState("todos");
-	const [filteredArray, setFilteredArray] = useState(props?.investments);
+	const [filteredArray, setFilteredArray] = useState<InvestmentModel[]>();
 
 	const filterButtons = [
 		{ buttonstate: "todos", label: "Todos" },
@@ -45,32 +66,33 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 		let newArray = [];
 
 		if (buttonstate === "em andamento") {
-			newArray = props?.investments?.filter(
+			newArray = investment?.investments?.filter(
 				(invest) => invest?.status === "InProgress"
 			);
 		} else if (buttonstate === "pedentes") {
-			newArray = props?.investments?.filter(
+			newArray = investment?.investments?.filter(
 				(invest) =>
 					invest?.status === "PendingPayment" ||
 					invest?.status === "PendingSignature"
 			);
 		} else if (buttonstate === "concluidos") {
-			newArray = props?.investments?.filter(
+			newArray = investment?.investments?.filter(
 				(invest) => invest?.status === "Concluded"
 			);
 		} else if (buttonstate === "todos") {
-			newArray = props?.investments;
+			newArray = investment?.investments;
 		}
 
 		setFilteredArray(newArray);
-	}, [buttonstate, props?.investments]);
+	}, [buttonstate, investment?.investments]);
 
 	useEffect(() => {
 		setFilter();
-	}, [setFilter]);
+	}, [buttonstate, setFilter]);
 
 	const handleStateChange = (newState) => {
 		setButtonState(newState);
+		setFilter();
 	};
 
 	return (
@@ -92,7 +114,7 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 							/>
 						</Flex>
 						<Flex>
-							<PieChartComponent data={props?.investments} />
+							<PieChartComponent data={investment?.investments} />
 						</Flex>
 						<Flex mt={"4.5rem"}>
 							<Text color={"#171923"} fontWeight={"600"} fontSize={"1.5rem"}>
@@ -152,7 +174,7 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 							<ImoveisTable
 								data={filteredArray}
 								token={props?.token}
-								isMoreThenOnePage={props?.isMoreThenOnePage}
+								buttonState={buttonstate}
 							/>
 						</Flex>
 						<Flex mt={"4rem"} flexDir={"column"}>
@@ -165,7 +187,7 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 								Onde você tem investido{" "}
 							</Text>
 							<Flex>
-								<Maps investmentData={props?.investments} />
+								<Maps investmentData={investment?.investments} />
 							</Flex>
 						</Flex>
 					</Flex>

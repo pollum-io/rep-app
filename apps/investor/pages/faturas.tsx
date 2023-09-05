@@ -82,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 				user,
 				token,
 				userDataPF: response?.data,
-				investments: investments?.data?.investments,
+				investments: investments?.investments,
 				contribution,
 			},
 		};

@@ -4,6 +4,9 @@ import { PersonalDataPF } from "../PersonalDataPF";
 import { PersonalDataPJ } from "../PersonalDataPJ";
 import { UserDataPF } from "../../../dtos/UserPF";
 import { UserDataPJ } from "../../../dtos/UserPJ";
+import { useQuery } from "react-query";
+import { fetchGetInvestorPFById } from "../../../services";
+import { Oval } from "react-loader-spinner";
 
 interface IChangePassword {
 	userDataPF?: UserDataPF;
@@ -13,12 +16,16 @@ interface IChangePassword {
 
 export const PersonalDataComponent: React.FC<IChangePassword> = (props) => {
 	const { userDataPF, userDataPJ, token } = props;
-	const { isInvestor } = useUser();
-
 	return (
 		<Flex w="100%" justifyContent="end">
 			{userDataPF ? (
-				<PersonalDataPF isCheckout={false} data={userDataPF} token={token} />
+				<>
+					<PersonalDataPF
+						isCheckout={false}
+						userDataPF={userDataPF}
+						token={token}
+					/>
+				</>
 			) : (
 				<PersonalDataPJ isCheckout={false} data={userDataPJ} token={token} />
 			)}

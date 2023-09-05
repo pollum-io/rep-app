@@ -15,7 +15,6 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
 	usersId,
 }) => {
-	console.log(imovelDetails);
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">

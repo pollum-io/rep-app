@@ -25,7 +25,6 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 		setFilteredArray(newArray);
 	}, [contribution?.contributions, state]);
 
-	console.log(contribution);
 	return (
 		<>
 			<Flex gap={"1rem"} mt={"2rem"} mb={"1.5rem"}>
@@ -102,20 +101,36 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 						</Text>
 					</Flex>
 				</Flex>
-				{filteredArray?.map((cnt) => (
-					<EmpreendimentoTable
-						key={cnt?._id}
-						id={cnt?._id}
-						name={cnt?.opportunity_name}
-						type={cnt?.opportunity_type}
-						status={cnt?.status}
-						value={cnt?.amount}
-						date={cnt?.due_date}
-						numInstallments={cnt?.num_installments}
-						numPaidInstallments={cnt?.paid_installments}
-						comprovante={cnt?.invoice_url}
-					/>
-				))}
+				<>
+					{filteredArray?.length > 0 ? (
+						filteredArray.map((cnt) => (
+							<EmpreendimentoTable
+								key={cnt?._id}
+								id={cnt?._id}
+								name={cnt?.opportunity_name}
+								type={cnt?.opportunity_type}
+								status={cnt?.status}
+								value={cnt?.amount}
+								date={cnt?.due_date}
+								numInstallments={cnt?.num_installments}
+								numPaidInstallments={cnt?.paid_installments}
+								comprovante={cnt?.invoice_url}
+							/>
+						))
+					) : (
+						<Flex
+							flexDir={"column"}
+							alignItems={"center"}
+							justifyContent={"center"}
+							mt={"5rem"}
+						>
+							<Text color={"#171923"} textAlign={"center"} w={"54%"}>
+								Você não possui faturas em aberto no momento, futuras parcelas a
+								serem pagas serão demonstradas aqui.
+							</Text>
+						</Flex>
+					)}
+				</>
 			</Flex>
 		</>
 	);

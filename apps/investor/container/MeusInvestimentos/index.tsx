@@ -57,7 +57,12 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 				throw new Error("Erro ao buscar investimento");
 			}
 		},
-		{}
+		{
+			refetchInterval: 3000,
+			onError: (error) => {
+				console.error("Erro ao buscar investimento:", error);
+			},
+		}
 	);
 
 	const investsSome = useMemo(() => {
@@ -68,25 +73,25 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 			profitability: 0,
 		};
 
-		investDashboard.totalInvest = investment?.data?.investments?.reduce(
+		investDashboard.totalInvest = investment?.investments?.reduce(
 			(total, investment) => {
 				return total + investment.total_invested;
 			},
 			0
 		);
-		investDashboard.totalReturnExpected = investment?.data?.investments?.reduce(
+		investDashboard.totalReturnExpected = investment?.investments?.reduce(
 			(total, investment) => {
 				return total + investment.expected_rentability;
 			},
 			0
 		);
-		investDashboard.totalReturnRealized = investment?.data?.investments?.reduce(
+		investDashboard.totalReturnRealized = investment?.investments?.reduce(
 			(total, investment) => {
 				return total + investment.return_realized;
 			},
 			0
 		);
-		investDashboard.profitability = investment?.data?.investments?.reduce(
+		investDashboard.profitability = investment?.investments?.reduce(
 			(total, investment) => {
 				return total + investment.profitability;
 			},
@@ -94,8 +99,8 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 		);
 
 		return investDashboard;
-	}, [investment?.data?.investments]);
-	console.log(investment);
+	}, [investment?.investments]);
+	console.log(investment?.investments, "dasdasdadassds");
 	return (
 		<DefaultTemplate>
 			<>
@@ -204,7 +209,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 										</Flex>
 										<Flex gap={"1.5"}>
 											<Text fontSize={"1.125rem"} fontWeight={"600"}>
-												{investment?.data?.investments?.length
+												{investment?.investments?.length
 													? ` + ${formatCurrency(investsSome?.totalInvest)}`
 													: "-"}
 											</Text>
@@ -223,14 +228,14 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 										</Flex>
 										<Flex gap={"0.75rem"}>
 											<Text fontSize={"1.125rem"} fontWeight={"600"}>
-												{investment?.data?.investments?.length
+												{investment?.investments?.length
 													? ` + ${formatCurrency(
 															investsSome?.totalReturnExpected
 													  )}`
 													: "-"}
 											</Text>
 											<Text color={"#38A169"} fontSize={"1.125rem"}>
-												{investment?.data?.investments?.length
+												{investment?.investments?.length
 													? `${investsSome?.profitability}%`
 													: "-"}
 											</Text>
@@ -253,30 +258,26 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 												fontSize={"1.125rem"}
 												fontWeight={"600"}
 											>
-												{investment?.data?.investments?.length
+												{investment?.investments?.length
 													? ` + ${formatCurrency(
 															investsSome?.totalReturnRealized
 													  )}`
 													: "-"}
 											</Text>
 											<Text color={"#38A169"} fontSize={"1.125rem"}>
-												{investment?.data?.investments?.length ? ` 200%` : "-"}
+												{investment?.investments?.length ? ` 200%` : "-"}
 											</Text>
 										</Flex>
 									</Flex>
 								</Flex>
 							</Flex>
 
-							{investment?.data?.investments?.length ? (
-								<MeusInvestimentosPage
-									token={props?.token}
-									investments={investment?.data?.investments}
-									isMoreThenOnePage={
-										investment?.data?.totalPages > 1 ? true : false
-									}
-								/>
+							{investment?.investments?.length ? (
+								<MeusInvestimentosPage token={props?.token} />
 							) : (
-								<EmptyInvest investments={investment?.data?.investments} />
+								<EmptyInvest
+									investments={investment?.investments?.investments}
+								/>
 							)}
 						</Flex>
 					</>
