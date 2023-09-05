@@ -38,7 +38,6 @@ export const Edit_ProfileContainer: FunctionComponent<IEditProfile> = (
 		props?.user?.investor_pf,
 		props?.user?.investor_pj,
 	]);
-
 	return (
 		<DefaultTemplate>
 			<motion.div

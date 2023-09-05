@@ -1,5 +1,5 @@
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { ImoveisTableRow } from "./Row";
 import { InvestmentDetailsModal } from "../Modal/InvestmentDetailsModal";
 import { ImoveisTableHeader } from "./ImoveisTableHeader";
@@ -11,7 +11,9 @@ import { fetchInvestmentByUser } from "../../../services/fetchInvestmentByUser";
 interface IImoveisTable {
 	data: InvestmentModel[];
 	token: string;
-	isMoreThenOnePage: boolean;
+	isMoreThenOnePage?: boolean;
+	buttonState?: string;
+	setFilter?: any;
 }
 const MotionFlex = motion(Flex);
 
@@ -19,35 +21,31 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 	data,
 	token,
 	isMoreThenOnePage,
+	buttonState,
 }) => {
 	const { isOpen, onClose, onOpen } = useDisclosure();
 	const [empreendimento, setEmpreendimento] = useState<InvestmentModel | null>(
 		null
 	);
 	const [currentPage, setCurrentPage] = useState(1);
-	const filesPerPage = 10; // Declare a variável filesPerPage antes de usá-la
+	const [totalPages, setTotalPages] = useState(1);
+	const [investmentData, setInvestmentData] = useState<InvestmentModel[]>([]);
 
-	const totalPages = Math.ceil(data?.length / filesPerPage);
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await fetchInvestmentByUser(token, currentPage);
+			setInvestmentData(response.investments);
+			setTotalPages(response.totalPages);
+		};
 
-	const [state, setState] = useState<any>(data);
+		fetchData();
+	}, [token, currentPage, investmentData]);
 
-	const nextPage = async () => {
-		setCurrentPage((prevPage) => prevPage + 1);
-		await fetchInvestmentByUser(token, currentPage + 1).then((response) => {
-			setState(response?.data?.investments);
-		});
-	};
-
-	const prevPage = async () => {
-		setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
-		await fetchInvestmentByUser(token, currentPage - 1).then((response) => {
-			setState(response?.data?.investments);
-		});
-	};
+	console.log(investmentData, "add");
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"0.75rem"}>
 			<ImoveisTableHeader />
-			{state?.map((data, index) => (
+			{data?.map((data, index) => (
 				<MotionFlex initial="hidden" animate="visible" key={index}>
 					<ImoveisTableRow
 						modalOpen={onOpen}
@@ -82,13 +80,11 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 					/>
 				</MotionFlex>
 			))}
-			{data && isMoreThenOnePage && (
+			{data && (
 				<Flex gap={"1.5rem"} mt="2rem" justifyContent={"center"}>
 					<Button
 						bgColor="#2D3748"
-						onClick={prevPage}
 						borderRadius="2rem"
-						isDisabled={currentPage === 1}
 						w="max"
 						transition="opacity 0.3s"
 						px={"1.25rem"}
@@ -98,6 +94,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 						fontSize={"0.875rem"}
 						fontWeight={"400"}
 						gap={"0.5rem"}
+						isDisabled={true}
 					>
 						<AiOutlineArrowLeft color="#FFF" />
 						Anterior
@@ -109,13 +106,12 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 						borderRadius="2rem"
 						h="max"
 						bgColor="#2D3748"
-						onClick={nextPage}
 						transition="opacity 0.3s"
 						color={"#FFF"}
 						fontSize={"0.875rem"}
 						fontWeight={"400"}
 						gap={"0.5rem"}
-						isDisabled={currentPage === totalPages || state.length < 10}
+						isDisabled={true}
 					>
 						Próxima
 						<AiOutlineArrowRight color="#FFF" />

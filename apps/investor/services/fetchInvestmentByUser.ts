@@ -10,7 +10,8 @@ export async function fetchInvestmentByUser(token: string, page?: number) {
 				},
 			}
 		);
-		return response;
+		const { investments, total_pages } = response.data; // Assuming your API response contains total_pages
+		return { investments, totalPages: total_pages };
 	} catch (error) {
 		console.error(error);
 	}

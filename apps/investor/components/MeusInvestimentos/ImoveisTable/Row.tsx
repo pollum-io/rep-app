@@ -1,5 +1,5 @@
 import { Flex, Text, Button, Img } from "@chakra-ui/react";
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent, useEffect, useMemo } from "react";
 import { IEmpreendimentoData } from "../../../dtos/IEmpreendimentoMeuInvestimento";
 import {
 	formatDateOnlyDayMonthYear,
@@ -16,7 +16,6 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 ) => {
 	const { push } = useRouter();
 
-	console.log(props?.contributionId, "props?._id");
 	const getStatusColorAndText = useMemo(() => {
 		const getStatusColor = (status: string) => {
 			switch (status) {

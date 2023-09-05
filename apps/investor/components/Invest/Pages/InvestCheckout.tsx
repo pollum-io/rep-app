@@ -161,7 +161,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 						<Flex>
 							<PersonalDataPF
 								isCheckout={true}
-								data={userDataPF ? userDataPF : userDataPJ}
+								userDataPF={userDataPF}
 								token={token}
 							/>
 						</Flex>

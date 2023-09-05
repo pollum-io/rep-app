@@ -38,7 +38,6 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 		props?.user?.investor_pj,
 	]);
 
-	console.log(props?.contribution);
 	return (
 		<DefaultTemplate>
 			<Flex
@@ -108,8 +107,8 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 								mt={"5rem"}
 							>
 								<Text color={"#171923"} textAlign={"center"} w={"54%"}>
-									Você não possui faturas em aberto no momento, futuras parcelas
-									a serem pagas serão demonstradas aqui.
+									Você não possui faturas no momento, futuras parcelas a serem
+									pagas serão demonstradas aqui.
 								</Text>
 							</Flex>
 						)}

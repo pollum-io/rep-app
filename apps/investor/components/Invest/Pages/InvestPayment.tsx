@@ -82,15 +82,9 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		},
 		{}
 	);
-	console.log(contribution, "c");
-	console.log(
-		contribution,
-		"contributionIdcontributionIdcontributionIdcontributionIdcontributionId"
-	);
 
 	useMemo(() => {
 		if (!isLoading && !isError && contribution) {
-			console.log(contribution, "c");
 			setPixDate(contribution.due_date);
 			const dataURL = `data:image/png;base64,${contribution.pix_qr_code}`;
 			setQRCodeImage(dataURL);
@@ -125,10 +119,6 @@ export const InvestPayment: React.FC<IContractSign> = ({
 			},
 		}
 	);
-
-	console.log(imovelPayment?.contribution?.invoice_key, "1");
-	console.log(imovelPayment?.contribution?.amount, "2");
-	console.log(imovelPayment?.contribution?.due_date);
 
 	const {
 		data: forcePayment,
