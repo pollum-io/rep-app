@@ -5,7 +5,7 @@ import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities"
 import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import PrevFinanceiraTable from "../ImovelOverviewComponents/PrevFinanceiraTable";
 import PositiveAndNegativeBarChart from "../ImovelOverviewComponents/FluxoDeCaixaChart";
-import { PriceCard, TimeCard } from "../SharedComponents";
+import { ImovelInfoDefault, PriceCard, TimeCard } from "../SharedComponents";
 import dynamic from "next/dynamic";
 
 const PieChartComponent = dynamic(
@@ -29,8 +29,10 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="1rem" maxWidth="70rem">
+				<Flex gap="1rem" maxWidth="70rem" position={"relative"}>
 					<Flex flexDir={"column"} maxWidth={"70%"} mr={"0em"}>
+						<ImovelInfoDefault imovelDetails={imovelDetails} />
+
 						<Flex flexDir={"row"} mt="1rem" justifyContent={"space-between"}>
 							<Text
 								mb="0.5rem"
@@ -176,23 +178,18 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 							</Flex>
 						</Flex>
 					</Flex>{" "}
-					<Flex flexDirection="column" position="relative" bottom={"14rem"}>
-						<Flex
-							flexDirection="column"
-							gap="1.5rem"
-							className="page-transition"
-						>
+					<Flex flexDirection="column" position={"relative"}>
+						<Flex flexDirection="column" gap="1.5rem" flex="1">
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault="8%"
-								pageSize="lg"
 								unitPrice={imovelDetails?.min_investment}
+								oppportunitiesDetails={imovelDetails?.oppportunities_details}
 							/>{" "}
 						</Flex>
-					</Flex>{" "}
+					</Flex>
 				</Flex>
 			</Flex>
 		</>

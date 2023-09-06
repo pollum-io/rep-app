@@ -40,7 +40,6 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 					<OportunitiesNavBar page={page} setPage={setPage} />
 					<Collections images={imovelDetails?.pictures_enterprise} />
 					<Flex gap="0rem" flexDir={"column"}>
-						<ImovelInfoDefault imovelDetails={imovelDetails} />
 						<Flex flexDir={"column"}>
 							{page === "oportunidade" && (
 								<motion.div
