@@ -146,7 +146,7 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 								))}{" "}
 							</Flex>
 
-							<Flex ml={"4rem"}>
+							{/* <Flex ml={"4rem"}>
 								<MenuPieChartChart
 									title="Tipo"
 									titleColor="#171923"
@@ -168,7 +168,7 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 										placeholder="Pesquisar por nome"
 									/>{" "}
 								</InputGroup>
-							</Flex>
+							</Flex> */}
 						</Flex>
 						<Flex>
 							<ImoveisTable

@@ -1,20 +1,26 @@
-import React, { ForwardRefRenderFunction } from "react";
+import React, { ForwardRefRenderFunction, forwardRef, useState } from "react";
 import { FormControl, FormLabel, Select, Text } from "@chakra-ui/react";
 import { InputValues, SelectProps } from "../../dtos/ISelectProps";
 
 export const SelectComponent: ForwardRefRenderFunction<
 	HTMLSelectElement,
 	SelectProps
-> = ({
-	name,
-	label,
-	type,
-	selectValue,
-	setData,
-	defaultValue,
-	setInputValues,
-	...rest
-}) => {
+> = (
+	{
+		name,
+		label,
+		type,
+		selectValue,
+		setData,
+		data,
+		defaultValue,
+		setInputValues,
+		...rest
+	},
+	ref
+) => {
+	const [selectedValue, setSelectedValue] = useState(defaultValue);
+
 	return (
 		<FormControl id={name}>
 			{label && (
@@ -63,6 +69,7 @@ export const SelectComponent: ForwardRefRenderFunction<
 				<Select
 					id={name}
 					name={name}
+					ref={ref}
 					{...rest}
 					_hover={{}}
 					w={""}
@@ -71,8 +78,12 @@ export const SelectComponent: ForwardRefRenderFunction<
 					placeholder="Select option"
 					color={"black"}
 					fontSize="0.875rem"
-					onChange={(e) => setData(e.target.value)}
+					onChange={(e) => {
+						setData(e.target.value);
+						rest.onChange(e);
+					}}
 					defaultValue={defaultValue}
+					value={data}
 				>
 					{selectValue?.map((value, index: number) => (
 						<option key={index} value={value.name}>
@@ -101,6 +112,7 @@ export const SelectComponent: ForwardRefRenderFunction<
 								[type]: e.target.value,
 							}));
 					}}
+					value={data}
 					defaultValue={defaultValue}
 				>
 					{selectValue?.map((value, index: number) => (
@@ -113,3 +125,5 @@ export const SelectComponent: ForwardRefRenderFunction<
 		</FormControl>
 	);
 };
+
+export default forwardRef(SelectComponent);

@@ -26,6 +26,7 @@ export interface SelectProps extends ChakraSelectProps {
 	type?: string;
 	selectValue?: UfValue[] | RelationshipType[] | UnionType[];
 	setData?: React.Dispatch<React.SetStateAction<string>>;
+	data?: string;
 	defaultValue?: string;
 	setInputValues?: React.Dispatch<React.SetStateAction<InputValues>>;
 }

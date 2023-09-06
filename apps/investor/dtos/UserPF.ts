@@ -26,9 +26,5 @@ export type MaritalStatus = {
 	partners_name?: string | null;
 	partners_rg?: string | null;
 	//se casado
-	spouse_name?: string | null;
-	spouse_cpf?: string | null;
-	spouse_rg?: string | null;
-	spouse_address?: string | null;
 	status?: string | null;
 };
