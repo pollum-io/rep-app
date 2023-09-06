@@ -3,7 +3,12 @@ import { FunctionComponent } from "react";
 import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import PlantaCarrousel from "../ImovelDetailComponents/PlantaCarrouselComponent";
 import { TimelineComponent } from "../ImovelDetailComponents";
-import { ObraSteps, PriceCard, TimeCard } from "../SharedComponents";
+import {
+	ImovelInfoDefault,
+	ObraSteps,
+	PriceCard,
+	TimeCard,
+} from "../SharedComponents";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
 
 interface IImovelProps {
@@ -18,8 +23,14 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="3.9rem" maxWidth="70rem" margin={"0 auto"}>
+				<Flex
+					gap="3.9rem"
+					maxWidth="70rem"
+					margin={"0 auto"}
+					position={"relative"}
+				>
 					<Flex flexDir={"column"} maxWidth={"70%"}>
+						<ImovelInfoDefault imovelDetails={imovelDetails} />
 						<Flex
 							flexDir={"column"}
 							mb="4rem"
@@ -158,21 +169,15 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 							</Flex>
 						</Flex>
 					</Flex>
-					<Flex
-						flexDirection="column"
-						position="relative"
-						bottom={"14rem"}
-						right={"5.7rem"}
-					>
-						<Flex flexDirection="column" gap="1.5rem">
+					<Flex flexDirection="column" position={"relative"} right={"5.9rem"}>
+						<Flex flexDirection="column" gap="1.5rem" flex="1">
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault="12%"
-								pageSize="md"
 								unitPrice={imovelDetails?.min_investment}
+								oppportunitiesDetails={imovelDetails?.oppportunities_details}
 							/>{" "}
 						</Flex>
 					</Flex>
