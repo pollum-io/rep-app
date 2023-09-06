@@ -46,7 +46,9 @@
 		"iAgree": "I agree with the Terms and Conditions above.",
 		"send": "Send Registration",
 		"back": "Back",
-		"noAbbreviations": "No Abbreviations"
+		"noAbbreviations": "No Abbreviations",
+		"nationality": "Nationality",
+		"cityOfBirth": "City of birth"
 	},
 	"opportunities": {
 		"investingIs": "Investing is much easier with LIVN!",

@@ -5,4 +5,6 @@ export interface ICreateInvestorPF {
 	is_legal_entity?: boolean;
 	invited_by: string;
 	email: string;
+	nationality: string;
+	city_of_birth: string;
 }
