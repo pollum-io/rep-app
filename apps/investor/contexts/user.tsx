@@ -117,7 +117,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 	// 	setInvestmentId(String(investmentCheckoutId));
 	// 	setContributionId(String(contributionIdStorage));
 	// }, [docLink, investmentId, contributionId]);
-	console.log(contributionId, "CONTRI CONTEXT");
 	const providerValue = useMemo(
 		() => ({
 			isUserLogged,

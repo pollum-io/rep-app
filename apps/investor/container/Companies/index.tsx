@@ -39,7 +39,7 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({
 			token
 		);
 	}, [getUserInfos, token, user?.investor_pf, user?.investor_pj]);
-	console.log(filteredCompanies);
+
 	return (
 		<DefaultTemplate>
 			<motion.div

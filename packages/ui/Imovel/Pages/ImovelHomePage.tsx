@@ -8,6 +8,7 @@ import { Maps } from "../../../../apps/investor/components/Maps/index";
 import { Carousel } from "../ImovelHomePageComponents";
 import {
 	DocsComponent,
+	ImovelInfoDefault,
 	ObraSteps,
 	PriceCard,
 	TimeCard,
@@ -23,11 +24,13 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	usersId,
 }) => {
 	const { t } = useTranslation();
+
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
-				<Flex gap="2.75rem" maxWidth="75rem">
+				<Flex gap="2.75rem" maxWidth="75rem" maxW={"max"} position={"relative"}>
 					<Flex flexDir={"column"} maxWidth={"70%"}>
+						<ImovelInfoDefault imovelDetails={imovelDetails} />
 						<Flex flexDir={"column"} pb="3rem">
 							<SimpleGrid
 								columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
@@ -187,15 +190,13 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 							/>
 						</Flex>
 					</Flex>
-					<Flex flexDirection="column" position="relative" bottom={"14rem"}>
-						<Flex flexDirection="column" gap="1.5rem">
+					<Flex flexDirection="column" position={"relative"}>
+						<Flex flexDirection="column" gap="1.5rem" flex="1">
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
-								heightDefault="15%"
-								pageSize="md"
 								unitPrice={imovelDetails?.min_investment}
 								oppportunitiesDetails={imovelDetails?.oppportunities_details}
 							/>{" "}

@@ -1,6 +1,6 @@
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
 import { useRegisterSteps } from "../../../../apps/investor/hooks/useRegisterSteps";
@@ -37,40 +37,14 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const { t } = useTranslation();
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 
-	const [containerPosition, setContainerPosition] = useState(false);
 	const [scroll, setScrollY] = useState("");
+	const [scrollPosition, setScrollPosition] = useState(0);
+	const topMargin = 0; // Altura em pixels onde o PriceCard deve começar a se mover
+	const bottomMargin = 0; // Altura em pixels onde o PriceCard deve parar de se mover
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const breakpoints: Record<string, number[]> = {
-				sm: [350, 560, 740, 900],
-				md: [350, 560, 740, 900],
-				lg: [400, 850, 1100, 1300],
-			};
-
-			const topValues: Record<string, string[]> = {
-				sm: ["29%", "50%", "75%", "80%"],
-				md: ["25%", "50%", "75%", "90%"],
-				lg: ["15%", "40%", "65%", "80%"],
-			};
-
-			const scrollY = window.scrollY;
-			const currentBreakpoints = breakpoints[pageSize || "sm"] || [];
-			const currentTopValues = topValues[pageSize || "sm"] || [];
-
-			let containerPosition = false;
-			let scrollYValue = "0%";
-
-			for (let i = currentBreakpoints.length - 1; i >= 0; i--) {
-				if (scrollY >= currentBreakpoints[i]) {
-					containerPosition = true;
-					scrollYValue = currentTopValues[i];
-					break;
-				}
-			}
-
-			setContainerPosition(containerPosition);
-			setScrollY(scrollYValue);
+			setScrollPosition(window.scrollY);
 		};
 
 		window.addEventListener("scroll", handleScroll);
@@ -78,7 +52,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
-	}, [pageSize]);
+	}, []);
 
 	return (
 		<Flex
@@ -88,9 +62,10 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 			p="1.5rem"
 			flexDir={"column"}
 			borderRadius="0.75rem"
-			position={"absolute"}
-			top={containerPosition ? scroll : heightDefault}
-			transition="top 1s ease-out"
+			position="sticky"
+			top={`${Math.max(topMargin - scrollPosition, 400)}px`}
+			marginTop={`${Math.max(bottomMargin - scrollPosition, 0)}px`}
+			transition="margin 5.2s ease-out"
 			boxShadow="0px 20px 25px rgba(31, 41, 55, 0.1), 0px 10px 10px rgba(31, 41, 55, 0.04);"
 			color="#ffffff"
 		>

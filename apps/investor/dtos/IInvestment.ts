@@ -11,6 +11,7 @@ export interface InvestmentModel {
 	return_realized: number;
 	num_cotas: number;
 	paid_installments: number;
+	contribution: string;
 	num_installments: number;
 	total_invested: number;
 	cota_price: number;

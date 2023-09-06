@@ -20,7 +20,6 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 	props
 ) => {
 	const [data, setData] = useState();
-	console.log(props);
 	useMemo(() => {
 		if (props.isOpen) {
 			const get = async () => {
@@ -35,7 +34,7 @@ export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 			return;
 		}
 	}, [props?.data?._id, props?.data?.token, props.isOpen]);
-	console.log(data, "data");
+
 	return (
 		<Modal isOpen={props.isOpen} onClose={props.onClose} size={"6xl"}>
 			<ModalOverlay />
