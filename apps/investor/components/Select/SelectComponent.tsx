@@ -96,6 +96,7 @@ export const SelectComponent: ForwardRefRenderFunction<
 				<Select
 					id={name}
 					name={name}
+					ref={ref}
 					{...rest}
 					_hover={{}}
 					w={""}
@@ -106,11 +107,6 @@ export const SelectComponent: ForwardRefRenderFunction<
 					fontSize="0.875rem"
 					onChange={(e) => {
 						setData(e.target.value);
-						setInputValues &&
-							setInputValues((prevState: InputValues) => ({
-								...prevState,
-								[type]: e.target.value,
-							}));
 					}}
 					value={data}
 					defaultValue={defaultValue}
