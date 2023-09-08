@@ -107,6 +107,7 @@ export const SelectComponent: ForwardRefRenderFunction<
 					fontSize="0.875rem"
 					onChange={(e) => {
 						setData(e.target.value);
+						rest.onChange(e);
 					}}
 					value={data}
 					defaultValue={defaultValue}

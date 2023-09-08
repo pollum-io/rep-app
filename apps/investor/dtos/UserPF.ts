@@ -20,6 +20,7 @@ export interface UserDataPF {
 
 export type MaritalStatus = {
 	equity_regime?: string | null;
+	contractor?: string | null;
 	//se uniao estavel
 	partners_address?: string | null;
 	partners_cpf?: string | null;
