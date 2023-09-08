@@ -46,7 +46,9 @@
 		"iAgree": "Declaro que li e aceito os termos acima.",
 		"send": "Enviar Cadastro",
 		"back": "Voltar",
-		"noAbbreviations": "Sem abreviações"
+		"noAbbreviations": "Sem abreviações",
+		"nationality": "Nacionalidade",
+		"cityOfBirth": "Cidade de Nascimento"
 	},
 	"opportunities": {
 		"investingIs": "Investir é muito mais fácil com a LIVN",
