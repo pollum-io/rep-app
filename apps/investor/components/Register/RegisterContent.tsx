@@ -46,6 +46,8 @@ interface IRequestData {
 	birthday_date?: Date;
 	cnpj?: string;
 	uf?: string;
+	nationality?: string;
+	city_of_birth?: string;
 	is_legal_entity: boolean;
 	invited_by: string;
 	isPerfilCompleted: boolean;
@@ -73,6 +75,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 		const data: ExistingData = isPhysical
 			? getValues(["cpf"])
 			: getValues(["enterprise_name", "cnpj"]);
+
 		if (isPhysical) {
 			//TODO: Retornar lista completa de cpfs dos usuarios
 			return setSecondStep(true), setFirstStep(false);
@@ -121,6 +124,8 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
 				email: user.email,
+				nationality: data?.nationality,
+				city_of_birth: data?.city_of_birth,
 			};
 		} else {
 			dataPJ = {
@@ -188,7 +193,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				{firstStep ? (
 					<SlideFade in={firstStep} offsetY="-30px">
 						<Flex flexDirection="column" gap="1.625rem">
-							<Flex gap="0.9375rem" fontFamily="Poppins">
+							{/* <Flex gap="0.9375rem" fontFamily="Poppins">
 								<Flex gap="0.75rem">
 									<Checkbox
 										spacing="0.75rem"
@@ -233,7 +238,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 										</Text>
 									</Checkbox>
 								</Flex>
-							</Flex>
+							</Flex> */}
 							<Flex flexDirection="column" gap="0rem">
 								{!isPhysical ? (
 									<>
@@ -291,6 +296,18 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 											type="text"
 											placeholderText={t("inputs.insertHere") as string}
 											{...register("invited_by")}
+											onChange={(e) => setButtonDisabled(e.target.value)}
+										/>
+										<InputComponent
+											label={t("register.nationality") as string}
+											type="text"
+											{...register("nationality")}
+											onChange={(e) => setButtonDisabled(e.target.value)}
+										/>
+										<InputComponent
+											label={t("register.cityOfBirth") as string}
+											type="text"
+											{...register("city_of_birth")}
 											onChange={(e) => setButtonDisabled(e.target.value)}
 										/>
 									</>
