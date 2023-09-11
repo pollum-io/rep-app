@@ -35,20 +35,22 @@ interface IPersonalDataPF {
 export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	const { userDataPF, token } = props;
 	const [defaultValues, setDefaultValues] = useState<any>();
-
+	const [isDisabled] = useState(true);
+	const [value, setValue] = useState("me");
+	const [equityRegime, setEquityRegime] = useState<string>("");
+	const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<string>();
 	const { userInfos } = useUser();
 	const { toast } = useToasty();
 	const { t } = useTranslation();
-
 	const { data, isLoading, isError, error } = useQuery(
-		"ïd",
+		"id",
 		async () => await fetchGetInvestorPFById(userDataPF?._id, token),
 		{
 			onError: (error) => {
 				console.error("Erro ao buscar investimento:", error);
 			},
-			onSuccess(data) {
-				const formValues = {
+			onSuccess: (data) => {
+				const formValues: any = {
 					full_name: data?.data?.full_name,
 					city_of_birth: data?.data?.city_of_birth,
 					birthday_date: new Date(data?.data?.birthday_date)
@@ -62,54 +64,42 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 					contact_number: formatPhoneNumber(data?.data?.contact_number),
 					marital_status: {
 						status: data?.data?.marital_status?.status,
-						equity_regime: data?.data?.marital_status?.equity_regime,
 						contractor: data?.data?.marital_status?.contractor,
-						partners_name: data?.data?.marital_status?.partners_name,
-						partners_cpf: formatCPF(data?.data?.marital_status?.partners_cpf),
-						partners_rg: data?.data?.marital_status?.partners_rg,
-						partners_address: data?.data?.marital_status?.partners_address,
+						spouses_name: data?.data?.marital_status?.partners_name,
+						spouses_cpf: formatCPF(data?.data?.marital_status?.partners_cpf),
+						spouses_rg: data?.data?.marital_status?.partners_rg,
+						spouses_address: data?.data?.marital_status?.partners_address,
 					},
 				};
+
+				if (data?.data?.marital_status?.status === "Casado(a)") {
+					formValues.marital_status.equity_regime =
+						data?.data?.marital_status?.equity_regime;
+					formValues.marital_status.contractor =
+						data?.data?.marital_status?.contractor;
+					formValues.marital_status.partners_name =
+						data?.data?.marital_status?.partners_name;
+					formValues.marital_status.partners_cpf = formatCPF(
+						data?.data?.marital_status?.partners_cpf
+					);
+					formValues.marital_status.partners_rg =
+						data?.data?.marital_status?.partners_rg;
+					formValues.marital_status.partners_address =
+						data?.data?.marital_status?.partners_address;
+				}
+
 				reset(formValues);
 				setDefaultValues(formValues);
 			},
 		}
 	);
+
 	const { register, handleSubmit, reset, watch } = useForm();
-
-	const [isDisabled] = useState(true);
-	const [value, setValue] = useState("me");
-
-	const [equityRegime, setEquityRegime] = useState<string>("");
-
-	const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<string>();
-	const [isMarried, setIsMarried] = useState<boolean>();
-
-	const [isStableUnion, setIsStableUnion] = useState<boolean>();
-
 	const maritalStatus = watch("marital_status.status");
-	console.log(isMarried, "isMarried");
-
-	useEffect(() => {
-		console.log(maritalStatus, "maritalStatus");
-
-		if (maritalStatus === "Casado(a)" && !isLoading) {
-			setIsMarried(true);
-			setIsStableUnion(false);
-		} else if (maritalStatus === "União Estável" && !isLoading) {
-			setIsStableUnion(true);
-			setIsMarried(false);
-		} else {
-			setIsStableUnion(false);
-			setIsMarried(false);
-		}
-	}, [isLoading, maritalStatus, watch]);
 
 	const onSubmitForm = async (data: any) => {
 		let request: UserDataPF;
 		let value: MaritalStatus;
-
-		console.log(data, "Dados que chegam na funcao");
 
 		// eslint-disable-next-line prefer-const
 		if (watch("marital_status.status") === "Casado(a)") {
@@ -154,7 +144,6 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			address: data.address,
 			marital_status: value,
 		};
-		console.log(request, "request");
 
 		await fetchEditInvestorPF(userInfos, request, token)
 			.then((res) => {
@@ -361,6 +350,9 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 													colorScheme={"cyan"}
 													{...register("marital_status.contractor")}
 													defaultValue={watch("marital_status.contractor")}
+													isChecked={
+														watch("marital_status.contractor") === "me"
+													}
 												>
 													<Text color={"#171923"} fontSize={"0.875rem"}>
 														Apenas você
@@ -373,6 +365,9 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 													colorScheme={"cyan"}
 													{...register("marital_status.contractor")}
 													defaultValue={watch("marital_status.contractor")}
+													isChecked={
+														watch("marital_status.contractor") === "spouse"
+													}
 												>
 													<Text color={"#171923"} fontSize={"0.875rem"}>
 														Apenas seu cônjuge{" "}
@@ -385,6 +380,9 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 													colorScheme={"cyan"}
 													{...register("marital_status.contractor")}
 													defaultValue={watch("marital_status.contractor")}
+													isChecked={
+														watch("marital_status.contractor") === "both"
+													}
 												>
 													<Text color={"#171923"} fontSize={"0.875rem"}>
 														Ambos{" "}
@@ -426,7 +424,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 										placeholderText={t("inputs.insertHere") as string}
 										label={t("editProfile.partnersName") as string}
 										type="text"
-										{...register("marital_status.partners_name")}
+										{...register("marital_status.spouses_name")}
 									/>
 									<Flex flexDir={"column"} my={"1.5rem"}>
 										<Text
@@ -441,7 +439,15 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 										</Text>
 										<RadioGroup onChange={setValue} mt={"0.75rem"}>
 											<Stack direction="column" gap={"0.75rem"}>
-												<Radio value="1" colorScheme={"cyan"}>
+												<Radio
+													value="me"
+													colorScheme={"cyan"}
+													{...register("marital_status.contractor")}
+													defaultValue={watch("marital_status.contractor")}
+													isChecked={
+														watch("marital_status.contractor") === "me"
+													}
+												>
 													<Text color={"#171923"} fontSize={"0.875rem"}>
 														Apenas você
 													</Text>
@@ -449,8 +455,13 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 												<Radio
 													color={"#171923"}
 													fontSize={"0.875rem"}
-													value="2"
+													value="spouse"
 													colorScheme={"cyan"}
+													{...register("marital_status.contractor")}
+													defaultValue={watch("marital_status.contractor")}
+													isChecked={
+														watch("marital_status.contractor") === "spouse"
+													}
 												>
 													<Text color={"#171923"} fontSize={"0.875rem"}>
 														Apenas seu cônjuge{" "}
@@ -459,8 +470,13 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 												<Radio
 													color={"#171923"}
 													fontSize={"0.875rem"}
-													value="3"
+													value="both"
 													colorScheme={"cyan"}
+													{...register("marital_status.contractor")}
+													defaultValue={watch("marital_status.contractor")}
+													isChecked={
+														watch("marital_status.contractor") === "both"
+													}
 												>
 													<Text color={"#171923"} fontSize={"0.875rem"}>
 														Ambos{" "}
@@ -474,38 +490,40 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 										label={t("editProfile.partnersSocialNumber") as string}
 										type="text"
 										maskType={"CPF"}
-										{...register("marital_status.partners_cpf")}
+										{...register("marital_status.spouses_cpf")}
 									/>
 									<InputComponent
 										placeholderText={t("inputs.insertHere") as string}
 										label={t("editProfile.partnersRG") as string}
 										type="text"
-										{...register("marital_status.partners_rg")}
+										{...register("marital_status.spouses_rg")}
 									/>
 									<InputComponent
 										placeholderText={t("inputs.insertHere") as string}
 										label={t("editProfile.partnersAddress") as string}
 										type="text"
-										{...register("marital_status.partners_address")}
+										{...register("marital_status.spouses_address")}
 									/>
 								</Collapse>
 							</Flex>
 						</Flex>
 
-						{props?.isCheckout && (
-							<Checkbox mt={"1.5rem"} mb={"2rem"}>
-								<Text fontSize={"0.875rem"} color={"#2D3748"}>
-									Declaro que estou em união estável.
-								</Text>
-							</Checkbox>
-						)}
-						{props?.isCheckout && (
-							<Checkbox mt={"1.5rem"} mb={"2rem"}>
-								<Text fontSize={"0.875rem"} color={"#2D3748"}>
-									Declaro que não estou em uma convivência de união estável.
-								</Text>
-							</Checkbox>
-						)}
+						{props?.isCheckout &&
+							watch("marital_status.status") === "União Estável" && (
+								<Checkbox mt={"1.5rem"} mb={"2rem"}>
+									<Text fontSize={"0.875rem"} color={"#2D3748"}>
+										Declaro que estou em união estável.
+									</Text>
+								</Checkbox>
+							)}
+						{props?.isCheckout &&
+							watch("marital_status.status") === "Casado(a)" && (
+								<Checkbox mt={"1.5rem"} mb={"2rem"}>
+									<Text fontSize={"0.875rem"} color={"#2D3748"}>
+										Declaro que não estou em uma convivência de união estável.
+									</Text>
+								</Checkbox>
+							)}
 						<Flex w="100%" justifyContent="flex-start">
 							<Button
 								w="13.375rem"
