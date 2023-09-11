@@ -272,7 +272,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 								</Flex>
 							</Flex>
 
-							{!investment?.investments?.length ? (
+							{investment?.investments?.length ? (
 								<MeusInvestimentosPage token={props?.token} />
 							) : (
 								<EmptyInvest
