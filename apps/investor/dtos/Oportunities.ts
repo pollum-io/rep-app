@@ -26,7 +26,7 @@ export interface IOpportunitiesCard {
 	enterprise_name?: string;
 	tags?: string[];
 	blueprints?: Array<{ file: string; name: string }>;
-	oppportunities_details?: {
+	opportunities_details?: {
 		constructed_area: number;
 		estimated_vgv: number;
 		total_units: number;

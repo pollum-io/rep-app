@@ -62,7 +62,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
-											{imovelDetails?.oppportunities_details?.constructed_area}{" "}
+											{imovelDetails?.opportunities_details?.constructed_area}{" "}
 											m²
 										</Text>
 									</Flex>
@@ -73,7 +73,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
-											{imovelDetails?.oppportunities_details?.total_units} lotes
+											{imovelDetails?.opportunities_details?.total_units} lotes
 										</Text>
 									</Flex>
 								</Flex>
@@ -83,7 +83,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
-											{imovelDetails?.oppportunities_details?.available_units}{" "}
+											{imovelDetails?.opportunities_details?.available_units}{" "}
 											lotes{" "}
 										</Text>
 									</Flex>
@@ -94,7 +94,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
-											R$ {imovelDetails?.oppportunities_details?.estimated_vgv}{" "}
+											R$ {imovelDetails?.opportunities_details?.estimated_vgv}{" "}
 										</Text>
 									</Flex>
 								</Flex>
@@ -105,7 +105,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
-											R$ {imovelDetails?.oppportunities_details?.average_price}{" "}
+											R$ {imovelDetails?.opportunities_details?.average_price}{" "}
 										</Text>
 									</Flex>
 								</Flex>
@@ -177,7 +177,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
 								unitPrice={imovelDetails?.min_investment}
-								oppportunitiesDetails={imovelDetails?.oppportunities_details}
+								opportunitiesDetails={imovelDetails?.opportunities_details}
 							/>{" "}
 						</Flex>
 					</Flex>

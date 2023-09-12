@@ -186,7 +186,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
 								unitPrice={imovelDetails?.min_investment}
-								oppportunitiesDetails={imovelDetails?.oppportunities_details}
+								opportunitiesDetails={imovelDetails?.opportunities_details}
 							/>{" "}
 						</Flex>
 					</Flex>
