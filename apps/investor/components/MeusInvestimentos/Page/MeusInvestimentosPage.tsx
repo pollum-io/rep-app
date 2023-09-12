@@ -108,10 +108,10 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 							<Text color={"#171923"} fontWeight={"600"} fontSize={"1.5rem"}>
 								Distribuição total de investimentos{" "}
 							</Text>
-							<MenuPieChartChart
+							{/* <MenuPieChartChart
 								title="Investimentos"
 								defaultSelection="Todos os imóveis"
-							/>
+							/> */}
 						</Flex>
 						<Flex>
 							<PieChartComponent data={investment?.investments} />
@@ -146,13 +146,13 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 								))}{" "}
 							</Flex>
 
-							{/* <Flex ml={"4rem"}>
-								<MenuPieChartChart
+							<Flex ml={"4rem"}>
+								{/* <MenuPieChartChart
 									title="Tipo"
 									titleColor="#171923"
 									defaultSelection="Todos os imóveis"
-								/>
-								<InputGroup>
+								/> */}
+								{/* <InputGroup>
 									<InputRightElement pointerEvents="none">
 										<BiSearch color="gray.300" />
 									</InputRightElement>
@@ -167,8 +167,8 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 										borderRadius={"0.375rem"}
 										placeholder="Pesquisar por nome"
 									/>{" "}
-								</InputGroup>
-							</Flex> */}
+								</InputGroup> */}
+							</Flex>
 						</Flex>
 						<Flex>
 							<ImoveisTable
