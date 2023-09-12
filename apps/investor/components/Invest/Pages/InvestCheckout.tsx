@@ -11,7 +11,8 @@ import { useOpportunities } from "../../../hooks/useOpportunities";
 import { fetchSignContract } from "../../../services/fetchSignContract";
 import { useUser } from "../../../hooks/useUser";
 import { Oval } from "react-loader-spinner";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { fetchGetInvestorPFById } from "../../../services";
 
 interface IInvestCheckout {
 	imovel?: IOpportunitiesCard;
@@ -22,7 +23,6 @@ interface IInvestCheckout {
 }
 
 export const InvestCheckout: React.FC<IInvestCheckout> = ({
-	isPerfilCompleted,
 	userDataPF,
 	userDataPJ,
 	imovel,
@@ -33,6 +33,17 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 	const { cotas, setCotas } = useOpportunities();
 	const { setInvestmentId, setDocLink } = useUser();
 
+	const { data, isLoading, isError, error } = useQuery(
+		"ïd",
+		async () => await fetchGetInvestorPFById(userDataPF?._id, token),
+		{
+			onError: (error) => {
+				console.error("Erro ao buscar investimento:", error);
+			},
+			refetchInterval: 3000, // Refetch a cada 5 segundos
+		}
+	);
+	console.log(data?.data);
 	const mutation = useMutation(
 		async (contractData: any) => {
 			try {
@@ -125,7 +136,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 						</Flex>
 					</Flex>
 				</Flex>
-				{isPerfilCompleted && (
+				{!isLoading && data?.data?.is_profile_filled === false && (
 					<Flex gap={"1.5rem"} flexDir={"column"}>
 						<Text
 							mt={"4rem"}
@@ -145,7 +156,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 						</Flex>
 					</Flex>
 				)}
-				{!isPerfilCompleted && (
+				{!isLoading && data?.data?.is_profile_filled === false && (
 					<Flex gap={"1.5rem"} flexDir={"column"}>
 						<Text
 							mt={"4rem"}
@@ -267,7 +278,10 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 							color="#007088"
 							_hover={{ bgColor: "#EDF2F7" }}
 							_active={{ bgColor: "#E2E8F0" }}
-							isDisabled={!isPerfilCompleted || !cotas}
+							isDisabled={
+								(!isLoading && data?.data?.is_profile_filled === false) ||
+								!cotas
+							}
 							onClick={() => handleSignContract()}
 						>
 							Confirmar e prosseguir

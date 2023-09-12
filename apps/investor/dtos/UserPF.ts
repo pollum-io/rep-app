@@ -1,6 +1,6 @@
 export interface UserDataPF {
 	address?: string;
-	birthday_date?: Date;
+	birthday_date?: Date | string;
 	city_of_birth?: string;
 	cpf?: string;
 	createdAt?: string;
@@ -19,16 +19,17 @@ export interface UserDataPF {
 }
 
 export type MaritalStatus = {
+	status?: string | null;
 	equity_regime?: string | null;
+	contractor?: string | null;
 	//se uniao estavel
+	spouses_address?: string | null;
+	spouses_cpf?: string | null;
+	spouses_name?: string | null;
+	spouses_rg?: string | null;
+	//se casado
 	partners_address?: string | null;
 	partners_cpf?: string | null;
 	partners_name?: string | null;
 	partners_rg?: string | null;
-	//se casado
-	spouse_name?: string | null;
-	spouse_cpf?: string | null;
-	spouse_rg?: string | null;
-	spouse_address?: string | null;
-	status?: string | null;
 };
