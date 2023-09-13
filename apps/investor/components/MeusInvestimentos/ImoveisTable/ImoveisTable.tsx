@@ -6,7 +6,7 @@ import { ImoveisTableHeader } from "./ImoveisTableHeader";
 import { InvestmentModel } from "../../../dtos/IInvestment";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { motion } from "framer-motion";
-import { fetchInvestmentByUser } from "../../../services/fetchInvestmentByUser";
+import { fetchInvestmentByUser } from "services";
 
 interface IImoveisTable {
 	data: InvestmentModel[];

@@ -48,6 +48,7 @@
 		"react-responsive-carousel": "^3.2.23",
 		"react-slick": "^0.29.0",
 		"recharts": "^2.4.1",
+		"services": "*",
 		"tsconfig": "*",
 		"ui": "*",
 		"uuid": "^9.0.0",

@@ -1,9 +1,8 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import { UserDataPF, UserDataPJ, UserLogin } from "ui";
-import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "../services";
 import { DashboardContainer } from "../container/Dashboard";
-
+import { fetchGetInvestorPFById } from "services";
 interface IDashboardPage {
 	token: string;
 	userDataPJ: UserDataPF;

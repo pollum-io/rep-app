@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
+import React, { FunctionComponent, useLayoutEffect } from "react";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { Flex, Text } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { useUser } from "../../hooks/useUser";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
-import { motion } from "framer-motion"; // Import motion from framer-motion
+import { motion } from "framer-motion";
 import { InvestmentModel } from "../../dtos/IInvestment";
 import { FaturasDetails } from "../../components/Faturas/FaturasDetails";
 import { ResumoFaturasComponent } from "../../components/Faturas/ResumoFaturas";

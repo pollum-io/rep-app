@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
+import React, { FunctionComponent, useLayoutEffect } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { ImovelDetail } from "../../components/Imovel/imovel";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";

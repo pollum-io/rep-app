@@ -4,7 +4,7 @@ import { FunctionComponent, useState } from "react";
 import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
 import { useToasty } from "../../hooks/useToasty";
-import { fetchSignIn } from "../../services";
+import { fetchSignIn } from "services";
 
 export const Login: FunctionComponent<ButtonProps> = () => {
 	const { push } = useRouter();

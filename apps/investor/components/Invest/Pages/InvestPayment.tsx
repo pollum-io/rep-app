@@ -6,15 +6,17 @@ import { formatCurrency } from "ui/utils/BRCurrency";
 import { useOpportunities } from "../../../hooks/useOpportunities";
 import { ICompaniesDetails } from "../../Companies/CompaniesCard/dto";
 import { formatCNPJ } from "../../../utils/formatCnpj";
-import { fetchContributionById } from "../../../services/fetchContributionById";
 import { useUser } from "../../../hooks/useUser";
 import Base64Image from "../qrcode";
 import { formattedDateWithYour } from "../../../utils/formatDate";
-import { fetchGetInvestmentById } from "../../../services/fetchGetInvestmentById";
 import { useToasty } from "../../../hooks/useToasty";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { fetchForcePayment } from "../../../services/fetchForcePayment";
+import {
+	fetchContributionById,
+	fetchForcePayment,
+	fetchGetInvestmentById,
+} from "services";
 
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
@@ -120,11 +122,7 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		}
 	);
 
-	const {
-		data: forcePayment,
-		isError: isForcePaymentError,
-		isLoading: isForcePaymentLoading,
-	} = useQuery(
+	const { data: forcePayment } = useQuery(
 		["forcePayment", isCheckout],
 		async () => {
 			try {

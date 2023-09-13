@@ -9,7 +9,7 @@ import { SelectComponent } from "../../Select/SelectComponent";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
 import { brasilStates } from "../../Register/states";
 import { UserDataPJ } from "../../../dtos/UserPJ";
-import { fetchEditInvestorPJ } from "../../../services/fetchEditInvestorPJ";
+import { fetchEditInvestorPJ } from "services";
 
 interface IChangePassword {
 	data?: UserDataPJ;

@@ -1,12 +1,11 @@
 import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { Edit_ProfileContainer } from "../../container";
-import { fetchGetInvestorPFById } from "../../services/fetchGetInvestorPFById";
-import { fetchGetInvestorPJById } from "../../services/fetchGetInvestorPJById";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { UserLogin } from "../../dtos/IUserLogin";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
+import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
 
 interface IEditProfile {
 	user: UserInfo;

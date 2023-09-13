@@ -1,10 +1,10 @@
 import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { CompaniesContainer } from "../../container";
-import { fetchEnterprise } from "../../services/fetchEnterprise";
 import { UserLogin } from "../../dtos/IUserLogin";
 import { ICompanieData } from "../../dtos/ICompaniesData";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
+import { fetchEnterprise } from "services";
 
 interface ICompanies {
 	companies: ICompanieData[];

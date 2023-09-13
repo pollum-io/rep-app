@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { Change_PasswordContainer } from "../container";
-import { fetchCodeVerify } from "../services/fetchCodeVerify";
+import { fetchCodeVerify } from "services";
 
 interface IChangePasswordData {
 	code?: string;

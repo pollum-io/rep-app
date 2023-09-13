@@ -1,21 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-	Button,
-	Flex,
-	Input,
-	InputGroup,
-	InputRightElement,
-	Text,
-} from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { BiSearch } from "react-icons/bi";
-import { MenuPieChartChart } from "../MenuPieChart";
 import { Maps } from "../../Maps";
 import { InvestmentModel } from "../../../dtos/IInvestment";
 import ImoveisTable from "../ImoveisTable/ImoveisTable";
 import { useQuery } from "react-query";
-import { fetchInvestmentByUser } from "../../../services/fetchInvestmentByUser";
+import { fetchInvestmentByUser } from "services";
 
 const PieChartComponent = dynamic(
 	async () => {

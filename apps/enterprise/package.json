@@ -12,6 +12,7 @@
 	"dependencies": {
 		"eslint-config-custom": "*",
 		"tsconfig": "*",
-		"ui": "*"
+		"ui": "*",
+		"services": "*"
 	}
 }

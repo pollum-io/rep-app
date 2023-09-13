@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useUser } from "../../../hooks/useUser";
 import { useToasty } from "../../../hooks/useToasty";
-import { fetchEditInvestorPF, fetchGetInvestorPFById } from "../../../services";
 import { InputComponent } from "../../Inputs/DeafultInput/InputComponent";
 import SelectComponent from "../../Select/SelectComponent";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
@@ -24,6 +23,7 @@ import { estadosRegimesPatrimoniais } from "../mockedData/estadosRegimesPatrimon
 import { MaritalStatus, UserDataPF } from "../../../dtos/UserPF";
 import { useQuery } from "react-query";
 import { Oval } from "react-loader-spinner";
+import { fetchEditInvestorPF, fetchGetInvestorPFById } from "services";
 
 interface IPersonalDataPF {
 	userDataPF?: UserDataPF;

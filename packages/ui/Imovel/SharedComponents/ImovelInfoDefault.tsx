@@ -3,8 +3,8 @@ import { useMemo, useState } from "react";
 import { FiMapPin } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
-import { fetchEnterpriseById } from "../../../../apps/investor/services/fetchEnterpriseById";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
+import { fetchEnterpriseById } from "services";
 
 interface IImovelInfoDefault {
 	imovelDetails?: IOpportunitiesCard;

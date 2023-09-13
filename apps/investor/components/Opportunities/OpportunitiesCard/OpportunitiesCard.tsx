@@ -3,16 +3,15 @@ import { Button, Flex, Img, Text, SimpleGrid } from "@chakra-ui/react";
 import { IOpportunitiesCard } from "./dto";
 import { useRouter } from "next/router";
 import { FiMapPin } from "react-icons/fi";
-import { fetchOpportunity } from "../../../services/fetchOpportunity";
 import { useQuery as query } from "react-query";
 import { formatDate } from "../../../utils/formatDate";
-import { fetchOpportunitiesByCompany } from "../../../services/fetchOpportunitiesByCompany";
 import { Oval } from "react-loader-spinner";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
 import { useRegisterSteps } from "../../../hooks";
 import { useOpportunities } from "../../../hooks/useOpportunities";
+import { fetchOpportunitiesByCompany, fetchOpportunity } from "services";
 
 interface IOpportunitiesCompaniesCard {
 	id?: string;

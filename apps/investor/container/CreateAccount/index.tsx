@@ -10,8 +10,8 @@ import {
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { fetchRegisterWhitelisted } from "../../services/fetchRegisterWhitelisted";
-import PersistentFramework from "../../utils/persistent";
+import { fetchRegisterWhitelisted } from "services";
+import { PersistentFramework } from "ui";
 
 export const CreateAccountContainer: FunctionComponent = () => {
 	const [emailPage, setEmailPage] = useState<boolean>(true);
