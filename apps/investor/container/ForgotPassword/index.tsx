@@ -10,7 +10,7 @@ import {
 import { useRouter } from "next/router";
 import React, { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { fetchEmailVerify } from "../../services/fetchEmailVerify";
+import { fetchEmailVerify } from "services";
 
 export const Recover_PasswordContainer: FunctionComponent = () => {
 	const [emailPage, setEmailPage] = useState<boolean>(true);

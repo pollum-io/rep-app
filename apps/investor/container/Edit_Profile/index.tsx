@@ -1,5 +1,5 @@
 import { Button, Flex } from "@chakra-ui/react";
-import { FunctionComponent, useEffect, useLayoutEffect, useState } from "react";
+import { FunctionComponent, useLayoutEffect, useState } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { useTranslation } from "react-i18next";
 import { ChangePassword } from "../../components/EditProfile/Pages/ChangePassword";
@@ -8,7 +8,7 @@ import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { useUser } from "../../hooks/useUser";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
-import { motion } from "framer-motion"; // Import motion from framer-motion
+import { motion } from "framer-motion";
 
 interface IEditProfile {
 	userDataPF?: UserDataPF;

@@ -1,7 +1,6 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
-import { fetchGetInvestorPFById } from "../services/fetchGetInvestorPFById";
-import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
-import PersistentFramework from "../utils/persistent";
+import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
+import { PersistentFramework } from "ui";
 interface IRegister {
 	setUserInfos: React.Dispatch<React.SetStateAction<string>>;
 	getUserInfos: (id: string, token?: string) => Promise<void>;

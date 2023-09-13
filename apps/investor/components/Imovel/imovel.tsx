@@ -11,7 +11,6 @@ import {
 } from "ui";
 import {
 	Collections,
-	ImovelInfoDefault,
 	MoreAbout,
 	OportunitiesNavBar,
 } from "ui/Imovel/SharedComponents";

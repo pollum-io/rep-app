@@ -8,11 +8,10 @@ import { UserDataPF } from "../../../dtos/UserPF";
 import { UserDataPJ } from "../../../dtos/UserPJ";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 import { useOpportunities } from "../../../hooks/useOpportunities";
-import { fetchSignContract } from "../../../services/fetchSignContract";
 import { useUser } from "../../../hooks/useUser";
 import { Oval } from "react-loader-spinner";
 import { useMutation, useQuery } from "react-query";
-import { fetchGetInvestorPFById } from "../../../services";
+import { fetchGetInvestorPFById, fetchSignContract } from "services";
 
 interface IInvestCheckout {
 	imovel?: IOpportunitiesCard;

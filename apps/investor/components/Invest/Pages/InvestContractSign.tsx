@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { Oval } from "react-loader-spinner";
 import { useRegisterSteps } from "../../../hooks";
@@ -6,9 +6,9 @@ import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { useOpportunities } from "../../../hooks/useOpportunities";
 import { useUser } from "../../../hooks/useUser";
-import { fetchGetInvestmentById } from "../../../services/fetchGetInvestmentById";
 import { FiCheckCircle } from "react-icons/fi";
 import { useQuery } from "react-query";
+import { fetchGetInvestmentById } from "services";
 
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
@@ -41,11 +41,7 @@ export const InvestContractSign: React.FC<IContractSign> = ({
 		};
 	}, [docLink]);
 
-	const {
-		data: investment,
-		isError,
-		isLoading,
-	} = useQuery(
+	const { data: investment, isLoading } = useQuery(
 		["investment", investmentId],
 		async () => {
 			try {

@@ -1,5 +1,5 @@
 {
-	"name": "ui",
+	"name": "services",
 	"version": "0.0.0",
 	"main": "./index.tsx",
 	"types": "./index.tsx",
@@ -7,9 +7,6 @@
 	"scripts": {
 		"lint": "eslint \"**/*.ts*\"",
 		"generate:component": "turbo gen react-component"
-	},
-	"dependencies": {
-		"services": "*"
 	},
 	"devDependencies": {
 		"@types/react": "^18.2.0",

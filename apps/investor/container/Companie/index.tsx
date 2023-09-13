@@ -1,10 +1,10 @@
-import { FunctionComponent, useEffect, useLayoutEffect } from "react";
+import { FunctionComponent, useLayoutEffect } from "react";
 import { CompaniePage } from "../../components/CompaniePage";
 import { ICompaniesDetails } from "../../components/Companies/CompaniesCard/dto";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { useUser } from "../../hooks/useUser";
 import { DefaultTemplate } from "../DefaultTemplate";
-import { motion } from "framer-motion"; // Import motion from framer-motion
+import { motion } from "framer-motion";
 
 interface ICompanieProps {
 	data: ICompaniesDetails;

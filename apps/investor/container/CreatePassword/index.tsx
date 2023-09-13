@@ -14,7 +14,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
 import { useToasty } from "../../hooks/useToasty";
-import { fetchCreatePassword } from "../../services/fetchCreatePassword";
+import { fetchCreatePassword } from "services";
 
 interface ICreatPasswordData {
 	code?: string;

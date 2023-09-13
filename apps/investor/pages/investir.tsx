@@ -2,16 +2,16 @@ import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { InvestContainer } from "../container";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
-import { fetchImovelDetail } from "../services/fetchImovelDetail";
 import { UserLogin } from "../dtos/IUserLogin";
+import { UserDataPF } from "../dtos/UserPF";
+import { UserDataPJ } from "../dtos/UserPJ";
+import { ICompaniesDetails } from "../components/Companies/CompaniesCard/dto";
 import {
 	fetchEnterpriseById,
 	fetchGetInvestorPFById,
 	fetchGetInvestorPJById,
-} from "../services";
-import { UserDataPF } from "../dtos/UserPF";
-import { UserDataPJ } from "../dtos/UserPJ";
-import { ICompaniesDetails } from "../components/Companies/CompaniesCard/dto";
+	fetchImovelDetail,
+} from "services";
 
 interface IInvest {
 	token: string;

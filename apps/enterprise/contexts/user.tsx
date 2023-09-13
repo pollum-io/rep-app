@@ -1,6 +1,5 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
-import { fetchGetInvestorPFById } from "../services/fetchGetInvestorPFById";
-import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
+import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
 import { PersistentFramework } from "ui";
 
 interface IRegister {

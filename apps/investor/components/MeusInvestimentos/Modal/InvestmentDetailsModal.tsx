@@ -14,7 +14,7 @@ import { GrFormClose } from "react-icons/gr";
 import { CronogramaAportesComponent } from "./CronogramaAportesComponent";
 import { ContratoComponent } from "./ContratoComponent";
 import { PrevRetornoComponent } from "ui";
-import { fetchGetInvestmentDetailByUser } from "../../../services/fetchGetInvestmentDetailByUser";
+import { fetchGetInvestmentDetailByUser } from "services";
 
 export const InvestmentDetailsModal: React.FC<IEmpreendimentoData> = (
 	props

@@ -1,5 +1,5 @@
 import { Flex, Text, Button, Img } from "@chakra-ui/react";
-import { FunctionComponent, useEffect, useMemo } from "react";
+import { FunctionComponent, useMemo } from "react";
 import { IEmpreendimentoData } from "../../../dtos/IEmpreendimentoMeuInvestimento";
 import {
 	formatDateOnlyDayMonthYear,

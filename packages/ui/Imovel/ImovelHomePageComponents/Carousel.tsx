@@ -2,7 +2,7 @@ import { Box, IconButton, useBreakpointValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import Slider from "react-slick";
-import { api } from "../../../../apps/investor/services/api";
+import { api } from "services";
 
 const settings = {
 	dots: true,

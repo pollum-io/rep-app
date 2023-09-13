@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { GoogleMap, MarkerF, useLoadScript } from "@react-google-maps/api";
-import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { InvestmentModel } from "../../dtos/IInvestment";
 interface IMaps {
