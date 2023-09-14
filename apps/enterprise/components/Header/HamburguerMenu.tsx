@@ -38,22 +38,29 @@ export const HamburguerMenu: React.FC = () => {
 					alignItems={"center"}
 					gap="3"
 					w={"max"}
-					border="0.0625rem solid #E2E8F0"
+					border="0.0625rem solid #B1D8DF"
 					rounded={"1rem"}
 				>
 					{!isInvestorPerfilCompleted && <Img src="/icons/notification.svg" />}
 					{username ? (
-						<Text fontSize={"sm"} fontFamily="Poppins" color={"#4A5568"}>
+						<Text fontSize={"sm"} fontFamily="Poppins" color={"#FFF"}>
 							{t("portfolio.hello", {
 								Name: username.slice(0, 8),
 							})}
 						</Text>
 					) : (
-						<Text fontSize={"sm"} fontFamily="Poppins" color={"#4A5568"}>
+						<Text fontSize={"sm"} fontFamily="Poppins" color={"#FFF"}>
 							Menu
 						</Text>
 					)}
-					<Icon color="black" as={FiMenu} />
+					<Flex
+						bgColor={"#E2E8F0"}
+						borderRadius={"0.8em"}
+						h={"max"}
+						p={"0.1rem"}
+					>
+						<Img color="black" src="/images/avatar.svg" w={"5"} h={"4"} />
+					</Flex>
 				</Flex>
 			</MenuButton>
 			<MenuList

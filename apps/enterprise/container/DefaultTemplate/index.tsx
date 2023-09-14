@@ -13,7 +13,7 @@ export const DefaultTemplate: FunctionComponent<BaseLayoutProps> = ({
 	return (
 		<Flex
 			id="default-template"
-			w="100vw"
+			w="100%"
 			h="100%"
 			minHeight={"100vh"}
 			flexDir={"column"}
