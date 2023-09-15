@@ -3,14 +3,17 @@ import { Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "../../utils/BRCurrency";
 
 interface IComponentProps {
-	data?: any; //TODO
+	data?: any; //
+	imovelDetails?: any;
 	isMyInvest: boolean;
 }
 
 export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 	data,
 	isMyInvest,
+	imovelDetails,
 }) => {
+	console.log(imovelDetails);
 	return (
 		<Flex mb={"2rem"} flexDir={"column"}>
 			{isMyInvest && (
@@ -27,7 +30,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 				<Flex flexDir={"column"} gap={"0.25rem"}>
 					<Flex gap={"0.5rem"}>
 						<Text fontSize={"0.875rem"} color={"#007D99"} fontWeight={"500"}>
-							Valor estimado
+							{isMyInvest ? "Valor estimado" : "Previsão de retorno"}{" "}
 						</Text>
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
@@ -36,7 +39,10 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 							+ {formatCurrency(data?.data?.estimated_value)}
 						</Text>
 						<Text fontSize={"1.125rem"} fontWeight={"400"} color={"#38A169"}>
-							%{data?.data?.expected_rentability?.toFixed(2)}
+							%
+							{imovelDetails
+								? imovelDetails?.expected_rentability?.toFixed(2)
+								: data?.data?.expected_rentability?.toFixed(2)}
 						</Text>
 					</Flex>
 				</Flex>

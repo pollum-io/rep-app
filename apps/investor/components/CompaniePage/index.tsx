@@ -5,12 +5,12 @@ import {
 	ICompaniesDetails,
 	ICompaniesTeam,
 } from "../Companies/CompaniesCard/dto";
-import { OpportunitiesCards } from "../Opportunities/OpportunitiesCard/OpportunitiesCard";
 import {
 	CompanieContact,
 	CompanieDetails,
 	CompanieInfoInProgress,
 	CompanieMembers,
+	OpportunitiesCards,
 } from "ui";
 
 interface ICompanie {

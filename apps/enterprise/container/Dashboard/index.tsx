@@ -1,4 +1,4 @@
-import { Login } from "../../components/Pages";
+import { Login } from "../../components/Pages/Login";
 import { UserDataPF, UserDataPJ } from "ui";
 import { FunctionComponent, useEffect, useState } from "react";
 import {

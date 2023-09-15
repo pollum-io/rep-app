@@ -4,13 +4,13 @@ import { IOpportunitiesCard } from "./dto";
 import { useRouter } from "next/router";
 import { FiMapPin } from "react-icons/fi";
 import { useQuery as query } from "react-query";
-import { formatDate } from "../../../utils/formatDate";
+import { formatDate } from "../../../../apps/investor/utils/formatDate";
 import { Oval } from "react-loader-spinner";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
-import { useRegisterSteps } from "../../../hooks";
-import { useOpportunities } from "../../../hooks/useOpportunities";
+import { useRegisterSteps } from "../../../../apps/investor/hooks";
+import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
 import { fetchOpportunitiesByCompany, fetchOpportunity } from "services";
 
 interface IOpportunitiesCompaniesCard {
@@ -20,17 +20,19 @@ interface IOpportunitiesCompaniesCard {
 	token?: string;
 	isPortfolio?: boolean;
 	host?: string;
+	isEnterprise?: boolean;
+	setFirstStep?: any;
+	setSecondStep?: any;
+	setCotas?: any;
 }
 
 export const OpportunitiesCard: FunctionComponent<
 	IOpportunitiesCompaniesCard
-> = ({ id }) => {
+> = ({ id, isEnterprise, setFirstStep, setSecondStep, setCotas }) => {
 	const currentTime = new Date();
 	const router = useRouter();
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
-	const { setFirstStep, setSecondStep } = useRegisterSteps();
-	const { setCotas } = useOpportunities();
 
 	const { data: cardsInfo } = query(
 		["oportunity", router.query],
@@ -75,7 +77,7 @@ export const OpportunitiesCard: FunctionComponent<
 					<Flex
 						key={cards._id}
 						w="19.125rem"
-						h="24.5625rem"
+						h={isEnterprise ? "max" : "24.5625rem"}
 						background="#FFFFFF"
 						boxShadow="0rem 0rem 0rem 0.0625rem rgba(0, 0, 0, 0.05)"
 						borderRadius="0.75rem"
@@ -85,6 +87,7 @@ export const OpportunitiesCard: FunctionComponent<
 							boxShadow:
 								"0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)",
 						}}
+						mr={isEnterprise ? "1.5rem" : "unset"}
 						transition="150ms"
 						onClick={() => {
 							router.push({
@@ -190,28 +193,9 @@ export const OpportunitiesCard: FunctionComponent<
 									</Text>
 								</Flex>
 							</Flex>
-							{cards.isPortfolio ? (
-								<Button
-									justifyContent="center"
-									mt="1rem"
-									alignItems="center"
-									w="16.125rem"
-									h="1.5rem"
-									border="0.0625rem solid #007D99"
-									borderRadius="0.375rem"
-									fontFamily="Poppins"
-									fontWeight="500"
-									fontSize="0.75rem"
-									lineHeight="1rem"
-									color="#007D99"
-									_hover={{ bgColor: "#EDF2F7" }}
-									opacity={"1"}
-									cursor={"pointer"}
-								>
-									{t("opportunities.card.workProgress")}
-								</Button>
-							) : (
-								<Flex flexDirection="column" gap="1rem" mt="1.5rem">
+
+							<Flex flexDirection="column" gap="1rem" mt="1.5rem">
+								{!isEnterprise ? (
 									<Flex
 										alignItems="center"
 										justifyContent="space-between"
@@ -260,6 +244,115 @@ export const OpportunitiesCard: FunctionComponent<
 											</Text>
 										</Flex>
 									</Flex>
+								) : (
+									<Flex flexDir={"column"} gap={"0.75rem"}>
+										<Flex
+											alignItems="center"
+											justifyContent="space-between"
+											w="100%"
+										>
+											<Flex flexDirection="column" flex={"1.6"}>
+												<Text
+													fontSize="0.75rem"
+													lineHeight="1rem"
+													color="#718096"
+												>
+													Total recebido{" "}
+												</Text>
+												<Flex gap="0.25rem" fontFamily="Poppins">
+													<Text
+														fontSize="0.75rem"
+														lineHeight="1rem"
+														color="#718096"
+													>
+														R$
+													</Text>
+													<Text
+														mt="0.0625rem"
+														fontSize="1rem"
+														lineHeight="1.5rem"
+														color="#171923"
+													>
+														{cards.min_investment}
+													</Text>
+												</Flex>
+											</Flex>
+											<Flex
+												flexDirection="column"
+												flex={"1"}
+												fontFamily="Poppins"
+											>
+												<Text
+													fontSize="0.75rem"
+													lineHeight="1rem"
+													color="#718096"
+												>
+													Cotistas{" "}
+												</Text>
+												<Text
+													fontSize="1rem"
+													lineHeight="1.5rem"
+													color="#171923"
+												>
+													02
+												</Text>
+											</Flex>
+										</Flex>
+										<Flex
+											alignItems="center"
+											justifyContent="space-between"
+											w="100%"
+										>
+											<Flex flexDirection="column" flex={"1.6"}>
+												<Text
+													fontSize="0.75rem"
+													lineHeight="1rem"
+													color="#718096"
+												>
+													Previsão de aportes{" "}
+												</Text>
+												<Flex gap="0.25rem" fontFamily="Poppins">
+													<Text
+														fontSize="0.75rem"
+														lineHeight="1rem"
+														color="#718096"
+													>
+														R$
+													</Text>
+													<Text
+														mt="0.0625rem"
+														fontSize="1rem"
+														lineHeight="1.5rem"
+														color="#171923"
+													>
+														1.000.000,00{" "}
+													</Text>
+												</Flex>
+											</Flex>
+											<Flex
+												flexDirection="column"
+												flex={"1"}
+												fontFamily="Poppins"
+											>
+												<Text
+													fontSize="0.75rem"
+													lineHeight="1rem"
+													color="#718096"
+												>
+													Ass. pendentes
+												</Text>
+												<Text
+													fontSize="1rem"
+													lineHeight="1.5rem"
+													color="#171923"
+												>
+													02
+												</Text>
+											</Flex>
+										</Flex>
+									</Flex>
+								)}
+								{!isEnterprise ? (
 									<Flex
 										w="max"
 										background="#E4F2F3"
@@ -279,8 +372,28 @@ export const OpportunitiesCard: FunctionComponent<
 											})}
 										</Text>
 									</Flex>
-								</Flex>
-							)}
+								) : (
+									<Flex
+										w="100%"
+										background="#E4F2F3"
+										borderRadius="2.6875rem"
+										py="0.125rem"
+										px={language === "pt-br" ? "1" : "3"}
+									>
+										<Text
+											fontFamily="Poppins"
+											fontWeight="500"
+											w={"100%"}
+											fontSize="0.75rem"
+											lineHeight="1rem"
+											textAlign={"center"}
+											color="#00576B"
+										>
+											70% da meta alcançada
+										</Text>
+									</Flex>
+								)}
+							</Flex>
 						</Flex>
 					</Flex>
 				))
@@ -312,7 +425,17 @@ export const OpportunitiesCard: FunctionComponent<
 
 export const OpportunitiesCards: FunctionComponent<
 	IOpportunitiesCompaniesCard
-> = ({ id, investorId, enterpriseData, isPortfolio, host, token }) => {
+> = ({
+	id,
+	investorId,
+	enterpriseData,
+	isPortfolio,
+	host,
+	token,
+	setFirstStep,
+	setSecondStep,
+	setCotas,
+}) => {
 	return (
 		<SimpleGrid
 			columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
@@ -327,6 +450,9 @@ export const OpportunitiesCards: FunctionComponent<
 				isPortfolio={isPortfolio}
 				host={host}
 				token={token}
+				setFirstStep={setFirstStep}
+				setCotas={setCotas}
+				setSecondStep={setSecondStep}
 			/>
 		</SimpleGrid>
 	);

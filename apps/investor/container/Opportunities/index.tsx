@@ -8,7 +8,6 @@ import {
 import { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { MenuInputs } from "../../components";
-import { OpportunitiesCards } from "../../components";
 import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
 import { CreateAccountModal } from "../../components/CreateAccount/CreateAccountModal";
@@ -16,6 +15,9 @@ import { UserDataPJ } from "../../dtos/UserPJ";
 import { UserDataPF } from "../../dtos/UserPF";
 import PersistentFramework from "../../utils/persistent";
 import { motion } from "framer-motion"; // Import motion from framer-motion
+import { OpportunitiesCards } from "ui";
+import { useOpportunities } from "../../hooks/useOpportunities";
+import { useRegisterSteps } from "../../hooks";
 
 interface UserData {
 	token: string;
@@ -32,6 +34,8 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 	const [bannerRes] = useMediaQuery("(max-width: 1110px)");
 	const { t } = useTranslation();
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
+	const { setCotas } = useOpportunities();
 
 	useLayoutEffect(() => {
 		getUserInfos(
@@ -255,6 +259,9 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 							<OpportunitiesCards
 								investorId={props?.investor_pf}
 								token={props.token}
+								setFirstStep={setFirstStep}
+								setCotas={setCotas}
+								setSecondStep={setSecondStep}
 							/>
 						</Flex>
 					</Flex>

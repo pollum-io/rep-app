@@ -8,24 +8,24 @@ export const HeaderLinks: React.FC = () => {
 	const links = [
 		{
 			id: 1,
-			name: t("companieDetails.opportunities"),
-			url: "/oportunidades",
+			name: "Visão geral",
+			url: "/painel-de-controle",
 		},
 		{
 			id: 2,
-			name: "Meus investimentos",
-			url: "/meus-investimentos",
+			name: "Empreendimentos",
+			url: "/empreendimentos",
 		},
 		{
 			id: 3,
-			name: t("header.companies"),
+			name: "Repasses financeiros",
 			url: "/empresas",
 		},
-		// {
-		// 	id: 4,
-		// 	name: t("companies.card.learnMore"),
-		// 	url: "/saibamais",
-		// },
+		{
+			id: 4,
+			name: "Meu perfil",
+			url: "/saibamais",
+		},
 	];
 
 	const { pathname, push } = useRouter();
@@ -37,17 +37,15 @@ export const HeaderLinks: React.FC = () => {
 					key={item.id}
 					w="max"
 					justifyContent="center"
-					transition="0.14s"
+					transition="0.4s"
 					borderBottom={
-						pathname === item.url
-							? "2px solid #007D99"
-							: "2px solid transparent"
+						pathname === item.url ? "2px solid #FFF" : "2px solid transparent"
 					}
 					mt="2"
 					pb="2"
-					color={pathname === item.url ? "#B1D8DF" : "#B1D8DF"}
+					color={pathname === item.url ? "#FFF" : "#B1D8DF"}
 					_hover={{
-						color: "#007D99",
+						opacity: 0.7,
 						cursor: "pointer",
 					}}
 					onClick={() => push(item.url)}

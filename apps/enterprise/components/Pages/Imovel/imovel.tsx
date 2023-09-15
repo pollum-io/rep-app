@@ -14,8 +14,8 @@ import {
 	OportunitiesNavBar,
 } from "ui/Imovel/SharedComponents";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
-import { useOpportunities } from "../../hooks/useOpportunities";
-import { useRegisterSteps } from "../../hooks";
+import { useOpportunities } from "../../../hooks/useOpportunities";
+import { useRegisterSteps } from "../../../hooks";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;

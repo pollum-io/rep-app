@@ -10,8 +10,8 @@ export const Footer: React.FC = () => {
 			h="max"
 			borderTopRadius="2xl"
 			bgColor={"#1789A3"}
-			px="4rem"
-			py="2rem"
+			px="2.8125rem"
+			py="1rem"
 			gap="10rem"
 			color="#ffffff"
 			flex={"1"}

@@ -1,8 +1,6 @@
 import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
 import { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities";
-import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import { formatDate } from "../../../../apps/investor/utils/formatDate";
 import { Maps } from "../../../../apps/investor/components/Maps/index";
 import { Carousel } from "../ImovelHomePageComponents";
@@ -13,15 +11,25 @@ import {
 	PriceCard,
 	TimeCard,
 } from "../SharedComponents";
+import { UserLogin } from "../../GlobalDtos";
+import { IOpportunitiesCard } from "../dtos/Oportunities";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	usersId: UserInfo;
+	usersId: UserLogin;
+	setFirstStep: any;
+	setSecondStep: any;
+	setCotas: any;
+	cotas: any;
 }
 
 export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
 	usersId,
+	setFirstStep,
+	setSecondStep,
+	setCotas,
+	cotas,
 }) => {
 	const { t } = useTranslation();
 
@@ -198,7 +206,11 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 								investor_pf={usersId?.investor_pf}
 								investor_pj={usersId?.investor_pj}
 								unitPrice={imovelDetails?.min_investment}
-								oppportunitiesDetails={imovelDetails?.oppportunities_details}
+								oppportunitiesDetails={imovelDetails?.opportunities_details}
+								cotas={cotas}
+								setCotas={setCotas}
+								setFirstStep={setFirstStep}
+								setSecondStep={setSecondStep}
 							/>{" "}
 						</Flex>
 					</Flex>

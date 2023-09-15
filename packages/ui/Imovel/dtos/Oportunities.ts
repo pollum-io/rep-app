@@ -26,7 +26,7 @@ export interface IOpportunitiesCard {
 	tags?: string[];
 	geolocation?: { lat: number; lng: number };
 	blueprints?: Array<{ file: string; name: string }>;
-	oppportunities_details?: {
+	opportunities_details?: {
 		constructed_area: number;
 		estimated_vgv: number;
 		total_units: number;
