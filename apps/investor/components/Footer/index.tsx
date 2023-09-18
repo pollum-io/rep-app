@@ -14,7 +14,8 @@ export const Footer: React.FC = () => {
 			py="3rem"
 			gap="10rem"
 			color="#ffffff"
-			flex={"1"}
+			position={"absolute"}
+			bottom={"0"}
 		>
 			<Flex flexDir={"column"} gap="0.4375rem">
 				<Img src={"/images/livnlogotext.png"} w="5.2763rem" h="1.5rem" />

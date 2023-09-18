@@ -68,12 +68,7 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 
 	return (
 		<DefaultTemplate>
-			<Flex
-				flexDirection="column"
-				bgColor="#ffffff"
-				mb="11.0625rem"
-				justifyContent="center"
-			>
+			<Flex flexDirection="column" bgColor="#ffffff" justifyContent="center">
 				<CreateAccountModal
 					isOpen={isOpen}
 					onClose={onClose}

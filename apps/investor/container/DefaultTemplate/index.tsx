@@ -17,11 +17,13 @@ export const DefaultTemplate: FunctionComponent<BaseLayoutProps> = ({
 			h="max"
 			minHeight={"100vh"}
 			flexDir={"column"}
-			bgColor="#FFFFFF"
+			bgColor="#ffffff"
 		>
 			<Header />
 			{children}
-			<Footer />
+			<Flex mt={"20.0625rem"}>
+				<Footer />
+			</Flex>
 		</Flex>
 	);
 };
