@@ -17,7 +17,7 @@ interface IEnterpriseDetailsCard {
 	setSecondStep: any;
 	setCotas: any;
 	cotas: any;
-	oppportunitiesDetails?: {
+	opportunitiesDetails?: {
 		constructed_area: number;
 		estimated_vgv: number;
 		total_units: number;
@@ -31,7 +31,7 @@ export const EnterpriseDetailsCard: React.FC<IEnterpriseDetailsCard> = (
 ) => {
 	const {
 		url,
-		oppportunitiesDetails,
+		opportunitiesDetails,
 		investor_pf,
 		unitPrice,
 		setFirstStep,
@@ -221,8 +221,8 @@ export const EnterpriseDetailsCard: React.FC<IEnterpriseDetailsCard> = (
 						{t("opportunitieDetails.shares")}
 					</Text>
 					<Text fontSize="md" fontWeight="400">
-						{(oppportunitiesDetails?.total_units ?? 0) -
-							(oppportunitiesDetails?.available_units ?? 0)}
+						{(opportunitiesDetails?.total_units ?? 0) -
+							(opportunitiesDetails?.available_units ?? 0)}
 					</Text>
 				</Flex>
 				<Flex justifyContent={"space-between"}>
@@ -230,7 +230,7 @@ export const EnterpriseDetailsCard: React.FC<IEnterpriseDetailsCard> = (
 						{t("opportunitieDetails.available")}
 					</Text>
 					<Text fontSize={"md"} fontWeight="400">
-						{oppportunitiesDetails?.available_units}
+						{opportunitiesDetails?.available_units}
 					</Text>
 				</Flex>
 			</Flex>

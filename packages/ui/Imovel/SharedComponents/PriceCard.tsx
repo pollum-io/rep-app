@@ -17,7 +17,7 @@ interface IPriceCard {
 	setSecondStep: any;
 	setCotas: any;
 	cotas: any;
-	oppportunitiesDetails?: {
+	opportunitiesDetails?: {
 		constructed_area: number;
 		estimated_vgv: number;
 		total_units: number;
@@ -29,7 +29,7 @@ interface IPriceCard {
 export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const {
 		url,
-		oppportunitiesDetails,
+		opportunitiesDetails,
 		investor_pf,
 		unitPrice,
 		setFirstStep,
@@ -37,6 +37,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 		setCotas,
 		cotas,
 	} = props;
+	console.log("props", props);
 	const [isInvestidor] = useState(investor_pf ? true : false);
 	const { ended, hasToken } = useOpportunities();
 	const { push } = useRouter();
@@ -199,8 +200,8 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									{t("opportunitieDetails.shares")}
 								</Text>
 								<Text fontSize="md" fontWeight="400">
-									{(oppportunitiesDetails?.total_units ?? 0) -
-										(oppportunitiesDetails?.available_units ?? 0)}
+									{(opportunitiesDetails?.total_units ?? 0) -
+										(opportunitiesDetails?.available_units ?? 0)}
 								</Text>
 							</Flex>
 							<Flex justifyContent={"space-between"}>
@@ -208,7 +209,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									{t("opportunitieDetails.available")}
 								</Text>
 								<Text fontSize={"md"} fontWeight="400">
-									{oppportunitiesDetails?.available_units}
+									{opportunitiesDetails?.available_units}
 								</Text>
 							</Flex>
 						</Flex>
