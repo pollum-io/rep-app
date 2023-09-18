@@ -1,7 +1,6 @@
 import React from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
-import { formatDateBirthday } from "../../utils/formatDate";
-import { IContribution } from "ui";
+import { IContribution, formatDateBirthday } from "ui";
 import { formatCurrency } from "ui/utils/BRCurrency";
 
 type ComponentProps = {

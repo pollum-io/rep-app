@@ -1,7 +1,6 @@
 import React from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
-import { IContribution } from "ui";
-import { formatDateOnlyMonthYear } from "../../utils/formatDate";
+import { IContribution, formatDateOnlyMonthYear } from "ui";
 
 type ComponentProps = {
 	contribution?: IContribution;

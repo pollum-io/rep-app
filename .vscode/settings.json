@@ -9,6 +9,7 @@
 		"/packages/ui/Imovel/ImovelOverviewComponents",
 		"/packages/ui/GlobalDtos",
 		"/packages/ui/utils",
-		"/apps/enterprise/components"
+		"/apps/enterprise/components",
+		"/packages/ui/Faturas"
 	]
 }

@@ -1,8 +1,8 @@
 import { Flex, Text, Button } from "@chakra-ui/react";
 import { FunctionComponent, useMemo } from "react";
-import { formatDateOnlyDayMonthYear } from "../../utils/formatDate";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { useRouter } from "next/router";
+import { formatDateOnlyDayMonthYear } from "../utils";
 
 type EmpreendimentoTable = {
 	name?: string;

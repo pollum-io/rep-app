@@ -16,7 +16,7 @@ import {
 
 interface UserData {
 	token: string;
-	user: UserInfo;
+	user: UserLogin;
 	userDataPF?: UserDataPF;
 	userDataPJ?: UserDataPJ;
 	investments?: InvestmentModel[];
