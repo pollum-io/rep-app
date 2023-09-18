@@ -230,6 +230,8 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 									onChangeScore={(score) => setButtonScore(score)}
 									minLength={8}
 									password={firstPassword}
+									scoreWords={["fraca", "fraca", "okay", "boa", "forte"]}
+									shortScoreWord={"fraca"}
 								/>
 							</Flex>
 						</Flex>

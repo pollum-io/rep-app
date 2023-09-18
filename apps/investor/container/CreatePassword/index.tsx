@@ -191,6 +191,8 @@ export const CreatePasswordContainer: FunctionComponent<ICreatPasswordData> = ({
 								onChangeScore={(score, feedback) => setButtonScore(score)}
 								minLength={8}
 								password={firstPassword}
+								scoreWords={["fraca", "fraca", "okay", "boa", "forte"]}
+								shortScoreWord={"fraca"}
 							/>
 						</Flex>
 						<Button
