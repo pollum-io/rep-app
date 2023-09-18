@@ -8,6 +8,8 @@ type ComponentProps = {
 };
 
 export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
+	const isMozilla = /firefox/i.test(window.navigator.userAgent);
+
 	return (
 		<Flex
 			justifyContent={"end"}
@@ -29,14 +31,18 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 				xl: "40.5%",
 				"2xl": "47%",
 			}}
-			w={"39rem"}
+			w={"max"}
 			px={"1.5rem"}
 			py={"1rem"}
 			borderRadius={"0.75rem"}
 			boxShadow="0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.10);"
 			gap={"2.75rem"}
 		>
-			<Flex flexDir={"column"} gap={"0.25rem"}>
+			<Flex
+				flexDir={"column"}
+				gap={"0.25rem"}
+				w={isMozilla ? "12rem" : "unset"}
+			>
 				<Flex gap={"0.5rem"}>
 					<Text color={"#007D99"} fontSize={"0.875rem"} fontWeight={"500"}>
 						Parcelas quitadas
@@ -50,7 +56,11 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 					<Text fontSize={"1.125rem"}>de {contribution?.num_installments}</Text>
 				</Flex>
 			</Flex>
-			<Flex flexDir={"column"} gap={"0.25rem"}>
+			<Flex
+				flexDir={"column"}
+				gap={"0.25rem"}
+				w={isMozilla ? "12rem" : "unset"}
+			>
 				<Flex gap={"0.5rem"}>
 					<Text color={"#007D99"} fontSize={"0.875rem"} fontWeight={"500"}>
 						Total de cotas na LIVN
@@ -59,7 +69,11 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 				</Flex>
 				<Text fontSize={"1.125rem"}>{contribution?.num_cotas}</Text>
 			</Flex>
-			<Flex flexDir={"column"} gap={"0.25rem"}>
+			<Flex
+				flexDir={"column"}
+				gap={"0.25rem"}
+				w={isMozilla ? "11rem" : "unset"}
+			>
 				<Flex gap={"0.5rem"}>
 					<Text color={"#007D99"} fontSize={"0.875rem"} fontWeight={"500"}>
 						Prazo final aportes

@@ -11,6 +11,8 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 	data,
 	isMyInvest,
 }) => {
+	const isMozilla = /firefox/i.test(window.navigator.userAgent);
+
 	return (
 		<Flex mb={"2rem"} flexDir={"column"}>
 			{isMyInvest && (
@@ -25,8 +27,13 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 			)}
 			<Flex gap={"8.8125rem"} mb={"1.5rem"}>
 				<Flex flexDir={"column"} gap={"0.25rem"}>
-					<Flex gap={"0.5rem"}>
-						<Text fontSize={"0.875rem"} color={"#007D99"} fontWeight={"500"}>
+					<Flex gap={"0.5rem"} w={isMozilla ? "9rem" : "unset"}>
+						<Text
+							fontSize={"0.875rem"}
+							w={"100%"}
+							color={"#007D99"}
+							fontWeight={"500"}
+						>
 							Valor estimado
 						</Text>
 						<Img src="/icons/info-circle-littlegray.svg" />
@@ -42,7 +49,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 				</Flex>
 				<Flex>
 					<Flex flexDir={"column"} gap={"0.25rem"}>
-						<Flex gap={"0.5rem"}>
+						<Flex gap={"0.5rem"} w={isMozilla ? "14rem" : "unset"}>
 							<Text fontSize={"0.875rem"} color={"#007D99"} fontWeight={"500"}>
 								Data da previsão{" "}
 							</Text>
