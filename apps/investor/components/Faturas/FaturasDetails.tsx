@@ -84,7 +84,9 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 					<Img src="/icons/info-circle-littlegray.svg" />
 				</Flex>
 				<Text fontSize={"1.125rem"}>
-					{formatDateOnlyMonthYear(contribution?.final_invoice)}
+					{contribution?.final_invoice !== "-"
+						? formatDateOnlyMonthYear(contribution?.final_invoice)
+						: "-"}
 				</Text>
 			</Flex>
 		</Flex>
