@@ -34,7 +34,11 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 	const { getUserInfos } = useUser();
 	const currentDate = new Date();
 	const formattedDate = format(currentDate, "dd/MMM/yy", { locale: ptBR });
-	const isMozilla = /firefox/i.test(window.navigator.userAgent);
+
+	let isMozilla = false;
+	if (typeof window !== "undefined") {
+		isMozilla = /firefox/i.test(window.navigator.userAgent);
+	}
 
 	useLayoutEffect(() => {
 		getUserInfos(
@@ -106,7 +110,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 
 		return investDashboard;
 	}, [investment?.investments]);
-	console.log(investment?.investments, "dasdasdadassds");
+
 	return (
 		<DefaultTemplate>
 			<>

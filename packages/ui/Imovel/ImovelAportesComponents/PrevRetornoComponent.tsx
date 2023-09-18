@@ -11,8 +11,10 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 	data,
 	isMyInvest,
 }) => {
-	const isMozilla = /firefox/i.test(window.navigator.userAgent);
-
+	let isMozilla = false;
+	if (typeof window !== "undefined") {
+		isMozilla = /firefox/i.test(window.navigator.userAgent);
+	}
 	return (
 		<Flex mb={"2rem"} flexDir={"column"}>
 			{isMyInvest && (

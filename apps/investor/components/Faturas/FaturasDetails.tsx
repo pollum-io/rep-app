@@ -8,7 +8,10 @@ type ComponentProps = {
 };
 
 export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
-	const isMozilla = /firefox/i.test(window.navigator.userAgent);
+	let isMozilla = false;
+	if (typeof window !== "undefined") {
+		isMozilla = /firefox/i.test(window.navigator.userAgent);
+	}
 
 	return (
 		<Flex
