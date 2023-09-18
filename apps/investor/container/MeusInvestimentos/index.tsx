@@ -205,7 +205,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 									<Flex
 										flexDir={"column"}
 										gap={"0.25rem"}
-										w={isMozilla ? "max" : "unset"}
+										w={isMozilla ? "9rem" : "unset"}
 									>
 										<Flex gap={"0.5rem"}>
 											<Text
@@ -228,7 +228,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 									<Flex
 										flexDir={"column"}
 										gap={"0.25rem"}
-										w={isMozilla ? "max" : "unset"}
+										w={isMozilla ? "14rem" : "unset"}
 									>
 										<Flex gap={"0.5rem"}>
 											<Text
@@ -240,7 +240,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 											</Text>
 											<Img src="/icons/info-circle-littlegray.svg" />
 										</Flex>
-										<Flex gap={"0.75rem"}>
+										<Flex gap={"0.75rem"} w={isMozilla ? "21rem" : "unset"}>
 											<Text fontSize={"1.125rem"} fontWeight={"600"}>
 												{investment?.investments?.length
 													? ` + ${formatCurrency(
