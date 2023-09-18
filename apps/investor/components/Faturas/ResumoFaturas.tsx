@@ -15,7 +15,7 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 	if (typeof window !== "undefined") {
 		isMozilla = /firefox/i.test(window.navigator.userAgent);
 	}
-
+	console.log(contribution?.next_invoice);
 	return (
 		<Flex flexDir={"column"}>
 			<Text
@@ -67,7 +67,7 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
 					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-						{contribution?.next_invoice
+						{contribution?.next_invoice !== "-"
 							? formatDateBirthday(contribution?.next_invoice)
 							: "-"}
 					</Text>
@@ -89,7 +89,7 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
 					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-						{contribution?.last_payment
+						{contribution?.last_payment !== "-"
 							? formatDateBirthday(contribution?.last_payment)
 							: "-"}
 					</Text>
