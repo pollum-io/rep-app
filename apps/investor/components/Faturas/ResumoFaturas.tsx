@@ -15,7 +15,6 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 	if (typeof window !== "undefined") {
 		isMozilla = /firefox/i.test(window.navigator.userAgent);
 	}
-	console.log(contribution?.next_invoice);
 	return (
 		<Flex flexDir={"column"}>
 			<Text
