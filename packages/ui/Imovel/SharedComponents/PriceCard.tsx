@@ -1,6 +1,6 @@
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
 import { useRegisterSteps } from "../../../../apps/investor/hooks/useRegisterSteps";
@@ -23,22 +23,13 @@ interface IPriceCard {
 }
 
 export const PriceCard: React.FC<IPriceCard> = (props) => {
-	const {
-		url,
-		opportunitiesDetails,
-		investor_pf,
-		heightDefault,
-		pageSize,
-		unitPrice,
-	} = props;
-	console.log("props", props);
+	const { url, opportunitiesDetails, investor_pf, unitPrice } = props;
 	const [isInvestidor] = useState(investor_pf ? true : false);
 	const { ended, hasToken, cotas, setCotas } = useOpportunities();
 	const { push } = useRouter();
 	const { t } = useTranslation();
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 
-	const [scroll, setScrollY] = useState("");
 	const [scrollPosition, setScrollPosition] = useState(0);
 	const topMargin = 0; // Altura em pixels onde o PriceCard deve começar a se mover
 	const bottomMargin = 0; // Altura em pixels onde o PriceCard deve parar de se mover
@@ -104,7 +95,16 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									transition: "all 0.4s",
 								}}
 								src={"/icons/PlusIcon.png"}
-								onClick={() => setCotas(cotas + 1)}
+								onClick={() => {
+									// Verificar se o número atual de cotas é menor ou igual ao número de unidades disponíveis
+									if (
+										opportunitiesDetails &&
+										opportunitiesDetails?.available_units > cotas
+									) {
+										// Se sim, adicionar uma cota
+										setCotas(cotas + 1);
+									}
+								}}
 							/>
 							<Img
 								_hover={{
