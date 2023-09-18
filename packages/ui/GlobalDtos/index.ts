@@ -1,6 +1,7 @@
 export * from "./AddressData";
 export * from "./ChangePassword";
 export * from "./Contribution";
+export * from "./Enterprise";
 export * from "./ICreateInvestorPF";
 export * from "./ICreateInvestorPJ";
 export * from "./ISelectProps";

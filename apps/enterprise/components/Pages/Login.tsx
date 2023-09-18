@@ -26,11 +26,9 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 			// 	title: "Seja bem-vindo!",
 			// });
 			if (data?.investor_pf) {
-				push("/oportunidades");
+				push("/painel-de-controle");
 			} else if (data?.investor_pj) {
-				push("/oportunidades");
-			} else {
-				push("/registrar");
+				push("/painel-de-controle");
 			}
 		} catch (error) {
 			if (error instanceof Error) {

@@ -24,7 +24,7 @@ export const HeaderLinks: React.FC = () => {
 		{
 			id: 4,
 			name: "Meu perfil",
-			url: "/saibamais",
+			url: "/meu-perfil",
 		},
 	];
 

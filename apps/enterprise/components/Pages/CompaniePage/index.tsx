@@ -1,7 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
-
 import {
 	CompanieContact,
 	CompanieDetails,
@@ -13,7 +12,7 @@ import {
 } from "ui";
 
 interface ICompanie {
-	companieDetail: ICompaniesDetails;
+	companieDetail?: ICompaniesDetails;
 }
 
 export const CompaniePage: FunctionComponent<ICompanie> = ({
