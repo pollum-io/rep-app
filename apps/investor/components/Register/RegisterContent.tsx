@@ -275,7 +275,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 										<InputComponent
 											label={t("register.noAbbreviations") as string}
 											type="text"
-											placeholderText={t("inputs.insertHere") as string}
+											placeholderText={t("register.fullName") as string}
 											{...register("full_name")}
 										/>
 										<InputComponent
