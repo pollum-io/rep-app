@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useLayoutEffect, useMemo } from "react";
+import React, {
+	FunctionComponent,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+} from "react";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { DefaultTemplate } from "../DefaultTemplate";
@@ -29,6 +34,11 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 	const { getUserInfos } = useUser();
 	const currentDate = new Date();
 	const formattedDate = format(currentDate, "dd/MMM/yy", { locale: ptBR });
+
+	let isMozilla = false;
+	if (typeof window !== "undefined") {
+		isMozilla = /firefox/i.test(window.navigator.userAgent);
+	}
 
 	useLayoutEffect(() => {
 		getUserInfos(
@@ -100,7 +110,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 
 		return investDashboard;
 	}, [investment?.investments]);
-	console.log(investment?.investments, "dasdasdadassds");
+
 	return (
 		<DefaultTemplate>
 			<>
@@ -189,14 +199,18 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 										xl: "14rem",
 										"2xl": "9rem",
 									}}
-									w={"45rem"}
+									w={"max"}
 									px={"1.5rem"}
 									py={"1rem"}
 									borderRadius={"0.75rem"}
 									boxShadow="0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.10);"
 									gap={"2.75rem"}
 								>
-									<Flex flexDir={"column"} gap={"0.25rem"}>
+									<Flex
+										flexDir={"column"}
+										gap={"0.25rem"}
+										w={isMozilla ? "9rem" : "unset"}
+									>
 										<Flex gap={"0.5rem"}>
 											<Text
 												color={"#007D99"}
@@ -215,7 +229,11 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 											</Text>
 										</Flex>
 									</Flex>
-									<Flex flexDir={"column"} gap={"0.25rem"}>
+									<Flex
+										flexDir={"column"}
+										gap={"0.25rem"}
+										w={isMozilla ? "14rem" : "unset"}
+									>
 										<Flex gap={"0.5rem"}>
 											<Text
 												color={"#007D99"}
@@ -226,7 +244,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 											</Text>
 											<Img src="/icons/info-circle-littlegray.svg" />
 										</Flex>
-										<Flex gap={"0.75rem"}>
+										<Flex gap={"0.75rem"} w={isMozilla ? "21rem" : "unset"}>
 											<Text fontSize={"1.125rem"} fontWeight={"600"}>
 												{investment?.investments?.length
 													? ` + ${formatCurrency(
@@ -241,7 +259,11 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 											</Text>
 										</Flex>
 									</Flex>
-									<Flex flexDir={"column"} gap={"0.25rem"}>
+									<Flex
+										flexDir={"column"}
+										gap={"0.25rem"}
+										w={isMozilla ? "11rem" : "max"}
+									>
 										<Flex gap={"0.5rem"}>
 											<Text
 												color={"#007D99"}
