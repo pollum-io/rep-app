@@ -1,6 +1,7 @@
 import React from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "../../utils/BRCurrency";
+import { formatDateOnlyDayMonthCompleteYear } from "../../../../apps/investor/utils/formatDate";
 
 interface IComponentProps {
 	data?: any; //TODO
@@ -42,10 +43,16 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 					</Flex>
 					<Flex gap={"0.75rem"}>
 						<Text fontSize={"1.125rem"} fontWeight={"600"} color={"#171923"}>
-							+ {formatCurrency(data?.data?.estimated_value)}
+							+{" "}
+							{formatCurrency(
+								isMyInvest ? data?.data?.estimated_value : data?.forecast_return
+							)}
 						</Text>
 						<Text fontSize={"1.125rem"} fontWeight={"400"} color={"#38A169"}>
-							%{data?.data?.expected_rentability?.toFixed(2)}
+							%{""}
+							{isMyInvest
+								? data?.data?.expected_rentability?.toFixed(2)
+								: data?.profitability}
 						</Text>
 					</Flex>
 				</Flex>
@@ -59,7 +66,13 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 						</Flex>
 						<Flex gap={"0.75rem"}>
 							<Text fontSize={"1.125rem"} fontWeight={"600"} color={"#171923"}>
-								-
+								{isMyInvest
+									? formatDateOnlyDayMonthCompleteYear(
+											data?.data?.expected_delivery_date
+									  )
+									: formatDateOnlyDayMonthCompleteYear(
+											data?.expected_delivery_date
+									  )}
 							</Text>
 						</Flex>
 					</Flex>
