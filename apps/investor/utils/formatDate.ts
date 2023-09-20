@@ -41,6 +41,13 @@ export const formatDateOnlyDayMonthYear = (
 	return formattedDate;
 };
 
+export const formatDateOnlyDayMonthCompleteYear = (
+	value: number | undefined | string
+) => {
+	const formattedDate = moment(value).locale("pt-br").format("DD MMMM YYYY");
+	return formattedDate;
+};
+
 export const formatDateBirthday = (value: string | Date) => {
 	const valor = moment(value).format("DD/MM/YYYY");
 

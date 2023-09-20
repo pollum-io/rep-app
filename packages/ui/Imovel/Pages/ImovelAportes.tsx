@@ -26,7 +26,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 				<Flex gap="1rem" maxWidth="75rem" position={"relative"}>
 					<Flex flexDir={"column"}>
 						<ImovelInfoDefault imovelDetails={imovelDetails} />
-						<PrevRetornoComponent isMyInvest={false} />
+						<PrevRetornoComponent data={imovelDetails} isMyInvest={false} />
 						<Flex flexDir={"row"} maxWidth={"70%"} mr={"0rem"} gap={"1.7rem"}>
 							<Flex flexDir={"column"}>
 								<Flex alignItems={"baseline"} gap={"1.5"}>

@@ -43,7 +43,6 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 			refetchInterval: 3000, // Refetch a cada 5 segundos
 		}
 	);
-	console.log(data?.data);
 	const mutation = useMutation(
 		async (contractData: any) => {
 			try {

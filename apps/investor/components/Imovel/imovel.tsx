@@ -26,7 +26,6 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	usersId,
 }) => {
 	const [page, setPage] = useState("oportunidade");
-
 	return (
 		<Flex w={"100%"} maxW={"70rem"} margin={"0 auto"} justifyContent={"center"}>
 			<motion.div
