@@ -119,6 +119,59 @@ export const SelectComponent: ForwardRefRenderFunction<
 					))}
 				</Select>
 			)}
+			{selectValue && type === "user-uf" && (
+				<Select
+					id={name}
+					name={name}
+					ref={ref}
+					{...rest}
+					_hover={{}}
+					w={""}
+					h="2rem"
+					border={"0.0938rem solid #E2E8F0"}
+					placeholder="Select option"
+					color={"black"}
+					fontSize="0.875rem"
+					onChange={(e) => {
+						setData(e.target.value);
+						rest.onChange(e);
+					}}
+					value={data}
+					defaultValue={defaultValue}
+				>
+					{selectValue?.map((value, index: number) => (
+						<option key={index} value={`${value.sigla},${value.nome}`}>
+							{value.nome}
+						</option>
+					))}
+				</Select>
+			)}
+			{selectValue && type === "user-city" && (
+				<Select
+					id={name}
+					name={name}
+					ref={ref}
+					{...rest}
+					_hover={{}}
+					w={""}
+					h="2rem"
+					border={"0.0938rem solid #E2E8F0"}
+					placeholder="Select option"
+					color={"black"}
+					fontSize="0.875rem"
+					onChange={(e) => {
+						setData(e.target.value);
+						rest.onChange(e);
+					}}
+					value={data}
+				>
+					{selectValue?.map((value, index: number) => (
+						<option key={index} value={value.nome}>
+							{value.nome}
+						</option>
+					))}
+				</Select>
+			)}
 		</FormControl>
 	);
 };

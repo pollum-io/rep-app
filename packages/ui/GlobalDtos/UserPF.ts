@@ -1,5 +1,5 @@
 export interface UserDataPF {
-	address?: string;
+	address?: Address;
 	birthday_date?: Date | string;
 	city_of_birth?: string;
 	cpf?: string;
@@ -16,6 +16,15 @@ export interface UserDataPF {
 	is_profile_filled?: boolean;
 	__v?: number;
 	_id?: string;
+}
+
+interface Address {
+	state: string;
+	city: string;
+	state_alias?: string;
+	neighborhood: string;
+	street: string;
+	number: number;
 }
 
 export type MaritalStatus = {

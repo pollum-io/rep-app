@@ -10,7 +10,7 @@ export const fetchGetInvestorPFById = async (
 				Authorization: `Bearer ${token}`,
 			},
 		});
-
+		console.log(response);
 		return response;
 	} catch (error) {
 		if (error instanceof Error) {
