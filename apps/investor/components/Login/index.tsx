@@ -1,16 +1,27 @@
-import { Button, ButtonProps, Flex, Img, Input, Text } from "@chakra-ui/react";
+import {
+	Button,
+	ButtonProps,
+	Flex,
+	Img,
+	Input,
+	InputGroup,
+	InputRightElement,
+	Text,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { FunctionComponent, useState } from "react";
 import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
 import { useToasty } from "../../hooks/useToasty";
 import { fetchSignIn } from "../../services";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export const Login: FunctionComponent<ButtonProps> = () => {
 	const { push } = useRouter();
 	const [email, setEmail] = useState<string>();
 	const [password, setPassword] = useState<string>();
 	const { getUserInfos } = useUser();
+	const [showPassword, setShowPassword] = useState<boolean>(true);
 	const { toast } = useToasty();
 
 	const handleLogin = async () => {
@@ -137,25 +148,40 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							>
 								{t("login.forgot")}
 							</Text>
-						</Flex>
-						<Input
-							placeholder={t("login.placeholderSenha") as string}
-							_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
-							border="0.0938rem solid #E2E8F0"
-							_hover={{}}
-							_focus={{}}
-							fontStyle="normal"
-							fontWeight="400"
-							fontSize="0.875rem"
-							lineHeight="1.25rem"
-							borderRadius="0.375rem"
-							h="2rem"
-							pl="0.7rem"
-							color="#2D3748"
-							onChange={(e) => setPassword(e.target.value)}
-							type={"password"}
-							onKeyPress={handleKeyPress}
-						/>
+						</Flex>{" "}
+						<InputGroup size="md">
+							<Input
+								placeholder={t("login.placeholderSenha") as string}
+								_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
+								border="0.0938rem solid #E2E8F0"
+								_hover={{}}
+								_focus={{}}
+								fontStyle="normal"
+								fontWeight="400"
+								fontSize="0.875rem"
+								lineHeight="1.25rem"
+								borderRadius="0.375rem"
+								h="2rem"
+								pl="0.7rem"
+								color="#2D3748"
+								onChange={(e) => setPassword(e.target.value)}
+								type={showPassword ? "password" : "text"}
+								onKeyPress={handleKeyPress}
+							/>
+							<InputRightElement
+								display={"flex"}
+								onClick={() => setShowPassword(!showPassword)}
+								alignItems="center"
+								_hover={{ cursor: "pointer" }}
+								pb="0.55rem"
+							>
+								{showPassword ? (
+									<AiOutlineEyeInvisible size={25} color="#7a7a7a" />
+								) : (
+									<AiOutlineEye size={25} color="#7a7a7a" />
+								)}
+							</InputRightElement>
+						</InputGroup>
 					</Flex>
 					<Flex mt="2.5rem">
 						<Button
