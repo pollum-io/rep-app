@@ -74,6 +74,8 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 				console.error("Erro ao buscar investimento:", error);
 			},
 			onSuccess: (data) => {
+				setUf(data?.data?.address?.state_alias);
+
 				const formValues: UserDataPF = {
 					full_name: data?.data?.full_name,
 					city_of_birth: data?.data?.city_of_birth,
@@ -83,7 +85,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 					cpf: formatCPF(data?.data?.cpf),
 					rg: data?.data?.rg,
 					address: {
-						state: data?.data?.address?.state,
+						state: `${data?.data?.address?.state_alias},${data?.data?.address?.state}`,
 						city: data?.data?.address?.city,
 						neighborhood: data?.data?.address?.neighborhood,
 						street: data?.data?.address?.street,
@@ -121,15 +123,20 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 				reset(formValues);
 				setDefaultValues(formValues);
 			},
+			refetchOnWindowFocus: false,
 		}
 	);
 
 	const getCity = async (uf: string) => {
-		const getUf = uf.split(",")[0];
+		const getUf: string = uf;
 		setUf(getUf);
 		const request = await fetchGetCitiesByUf(getUf);
 		setCities(request);
 	};
+
+	useEffect(() => {
+		getCity(uf);
+	}, [uf]);
 
 	const { register, handleSubmit, reset, watch } = useForm();
 
@@ -187,7 +194,6 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			},
 			marital_status: value,
 		};
-		console.log(request, "request");
 
 		await fetchEditInvestorPF(userInfos, request, token)
 			.then((res) => {
@@ -220,6 +226,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			setIsMarried(true);
 		}
 	}, [watch]);
+
 	return (
 		<Flex w="100%" justifyContent="end">
 			<Flex flexDirection="column" gap="2.75rem" w="100%" maxWidth="47.4375rem">
@@ -314,15 +321,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 										type="user-uf"
 										{...register("address.state", {
 											onChange(e) {
-												getCity(e.target.value);
-												console.log(e);
-												reset({
-													...defaultValues,
-													address: {
-														...defaultValues.address,
-														state: e.target.value,
-													},
-												});
+												getCity(e.target.value.split(",")[0]);
 											},
 										})}
 										setData={setSelectedState}
@@ -401,9 +400,9 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									{...register("marital_status.status", {
 										onChange(e) {
 											reset({
-												...defaultValues,
+												...watch(),
 												marital_status: {
-													...defaultValues.marital_status,
+													...watch().marital_status,
 													status: e.target.value,
 													// equity_regime: "",
 													// contractor: "",
