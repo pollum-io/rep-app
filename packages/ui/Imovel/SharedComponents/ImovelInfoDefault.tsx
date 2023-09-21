@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
 import { fetchEnterpriseById } from "../../../../apps/investor/services/fetchEnterpriseById";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
+import { useRouter } from "next/router";
 
 interface IImovelInfoDefault {
 	imovelDetails?: IOpportunitiesCard;
@@ -17,6 +18,7 @@ export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 	const { hasToken } = useOpportunities();
 	const [cota] = useState<number>(0);
 	const { t } = useTranslation();
+	const { push } = useRouter();
 
 	useMemo(async () => {
 		const name = await fetchEnterpriseById(imovelDetails?.enterprise_id);
@@ -25,7 +27,19 @@ export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 
 	return (
 		<Flex flexDir={"column"}>
-			<Flex gap="0.5rem" pb="0.5rem">
+			<Flex
+				gap="0.5rem"
+				pb="0.5rem"
+				onClick={() =>
+					push({
+						pathname: `/empresa/`,
+						query: { enterprise_id: `${imovelDetails?.enterprise_id}` },
+					})
+				}
+				transition={"0.5s"}
+				w={"max"}
+				_hover={{ cursor: "pointer", opacity: 0.6 }}
+			>
 				<Img w="6" h="6" src={`/api/file/${imovelDetails?.enterprise_logo}`} />
 				<Text fontWeight={"400"} color="#171923">
 					{imovelDetails?.enterprise_name}
