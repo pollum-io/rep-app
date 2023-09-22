@@ -146,7 +146,7 @@ export const SelectComponent: ForwardRefRenderFunction<
 					))}
 				</Select>
 			)}
-			{selectValue && type === "user-city" && (
+			{!!selectValue?.length && type === "user-city" && (
 				<Select
 					id={name}
 					name={name}
