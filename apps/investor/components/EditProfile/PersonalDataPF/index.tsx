@@ -6,11 +6,12 @@ import {
 	Img,
 	Radio,
 	RadioGroup,
+	Select,
 	Stack,
 	Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useMemo, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useUser } from "../../../hooks/useUser";
 import { useToasty } from "../../../hooks/useToasty";
@@ -23,7 +24,12 @@ import { estadosRegimesPatrimoniais } from "../mockedData/estadosRegimesPatrimon
 import { MaritalStatus, UserDataPF } from "../../../dtos/UserPF";
 import { useQuery } from "react-query";
 import { Oval } from "react-loader-spinner";
-import { fetchEditInvestorPF, fetchGetInvestorPFById } from "services";
+import {
+	fetchEditInvestorPF,
+	fetchGetCitiesByUf,
+	fetchGetInvestorPFById,
+	fetchGetUf,
+} from "services";
 
 interface IPersonalDataPF {
 	userDataPF?: UserDataPF;
@@ -39,27 +45,52 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	const [isMarried, setIsMarried] = useState<boolean>();
 
 	const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<string>();
+	const [selectedState, setSelectedState] = useState<string>();
+
+	const [selectedCity, setSelectedCity] = useState<string>();
+
 	const { userInfos } = useUser();
 	const { toast } = useToasty();
 	const { t } = useTranslation();
 
-	const { isLoading } = useQuery(
+	const [cities, setCities] = useState<any>();
+	const [uf, setUf] = useState<any>();
+
+	const { data: ufData, isLoading: ufLoading } = useQuery(
 		"id",
+		async () => await fetchGetUf(),
+		{
+			onError: (error) => {
+				console.error("Erro ao buscar investimento:", error);
+			},
+		}
+	);
+
+	const { isLoading } = useQuery(
+		"investor",
 		async () => await fetchGetInvestorPFById(userDataPF?._id, token),
 		{
 			onError: (error) => {
 				console.error("Erro ao buscar investimento:", error);
 			},
 			onSuccess: (data) => {
+				setUf(data?.data?.address?.state_alias);
+
 				const formValues: UserDataPF = {
 					full_name: data?.data?.full_name,
 					city_of_birth: data?.data?.city_of_birth,
-					birthday_date: new Date(data?.data?.birthday_date)
-						.toISOString()
-						.split("T")[0],
+					birthday_date: data?.data?.birthday_date
+						? new Date(data?.data?.birthday_date).toISOString().split("T")[0]
+						: null,
 					cpf: formatCPF(data?.data?.cpf),
 					rg: data?.data?.rg,
-					address: data?.data?.address,
+					address: {
+						state: `${data?.data?.address?.state_alias},${data?.data?.address?.state}`,
+						city: data?.data?.address?.city,
+						neighborhood: data?.data?.address?.neighborhood,
+						street: data?.data?.address?.street,
+						number: data?.data?.address?.number,
+					},
 					profession: data?.data?.profession,
 					email: data?.data?.email,
 					contact_number: formatPhoneNumber(data?.data?.contact_number),
@@ -92,15 +123,26 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 				reset(formValues);
 				setDefaultValues(formValues);
 			},
+			refetchOnWindowFocus: false,
 		}
 	);
+
+	const getCity = async (uf: string) => {
+		const getUf: string = uf;
+		setUf(getUf);
+		const request = await fetchGetCitiesByUf(getUf);
+		setCities(request);
+	};
+
+	useEffect(() => {
+		getCity(uf);
+	}, [uf]);
 
 	const { register, handleSubmit, reset, watch } = useForm();
 
 	const onSubmitForm = async (data: UserDataPF) => {
 		let request: UserDataPF;
 		let value: MaritalStatus;
-
 		if (watch("marital_status.status") === "Casado(a)") {
 			value = {
 				status: data?.marital_status?.status,
@@ -128,6 +170,8 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 				partners_address: "",
 			};
 		}
+		console.log(data, "data");
+
 		// eslint-disable-next-line prefer-const
 		request = {
 			full_name: data.full_name,
@@ -140,7 +184,14 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			city_of_birth: data.city_of_birth,
 			rg: data.rg,
 			profession: data.profession,
-			address: data.address,
+			address: {
+				city: data?.address?.city,
+				neighborhood: data?.address?.neighborhood,
+				number: Number(data?.address?.number),
+				state: data?.address?.state.split(",")[1],
+				state_alias: uf,
+				street: data?.address?.street,
+			},
 			marital_status: value,
 		};
 
@@ -175,6 +226,7 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			setIsMarried(true);
 		}
 	}, [watch]);
+
 	return (
 		<Flex w="100%" justifyContent="end">
 			<Flex flexDirection="column" gap="2.75rem" w="100%" maxWidth="47.4375rem">
@@ -263,11 +315,53 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 										type="text"
 										{...register("rg")}
 									/>
+									<SelectComponent
+										selectValue={ufData}
+										label={"Estado"}
+										type="user-uf"
+										{...register("address.state", {
+											onChange(e) {
+												getCity(e.target.value.split(",")[0]);
+											},
+										})}
+										setData={setSelectedState}
+										data={selectedState}
+										defaultValue={watch("address.state")}
+									/>
+									<SelectComponent
+										selectValue={cities}
+										label={"Cidade"}
+										type="user-city"
+										{...register("address.city", {
+											onChange(e) {
+												reset({
+													...defaultValues,
+													address: {
+														city: e.target.value,
+													},
+												});
+											},
+										})}
+										data={selectedCity}
+										setData={setSelectedCity}
+									/>
 									<InputComponent
 										placeholderText={t("inputs.insertHere") as string}
-										label={t("editProfile.address") as string}
+										label={"Bairro"}
 										type="text"
-										{...register("address")}
+										{...register("address.neighborhood")}
+									/>
+									<InputComponent
+										placeholderText={t("inputs.insertHere") as string}
+										label={"Rua"}
+										type="text"
+										{...register("address.street")}
+									/>
+									<InputComponent
+										placeholderText={t("inputs.insertHere") as string}
+										label={"Numero"}
+										type="text"
+										{...register("address.number")}
 									/>
 									<InputComponent
 										placeholderText={t("inputs.insertHere") as string}
@@ -306,9 +400,9 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 									{...register("marital_status.status", {
 										onChange(e) {
 											reset({
-												...defaultValues,
+												...watch(),
 												marital_status: {
-													...defaultValues.marital_status,
+													...watch().marital_status,
 													status: e.target.value,
 													// equity_regime: "",
 													// contractor: "",
