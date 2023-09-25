@@ -19,11 +19,7 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 	companieDetail,
 }) => {
 	const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
-	console.log(url, "url");
-	console.log(
-		companieDetail?.enterprise_logo,
-		"companieDetail?.enterprise_logo"
-	);
+
 	const { t } = useTranslation();
 	return (
 		<Flex flexDirection="column" gap="2rem" mt="6.25rem" mb="4.5rem">
@@ -84,8 +80,8 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 							<Flex h="100%">
 								<CompanieContact
 									website={companieDetail?.site_url}
-									whats={companieDetail?.contact_number}
-									phone={companieDetail?.contact_number}
+									whatsapp={companieDetail.social_media.whatsapp}
+									telephone={companieDetail?.social_media.telephone}
 									email={companieDetail?.email}
 									instagram={companieDetail?.social_media?.instagram}
 									twitter={companieDetail?.social_media?.twitter}

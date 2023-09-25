@@ -79,8 +79,8 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 							<Flex h="100%">
 								<CompanieContact
 									website={companieDetail?.site_url}
-									whats={companieDetail?.contact_number}
-									phone={companieDetail?.contact_number}
+									whatsapp={companieDetail?.contact_number}
+									telephone={companieDetail?.contact_number}
 									email={companieDetail?.email}
 									instagram={companieDetail?.social_media?.instagram}
 									twitter={companieDetail?.social_media?.twitter}

@@ -8,8 +8,8 @@ import { ICompanieContact } from "./dto";
 
 export const CompanieContact: FunctionComponent<ICompanieContact> = ({
 	website,
-	whats,
-	phone,
+	whatsapp,
+	telephone,
 	email,
 	instagram,
 	twitter,
@@ -25,16 +25,16 @@ export const CompanieContact: FunctionComponent<ICompanieContact> = ({
 			id: 1,
 		},
 		{
-			valid: whats ? true : false,
-			content: whats,
-			link: "",
+			valid: whatsapp ? true : false,
+			content: "Whatsapp",
+			link: whatsapp,
 			icon: <BsWhatsapp size={24} color="#007D99" />,
 			id: 2,
 		},
 		{
-			valid: phone ? true : false,
-			content: phone,
-			link: "",
+			valid: telephone ? true : false,
+			content: "Telefone",
+			link: telephone,
 			icon: <BsFillTelephoneFill size={23} color="#007D99" />,
 			id: 3,
 		},

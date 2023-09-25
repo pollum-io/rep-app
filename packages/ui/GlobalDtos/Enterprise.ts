@@ -30,10 +30,19 @@ export interface ICompaniesDetails {
 }
 
 interface ICompaniesSocial {
-	[key: string]: {
-		url: string;
-		username: string;
-	};
+	website?: string;
+	whatsapp?: string;
+	telephone?: string;
+	email?: string;
+	instagram?: ISocial;
+	twitter?: ISocial;
+	telegram?: ISocial;
+	facebook?: ISocial;
+}
+
+interface ISocial {
+	username?: string;
+	url?: string;
 }
 
 interface ICompaniesAddress {
