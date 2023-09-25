@@ -8,8 +8,7 @@ import { formatCurrency } from "../../utils/BRCurrency";
 
 interface IPriceCard {
 	url?: string;
-	investor_pf?: string | null | undefined;
-	investor_pj?: string | null | undefined;
+	isEnterprise?: boolean;
 	heightDefault?: string;
 	pageSize?: string;
 	unitPrice?: number;
@@ -30,7 +29,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const {
 		url,
 		opportunitiesDetails,
-		investor_pf,
+		isEnterprise,
 		unitPrice,
 		setFirstStep,
 		setSecondStep,
@@ -38,7 +37,6 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 		cotas,
 	} = props;
 	console.log("props", props);
-	const [isInvestidor] = useState(investor_pf ? true : false);
 	const { ended, hasToken } = useOpportunities();
 	const { push } = useRouter();
 	const { t } = useTranslation();
@@ -75,7 +73,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 			boxShadow="0px 20px 25px rgba(31, 41, 55, 0.1), 0px 10px 10px rgba(31, 41, 55, 0.04);"
 			color="#ffffff"
 		>
-			{!isInvestidor ? (
+			{!isEnterprise ? (
 				<>
 					<Text fontSize={"xl"} fontWeight="500">
 						{t("opportunitieDetails.priceCard.sharesName")}
@@ -186,7 +184,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						<Flex flexDir={"column"} gap="0.5rem">
 							<Flex
 								justifyContent={"space-between"}
-								display={isInvestidor ? "flex" : "none"}
+								display={isEnterprise ? "flex" : "none"}
 							>
 								<Text fontSize={"md"} fontWeight="400">
 									{t("opportunitieDetails.unit")}

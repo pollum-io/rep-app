@@ -4,9 +4,13 @@ import { FunctionComponent, useState } from "react";
 import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
 import { useToasty } from "../../hooks/useToasty";
-import { fetchSignIn } from "services";
+import { fetchLoginEnterprise } from "services";
 
-export const Login: FunctionComponent<ButtonProps> = () => {
+interface ILogin {
+	token: string;
+}
+
+export const Login: FunctionComponent<ILogin> = ({ token }) => {
 	const { push } = useRouter();
 	const [email, setEmail] = useState<string>();
 	const [password, setPassword] = useState<string>();
@@ -15,20 +19,18 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 
 	const handleLogin = async () => {
 		try {
-			const data = await fetchSignIn(email, password);
-			getUserInfos(
-				data?.investor_pf === null ? data?.investor_pj : data?.investor_pf
-			);
+			const data = await fetchLoginEnterprise(email, password);
+			await getUserInfos(data?.enterprise, token);
 			// toast({
 			// 	id: "toast-login-suc",
 			// 	position: "top-right",
 			// 	status: "success",
 			// 	title: "Seja bem-vindo!",
 			// });
-			if (data?.investor_pf) {
+			if (data?.enterprise) {
 				push("/painel-de-controle");
-			} else if (data?.investor_pj) {
-				push("/painel-de-controle");
+			} else if (data) {
+				push("/");
 			}
 		} catch (error) {
 			if (error instanceof Error) {

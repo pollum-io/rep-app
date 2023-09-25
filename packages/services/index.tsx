@@ -34,3 +34,4 @@ export * from "./fetchRegisterWhitelisted";
 export * from "./fetchSignContract";
 export * from "./fetchTurnPerfilEdit";
 export * from "./fetchUserApproveData";
+export * from "./fetchLoginEnterprise";

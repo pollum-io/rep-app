@@ -34,7 +34,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 	const user: UserLogin = jwt_decode(token);
-	const response = await fetchEnterpriseById(String(query.enterprise_id));
+	const response = await fetchEnterpriseById(
+		String(query.enterprise_id),
+		token
+	);
 
 	return {
 		props: {

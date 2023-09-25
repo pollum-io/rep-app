@@ -1,10 +1,24 @@
-import { Flex } from "@chakra-ui/react";
-import { NextPage } from "next";
+import React, { FunctionComponent, useLayoutEffect } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { motion } from "framer-motion";
 import { CompaniePage } from "../../components/Pages/CompaniePage";
+import { useUser } from "../../hooks/useUser";
 
-export const MyProfileContainer: NextPage = () => {
+interface IMyProfileProps {
+	token: string;
+	enterpriseId: string;
+}
+
+export const MyProfileContainer: FunctionComponent<IMyProfileProps> = ({
+	enterpriseId,
+	token,
+}) => {
+	const { getUserInfos } = useUser();
+
+	useLayoutEffect(() => {
+		getUserInfos(enterpriseId, token);
+	}, [enterpriseId, getUserInfos, token]);
+
 	return (
 		<DefaultTemplate>
 			<motion.div

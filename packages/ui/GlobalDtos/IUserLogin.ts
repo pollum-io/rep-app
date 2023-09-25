@@ -3,6 +3,7 @@ export interface UserLogin {
 	email: string;
 	investor_pf?: string;
 	investor_pj?: string;
+	enterprise?: string;
 	iat: number;
 	exo: number;
 }

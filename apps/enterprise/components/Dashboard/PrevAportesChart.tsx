@@ -162,7 +162,7 @@ const CustomBarLabel = (props: ICustomBarLabelProps) => {
 	);
 };
 
-const PrevAportesChart: FunctionComponent = () => {
+export const PrevAportesChart: FunctionComponent = () => {
 	const chartData = mockData.map((item, index) => ({
 		name: `Item ${index + 1}`,
 		value: item.cash_flow,
@@ -225,5 +225,3 @@ const PrevAportesChart: FunctionComponent = () => {
 		</Flex>
 	);
 };
-
-export default PrevAportesChart;

@@ -203,8 +203,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
-								investor_pf={usersId?.investor_pf}
-								investor_pj={usersId?.investor_pj}
+								isEnterprise={usersId.enterprise ? true : false}
 								unitPrice={imovelDetails?.min_investment}
 								opportunitiesDetails={imovelDetails?.opportunities_details}
 								cotas={cotas}

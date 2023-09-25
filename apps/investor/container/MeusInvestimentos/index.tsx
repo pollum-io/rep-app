@@ -100,7 +100,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 
 		return investDashboard;
 	}, [investment?.investments]);
-	console.log(investment?.investments, "dasdasdadassds");
+
 	return (
 		<DefaultTemplate>
 			<>

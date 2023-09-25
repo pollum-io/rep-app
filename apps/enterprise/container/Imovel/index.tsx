@@ -8,29 +8,24 @@ import { ImovelDetail } from "../../components/Pages/Imovel/imovel";
 
 interface IImovelProps {
 	imovel: IOpportunitiesCard;
-	usersId: UserLogin;
+	user: UserLogin;
 	token: string;
 }
 
 export const ImovelContainer: FunctionComponent<IImovelProps> = ({
 	imovel,
-	usersId,
+	user,
 	token,
 }) => {
 	const { getUserInfos } = useUser();
 
 	useLayoutEffect(() => {
-		getUserInfos(
-			usersId?.investor_pf === null
-				? usersId?.investor_pj
-				: usersId?.investor_pf,
-			token
-		);
-	}, [getUserInfos, token, usersId?.investor_pf, usersId?.investor_pj]);
+		getUserInfos(user?.enterprise, token);
+	}, [getUserInfos, token, user?.enterprise]);
 
 	return (
 		<DefaultTemplate>
-			<ImovelDetail imovelDetails={imovel} usersId={usersId} />
+			<ImovelDetail imovelDetails={imovel} usersId={user} token={token} />
 		</DefaultTemplate>
 	);
 };

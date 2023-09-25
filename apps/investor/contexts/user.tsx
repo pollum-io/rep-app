@@ -99,23 +99,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 		}
 	}, [isInvestor, userInfos, username, contributionId]);
 
-	// useEffect(() => {
-	// 	const contractLink = PersistentFramework.get("signContract") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	const investmentCheckoutId = PersistentFramework.get("investmentId") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	const contributionIdStorage = PersistentFramework.get("contributionId") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	console.log(contributionId, "contributionId");
-	// 	console.log(investmentId, "investmentId");
-
-	// 	setDocLink(String(contractLink));
-	// 	setInvestmentId(String(investmentCheckoutId));
-	// 	setContributionId(String(contributionIdStorage));
-	// }, [docLink, investmentId, contributionId]);
 	const providerValue = useMemo(
 		() => ({
 			isUserLogged,
