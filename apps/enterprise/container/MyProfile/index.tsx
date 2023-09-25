@@ -7,18 +7,20 @@ import { useUser } from "../../hooks/useUser";
 interface IMyProfileProps {
 	token: string;
 	enterpriseId: string;
+	enterpriseData: any;
 }
 
 export const MyProfileContainer: FunctionComponent<IMyProfileProps> = ({
 	enterpriseId,
 	token,
+	enterpriseData,
 }) => {
 	const { getUserInfos } = useUser();
 
 	useLayoutEffect(() => {
 		getUserInfos(enterpriseId, token);
 	}, [enterpriseId, getUserInfos, token]);
-
+	console.log(enterpriseData);
 	return (
 		<DefaultTemplate>
 			<motion.div
@@ -26,7 +28,7 @@ export const MyProfileContainer: FunctionComponent<IMyProfileProps> = ({
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5 }}
 			>
-				<CompaniePage />
+				<CompaniePage companieDetail={enterpriseData} />
 			</motion.div>
 		</DefaultTemplate>
 	);

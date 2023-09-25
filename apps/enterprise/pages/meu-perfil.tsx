@@ -7,10 +7,19 @@ import { UserLogin } from "ui";
 interface IMyProfilePage {
 	token: string;
 	enterpriseId: string;
+	enterpriseData: any;
 }
 
-const MyProfile: NextPage<IMyProfilePage> = ({ token, enterpriseId }) => (
-	<MyProfileContainer enterpriseId={enterpriseId} token={token} />
+const MyProfile: NextPage<IMyProfilePage> = ({
+	token,
+	enterpriseId,
+	enterpriseData,
+}) => (
+	<MyProfileContainer
+		enterpriseId={enterpriseId}
+		token={token}
+		enterpriseData={enterpriseData}
+	/>
 );
 
 export const getServerSideProps: GetServerSideProps = async ({

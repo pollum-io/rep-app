@@ -7,10 +7,12 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 	name,
 	occupation,
 }) => {
+	const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+
 	return (
 		<Flex flexDirection="column" gap="0.5rem" alignItems="center">
 			<Flex w="4rem" h="4rem">
-				<Img src={`/api/file/${image}`} />
+				<Img src={`${url}/file/${image}`} />
 			</Flex>
 			<Flex
 				fontFamily="Poppins"

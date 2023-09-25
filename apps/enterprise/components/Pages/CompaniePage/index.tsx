@@ -18,6 +18,12 @@ interface ICompanie {
 export const CompaniePage: FunctionComponent<ICompanie> = ({
 	companieDetail,
 }) => {
+	const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+	console.log(url, "url");
+	console.log(
+		companieDetail?.enterprise_logo,
+		"companieDetail?.enterprise_logo"
+	);
 	const { t } = useTranslation();
 	return (
 		<Flex flexDirection="column" gap="2rem" mt="6.25rem" mb="4.5rem">
@@ -33,8 +39,8 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 						<Flex flexDirection="column">
 							<Flex>
 								<CompanieDetails
-									logo={`/api/file/${companieDetail?.enterprise_logo}`}
-									banner={`/api/file/${companieDetail?.enterprise_banner}`}
+									logo={`${url}/file/${companieDetail?.enterprise_logo}`}
+									banner={`${url}/file/${companieDetail?.enterprise_banner}`}
 									name={companieDetail?.enterprise_name}
 									id={`CNPJ: ${companieDetail?.cnpj}`}
 									location={`${companieDetail?.address?.street}, ${companieDetail?.address?.neighborhood} - ${companieDetail?.address?.state}`}
