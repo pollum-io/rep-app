@@ -1,18 +1,18 @@
 import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
-import { fetchImovelDetail } from "services";
+import { fetchEnterpriseById, fetchImovelDetail } from "services";
 import { UserLogin } from "ui";
 import { ImovelContainer } from "../../container/Imovel";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 
 interface IImovelProps {
 	data: IOpportunitiesCard;
-	users: UserLogin;
+	user: UserLogin;
 	token: string;
 }
 
-const Imovel: NextPage<IImovelProps> = ({ data, users, token }) => {
-	return <ImovelContainer imovel={data} usersId={users} token={token} />;
+const Imovel: NextPage<IImovelProps> = ({ data, user, token }) => {
+	return <ImovelContainer imovel={data} user={user} token={token} />;
 };
 export const getServerSideProps: GetServerSideProps = async ({
 	req,
@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	return {
 		props: {
 			data: response,
-			users: user,
+			user: user,
 			token,
 		},
 	};

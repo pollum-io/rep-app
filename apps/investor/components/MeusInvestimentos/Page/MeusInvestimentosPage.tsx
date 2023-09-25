@@ -17,6 +17,7 @@ const PieChartComponent = dynamic(
 		ssr: false,
 	}
 );
+
 type ComponentProps = {
 	token: string;
 };

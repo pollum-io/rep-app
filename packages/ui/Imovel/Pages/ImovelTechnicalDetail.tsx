@@ -183,9 +183,8 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
-								investor_pf={usersId?.investor_pf}
-								investor_pj={usersId?.investor_pj}
 								unitPrice={imovelDetails?.min_investment}
+								isEnterprise={usersId.enterprise ? true : false}
 								opportunitiesDetails={imovelDetails?.opportunities_details}
 								cotas={cotas}
 								setCotas={setCotas}

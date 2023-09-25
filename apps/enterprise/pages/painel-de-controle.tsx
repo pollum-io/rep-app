@@ -2,22 +2,22 @@ import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import { UserDataPF, UserDataPJ, UserLogin } from "ui";
 import { DashboardContainer } from "../container/Dashboard";
-import { fetchGetInvestorPFById } from "services";
+import { fetchEnterpriseById, fetchGetInvestorPFById } from "services";
 interface IDashboardPage {
 	token: string;
-	userDataPJ: UserDataPF;
-	investorPjId: string;
+	enterpriseData: UserDataPF;
+	enterpriseId: string;
 }
 
 const Dashboard: NextPage<IDashboardPage> = ({
 	token,
-	userDataPJ,
-	investorPjId,
+	enterpriseData,
+	enterpriseId,
 }) => (
 	<DashboardContainer
 		token={token}
-		investorPjId={investorPjId}
-		userDataPJ={userDataPJ}
+		enterpriseId={enterpriseId}
+		enterpriseData={enterpriseData}
 	/>
 );
 
@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	const user: UserLogin = jwt_decode(token);
 
-	if (!user?.investor_pf) {
+	if (!user?.enterprise) {
 		return {
 			redirect: {
 				permanent: false,
@@ -52,16 +52,13 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(
-			String(user?.investor_pf),
-			token
-		);
+	if (user?.enterprise) {
+		const response = await fetchEnterpriseById(String(user?.enterprise), token);
 
 		return {
 			props: {
-				investorPjId: user?.investor_pf,
-				userDataPJ: response?.data,
+				enterpriseId: user?.enterprise,
+				enterpriseData: response,
 				token: token,
 			},
 		};

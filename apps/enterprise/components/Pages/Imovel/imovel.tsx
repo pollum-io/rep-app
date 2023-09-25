@@ -20,6 +20,7 @@ import { useRegisterSteps } from "../../../hooks";
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
 	usersId: UserLogin;
+	token: string;
 }
 
 export const ImovelDetail: FunctionComponent<IImovelProps> = ({

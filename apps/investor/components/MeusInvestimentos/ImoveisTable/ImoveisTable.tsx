@@ -41,7 +41,6 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 		fetchData();
 	}, [token, currentPage, investmentData]);
 
-	console.log(investmentData, "add");
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"0.75rem"}>
 			<ImoveisTableHeader />

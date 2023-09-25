@@ -15,10 +15,9 @@ import {
 
 interface UserData {
 	token?: string;
-	user?: UserLogin;
-	userDataPF?: UserDataPF;
-	userDataPJ?: UserDataPJ;
+	enterpriseId?: string;
 	investments?: any[];
+	enterpriseData: any;
 	contribution?: IContribution;
 }
 
@@ -26,6 +25,10 @@ export const FinancialDisbursementContainer: FunctionComponent<UserData> = (
 	props
 ) => {
 	const { getUserInfos } = useUser();
+
+	useLayoutEffect(() => {
+		getUserInfos(props?.enterpriseId, props?.token);
+	}, [getUserInfos, props?.enterpriseId, props?.token]);
 
 	return (
 		<DefaultTemplate>

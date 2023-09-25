@@ -1,10 +1,9 @@
 import { Flex, Img, Text, Icon } from "@chakra-ui/react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { FiMapPin } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
-import { fetchEnterpriseById } from "services";
 
 interface IImovelInfoDefault {
 	imovelDetails?: IOpportunitiesCard;
@@ -13,15 +12,9 @@ interface IImovelInfoDefault {
 export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 	imovelDetails,
 }) => {
-	const [enterpriseName, setEnterpriseName] = useState();
 	const { hasToken } = useOpportunities();
 	const [cota] = useState<number>(0);
 	const { t } = useTranslation();
-
-	useMemo(async () => {
-		const name = await fetchEnterpriseById(imovelDetails?.enterprise_id);
-		setEnterpriseName(name?.data?.enterprise_name);
-	}, [imovelDetails?.enterprise_id]);
 
 	return (
 		<Flex flexDir={"column"}>

@@ -1,36 +1,52 @@
-import { Login } from "../../components/Pages/Login";
-import { UserDataPF, UserDataPJ } from "ui";
-import { FunctionComponent, useEffect, useState } from "react";
-import {
-	Button,
-	Flex,
-	Img,
-	Text,
-	useDisclosure,
-	useMediaQuery,
-} from "@chakra-ui/react";
+import { FunctionComponent, useState, useLayoutEffect } from "react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { GeralInfoEnterpriseComponent } from "../../components/Dashboard/GeralInfoEnterpriseComponent";
-import PrevAportesChart from "../../components/Dashboard/PrevAportesChart";
-import PrevMonthAportesChart from "../../components/Dashboard/PrevMonthAportesChart";
-import ImoveisTable from "./ImoveisTable/ImoveisTable";
-import { EmptyInvest } from "./EmptyInvest";
+import ImoveisTable from "../../components/Dashboard/ImoveisTable/ImoveisTable";
+import { EmptyInvest } from "../../components/Dashboard/EmptyInvest";
+import { useUser } from "../../hooks/useUser";
+import dynamic from "next/dynamic";
 
+const PrevAportesChart = dynamic(
+	async () => {
+		const mod = await import("../../components/Dashboard/PrevAportesChart");
+		return mod.PrevAportesChart;
+	},
+	{
+		ssr: false,
+	}
+);
+
+const PrevMonthAportesChart = dynamic(
+	async () => {
+		const mod = await import(
+			"../../components/Dashboard/PrevMonthAportesChart"
+		);
+		return mod.PrevMonthAportesChart;
+	},
+	{
+		ssr: false,
+	}
+);
 interface IDashboardContainer {
 	token: string;
-	userDataPJ: UserDataPF;
-	investorPjId: string;
+	enterpriseData: any;
+	enterpriseId: string;
 }
 
 export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
-	investorPjId,
+	enterpriseId,
 	token,
-	userDataPJ,
+	enterpriseData,
 }) => {
 	const [buttonstate, setButtonState] = useState("todos");
 	const [filteredArray, setFilteredArray] = useState<any[]>();
-
 	const [haveInvestment, setHaveInvestment] = useState(true);
+	const { getUserInfos } = useUser();
+
+	useLayoutEffect(() => {
+		getUserInfos(enterpriseId, token);
+	}, [enterpriseId, getUserInfos, token]);
 
 	const filterButtons = [
 		{ buttonstate: "todos", label: "Todos" },

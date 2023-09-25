@@ -2,8 +2,11 @@ import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import { UserLogin } from "ui";
 import { LoginContainer } from "../container/Login";
+interface ILogin {
+	token: string;
+}
 
-const Login: NextPage = () => <LoginContainer />;
+const Login: NextPage<ILogin> = ({ token }) => <LoginContainer token={token} />;
 
 export default Login;
 
@@ -24,10 +27,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 		: {
 				redirect: {
 					permanent: false,
-					destination:
-						!user?.investor_pf || !user?.investor_pj
-							? "/"
-							: "/painel-de-controle",
+					destination: !user?.enterprise ? "/" : "/painel-de-controle",
 				},
 				props: { user, token },
 		  };

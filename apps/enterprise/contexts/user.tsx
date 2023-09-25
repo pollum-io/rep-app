@@ -1,5 +1,5 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
-import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
+import { fetchEnterpriseById } from "services";
 import { PersistentFramework } from "ui";
 
 interface IRegister {
@@ -28,8 +28,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
 	const [isUserLogged, setIsUserLogged] = useState<boolean>(false);
 	const [isInvestor, setIsInvestor] = useState<boolean>(false);
-	const [isInvestorPerfilCompleted, setIsInvestorPerfilCompleted] =
-		useState<boolean>(false);
 
 	const [userInfos, setUserInfos] = useState<string>();
 	const [username, setUsername] = useState<string>();
@@ -43,32 +41,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 		let name = "";
 		setUserInfos(id);
 
-		const investorPF = await fetchGetInvestorPFById(id, token);
-
-		if (investorPF) {
-			name = investorPF.data?.full_name;
+		const enterpriseData = await fetchEnterpriseById(id, token);
+		if (enterpriseData) {
+			name = enterpriseData?.enterprise_name;
 			setUsername(name);
-			setIsInvestor(true);
-			setIsInvestorPerfilCompleted(
-				investorPF?.data?.is_profile_filled === true ? true : false
-			);
 			PersistentFramework.add("name", String(name));
-			PersistentFramework.add("isInvestor", { isInvestor: true });
 			PersistentFramework.add("id", String(id));
 			return;
-		}
-
-		const investorPJ = await fetchGetInvestorPJById(id, token);
-		if (investorPJ) {
-			name = investorPJ.data?.full_name;
-			setUsername(name);
-			setIsInvestor(true);
-			setIsInvestorPerfilCompleted(
-				investorPJ?.data?.is_profile_filled === true ? true : false
-			);
-			PersistentFramework.add("name", String(name));
-			PersistentFramework.add("isInvestor", { isInvestor: true });
-			PersistentFramework.add("id", String(id));
 		}
 	};
 
@@ -85,38 +64,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			setUsername(String(name));
 			return;
 		}
-		if (isInvestor) {
-			const investor = PersistentFramework.get("isInvestor") as {
-				[k: string]: boolean;
-			};
-			if (investor?.isInvestor === true) {
-				setIsInvestor(true);
-			} else {
-				setIsInvestor(false);
-			}
-			return;
-		} else {
-			return;
-		}
 	}, [isInvestor, userInfos, username, contributionId]);
 
-	// useEffect(() => {
-	// 	const contractLink = PersistentFramework.get("signContract") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	const investmentCheckoutId = PersistentFramework.get("investmentId") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	const contributionIdStorage = PersistentFramework.get("contributionId") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	console.log(contributionId, "contributionId");
-	// 	console.log(investmentId, "investmentId");
-
-	// 	setDocLink(String(contractLink));
-	// 	setInvestmentId(String(investmentCheckoutId));
-	// 	setContributionId(String(contributionIdStorage));
-	// }, [docLink, investmentId, contributionId]);
 	const providerValue = useMemo(
 		() => ({
 			isUserLogged,
@@ -129,7 +78,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			setIsInvestor,
 			firstAccess,
 			setFirstAccess,
-			isInvestorPerfilCompleted,
 			docLink,
 			setDocLink,
 			investmentId,
@@ -138,15 +86,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 			setContributionId,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[
-			isUserLogged,
-			userInfos,
-			username,
-			investmentId,
-			contributionId,
-			docLink,
-			isInvestorPerfilCompleted,
-		]
+		[isUserLogged, userInfos, username, investmentId, contributionId, docLink]
 	);
 
 	return (

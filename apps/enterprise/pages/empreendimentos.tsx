@@ -1,16 +1,16 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import { EmpreendimentosContainer } from "../container/Empreendimentos";
-import { fetchGetInvestorPFById } from "services";
+import { fetchEnterpriseById, fetchGetInvestorPFById } from "services";
 import { UserLogin } from "ui";
 
 interface IPage {
 	token: string;
-	investor_pf: string;
+	enterpriseId: string;
 }
 
-const Empreendimentos: NextPage<IPage> = ({ token, investor_pf }) => (
-	<EmpreendimentosContainer token={token} investor_pf={investor_pf} />
+const Empreendimentos: NextPage<IPage> = ({ token, enterpriseId }) => (
+	<EmpreendimentosContainer token={token} enterpriseId={enterpriseId} />
 );
 
 export const getServerSideProps: GetServerSideProps = async ({
@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	const user: UserLogin = jwt_decode(token);
 
-	if (!user?.investor_pf) {
+	if (!user?.enterprise) {
 		return {
 			redirect: {
 				permanent: false,
@@ -44,16 +44,13 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	if (user?.investor_pf) {
-		const response = await fetchGetInvestorPFById(
-			String(user?.investor_pf),
-			token
-		);
+	if (user?.enterprise) {
+		const response = await fetchEnterpriseById(String(user?.enterprise), token);
 
 		return {
 			props: {
-				investorPjId: user?.investor_pf,
-				userDataPJ: response?.data,
+				enterpriseId: user?.enterprise,
+				enterpriseData: response,
 				token: token,
 			},
 		};
