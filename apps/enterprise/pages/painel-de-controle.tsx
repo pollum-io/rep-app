@@ -1,23 +1,33 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
-import { UserDataPF, UserDataPJ, UserLogin } from "ui";
+import { UserDataPF, UserLogin } from "ui";
 import { DashboardContainer } from "../container/Dashboard";
-import { fetchEnterpriseById, fetchGetInvestorPFById } from "services";
+import {
+	fetchEnterpriseById,
+	fetchEnterpriseForecastGeneral,
+	fetchEnterpriseForecastMonthly,
+} from "services";
 interface IDashboardPage {
 	token: string;
 	enterpriseData: UserDataPF;
 	enterpriseId: string;
+	monthlyForecastResponse: any;
+	generalForecastResponse: any;
 }
 
 const Dashboard: NextPage<IDashboardPage> = ({
 	token,
 	enterpriseData,
 	enterpriseId,
+	monthlyForecastResponse,
+	generalForecastResponse,
 }) => (
 	<DashboardContainer
 		token={token}
 		enterpriseId={enterpriseId}
 		enterpriseData={enterpriseData}
+		monthlyForecast={monthlyForecastResponse}
+		generalForecast={generalForecastResponse}
 	/>
 );
 
@@ -54,11 +64,21 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	if (user?.enterprise) {
 		const response = await fetchEnterpriseById(String(user?.enterprise), token);
+		const monthlyForecastResponse = await fetchEnterpriseForecastMonthly(
+			String(user?.enterprise),
+			token
+		);
+		const generalForecastResponse = await fetchEnterpriseForecastGeneral(
+			String(user?.enterprise),
+			token
+		);
 
 		return {
 			props: {
 				enterpriseId: user?.enterprise,
 				enterpriseData: response,
+				monthlyForecastResponse,
+				generalForecastResponse,
 				token: token,
 			},
 		};

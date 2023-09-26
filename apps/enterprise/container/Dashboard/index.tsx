@@ -32,12 +32,16 @@ interface IDashboardContainer {
 	token: string;
 	enterpriseData: any;
 	enterpriseId: string;
+	monthlyForecast: any;
+	generalForecast: any;
 }
 
 export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	enterpriseId,
 	token,
 	enterpriseData,
+	monthlyForecast,
+	generalForecast,
 }) => {
 	const [buttonstate, setButtonState] = useState("todos");
 	const [filteredArray, setFilteredArray] = useState<any[]>();
@@ -104,7 +108,7 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 							>
 								Previsão de aportes totais{" "}
 							</Text>
-							<PrevAportesChart />
+							<PrevAportesChart generalForecast={generalForecast} />
 						</Flex>
 						<Flex flexDir={"column"} mt={"5rem"}>
 							<Text

@@ -1,16 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React, { FunctionComponent, useState } from "react";
-import {
-	BarChart,
-	Bar,
-	XAxis,
-	YAxis,
-	Tooltip,
-	LabelList,
-	Rectangle,
-	ResponsiveContainer,
-	Cell,
-} from "recharts";
+import { BarChart, Bar, LabelList, Rectangle, Cell } from "recharts";
+
 const mockData: IScheduleItem[] = [
 	{
 		period: 1,
@@ -112,22 +103,6 @@ const mockDataa = [
 	},
 ];
 
-interface ICustomBarLabelProps {
-	x?: number;
-	y?: number;
-	width?: number;
-	value?: number;
-}
-
-interface ICustomBarProps {
-	fill?: string;
-	x?: number;
-	y?: number;
-	width?: number;
-	height?: number;
-	value?: number;
-}
-
 interface IScheduleItem {
 	period?: number;
 	cost: number;
@@ -137,39 +112,91 @@ interface IScheduleItem {
 	cash_flow: number;
 }
 
-const formatCurrencyValue = (value: number) => {
-	return (value / 100).toLocaleString("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	});
-};
+interface IPrevAportes {
+	generalForecast: any;
+}
 
-const getBarColor = (entryValue: string | number) => {
-	return Number(entryValue) >= 0 ? "#38A169" : "#E53E3E";
-};
-
-const CustomBarLabel = (props: ICustomBarLabelProps) => {
-	const { x, y, width, value } = props;
-
-	return (
-		<>
-			{x && y && width && value && (
-				<text x={x} y={y} fill="black" fontSize={12} textAnchor="middle">
-					aaaaaaaaa{" "}
-				</text>
-			)}
-		</>
-	);
-};
-
-export const PrevAportesChart: FunctionComponent = () => {
-	const chartData = mockData.map((item, index) => ({
-		name: `Item ${index + 1}`,
-		value: item.cash_flow,
-		fill: getBarColor(item.cash_flow),
-		cost: item.cost, // Inclua o valor de "cost" no mapeamento de dados
-	}));
+export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
+	generalForecast,
+}) => {
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
+
+	const yearlyData = Object.entries(generalForecast.yearlyData).map(
+		([year, value]) => ({
+			name: year,
+			value: value,
+		})
+	);
+	console.log(yearlyData, "generalForecast");
+
+	const formatCurrencyValue = (value: number) => {
+		return (value / 1).toLocaleString("pt-BR", {
+			style: "currency",
+			currency: "BRL",
+		});
+	};
+
+	const CustomBarLabel = (props: any) => {
+		const { x, y, width, value, index } = props;
+		const centerX = x + width / 8;
+
+		return (
+			<>
+				{x && y && width && value && (
+					<text
+						x={64}
+						y={y + 20}
+						fill="white"
+						fontSize={12}
+						fontWeight={500}
+						textAnchor="top"
+						style={{ transition: "all 0.5s ease-in-out", zIndex: 9999999 }}
+						onMouseEnter={() => setHighlightedCell(index)}
+						onMouseLeave={() => setHighlightedCell(null)}
+					>
+						{formatCurrencyValue(value)}
+					</text>
+				)}
+			</>
+		);
+	};
+
+	const chartData = yearlyData.map((item, index) => ({
+		name: `Item ${index + 1}`,
+		value: item.value,
+		fill: "#48BB78",
+	}));
+
+	const CustomBar = (props: any) => {
+		const { fill, x, y, width, height, value, index } = props;
+		const borderRadius = 8; // Adjust the border radius as needed
+		const isPositive = (value ? value : 0) >= 0;
+
+		return (
+			<g>
+				<Rectangle
+					x={48}
+					y={y}
+					width={105}
+					height={height}
+					radius={
+						isPositive
+							? [borderRadius, borderRadius, 0, 0]
+							: [borderRadius, borderRadius, 0, 0]
+					}
+					fill={fill}
+					onMouseEnter={() => setHighlightedCell(index)}
+					onMouseLeave={() => setHighlightedCell(null)}
+					style={{
+						filter:
+							highlightedCell === index
+								? `drop-shadow(0px 0px 4px #1000005a)`
+								: "null",
+					}}
+				/>
+			</g>
+		);
+	};
 
 	return (
 		<Flex flexDir={"column"} w={"100%"}>
@@ -181,7 +208,7 @@ export const PrevAportesChart: FunctionComponent = () => {
 				px={"0.8rem"}
 				mb={"2rem"}
 			>
-				{mockDataa.map((data, index) => (
+				{yearlyData.map((data, index) => (
 					<Flex
 						key={index}
 						width={"10.9125rem"}
@@ -196,30 +223,17 @@ export const PrevAportesChart: FunctionComponent = () => {
 							onMouseLeave={() => setHighlightedCell(null)}
 							fontWeight={highlightedCell === index ? "500" : "400"}
 						>
-							{data.year}
+							{data.name}
 						</Text>
 					</Flex>
 				))}
 			</Flex>
 			<BarChart width={1104} height={90} data={chartData}>
-				<Bar radius={[8, 8, 0, 0]} dataKey="value">
+				<Bar radius={[8, 8, 0, 0]} dataKey="value" shape={<CustomBar />}>
+					<LabelList dataKey="value" content={<CustomBarLabel />} />
 					{chartData.map((entry, index) => (
-						<Cell
-							key={`cell-${index}`}
-							fill={entry.fill}
-							width={115}
-							onMouseEnter={() => setHighlightedCell(index)}
-							onMouseLeave={() => setHighlightedCell(null)}
-							style={{
-								filter:
-									highlightedCell === index
-										? `drop-shadow(0px 0px 4px #1000005a)`
-										: "null",
-							}}
-						>
-							<LabelList dataKey="cost" content={<CustomBarLabel />} />
-						</Cell>
-					))}
+						<Cell key={`cell-${index}`} fill={entry.fill} />
+					))}{" "}
 				</Bar>
 			</BarChart>
 		</Flex>

@@ -35,3 +35,5 @@ export * from "./fetchSignContract";
 export * from "./fetchTurnPerfilEdit";
 export * from "./fetchUserApproveData";
 export * from "./fetchLoginEnterprise";
+export * from "./fetchEnterpriseForecastMonthly";
+export * from "./fetchEnterpriseForecastGeneral";

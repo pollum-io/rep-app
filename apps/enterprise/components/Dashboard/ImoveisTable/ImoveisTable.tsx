@@ -29,8 +29,8 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await fetchInvestmentByUser(token, currentPage);
-			setInvestmentData(response.investments);
-			setTotalPages(response.totalPages);
+			setInvestmentData(response?.investments);
+			setTotalPages(response?.totalPages);
 		};
 
 		fetchData();
