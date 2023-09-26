@@ -20,7 +20,7 @@ export const MyProfileContainer: FunctionComponent<IMyProfileProps> = ({
 	useLayoutEffect(() => {
 		getUserInfos(enterpriseId, token);
 	}, [enterpriseId, getUserInfos, token]);
-	console.log(enterpriseData);
+
 	return (
 		<DefaultTemplate>
 			<motion.div

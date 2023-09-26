@@ -30,18 +30,18 @@ const PrevMonthAportesChart = dynamic(
 );
 interface IDashboardContainer {
 	token: string;
-	enterpriseData: any;
 	enterpriseId: string;
-	monthlyForecast: any;
-	generalForecast: any;
+	monthlyForecast: any; //TODO
+	generalForecast: any; //TODO
+	shareholders: any; //TODO
 }
 
 export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	enterpriseId,
 	token,
-	enterpriseData,
 	monthlyForecast,
 	generalForecast,
+	shareholders,
 }) => {
 	const [buttonstate, setButtonState] = useState("todos");
 	const [filteredArray, setFilteredArray] = useState<any[]>();
@@ -51,7 +51,7 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	useLayoutEffect(() => {
 		getUserInfos(enterpriseId, token);
 	}, [enterpriseId, getUserInfos, token]);
-
+	console.log(shareholders);
 	const filterButtons = [
 		{ buttonstate: "todos", label: "Todos" },
 		{ buttonstate: "em dia", label: "Em dia" },
@@ -155,7 +155,7 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 							</Flex>
 							<Flex>
 								<ImoveisTable
-									data={filteredArray}
+									data={shareholders}
 									token={token}
 									buttonState={buttonstate}
 								/>

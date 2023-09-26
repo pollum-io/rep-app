@@ -3,11 +3,43 @@ import { FunctionComponent, useMemo } from "react";
 import { useRouter } from "next/router";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { motion } from "framer-motion";
-import { formatDateOnlyDayMonthYear, formatDateOnlyMonthYear } from "ui";
+import {
+	formatCPF,
+	formatDateOnlyDayMonthYear,
+	formatDateOnlyMonthYear,
+} from "ui";
 
 const MotionFlex = motion(Flex);
 
-export const ImoveisTableRow: FunctionComponent<any> = (props) => {
+const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+
+interface IShareholders {
+	oportunityImage: string;
+	oportunityName: string;
+	oportunityType: string;
+	oportunityUrl: string;
+	investorName: string;
+	investorCpf: string;
+	totalInvested: number;
+	cotas: number;
+	paidInstallments: number;
+	numberOfInstallments: number;
+	status: string;
+}
+
+export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
+	oportunityImage,
+	oportunityName,
+	oportunityType,
+	investorName,
+	investorCpf,
+	totalInvested,
+	cotas,
+	paidInstallments,
+	numberOfInstallments,
+	status,
+	oportunityUrl,
+}) => {
 	const { push } = useRouter();
 
 	const getStatusColorAndText = useMemo(() => {
@@ -50,35 +82,31 @@ export const ImoveisTableRow: FunctionComponent<any> = (props) => {
 	}, []);
 
 	const totalInvestColor = useMemo(() => {
-		if (
-			props?.status === "PendingSignature" ||
-			props?.status === "PendingPayment"
-		) {
+		if (status === "PendingSignature" || status === "PendingPayment") {
 			return "#CBD5E0";
 		} else {
 			return "#171923";
 		}
-	}, [props?.status]);
+	}, [status]);
 
-	const statusAction = getStatusColorAndText(props?.status)?.action;
+	const statusAction = getStatusColorAndText(status)?.action;
 	const isAssinarContrato = statusAction === "Assinar contrato";
 	const isRealizarPagamento = statusAction === "Realizar pagamento";
-	const isVerAportesRetornos =
-		statusAction === "Ver aportes e retornos" && !props.isModal;
+	const isVerAportesRetornos = statusAction === "Ver aportes e retornos";
 
-	const handleButtonClick = () => {
-		if (isAssinarContrato) {
-			window.open(props?.url_unsigned_document, "_blank");
-		} else if (isRealizarPagamento) {
-			push({
-				pathname: `/pagamento/`,
-				query: { id: props?.contributionId },
-			});
-		} else if (isVerAportesRetornos) {
-			props.setEmpreendimento(props);
-			props.modalOpen();
-		}
-	};
+	// const handleButtonClick = () => {
+	// 	if (isAssinarContrato) {
+	// 		window.open(props?.url_unsigned_document, "_blank");
+	// 	} else if (isRealizarPagamento) {
+	// 		push({
+	// 			pathname: `/pagamento/`,
+	// 			query: { id: props?.contributionId },
+	// 		});
+	// 	} else if (isVerAportesRetornos) {
+	// 		props.setEmpreendimento(props);
+	// 		props.modalOpen();
+	// 	}
+	// };
 
 	return (
 		<MotionFlex
@@ -91,7 +119,7 @@ export const ImoveisTableRow: FunctionComponent<any> = (props) => {
 			animate="visible"
 			borderRadius={"0.75rem"}
 			mb={"0.75rem"}
-			cursor={!props.isModal ? "pointer" : "unset"}
+			cursor={"pointer"}
 			_hover={{
 				boxShadow:
 					"0px 2px 4px -1px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.10);",
@@ -104,7 +132,7 @@ export const ImoveisTableRow: FunctionComponent<any> = (props) => {
 				alignItems={"center"}
 				onClick={() =>
 					push({
-						pathname: `/oportunidades/${props?.opportunity_url}`,
+						pathname: `/oportunidades/${oportunityUrl}`,
 					})
 				}
 			>
@@ -114,7 +142,7 @@ export const ImoveisTableRow: FunctionComponent<any> = (props) => {
 						h={"2.4375rem"}
 						objectFit={"cover"}
 						borderLeftRadius={"0.75rem"}
-						src={`/images/backgrounds/Image-3.png`}
+						src={`${url}/file/${oportunityImage}`}
 					/>
 					<Flex
 						position="absolute"
@@ -141,14 +169,12 @@ export const ImoveisTableRow: FunctionComponent<any> = (props) => {
 						fontWeight={"500"}
 						color={"#171923"}
 					>
-						{/* {props?.name?.length >= 15
-							? `${props?.name?.slice(0, 15)}...`
-							: props?.name} */}
-						Golden Plaza
+						{oportunityName.length >= 27
+							? `${oportunityName.slice(0, 27)}...`
+							: oportunityName}
 					</Text>
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#2D3748"}>
-						{/* {props?.enterprise_type} */}
-						Tipo do empreendimento
+						{oportunityType}
 					</Text>
 				</Flex>
 			</Flex>
@@ -161,35 +187,34 @@ export const ImoveisTableRow: FunctionComponent<any> = (props) => {
 			>
 				<Flex flex="1.5" flexDir={"column"}>
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
-						Ana Carola Oliveira e Costa...{" "}
+						{investorName}
 					</Text>
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
-						000.000.000-00{" "}
+						{formatCPF(investorCpf)}
 					</Text>
 				</Flex>
 				<Flex flex="1" flexDir={"column"}>
 					<Text fontSize={"0.75rem"} color={totalInvestColor}>
-						{/* {formatCurrency(props?.total_invested)} */}
-						R$ 200.000,00
+						{formatCurrency(totalInvested)}
 					</Text>
 					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"#2D3748"}>
-						{/* {props?.percentageInvestment?.toFixed(2)} */}2 cotas
+						{cotas} cotas
 					</Text>
 				</Flex>
 				<Flex flex="1.3" flexDir={"column"}>
 					<Text fontSize={"0.75rem"} color={"#171923"} fontWeight={"500"}>
-						R$ 10.000,00{" "}
+						R$ FALTANDO{" "}
 					</Text>
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#2D3748"}>
-						1 de 10{" "}
+						{paidInstallments} de {numberOfInstallments}
 					</Text>
 				</Flex>
 			</Flex>
 			<Flex
 				flex="2"
 				as={"a"}
-				href={isAssinarContrato ? props?.url_unsigned_document : null}
-				onClick={() => handleButtonClick()}
+				// href={isAssinarContrato ? props?.url_unsigned_document : null}
+				// onClick={() => handleButtonClick()}
 				target="_blank"
 				h={"100%"}
 				alignItems={"center"}
@@ -202,12 +227,12 @@ export const ImoveisTableRow: FunctionComponent<any> = (props) => {
 						textAlign={"center"}
 						borderRadius={"2.625rem"}
 						fontSize={"0.75rem"}
-						bg={getStatusColorAndText(props?.status)?.bg}
-						color={getStatusColorAndText(props?.status)?.color}
+						bg={getStatusColorAndText(status)?.bg}
+						color={getStatusColorAndText(status)?.color}
 						fontWeight={"500"}
 						_hover={{}}
 					>
-						{getStatusColorAndText(props?.status)?.statusText}
+						{getStatusColorAndText(status)?.statusText}
 					</Button>
 				</Flex>
 				<Flex flex="1">
@@ -224,8 +249,8 @@ export const ImoveisTableRow: FunctionComponent<any> = (props) => {
 						color={"#007D99"}
 						fontWeight={"500"}
 						_hover={{}}
-						href={isAssinarContrato ? props?.url_unsigned_document : null}
-						onClick={() => handleButtonClick()}
+						// href={isAssinarContrato ? props?.url_unsigned_document : null}
+						// onClick={() => handleButtonClick()}
 					>
 						Visualizar{" "}
 					</Button>

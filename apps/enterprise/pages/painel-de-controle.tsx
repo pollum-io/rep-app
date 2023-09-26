@@ -6,28 +6,29 @@ import {
 	fetchEnterpriseById,
 	fetchEnterpriseForecastGeneral,
 	fetchEnterpriseForecastMonthly,
+	fetchEnterpriseShareholders,
 } from "services";
 interface IDashboardPage {
 	token: string;
-	enterpriseData: UserDataPF;
 	enterpriseId: string;
-	monthlyForecastResponse: any;
-	generalForecastResponse: any;
+	monthlyForecastResponse: any; //TODO
+	generalForecastResponse: any; //TODO
+	shareholdersResponse: any; //TODO
 }
 
 const Dashboard: NextPage<IDashboardPage> = ({
 	token,
-	enterpriseData,
 	enterpriseId,
 	monthlyForecastResponse,
 	generalForecastResponse,
+	shareholdersResponse,
 }) => (
 	<DashboardContainer
 		token={token}
 		enterpriseId={enterpriseId}
-		enterpriseData={enterpriseData}
 		monthlyForecast={monthlyForecastResponse}
 		generalForecast={generalForecastResponse}
+		shareholders={shareholdersResponse}
 	/>
 );
 
@@ -63,7 +64,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 
 	if (user?.enterprise) {
-		const response = await fetchEnterpriseById(String(user?.enterprise), token);
 		const monthlyForecastResponse = await fetchEnterpriseForecastMonthly(
 			String(user?.enterprise),
 			token
@@ -72,13 +72,17 @@ export const getServerSideProps: GetServerSideProps = async ({
 			String(user?.enterprise),
 			token
 		);
+		const shareholdersResponse = await fetchEnterpriseShareholders(
+			String(user?.enterprise),
+			token
+		);
 
 		return {
 			props: {
 				enterpriseId: user?.enterprise,
-				enterpriseData: response,
 				monthlyForecastResponse,
 				generalForecastResponse,
+				shareholdersResponse,
 				token: token,
 			},
 		};
