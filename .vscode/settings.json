@@ -10,6 +10,9 @@
 		"/packages/ui/GlobalDtos",
 		"/packages/ui/utils",
 		"/apps/enterprise/components",
-		"/packages/ui/Faturas"
+		"/packages/ui/Faturas",
+		"/packages/services/investor",
+		"/packages/services/enterprise",
+		"/packages/services/sharedFetchs"
 	]
 }
