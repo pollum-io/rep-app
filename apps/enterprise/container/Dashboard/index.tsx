@@ -51,7 +51,7 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	useLayoutEffect(() => {
 		getUserInfos(enterpriseId, token);
 	}, [enterpriseId, getUserInfos, token]);
-	console.log(shareholders);
+
 	const filterButtons = [
 		{ buttonstate: "todos", label: "Todos" },
 		{ buttonstate: "em dia", label: "Em dia" },
@@ -95,7 +95,7 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	// };
 	return (
 		<DefaultTemplate>
-			<GeralInfoEnterpriseComponent />
+			<GeralInfoEnterpriseComponent generalForecast={generalForecast} />
 			{haveInvestment ? (
 				<>
 					<Flex margin={"0 auto"} flexDir={"column"}>

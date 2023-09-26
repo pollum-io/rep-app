@@ -1,7 +1,19 @@
 import React from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
+import { formatCurrency } from "ui";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
-export const GeralInfoEnterpriseComponent: React.FC = () => {
+interface IGeralInfoEnterprise {
+	generalForecast: any;
+}
+
+export const GeralInfoEnterpriseComponent: React.FC<IGeralInfoEnterprise> = ({
+	generalForecast,
+}) => {
+	const currentDate = new Date();
+
+	const formattedDate = format(currentDate, "dd/MMM/yy", { locale: ptBR });
 	return (
 		<>
 			<Flex
@@ -46,7 +58,7 @@ export const GeralInfoEnterpriseComponent: React.FC = () => {
 						Visão Geral{" "}
 					</Text>
 					<Text fontWeight={"400"} fontSize={"0.875rem"} color={"#fff"}>
-						Esse é o seu portfólio de {}
+						Esse é o seu portfólio de {formattedDate}
 					</Text>
 				</Flex>
 				<Flex flexDir={"row"} w={"100%"} justifyContent={"end"}>
@@ -80,7 +92,14 @@ export const GeralInfoEnterpriseComponent: React.FC = () => {
 								<Img src="/icons/info-circle-littlegray.svg" />
 							</Flex>
 							<Flex gap={"1.5"}>
-								<Text fontSize={"1.125rem"} fontWeight={"600"}></Text>
+								<Text
+									fontSize={"1.125rem"}
+									fontWeight={"600"}
+									color={"#171923"}
+								>
+									{" "}
+									{formatCurrency(generalForecast?.totalContributions)}
+								</Text>
 							</Flex>
 						</Flex>
 						<Flex flexDir={"column"} gap={"0.25rem"}>
@@ -95,8 +114,14 @@ export const GeralInfoEnterpriseComponent: React.FC = () => {
 								<Img src="/icons/info-circle-littlegray.svg" />
 							</Flex>
 							<Flex gap={"0.75rem"}>
-								<Text fontSize={"1.125rem"} fontWeight={"600"}></Text>
-								<Text color={"#38A169"} fontSize={"1.125rem"}></Text>
+								<Text
+									fontSize={"1.125rem"}
+									fontWeight={"600"}
+									color={"#171923"}
+								>
+									{" "}
+									{formatCurrency(generalForecast?.totalRaised)}
+								</Text>
 							</Flex>
 						</Flex>
 						<Flex flexDir={"column"} gap={"0.25rem"}>
@@ -112,11 +137,12 @@ export const GeralInfoEnterpriseComponent: React.FC = () => {
 							</Flex>
 							<Flex gap={"0.75rem"}>
 								<Text
-									color={"#38A169"}
+									color={"#171923"}
 									fontSize={"1.125rem"}
 									fontWeight={"600"}
-								></Text>
-								<Text color={"#38A169"} fontSize={"1.125rem"}></Text>
+								>
+									{generalForecast?.totalShareholders}
+								</Text>
 							</Flex>
 						</Flex>
 					</Flex>
