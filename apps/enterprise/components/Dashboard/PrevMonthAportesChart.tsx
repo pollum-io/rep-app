@@ -1,127 +1,20 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React, { FunctionComponent, useState } from "react";
-import {
-	BarChart,
-	Bar,
-	XAxis,
-	YAxis,
-	Tooltip,
-	LabelList,
-	Rectangle,
-	ResponsiveContainer,
-	Cell,
-} from "recharts";
-const mockData: IScheduleItem[] = [
-	{
-		period: 1,
-		cost: 1000,
-		total_revenue: 1500,
-		total_revenue_percentage: 50,
-		units_sold: 200,
-		cash_flow: 500,
-	},
-	{
-		period: 2,
-		cost: 1200,
-		total_revenue: 1800,
-		total_revenue_percentage: 60,
-		units_sold: 250,
-		cash_flow: 600,
-	},
-	{
-		period: 3,
-		cost: 900,
-		total_revenue: 1350,
-		total_revenue_percentage: 45,
-		units_sold: 180,
-		cash_flow: 450,
-	},
-	{
-		period: 4,
-		cost: 1100,
-		total_revenue: 1600,
-		total_revenue_percentage: 55,
-		units_sold: 220,
-		cash_flow: 500,
-	},
-	{
-		period: 5,
-		cost: 1300,
-		total_revenue: 1700,
-		total_revenue_percentage: 52,
-		units_sold: 240,
-		cash_flow: 400,
-	},
-	{
-		period: 6,
-		cost: 950,
-		total_revenue: 1400,
-		total_revenue_percentage: 47,
-		units_sold: 190,
-		cash_flow: 450,
-	},
-	{
-		period: 7,
-		cost: 1050,
-		total_revenue: 1550,
-		total_revenue_percentage: 53,
-		units_sold: 210,
-		cash_flow: 500,
-	},
-	{
-		period: 8,
-		cost: 1150,
-		total_revenue: 1650,
-		total_revenue_percentage: 57,
-		units_sold: 230,
-		cash_flow: 500,
-	},
-	{
-		period: 9,
-		cost: 1150,
-		total_revenue: 1650,
-		total_revenue_percentage: 57,
-		units_sold: 230,
-		cash_flow: 500,
-	},
-	{
-		period: 10,
-		cost: 1150,
-		total_revenue: 1650,
-		total_revenue_percentage: 57,
-		units_sold: 230,
-		cash_flow: 500,
-	},
-	{
-		period: 11,
-		cost: 1150,
-		total_revenue: 1650,
-		total_revenue_percentage: 57,
-		units_sold: 230,
-		cash_flow: 500,
-	},
-	{
-		period: 12,
-		cost: 1150,
-		total_revenue: 1650,
-		total_revenue_percentage: 57,
-		units_sold: 230,
-		cash_flow: 500,
-	},
-];
-const mockDataa = [
-	{ month: "Jan", value: 500 },
-	{ month: "Feb", value: -300 },
-	{ month: "Mar", value: 700 },
-	{ month: "Apr", value: -400 },
-	{ month: "May", value: 600 },
-	{ month: "Jun", value: 800 },
-	{ month: "Jul", value: -200 },
-	{ month: "Aug", value: 900 },
-	{ month: "Sep", value: 0 }, // Adicione os meses restantes com valores fictícios
-	{ month: "Oct", value: 0 },
-	{ month: "Nov", value: 0 },
-	{ month: "Dec", value: 0 },
+import { BarChart, Bar, LabelList, Rectangle, Cell } from "recharts";
+
+const monthsData = [
+	{ month: "Jan" },
+	{ month: "Feb" },
+	{ month: "Mar" },
+	{ month: "Apr" },
+	{ month: "May" },
+	{ month: "Jun" },
+	{ month: "Jul" },
+	{ month: "Aug" },
+	{ month: "Sep" },
+	{ month: "Oct" },
+	{ month: "Nov" },
+	{ month: "Dec" },
 ];
 
 interface ICustomBarLabelProps {
@@ -131,13 +24,8 @@ interface ICustomBarLabelProps {
 	value?: number;
 }
 
-interface ICustomBarProps {
-	fill?: string;
-	x?: number;
-	y?: number;
-	width?: number;
-	height?: number;
-	value?: number;
+interface IPrevMonthAportesChart {
+	monthlyForecast?: any;
 }
 
 interface IScheduleItem {
@@ -149,45 +37,79 @@ interface IScheduleItem {
 	cash_flow: number;
 }
 
-const formatCurrencyValue = (value: number) => {
-	return (value / 100).toLocaleString("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	});
-};
-
-const getBarColor = (entryValue: string | number) => {
-	return Number(entryValue) >= 0 ? "#4BA3B7" : "#E53E3E";
-};
-
-const CustomBarLabel = (props: ICustomBarLabelProps) => {
-	const { x, y, width, value } = props;
-	const isPositive = (value ? value : 0) >= 0;
-
-	return (
-		<>
-			{x && y && width && value && (
-				<text
-					x={x + width / 2.2}
-					y={isPositive ? y - -18 : y + -13}
-					fill="white"
-					fontSize={12}
-					textAnchor="middle"
-				>
-					{formatCurrencyValue(value)}
-				</text>
-			)}
-		</>
-	);
-};
-
-export const PrevMonthAportesChart: FunctionComponent = () => {
-	const chartData = mockData.map((item, index) => ({
-		name: `Item ${index + 1}`,
-		value: item.cash_flow,
-		fill: getBarColor(item.cash_flow),
-	}));
+export const PrevMonthAportesChart: FunctionComponent<
+	IPrevMonthAportesChart
+> = ({ monthlyForecast }) => {
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
+
+	const monthlyData = Object.entries(monthlyForecast).map(([year, value]) => ({
+		month: year,
+		value: value,
+	}));
+
+	const formatCurrencyValue = (value: number) => {
+		return (value / 100).toLocaleString("pt-BR", {
+			style: "currency",
+			currency: "BRL",
+		});
+	};
+
+	const CustomBarLabel = (props: ICustomBarLabelProps) => {
+		const { x, y, width, value } = props;
+		const isPositive = (value ? value : 0) >= 0;
+
+		return (
+			<>
+				{x && y && width && value && (
+					<text
+						x={x + width / 1.9}
+						y={isPositive ? y - -18 : y + -13}
+						fill="white"
+						fontSize={12}
+						textAnchor="middle"
+					>
+						{formatCurrencyValue(value)}
+					</text>
+				)}
+			</>
+		);
+	};
+	const chartData = monthlyData.map((item, index) => ({
+		name: `Item ${index + 1}`,
+		value: item.value,
+		fill: "#4BA3B7",
+	}));
+
+	const CustomBar = (props: any) => {
+		const { fill, x, y, width, height, value, index } = props;
+		const borderRadius = 8; // Adjust the border radius as needed
+		const isPositive = (value ? value : 0) >= 0;
+
+		return (
+			<g>
+				<Rectangle
+					x={x}
+					y={y}
+					width={80}
+					height={height}
+					radius={
+						isPositive
+							? [borderRadius, borderRadius, 0, 0]
+							: [borderRadius, borderRadius, 0, 0]
+					}
+					fill={fill}
+					onMouseEnter={() => setHighlightedCell(index)}
+					onMouseLeave={() => setHighlightedCell(null)}
+					style={{
+						filter:
+							highlightedCell === index
+								? `drop-shadow(0px 0px 4px #1000005a)`
+								: "null",
+					}}
+				/>
+			</g>
+		);
+	};
 
 	return (
 		<Flex flexDir={"column"} w={"100%"}>
@@ -199,7 +121,7 @@ export const PrevMonthAportesChart: FunctionComponent = () => {
 				px={"0.8rem"}
 				mb={"2rem"}
 			>
-				{mockDataa.map((data, index) => (
+				{monthsData.map((data, index) => (
 					<Flex
 						key={index}
 						width={"14.4581rem"}
@@ -220,21 +142,10 @@ export const PrevMonthAportesChart: FunctionComponent = () => {
 				))}
 			</Flex>
 			<BarChart width={1114} height={290} data={chartData}>
-				<Bar radius={[8, 8, 0, 0]} dataKey="value">
+				<Bar radius={[8, 8, 0, 0]} dataKey="value" shape={<CustomBar />}>
+					<LabelList dataKey="value" content={<CustomBarLabel />} />
 					{chartData.map((entry, index) => (
-						<Cell
-							key={`cell-${index}`}
-							fill={entry.fill}
-							width={65}
-							onMouseEnter={() => setHighlightedCell(index)}
-							onMouseLeave={() => setHighlightedCell(null)}
-							style={{
-								filter:
-									highlightedCell === index
-										? `drop-shadow(0px 0px 4px #1000005a)`
-										: "null",
-							}}
-						/>
+						<Cell key={`cell-${index}`} fill={entry.fill} />
 					))}
 				</Bar>
 			</BarChart>

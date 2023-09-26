@@ -119,7 +119,7 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 							>
 								Previsão mensal de aportes{" "}
 							</Text>
-							<PrevMonthAportesChart />
+							<PrevMonthAportesChart monthlyForecast={monthlyForecast} />
 						</Flex>
 						<Flex flexDir={"column"} mt={"5rem"}>
 							<Text

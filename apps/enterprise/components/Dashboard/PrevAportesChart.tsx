@@ -127,7 +127,6 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 			value: value,
 		})
 	);
-	console.log(yearlyData, "generalForecast");
 
 	const formatCurrencyValue = (value: number) => {
 		return (value / 1).toLocaleString("pt-BR", {
@@ -202,7 +201,7 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 		<Flex flexDir={"column"} w={"100%"}>
 			<Flex
 				boxShadow="0px 1px 2px 0px rgba(0, 0, 0, 0.06), 0px 1px 3px 0px rgba(0, 0, 0, 0.10);"
-				w={"69.1875rem"}
+				w={"70rem"}
 				borderRadius={"0.75rem"}
 				py={"1rem"}
 				px={"0.8rem"}
@@ -211,7 +210,7 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 				{yearlyData.map((data, index) => (
 					<Flex
 						key={index}
-						width={"10.9125rem"}
+						width={"10.6rem"}
 						justifyContent={"center"}
 						gap={"1.5rem"}
 					>
