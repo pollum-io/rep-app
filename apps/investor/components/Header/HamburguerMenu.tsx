@@ -26,6 +26,8 @@ export const HamburguerMenu: React.FC = () => {
 	const { userInfos, username, isInvestorPerfilCompleted } = useUser();
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
+	const parts = username.split(" ");
+	const firstName = parts[0];
 
 	return (
 		<Menu>
@@ -45,7 +47,7 @@ export const HamburguerMenu: React.FC = () => {
 					{username ? (
 						<Text fontSize={"sm"} fontFamily="Poppins" color={"#4A5568"}>
 							{t("portfolio.hello", {
-								Name: username.slice(0, 8),
+								Name: firstName,
 							})}
 						</Text>
 					) : (

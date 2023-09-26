@@ -10,6 +10,10 @@ type ComponentProps = {
 export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 	contribution,
 }) => {
+	let isMozilla = false;
+	if (typeof window !== "undefined") {
+		isMozilla = /firefox/i.test(window.navigator.userAgent);
+	}
 	return (
 		<Flex flexDir={"column"}>
 			<Text
@@ -61,7 +65,7 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
 					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-						{contribution?.next_invoice
+						{contribution?.next_invoice !== "-"
 							? formatDateBirthday(contribution?.next_invoice)
 							: "-"}
 					</Text>
@@ -76,14 +80,14 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 					gap={"0.5rem"}
 				>
 					<Img w={"3.8125rem"} src="/icons/ultimo-pagamento.svg" />
-					<Flex gap={"0.5rem"} w={"max"}>
+					<Flex gap={"0.5rem"} w={isMozilla ? "11rem" : "max"}>
 						<Text fontSize={"0.875rem"} color={"#1A202C"}>
 							Último pagamento{" "}
 						</Text>
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
 					<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#1A202C"}>
-						{contribution?.last_payment
+						{contribution?.last_payment !== "-"
 							? formatDateBirthday(contribution?.last_payment)
 							: "-"}
 					</Text>
@@ -92,13 +96,13 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 					flexDir={"column"}
 					px={"1.5rem"}
 					py={"1rem"}
-					w={"12.8125rem"}
+					w={"13.8125rem"}
 					border={"1px solid #EDF2F7"}
 					borderRadius={"0.75rem"}
 					gap={"0.5rem"}
 				>
 					<Img w={"3.8125rem"} src="/icons/contratos-pendentes.svg" />
-					<Flex gap={"0.5rem"} w={"max"}>
+					<Flex gap={"0.5rem"} w={isMozilla ? "12rem" : "max"}>
 						<Text fontSize={"0.875rem"} color={"#1A202C"}>
 							Contratos pendentes{" "}
 						</Text>

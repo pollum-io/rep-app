@@ -244,7 +244,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 									<>
 										<InputComponent
 											placeholderText={t("inputs.insertHere") as string}
-											label={t("register.corporateName") as string}
+											label={t("register.noAbbreviations") as string}
 											type="text"
 											{...register("enterprise_name")}
 										/>
@@ -273,9 +273,9 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 								) : (
 									<>
 										<InputComponent
-											label={t("register.noAbbreviations") as string}
+											label={t("register.fullName") as string}
 											type="text"
-											placeholderText={t("inputs.insertHere") as string}
+											placeholderText={t("register.noAbbreviations") as string}
 											{...register("full_name")}
 										/>
 										<InputComponent
