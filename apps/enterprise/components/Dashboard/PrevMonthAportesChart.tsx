@@ -1,6 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React, { FunctionComponent, useState } from "react";
 import { BarChart, Bar, LabelList, Rectangle, Cell } from "recharts";
+import { IMonthlyForecast } from "../../types/IMonthlyForecast";
 
 const monthsData = [
 	{ month: "Jan" },
@@ -22,19 +23,13 @@ interface ICustomBarLabelProps {
 	y?: number;
 	width?: number;
 	value?: number;
+	index?: number;
+	fill?: string;
+	height?: number;
 }
 
 interface IPrevMonthAportesChart {
-	monthlyForecast?: any;
-}
-
-interface IScheduleItem {
-	period?: number;
-	cost: number;
-	total_revenue: number;
-	total_revenue_percentage: number;
-	units_sold: number;
-	cash_flow: number;
+	monthlyForecast?: IMonthlyForecast;
 }
 
 export const PrevMonthAportesChart: FunctionComponent<
@@ -80,8 +75,8 @@ export const PrevMonthAportesChart: FunctionComponent<
 		fill: "#4BA3B7",
 	}));
 
-	const CustomBar = (props: any) => {
-		const { fill, x, y, width, height, value, index } = props;
+	const CustomBar = (props: ICustomBarLabelProps) => {
+		const { fill, x, y, height, value, index } = props;
 		const borderRadius = 8; // Adjust the border radius as needed
 		const isPositive = (value ? value : 0) >= 0;
 

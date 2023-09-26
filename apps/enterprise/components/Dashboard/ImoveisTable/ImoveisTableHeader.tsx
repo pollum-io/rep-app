@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 
 export const ImoveisTableHeader: React.FC = (props) => {
 	return (

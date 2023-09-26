@@ -1,119 +1,20 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React, { FunctionComponent, useState } from "react";
 import { BarChart, Bar, LabelList, Rectangle, Cell } from "recharts";
+import { IGeneralForecast } from "../../types/IGeneralForecast";
 
-const mockData: IScheduleItem[] = [
-	{
-		period: 1,
-		cost: 1000,
-		total_revenue: 1500,
-		total_revenue_percentage: 50,
-		units_sold: 200,
-		cash_flow: 500,
-	},
-	{
-		period: 2,
-		cost: 1200,
-		total_revenue: 1800,
-		total_revenue_percentage: 60,
-		units_sold: 250,
-		cash_flow: 600,
-	},
-	{
-		period: 3,
-		cost: 900,
-		total_revenue: 1350,
-		total_revenue_percentage: 45,
-		units_sold: 180,
-		cash_flow: 450,
-	},
-	{
-		period: 4,
-		cost: 1100,
-		total_revenue: 1600,
-		total_revenue_percentage: 55,
-		units_sold: 220,
-		cash_flow: 500,
-	},
-	{
-		period: 5,
-		cost: 1300,
-		total_revenue: 1700,
-		total_revenue_percentage: 52,
-		units_sold: 240,
-		cash_flow: 400,
-	},
-	{
-		period: 6,
-		cost: 950,
-		total_revenue: 1400,
-		total_revenue_percentage: 47,
-		units_sold: 190,
-		cash_flow: 450,
-	},
-	{
-		period: 7,
-		cost: 1050,
-		total_revenue: 1550,
-		total_revenue_percentage: 53,
-		units_sold: 210,
-		cash_flow: 500,
-	},
-	{
-		period: 8,
-		cost: 1150,
-		total_revenue: 1650,
-		total_revenue_percentage: 57,
-		units_sold: 230,
-		cash_flow: 500,
-	},
-];
-const mockDataa = [
-	{
-		year: 2023,
-		value: 500,
-	},
-	{
-		year: 2024,
-		value: -300,
-	},
-	{
-		year: 2025,
-		value: 700,
-	},
-	{
-		year: 2026,
-		value: -400,
-	},
-	{
-		year: 2027,
-		value: 600,
-	},
-	{
-		year: 2028,
-		value: 800,
-	},
-	{
-		year: 2029,
-		value: -200,
-	},
-	{
-		year: 2030,
-		value: 900,
-	},
-];
-
-interface IScheduleItem {
-	period?: number;
-	cost: number;
-	total_revenue: number;
-	total_revenue_percentage: number;
-	units_sold: number;
-	cash_flow: number;
+interface ICustomBarLabel {
+	x?: number;
+	y?: number;
+	width?: number;
+	value?: number;
+	index?: number;
+	fill?: string;
+	height?: number;
 }
 
 interface IPrevAportes {
-	generalForecast: any;
+	generalForecast: IGeneralForecast;
 }
 
 export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
@@ -135,9 +36,8 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 		});
 	};
 
-	const CustomBarLabel = (props: any) => {
+	const CustomBarLabel = (props: ICustomBarLabel) => {
 		const { x, y, width, value, index } = props;
-		const centerX = x + width / 8;
 
 		return (
 			<>
@@ -166,8 +66,8 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 		fill: "#48BB78",
 	}));
 
-	const CustomBar = (props: any) => {
-		const { fill, x, y, width, height, value, index } = props;
+	const CustomBar = (props: ICustomBarLabel) => {
+		const { fill, y, height, value, index } = props;
 		const borderRadius = 8; // Adjust the border radius as needed
 		const isPositive = (value ? value : 0) >= 0;
 

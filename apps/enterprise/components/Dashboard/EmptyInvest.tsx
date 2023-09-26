@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 export const EmptyInvest: React.FC = () => {

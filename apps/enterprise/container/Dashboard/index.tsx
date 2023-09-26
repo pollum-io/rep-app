@@ -6,6 +6,9 @@ import ImoveisTable from "../../components/Dashboard/ImoveisTable/ImoveisTable";
 import { EmptyInvest } from "../../components/Dashboard/EmptyInvest";
 import { useUser } from "../../hooks/useUser";
 import dynamic from "next/dynamic";
+import { IMonthlyForecast } from "../../types/IMonthlyForecast";
+import { IGeneralForecast } from "../../types/IGeneralForecast";
+import { IShareholder } from "../../types/IShareholders";
 
 const PrevAportesChart = dynamic(
 	async () => {
@@ -31,9 +34,9 @@ const PrevMonthAportesChart = dynamic(
 interface IDashboardContainer {
 	token: string;
 	enterpriseId: string;
-	monthlyForecast: any; //TODO
-	generalForecast: any; //TODO
-	shareholders: any; //TODO
+	monthlyForecast: IMonthlyForecast;
+	generalForecast: IGeneralForecast;
+	shareholders: IShareholder[];
 }
 
 export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
@@ -47,7 +50,7 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	const [filteredArray, setFilteredArray] = useState<any[]>();
 	const [haveInvestment, setHaveInvestment] = useState(true);
 	const { getUserInfos } = useUser();
-
+	console.log(shareholders);
 	useLayoutEffect(() => {
 		getUserInfos(enterpriseId, token);
 	}, [enterpriseId, getUserInfos, token]);

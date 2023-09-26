@@ -5,9 +5,10 @@ import { ImoveisTableHeader } from "./ImoveisTableHeader";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { fetchInvestmentByUser } from "services";
+import { IShareholder } from "../../../types/IShareholders";
 
 interface IImoveisTable {
-	data: any[]; //TODO
+	data: IShareholder[];
 	token: string;
 	isMoreThenOnePage?: boolean;
 	buttonState?: string;

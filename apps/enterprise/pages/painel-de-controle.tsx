@@ -8,12 +8,15 @@ import {
 	fetchEnterpriseForecastMonthly,
 	fetchEnterpriseShareholders,
 } from "services";
+import { IMonthlyForecast } from "../types/IMonthlyForecast";
+import { IGeneralForecast } from "../types/IGeneralForecast";
+import { IShareholder } from "../types/IShareholders";
 interface IDashboardPage {
 	token: string;
 	enterpriseId: string;
-	monthlyForecastResponse: any; //TODO
-	generalForecastResponse: any; //TODO
-	shareholdersResponse: any; //TODO
+	monthlyForecastResponse: IMonthlyForecast;
+	generalForecastResponse: IGeneralForecast;
+	shareholdersResponse: IShareholder[];
 }
 
 const Dashboard: NextPage<IDashboardPage> = ({

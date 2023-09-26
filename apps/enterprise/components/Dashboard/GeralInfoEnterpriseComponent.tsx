@@ -3,9 +3,10 @@ import { Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { IGeneralForecast } from "../../types/IGeneralForecast";
 
 interface IGeralInfoEnterprise {
-	generalForecast: any;
+	generalForecast: IGeneralForecast;
 }
 
 export const GeralInfoEnterpriseComponent: React.FC<IGeralInfoEnterprise> = ({
