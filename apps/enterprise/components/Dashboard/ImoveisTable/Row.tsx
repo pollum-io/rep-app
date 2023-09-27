@@ -23,6 +23,7 @@ interface IShareholders {
 	totalInvested: number;
 	cotas: number;
 	paidInstallments: number;
+	unpaidInstallments: number;
 	numberOfInstallments: number;
 	status: string;
 }
@@ -39,6 +40,7 @@ export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
 	numberOfInstallments,
 	status,
 	oportunityUrl,
+	unpaidInstallments,
 }) => {
 	const { push } = useRouter();
 
@@ -70,16 +72,32 @@ export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
 					return {
 						bg: "#FEEBCB",
 						color: "#B7791F",
-						statusText: "Em Andamento",
+						statusText: "Em dia",
 						action: "Ver aportes e retornos",
 					};
+				case "Overdue":
+					if (unpaidInstallments === 1) {
+						return {
+							bg: "#FED7D7",
+							color: "#E53E3E",
+							statusText: "Atrasado",
+							action: "Realizar pagamento",
+						};
+					} else if (unpaidInstallments > 1) {
+						return {
+							bg: "#FED7D7",
+							color: "#E53E3E",
+							statusText: `${unpaidInstallments} parcelas atrasadas`,
+							action: "Realizar pagamento",
+						};
+					}
 				default:
 					return { bg: "white", color: "black" };
 			}
 		};
 
 		return getStatusColor;
-	}, []);
+	}, [unpaidInstallments]);
 
 	const totalInvestColor = useMemo(() => {
 		if (status === "PendingSignature" || status === "PendingPayment") {

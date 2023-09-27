@@ -16,7 +16,6 @@ interface IDashboardPage {
 	enterpriseId: string;
 	monthlyForecastResponse: IMonthlyForecast;
 	generalForecastResponse: IGeneralForecast;
-	shareholdersResponse: IShareholder[];
 }
 
 const Dashboard: NextPage<IDashboardPage> = ({
@@ -24,14 +23,12 @@ const Dashboard: NextPage<IDashboardPage> = ({
 	enterpriseId,
 	monthlyForecastResponse,
 	generalForecastResponse,
-	shareholdersResponse,
 }) => (
 	<DashboardContainer
 		token={token}
 		enterpriseId={enterpriseId}
 		monthlyForecast={monthlyForecastResponse}
 		generalForecast={generalForecastResponse}
-		shareholders={shareholdersResponse}
 	/>
 );
 
@@ -75,17 +72,12 @@ export const getServerSideProps: GetServerSideProps = async ({
 			String(user?.enterprise),
 			token
 		);
-		const shareholdersResponse = await fetchEnterpriseShareholders(
-			String(user?.enterprise),
-			token
-		);
 
 		return {
 			props: {
 				enterpriseId: user?.enterprise,
 				monthlyForecastResponse,
 				generalForecastResponse,
-				shareholdersResponse,
 				token: token,
 			},
 		};

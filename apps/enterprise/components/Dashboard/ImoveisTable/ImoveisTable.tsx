@@ -1,65 +1,116 @@
 import { Button, Flex } from "@chakra-ui/react";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { ImoveisTableRow } from "./Row";
 import { ImoveisTableHeader } from "./ImoveisTableHeader";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { motion } from "framer-motion";
-import { fetchInvestmentByUser } from "services";
-import { IShareholder } from "../../../types/IShareholders";
+import { motion, AnimatePresence } from "framer-motion"; // Importe o motion e o AnimatePresence
+import { fetchEnterpriseShareholders } from "services";
+import { useQuery, useQueryClient } from "react-query";
+import { Oval } from "react-loader-spinner";
 
 interface IImoveisTable {
-	data: IShareholder[];
+	enterpriseId: string;
 	token: string;
 	isMoreThenOnePage?: boolean;
 	buttonState?: string;
 	setFilter?: any;
+	dataShare?: any;
+	isLoading?: any;
+	error?: any;
+	currentPage?: number;
+	setCurrentPage?: any;
 }
 const MotionFlex = motion(Flex);
 
 const ImoveisTable: FunctionComponent<IImoveisTable> = ({
-	data,
 	token,
-	isMoreThenOnePage,
-	buttonState,
+	dataShare,
+	enterpriseId,
+	isLoading,
+	error,
+	currentPage,
+	setCurrentPage,
 }) => {
-	const [empreendimento, setEmpreendimento] = useState<any | null>(null);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [totalPages, setTotalPages] = useState(1);
-	const [investmentData, setInvestmentData] = useState<any[]>([]);
+	const queryClient = useQueryClient();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetchInvestmentByUser(token, currentPage);
-			setInvestmentData(response?.investments);
-			setTotalPages(response?.totalPages);
-		};
+	const totalPages = dataShare?.totalPages;
 
-		fetchData();
-	}, [token, currentPage, investmentData]);
+	const handleNextPageClick = () => {
+		if (currentPage < totalPages - 1) {
+			setCurrentPage(currentPage + 1);
+			const queryKey = ["enterpriseShareholders", enterpriseId, currentPage];
+			queryClient.invalidateQueries(queryKey);
+		}
+	};
+
+	const handlePreviousPageClick = () => {
+		if (currentPage > 1) {
+			setCurrentPage(currentPage - 1);
+			const queryKey = ["enterpriseShareholders", enterpriseId, currentPage];
+			queryClient.invalidateQueries(queryKey);
+		}
+	};
+	const hasNextPage = !isLoading && currentPage < totalPages - 1;
 
 	return (
-		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"0.75rem"}>
+		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"9.75rem"}>
 			<ImoveisTableHeader />
-			{data?.map((data, index) => (
-				<MotionFlex initial="hidden" animate="visible" key={index}>
-					<ImoveisTableRow
-						oportunityImage={data?.opportunity?.images[0]}
-						oportunityName={data?.opportunity?.name}
-						oportunityType={data?.opportunity?.enterprise_type}
-						oportunityUrl={data?.opportunity?.url}
-						investorName={data?.investor?.name}
-						investorCpf={data?.investor?.cpf}
-						totalInvested={
-							data?.investment?.cota_price * data?.investment?.num_cotas
-						}
-						cotas={data?.investment?.num_cotas}
-						paidInstallments={data?.investment?.paid_installments}
-						numberOfInstallments={data?.investment?.num_installments}
-						status={data?.investment?.status}
-					/>
-				</MotionFlex>
-			))}
-			{data && (
+			<AnimatePresence initial={false} mode="wait">
+				{!isLoading && dataShare?.shareholders && (
+					<motion.div
+						key={currentPage}
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -10 }}
+						transition={{ duration: 0.2 }}
+					>
+						{isLoading || error ? (
+							<Flex
+								w={"100%"}
+								h={"100%"}
+								justifyContent={"center"}
+								py={"15rem"}
+							>
+								<Oval
+									height={85}
+									width={85}
+									color="#1789A3"
+									wrapperStyle={{}}
+									wrapperClass=""
+									visible={true}
+									ariaLabel="oval-loading"
+									secondaryColor="#bdbdbd"
+									strokeWidth={2}
+									strokeWidthSecondary={2}
+								/>
+							</Flex>
+						) : (
+							dataShare?.shareholders?.map((data, index) => (
+								<MotionFlex initial="hidden" animate="visible" key={index}>
+									<ImoveisTableRow
+										oportunityImage={data?.opportunity?.images[0]}
+										oportunityName={data?.opportunity?.name}
+										oportunityType={data?.opportunity?.enterprise_type}
+										oportunityUrl={data?.opportunity?.url}
+										investorName={data?.investor?.name}
+										investorCpf={data?.investor?.cpf}
+										totalInvested={
+											data?.investment?.cota_price * data?.investment?.num_cotas
+										}
+										cotas={data?.investment?.num_cotas}
+										paidInstallments={data?.investment?.paid_installments}
+										unpaidInstallments={data?.investment?.unpaid_installments}
+										numberOfInstallments={data?.investment?.num_installments}
+										status={data?.investment?.status}
+									/>
+								</MotionFlex>
+							))
+						)}
+					</motion.div>
+				)}
+			</AnimatePresence>
+
+			{dataShare?.shareholders && (
 				<Flex gap={"1.5rem"} mt="2rem" justifyContent={"center"}>
 					<Button
 						bgColor="#2D3748"
@@ -73,7 +124,8 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 						fontSize={"0.875rem"}
 						fontWeight={"400"}
 						gap={"0.5rem"}
-						isDisabled={true}
+						isDisabled={currentPage === 1}
+						onClick={handlePreviousPageClick}
 					>
 						<AiOutlineArrowLeft color="#FFF" />
 						Anterior
@@ -90,7 +142,8 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 						fontSize={"0.875rem"}
 						fontWeight={"400"}
 						gap={"0.5rem"}
-						isDisabled={true}
+						onClick={handleNextPageClick}
+						isDisabled={!hasNextPage} // Desabilite o botão se não houver uma próxima página disponível
 					>
 						Próxima
 						<AiOutlineArrowRight color="#FFF" />

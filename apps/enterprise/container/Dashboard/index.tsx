@@ -9,6 +9,8 @@ import dynamic from "next/dynamic";
 import { IMonthlyForecast } from "../../types/IMonthlyForecast";
 import { IGeneralForecast } from "../../types/IGeneralForecast";
 import { IShareholder } from "../../types/IShareholders";
+import { fetchEnterpriseShareholders } from "services";
+import { useQuery, useQueryClient } from "react-query";
 
 const PrevAportesChart = dynamic(
 	async () => {
@@ -36,7 +38,6 @@ interface IDashboardContainer {
 	enterpriseId: string;
 	monthlyForecast: IMonthlyForecast;
 	generalForecast: IGeneralForecast;
-	shareholders: IShareholder[];
 }
 
 export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
@@ -44,58 +45,55 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	token,
 	monthlyForecast,
 	generalForecast,
-	shareholders,
 }) => {
-	const [buttonstate, setButtonState] = useState("todos");
+	const [buttonstate, setButtonState] = useState("");
 	const [filteredArray, setFilteredArray] = useState<any[]>();
 	const [haveInvestment, setHaveInvestment] = useState(true);
+	const [currentPage, setCurrentPage] = useState(1);
+	const queryClient = useQueryClient();
+
 	const { getUserInfos } = useUser();
-	console.log(shareholders);
 	useLayoutEffect(() => {
 		getUserInfos(enterpriseId, token);
 	}, [enterpriseId, getUserInfos, token]);
 
+	const {
+		data: dataShare,
+		isLoading,
+		error,
+	} = useQuery(
+		["enterpriseShareholdersFilter", enterpriseId, currentPage, buttonstate],
+		async () =>
+			await fetchEnterpriseShareholders(
+				enterpriseId,
+				token,
+				currentPage,
+				buttonstate
+			)
+	);
+	console.log(dataShare);
+
 	const filterButtons = [
-		{ buttonstate: "todos", label: "Todos" },
-		{ buttonstate: "em dia", label: "Em dia" },
-		{ buttonstate: "atrasado", label: "Atrasado" },
-		{ buttonstate: "pagamento pendente", label: "Pagamento pendente" },
-		{ buttonstate: "assinatura pendente", label: "Assinatura pendente" },
-		{ buttonstate: "pago", label: "Pago" },
+		{ buttonstate: "", label: "Todos" },
+		{ buttonstate: "InProgress", label: "Em dia" },
+		{ buttonstate: "Overdue", label: "Atrasado" },
+		{ buttonstate: "PendingPayment", label: "Pagamento pendente" },
+		{ buttonstate: "PendingSignature", label: "Assinatura pendente" },
+		{ buttonstate: "Concluded", label: "Pago" },
 	];
 
-	// const setFilter = useCallback(() => {
-	// 	let newArray = [];
+	const handleShareholdersFilter = (state: string) => {
+		console.log(state, "state");
+		setButtonState(state);
+		const queryKey = [
+			"enterpriseShareholdersFilter",
+			enterpriseId,
+			currentPage,
+			buttonstate,
+		];
+		queryClient.invalidateQueries(queryKey);
+	};
 
-	// 	if (buttonstate === "em andamento") {
-	// 		newArray = investment?.investments?.filter(
-	// 			(invest) => invest?.status === "InProgress"
-	// 		);
-	// 	} else if (buttonstate === "pedentes") {
-	// 		newArray = investment?.investments?.filter(
-	// 			(invest) =>
-	// 				invest?.status === "PendingPayment" ||
-	// 				invest?.status === "PendingSignature"
-	// 		);
-	// 	} else if (buttonstate === "concluidos") {
-	// 		newArray = investment?.investments?.filter(
-	// 			(invest) => invest?.status === "Concluded"
-	// 		);
-	// 	} else if (buttonstate === "todos") {
-	// 		newArray = investment?.investments;
-	// 	}
-
-	// 	setFilteredArray(newArray);
-	// }, [buttonstate, investment?.investments]);
-
-	// useEffect(() => {
-	// 	setFilter();
-	// }, [buttonstate, setFilter]);
-
-	// const handleStateChange = (newState) => {
-	// 	setButtonState(newState);
-	// 	setFilter();
-	// };
 	return (
 		<DefaultTemplate>
 			<GeralInfoEnterpriseComponent generalForecast={generalForecast} />
@@ -149,8 +147,8 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 												: "transparent"
 										}
 										fontWeight={"500"}
-										// onClick={() => handleStateChange(button.buttonstate)}
 										_hover={{ opacity: 0.7 }}
+										onClick={() => handleShareholdersFilter(button.buttonstate)}
 									>
 										{button.label}
 									</Button>
@@ -158,9 +156,14 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 							</Flex>
 							<Flex>
 								<ImoveisTable
-									data={shareholders}
+									enterpriseId={enterpriseId}
 									token={token}
 									buttonState={buttonstate}
+									dataShare={dataShare}
+									error={error}
+									isLoading={isLoading}
+									currentPage={currentPage}
+									setCurrentPage={setCurrentPage}
 								/>
 							</Flex>{" "}
 						</Flex>
