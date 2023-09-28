@@ -31,7 +31,6 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 	setCurrentPage,
 }) => {
 	const queryClient = useQueryClient();
-	console.log(dataShare);
 	const totalPages = dataShare?.totalPages;
 
 	const handleNextPageClick = () => {

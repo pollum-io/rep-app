@@ -12,7 +12,6 @@ export const Collections: React.FC<ICollections> = (props) => {
 	const { images } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [selectedImage, setSelectedImage] = useState<any>();
-
 	return (
 		<Flex
 			w="100%"
@@ -28,6 +27,7 @@ export const Collections: React.FC<ICollections> = (props) => {
 				isOpen={isOpen}
 				onClose={onClose}
 				selectedImage={selectedImage}
+				setSelectedImage={setSelectedImage}
 			/>
 			<Flex
 				onClick={() => {

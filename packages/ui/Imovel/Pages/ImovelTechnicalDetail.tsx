@@ -28,7 +28,6 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 	setCotas,
 	cotas,
 }) => {
-	console.log(imovelDetails?.opportunities_details?.constructed_area);
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
