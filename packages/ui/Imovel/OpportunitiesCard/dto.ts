@@ -30,6 +30,11 @@ export interface IOpportunitiesCard {
 	sale_end_at?: any;
 	isAvailable?: boolean;
 	url: string;
+	totalRaised?: number;
+	shareholders?: number;
+	contributionForecast?: number;
+	pendingSubscribers?: number;
+	images?: string[];
 }
 
 export interface IOpportunitieAddress {

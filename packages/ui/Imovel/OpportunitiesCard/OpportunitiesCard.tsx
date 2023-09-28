@@ -9,7 +9,12 @@ import { Oval } from "react-loader-spinner";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
-import { fetchOpportunitiesByCompany, fetchOpportunity } from "services";
+import {
+	fetchEnterpriseOpportunties,
+	fetchOpportunitiesByCompany,
+	fetchOpportunity,
+} from "services";
+import { formatCurrencyWithoutSymbol } from "../../utils";
 
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
@@ -24,22 +29,40 @@ interface IOpportunitiesCompaniesCard {
 	setFirstStep?: any;
 	setSecondStep?: any;
 	setCotas?: any;
+	enterpriseId?: string;
 }
 
 export const OpportunitiesCard: FunctionComponent<
 	IOpportunitiesCompaniesCard
-> = ({ id, isEnterprise, setFirstStep, setSecondStep, setCotas }) => {
+> = ({
+	id,
+	isEnterprise,
+	setFirstStep,
+	setSecondStep,
+	setCotas,
+	enterpriseId,
+	token,
+}) => {
 	const currentTime = new Date();
 	const router = useRouter();
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
 
-	const { data: cardsInfo } = query(
+	const { data: cardsInfo, isLoading } = query(
 		["oportunity", router.query],
 		() =>
 			id
 				? fetchOpportunitiesByCompany(router.query)
 				: fetchOpportunity(router.query),
+		{
+			refetchOnWindowFocus: false,
+			refetchInterval: false,
+		}
+	);
+
+	const { data: opportunitiesEnterprise } = query(
+		["oportunityEnterprise", id],
+		() => fetchEnterpriseOpportunties(enterpriseId, token),
 		{
 			refetchOnWindowFocus: false,
 			refetchInterval: false,
@@ -72,8 +95,11 @@ export const OpportunitiesCard: FunctionComponent<
 
 	return (
 		<>
-			{cardsInfo !== undefined ? (
-				cardsInfo?.opportunities?.map((cards: IOpportunitiesCard) => (
+			{cardsInfo !== undefined && !isLoading ? (
+				(!isEnterprise
+					? cardsInfo?.opportunities
+					: opportunitiesEnterprise
+				)?.map((cards: IOpportunitiesCard) => (
 					<Flex
 						key={cards._id}
 						w="19.125rem"
@@ -105,7 +131,11 @@ export const OpportunitiesCard: FunctionComponent<
 							justifyContent="end"
 						>
 							<Img
-								src={`${url}/file/${cards.pictures_enterprise[0]}`}
+								src={`${url}/file/${
+									isEnterprise
+										? cards?.images && cards?.images[0]
+										: cards.pictures_enterprise[0]
+								}`}
 								borderRadius="0.75rem"
 							/>
 							<Flex position="absolute" pt="0.625rem" pr="0.75rem">
@@ -157,7 +187,7 @@ export const OpportunitiesCard: FunctionComponent<
 										<Img
 											w={4}
 											h={4}
-											src={`/api/file/${cards.enterprise_logo}`}
+											src={`${url}/file/${cards.enterprise_logo}`}
 										/>
 									)}
 									<Text
@@ -273,7 +303,7 @@ export const OpportunitiesCard: FunctionComponent<
 														lineHeight="1.5rem"
 														color="#171923"
 													>
-														{cards.min_investment}
+														{formatCurrencyWithoutSymbol(cards?.totalRaised)}
 													</Text>
 												</Flex>
 											</Flex>
@@ -294,7 +324,7 @@ export const OpportunitiesCard: FunctionComponent<
 													lineHeight="1.5rem"
 													color="#171923"
 												>
-													02
+													{cards?.shareholders}
 												</Text>
 											</Flex>
 										</Flex>
@@ -325,7 +355,9 @@ export const OpportunitiesCard: FunctionComponent<
 														lineHeight="1.5rem"
 														color="#171923"
 													>
-														1.000.000,00{" "}
+														{formatCurrencyWithoutSymbol(
+															cards?.contributionForecast
+														)}
 													</Text>
 												</Flex>
 											</Flex>
@@ -346,7 +378,7 @@ export const OpportunitiesCard: FunctionComponent<
 													lineHeight="1.5rem"
 													color="#171923"
 												>
-													02
+													{cards?.pendingSubscribers}
 												</Text>
 											</Flex>
 										</Flex>
@@ -389,7 +421,13 @@ export const OpportunitiesCard: FunctionComponent<
 											textAlign={"center"}
 											color="#00576B"
 										>
-											70% da meta alcançada
+											{cards?.totalRaised !== undefined &&
+												cards?.contributionForecast !== undefined &&
+												(
+													(cards.totalRaised / cards.contributionForecast) *
+													100
+												).toFixed(2)}
+											% da meta alcançada
 										</Text>
 									</Flex>
 								)}

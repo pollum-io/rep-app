@@ -32,6 +32,7 @@ export const EmpreendimentosContainer: FunctionComponent<IEmpreendimento> = ({
 					setFirstStep={setFirstStep}
 					setCotas={setCotas}
 					setSecondStep={setSecondStep}
+					enterpriseId={enterpriseId}
 				/>
 			</Flex>
 		</DefaultTemplate>
