@@ -6,6 +6,8 @@ import { useOpportunities } from "../../../../apps/investor/hooks/useOpportuniti
 import { IOpportunitiesCard } from "../dtos/Oportunities";
 import { useRouter } from "next/router";
 
+const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+
 interface IImovelInfoDefault {
 	imovelDetails?: IOpportunitiesCard;
 }
@@ -33,7 +35,11 @@ export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 				w={"max"}
 				_hover={{ cursor: "pointer", opacity: 0.6 }}
 			>
-				<Img w="6" h="6" src={`/api/file/${imovelDetails?.enterprise_logo}`} />
+				<Img
+					w="6"
+					h="6"
+					src={`${url}/file/${imovelDetails?.enterprise_logo}`}
+				/>
 				<Text fontWeight={"400"} color="#171923">
 					{imovelDetails?.enterprise_name}
 				</Text>

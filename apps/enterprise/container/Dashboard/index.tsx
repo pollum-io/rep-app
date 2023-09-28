@@ -71,7 +71,6 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 				buttonstate
 			)
 	);
-	console.log(dataShare);
 
 	const filterButtons = [
 		{ buttonstate: "", label: "Todos" },
@@ -83,7 +82,6 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	];
 
 	const handleShareholdersFilter = (state: string) => {
-		console.log(state, "state");
 		setButtonState(state);
 		const queryKey = [
 			"enterpriseShareholdersFilter",

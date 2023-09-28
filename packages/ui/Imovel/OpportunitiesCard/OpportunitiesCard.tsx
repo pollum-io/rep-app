@@ -9,9 +9,9 @@ import { Oval } from "react-loader-spinner";
 import Countdown from "react-countdown";
 import { CountdownRenderProps } from "react-countdown/dist/Countdown";
 import { useTranslation } from "react-i18next";
-import { useRegisterSteps } from "../../../../apps/investor/hooks";
-import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
 import { fetchOpportunitiesByCompany, fetchOpportunity } from "services";
+
+const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 interface IOpportunitiesCompaniesCard {
 	id?: string;
@@ -105,7 +105,7 @@ export const OpportunitiesCard: FunctionComponent<
 							justifyContent="end"
 						>
 							<Img
-								src={`/api/file/${cards.pictures_enterprise[0]}`}
+								src={`${url}/file/${cards.pictures_enterprise[0]}`}
 								borderRadius="0.75rem"
 							/>
 							<Flex position="absolute" pt="0.625rem" pr="0.75rem">

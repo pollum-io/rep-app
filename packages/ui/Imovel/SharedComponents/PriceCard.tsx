@@ -36,7 +36,6 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 		setCotas,
 		cotas,
 	} = props;
-	console.log("props", props);
 	const { ended, hasToken } = useOpportunities();
 	const { push } = useRouter();
 	const { t } = useTranslation();

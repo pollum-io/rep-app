@@ -4,8 +4,7 @@ import { ImoveisTableRow } from "./Row";
 import { ImoveisTableHeader } from "./ImoveisTableHeader";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { motion, AnimatePresence } from "framer-motion"; // Importe o motion e o AnimatePresence
-import { fetchEnterpriseShareholders } from "services";
-import { useQuery, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { Oval } from "react-loader-spinner";
 
 interface IImoveisTable {
@@ -32,7 +31,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 	setCurrentPage,
 }) => {
 	const queryClient = useQueryClient();
-
+	console.log(dataShare);
 	const totalPages = dataShare?.totalPages;
 
 	const handleNextPageClick = () => {
