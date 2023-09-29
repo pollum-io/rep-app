@@ -43,7 +43,7 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 			<>
 				{x && y && width && value && (
 					<text
-						x={64}
+						x={58}
 						y={y + 20}
 						fill="white"
 						fontSize={12}

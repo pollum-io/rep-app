@@ -8,6 +8,7 @@ import {
 	formatDateOnlyDayMonthYear,
 	formatDateOnlyMonthYear,
 } from "ui";
+import { fetchGetDocumentLinks } from "services";
 
 const MotionFlex = motion(Flex);
 
@@ -19,6 +20,7 @@ interface IShareholders {
 	oportunityType: string;
 	oportunityUrl: string;
 	investorName: string;
+	documentKey: string;
 	investorCpf: string;
 	totalInvested: number;
 	cotas: number;
@@ -26,6 +28,7 @@ interface IShareholders {
 	unpaidInstallments: number;
 	numberOfInstallments: number;
 	status: string;
+	token: string;
 }
 
 export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
@@ -33,6 +36,7 @@ export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
 	oportunityName,
 	oportunityType,
 	investorName,
+	documentKey,
 	investorCpf,
 	totalInvested,
 	cotas,
@@ -41,6 +45,7 @@ export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
 	status,
 	oportunityUrl,
 	unpaidInstallments,
+	token,
 }) => {
 	const { push } = useRouter();
 
@@ -106,6 +111,11 @@ export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
 			return "#171923";
 		}
 	}, [status]);
+
+	const getDocLinks = async () => {
+		const req = await fetchGetDocumentLinks(token, documentKey);
+		window.open(req?.original_file_url, "_blank");
+	};
 
 	const statusAction = getStatusColorAndText(status)?.action;
 	const isAssinarContrato = statusAction === "Assinar contrato";
@@ -268,7 +278,7 @@ export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
 						fontWeight={"500"}
 						_hover={{}}
 						// href={isAssinarContrato ? props?.url_unsigned_document : null}
-						// onClick={() => handleButtonClick()}
+						onClick={() => getDocLinks()}
 					>
 						Visualizar{" "}
 					</Button>

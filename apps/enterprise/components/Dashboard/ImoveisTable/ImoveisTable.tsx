@@ -92,6 +92,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 										oportunityUrl={data?.opportunity?.url}
 										investorName={data?.investor?.name}
 										investorCpf={data?.investor?.cpf}
+										documentKey={data?.investment?.document_key}
 										totalInvested={
 											data?.investment?.cota_price * data?.investment?.num_cotas
 										}
@@ -100,6 +101,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 										unpaidInstallments={data?.investment?.unpaid_installments}
 										numberOfInstallments={data?.investment?.num_installments}
 										status={data?.investment?.status}
+										token={token}
 									/>
 								</MotionFlex>
 							))
