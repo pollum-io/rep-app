@@ -24,6 +24,7 @@ export interface IOpportunitiesCard {
 	description_extra?: string;
 	picture_extra?: string[];
 	enterprise_name?: string;
+	forecast_return?: number;
 	tags?: string[];
 	blueprints?: Array<{ file: string; name: string }>;
 	opportunities_details?: {

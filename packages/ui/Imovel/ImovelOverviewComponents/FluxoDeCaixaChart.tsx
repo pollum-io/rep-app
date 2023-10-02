@@ -1,30 +1,14 @@
 import { Flex, Text } from "@chakra-ui/react";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import {
 	BarChart,
 	Bar,
 	XAxis,
 	YAxis,
-	Tooltip,
 	LabelList,
 	Rectangle,
+	Cell,
 } from "recharts";
-
-interface ICustomBarLabelProps {
-	x?: number;
-	y?: number;
-	width?: number;
-	value?: number;
-}
-
-interface ICustomBarProps {
-	fill?: string;
-	x?: number;
-	y?: number;
-	width?: number;
-	height?: number;
-	value?: number;
-}
 
 interface IScheduleItem {
 	period?: number;
@@ -39,46 +23,82 @@ interface IPositiveAndNegativeBarChart {
 	data?: IScheduleItem[];
 }
 
-const formatCurrencyValue = (value: number) => {
-	return (value / 100).toLocaleString("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	});
-};
-
-const getBarColor = (entryValue: string | number) => {
-	return Number(entryValue) >= 0 ? "#38A169" : "#E53E3E";
-};
-
-const CustomBarLabel = (props: ICustomBarLabelProps) => {
-	const { x, y, width, value } = props;
-	const isPositive = (value ? value : 0) >= 0;
-
-	return (
-		<>
-			{x && y && width && value && (
-				<text
-					x={x + width / 2.2}
-					y={isPositive ? y - -18 : y + -13}
-					fill="white"
-					fontSize={12}
-					textAnchor="middle"
-				>
-					{formatCurrencyValue(value)}
-				</text>
-			)}
-		</>
-	);
-};
-
 const PositiveAndNegativeBarChart: FunctionComponent<
 	IPositiveAndNegativeBarChart
 > = ({ data }) => {
+	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
+
+	const formatCurrencyValue = (value: number) => {
+		return (value / 100).toLocaleString("pt-BR", {
+			style: "currency",
+			currency: "BRL",
+		});
+	};
+
+	const getBarColor = (entryValue: string | number) => {
+		return Number(entryValue) >= 0 ? "#48BB78" : "#E53E3E";
+	};
+
+	const CustomBarLabel = (props: any) => {
+		const { x, y, width, value, index } = props;
+		const isPositive = (value ? value : 0) >= 0;
+
+		return (
+			<>
+				{x && y && width && value && (
+					<text
+						x={x + width / 2.2}
+						y={isPositive ? y - -18 : y + -13}
+						fill="white"
+						fontSize={12}
+						textAnchor="middle"
+						style={{ transition: "all 0.5s ease-in-out" }}
+						onMouseEnter={() => setHighlightedCell(index)}
+						onMouseLeave={() => setHighlightedCell(null)}
+					>
+						{formatCurrencyValue(value)}
+					</text>
+				)}
+			</>
+		);
+	};
+
 	const chartData = data?.map((item, index) => ({
 		name: `Item ${index + 1}`,
 		value: item.cash_flow,
 		fill: getBarColor(item.cash_flow),
 	}));
+
+	const CustomBar = (props: any) => {
+		const { fill, x, y, width, height, value, index } = props;
+		const borderRadius = 8; // Adjust the border radius as needed
+		const isPositive = (value ? value : 0) >= 0;
+
+		return (
+			<g>
+				<Rectangle
+					x={x}
+					y={y}
+					width={105}
+					height={height}
+					radius={
+						isPositive
+							? [borderRadius, borderRadius, 0, 0]
+							: [borderRadius, borderRadius, 0, 0]
+					}
+					fill={fill}
+					onMouseEnter={() => setHighlightedCell(index)}
+					onMouseLeave={() => setHighlightedCell(null)}
+					style={{
+						filter:
+							highlightedCell === index
+								? `drop-shadow(0px 0px 4px #1000005a)`
+								: "null",
+					}}
+				/>
+			</g>
+		);
+	};
 
 	return (
 		<Flex flexDir={"column"}>
@@ -92,46 +112,28 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 			>
 				{data?.map((data, index) => (
 					<Flex key={index} width={"8.2rem"} justifyContent={"center"}>
-						<Text textAlign={"center"} color="#171923" fontSize={"0.875rem"}>
+						<Text
+							textAlign={"center"}
+							color="#171923"
+							fontSize={"0.875rem"}
+							fontWeight={highlightedCell === index ? "500" : "400"}
+						>
 							{data?.period}
 						</Text>
 					</Flex>
 				))}
 			</Flex>
-			<BarChart width={280} height={400} data={chartData}>
+			<BarChart width={280} height={220} data={chartData}>
 				<XAxis hide={true} />
 				<YAxis hide={true} />
-				<Tooltip
-					formatter={(value) => formatCurrencyValue(Number(value))} // Format tooltip value
-				/>
-				<Bar dataKey="value" fill={String(getBarColor)} shape={<CustomBar />}>
+				<Bar radius={[8, 8, 0, 0]} dataKey="value" shape={<CustomBar />}>
+					{chartData?.map((entry, index) => (
+						<Cell key={`cell-${index}`} fill={entry.fill} />
+					))}
 					<LabelList dataKey="value" content={<CustomBarLabel />} />
 				</Bar>
 			</BarChart>
 		</Flex>
-	);
-};
-
-const CustomBar = (props: ICustomBarProps) => {
-	const { fill, x, y, width, height, value } = props;
-	const borderRadius = 8; // Adjust the border radius as needed
-	const isPositive = (value ? value : 0) >= 0;
-
-	return (
-		<g>
-			<Rectangle
-				x={x}
-				y={y}
-				width={105}
-				height={height}
-				radius={
-					isPositive
-						? [borderRadius, borderRadius, 0, 0]
-						: [borderRadius, borderRadius, 0, 0]
-				}
-				fill={fill}
-			/>
-		</g>
 	);
 };
 

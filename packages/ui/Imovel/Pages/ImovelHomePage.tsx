@@ -1,5 +1,5 @@
 import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import { formatDate } from "../../../../apps/investor/utils/formatDate";
 import { Maps } from "../../../../apps/investor/components/Maps/index";
@@ -32,7 +32,6 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	cotas,
 }) => {
 	const { t } = useTranslation();
-
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
