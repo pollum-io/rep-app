@@ -24,6 +24,7 @@ interface IShareholders {
 	investorCpf: string;
 	totalInvested: number;
 	cotas: number;
+	totalPaid: number;
 	paidInstallments: number;
 	unpaidInstallments: number;
 	numberOfInstallments: number;
@@ -40,6 +41,7 @@ export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
 	investorCpf,
 	totalInvested,
 	cotas,
+	totalPaid,
 	paidInstallments,
 	numberOfInstallments,
 	status,
@@ -231,7 +233,7 @@ export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
 				</Flex>
 				<Flex flex="1.3" flexDir={"column"}>
 					<Text fontSize={"0.75rem"} color={"#171923"} fontWeight={"500"}>
-						R$ FALTANDO{" "}
+						{formatCurrency(totalPaid)}
 					</Text>
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#2D3748"}>
 						{paidInstallments} de {numberOfInstallments}

@@ -49,7 +49,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 		}
 	};
 	const hasNextPage = !isLoading && currentPage < totalPages - 1;
-
+	console.log(dataShare);
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"9.75rem"}>
 			<ImoveisTableHeader />
@@ -97,6 +97,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 											data?.investment?.cota_price * data?.investment?.num_cotas
 										}
 										cotas={data?.investment?.num_cotas}
+										totalPaid={data?.investment?.totalPaid}
 										paidInstallments={data?.investment?.paid_installments}
 										unpaidInstallments={data?.investment?.unpaid_installments}
 										numberOfInstallments={data?.investment?.num_installments}
