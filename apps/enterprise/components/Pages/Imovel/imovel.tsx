@@ -19,13 +19,16 @@ import { useRegisterSteps } from "../../../hooks";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
+	opportuntyDetails?: any;
 	usersId: UserLogin;
 	token: string;
 }
 
 export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
+	opportuntyDetails,
 	usersId,
+	token,
 }) => {
 	const [page, setPage] = useState("oportunidade");
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
@@ -60,6 +63,8 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 										setCotas={setCotas}
 										setFirstStep={setFirstStep}
 										setSecondStep={setSecondStep}
+										opportuntyDetails={opportuntyDetails}
+										token={token}
 									/>
 								</motion.div>
 							)}
@@ -78,6 +83,8 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 										setCotas={setCotas}
 										setFirstStep={setFirstStep}
 										setSecondStep={setSecondStep}
+										opportuntyDetails={opportuntyDetails}
+										token={token}
 									/>{" "}
 								</motion.div>
 							)}
@@ -96,6 +103,8 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 										setCotas={setCotas}
 										setFirstStep={setFirstStep}
 										setSecondStep={setSecondStep}
+										opportuntyDetails={opportuntyDetails}
+										token={token}
 									/>
 								</motion.div>
 							)}
@@ -114,6 +123,8 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 										setCotas={setCotas}
 										setFirstStep={setFirstStep}
 										setSecondStep={setSecondStep}
+										opportuntyDetails={opportuntyDetails}
+										token={token}
 									/>
 								</motion.div>
 							)}

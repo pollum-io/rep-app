@@ -1,11 +1,13 @@
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Button, Flex, Img, Text, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
-import { useRegisterSteps } from "../../../../apps/investor/hooks/useRegisterSteps";
-import { formatCurrency } from "../../utils/BRCurrency";
-
+import {
+	formatCurrency,
+	formatCurrencyWithoutSymbol,
+} from "../../utils/BRCurrency";
+import { ProjectDetailModal } from "../../../../apps/enterprise/components/Oportunities/ProjectDetailModal";
 interface IPriceCard {
 	url?: string;
 	isEnterprise?: boolean;
@@ -23,22 +25,27 @@ interface IPriceCard {
 		available_units: number;
 		average_price: number;
 	};
+	opportunitiesDetailsToEnteprise?: any;
+	token?: string;
 }
 
 export const PriceCard: React.FC<IPriceCard> = (props) => {
 	const {
 		url,
 		opportunitiesDetails,
+		opportunitiesDetailsToEnteprise,
 		isEnterprise,
 		unitPrice,
 		setFirstStep,
 		setSecondStep,
 		setCotas,
 		cotas,
+		token,
 	} = props;
 	const { ended, hasToken } = useOpportunities();
 	const { push } = useRouter();
 	const { t } = useTranslation();
+	const { isOpen, onClose, onOpen } = useDisclosure();
 
 	const [scrollPosition, setScrollPosition] = useState(0);
 	const topMargin = 0; // Altura em pixels onde o PriceCard deve começar a se mover
@@ -71,6 +78,12 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 			boxShadow="0px 20px 25px rgba(31, 41, 55, 0.1), 0px 10px 10px rgba(31, 41, 55, 0.04);"
 			color="#ffffff"
 		>
+			<ProjectDetailModal
+				opportunitiesDetailsToEnteprise={opportunitiesDetailsToEnteprise}
+				isOpen={isOpen}
+				onClose={onClose}
+				token={token}
+			/>
 			{!isEnterprise ? (
 				<>
 					<Text fontSize={"xl"} fontWeight="500">
@@ -240,7 +253,9 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 								R$
 							</Text>
 							<Text fontSize={"1.25rem"} fontWeight={"500"}>
-								200.000,00
+								{formatCurrencyWithoutSymbol(
+									opportunitiesDetailsToEnteprise[0]?.totalRaised
+								)}
 							</Text>
 						</Flex>
 					</Flex>
@@ -256,7 +271,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 								Cotistas
 							</Text>
 							<Text fontSize={"md"} fontWeight="400">
-								2
+								{opportunitiesDetailsToEnteprise[0]?.totalShareholders}
 							</Text>
 						</Flex>
 						<Flex justifyContent={"space-between"}>
@@ -264,7 +279,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 								Cotas emitidas
 							</Text>
 							<Text fontSize="md" fontWeight="400">
-								5
+								{opportunitiesDetailsToEnteprise[0]?.totalCotas}
 							</Text>
 						</Flex>
 						<Flex justifyContent={"space-between"}>
@@ -272,7 +287,9 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 								Previsão de aportes
 							</Text>
 							<Text fontSize={"md"} fontWeight="400">
-								R$ 400.000,00
+								{formatCurrency(
+									opportunitiesDetailsToEnteprise[0]?.contributionForecast
+								)}
 							</Text>
 						</Flex>
 					</Flex>
@@ -283,6 +300,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						w={"100%"}
 						p={"0.625rem"}
 						fontWeight={"500"}
+						onClick={() => onOpen()}
 					>
 						Ver detalhamento
 					</Button>

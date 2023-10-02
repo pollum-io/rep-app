@@ -60,7 +60,10 @@ export const OpportunitiesCard: FunctionComponent<
 		}
 	);
 
-	const { data: opportunitiesEnterprise } = query(
+	const {
+		data: opportunitiesEnterprise,
+		isLoading: opportunitiesEnterpriseLoading,
+	} = query(
 		["oportunityEnterprise", id],
 		() => fetchEnterpriseOpportunties(enterpriseId, token),
 		{
@@ -68,7 +71,7 @@ export const OpportunitiesCard: FunctionComponent<
 			refetchInterval: false,
 		}
 	);
-
+	console.log(opportunitiesEnterprise);
 	const renderer = ({
 		days,
 		hours,
@@ -95,7 +98,9 @@ export const OpportunitiesCard: FunctionComponent<
 
 	return (
 		<>
-			{cardsInfo !== undefined && !isLoading ? (
+			{(cardsInfo !== undefined && !isLoading) ||
+			(opportunitiesEnterprise !== undefined &&
+				!opportunitiesEnterpriseLoading) ? (
 				(!isEnterprise
 					? cardsInfo?.opportunities
 					: opportunitiesEnterprise

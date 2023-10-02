@@ -14,21 +14,38 @@ interface ICustomBarLabel {
 }
 
 interface IPrevAportes {
-	generalForecast: IGeneralForecast;
+	generalForecast?: IGeneralForecast;
+	opForecast?: YearlyData;
+	isOpportunityPage?: boolean;
 }
+
+type YearlyData = {
+	[year: number]: number;
+};
 
 export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 	generalForecast,
+	opForecast,
+	isOpportunityPage,
 }) => {
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
+	console.log(opForecast, "opForecast");
 
-	const yearlyData = Object.entries(generalForecast.yearlyData).map(
-		([year, value]) => ({
-			name: year,
-			value: value,
-		})
-	);
+	const yearlyData = isOpportunityPage
+		? opForecast
+			? Object.entries(opForecast).map(([year, value]) => ({
+					name: year,
+					value: value,
+			  }))
+			: []
+		: generalForecast && generalForecast.yearlyData
+		? Object.entries(generalForecast.yearlyData).map(([year, value]) => ({
+				name: year,
+				value: value,
+		  }))
+		: [];
 
+	console.log(yearlyData, "yearlyData");
 	const formatCurrencyValue = (value: number) => {
 		return (value / 1).toLocaleString("pt-BR", {
 			style: "currency",

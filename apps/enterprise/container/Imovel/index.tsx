@@ -8,12 +8,15 @@ import { ImovelDetail } from "../../components/Pages/Imovel/imovel";
 
 interface IImovelProps {
 	imovel: IOpportunitiesCard;
+	opportuntyDetails?: any;
+
 	user: UserLogin;
 	token: string;
 }
 
 export const ImovelContainer: FunctionComponent<IImovelProps> = ({
 	imovel,
+	opportuntyDetails,
 	user,
 	token,
 }) => {
@@ -25,7 +28,12 @@ export const ImovelContainer: FunctionComponent<IImovelProps> = ({
 
 	return (
 		<DefaultTemplate>
-			<ImovelDetail imovelDetails={imovel} usersId={user} token={token} />
+			<ImovelDetail
+				imovelDetails={imovel}
+				opportuntyDetails={opportuntyDetails}
+				usersId={user}
+				token={token}
+			/>
 		</DefaultTemplate>
 	);
 };

@@ -16,20 +16,24 @@ import { IOpportunitiesCard } from "../dtos/Oportunities";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
+	opportuntyDetails?: any;
 	usersId: UserLogin;
 	setFirstStep: any;
 	setSecondStep: any;
 	setCotas: any;
 	cotas: any;
+	token?: string;
 }
 
 export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
+	opportuntyDetails,
 	usersId,
 	setFirstStep,
 	setSecondStep,
 	setCotas,
 	cotas,
+	token,
 }) => {
 	const { t } = useTranslation();
 	return (
@@ -209,6 +213,8 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 								setCotas={setCotas}
 								setFirstStep={setFirstStep}
 								setSecondStep={setSecondStep}
+								opportunitiesDetailsToEnteprise={opportuntyDetails}
+								token={token}
 							/>{" "}
 						</Flex>
 					</Flex>

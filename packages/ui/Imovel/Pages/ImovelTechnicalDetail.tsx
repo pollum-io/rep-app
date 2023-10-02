@@ -13,20 +13,24 @@ import { UserLogin } from "../../GlobalDtos";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
+	opportuntyDetails?: any;
 	usersId: UserLogin;
 	setFirstStep: any;
 	setSecondStep: any;
 	setCotas: any;
 	cotas: any;
+	token?: string;
 }
 
 export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
+	opportuntyDetails,
 	usersId,
 	setFirstStep,
 	setSecondStep,
 	setCotas,
 	cotas,
+	token,
 }) => {
 	return (
 		<>
@@ -189,6 +193,8 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 								setCotas={setCotas}
 								setFirstStep={setFirstStep}
 								setSecondStep={setSecondStep}
+								opportunitiesDetailsToEnteprise={opportuntyDetails}
+								token={token}
 							/>{" "}
 						</Flex>
 					</Flex>
