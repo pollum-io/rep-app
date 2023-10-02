@@ -48,6 +48,19 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
 									}}
 								/>
+								<Script
+									src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+								/>
+
+								<Script id="google-analytics" strategy="afterInteractive">
+									{`
+					          window.dataLayer = window.dataLayer || [];
+										function gtag(){dataLayer.push(arguments);}
+										gtag('js', new Date());
+
+										gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+                `}
+								</Script>
 							</AppWrapper>
 						</ToastyProvider>
 					</OpportunitiesProvider>
