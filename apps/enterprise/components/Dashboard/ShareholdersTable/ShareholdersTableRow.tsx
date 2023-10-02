@@ -32,7 +32,7 @@ interface IShareholders {
 	token: string;
 }
 
-export const ImoveisTableRow: FunctionComponent<IShareholders> = ({
+export const ShareholdersTableRow: FunctionComponent<IShareholders> = ({
 	oportunityImage,
 	oportunityName,
 	oportunityType,

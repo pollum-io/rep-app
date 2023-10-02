@@ -1,7 +1,7 @@
 import { Button, Flex } from "@chakra-ui/react";
 import { FunctionComponent, useState } from "react";
-import { ImoveisTableRow } from "./Row";
-import { ImoveisTableHeader } from "./ImoveisTableHeader";
+import { ShareholdersTableRow } from "./ShareholdersTableRow";
+import { ShareholdersTableHeader } from "./ShareholdersTableHeader";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { motion, AnimatePresence } from "framer-motion"; // Importe o motion e o AnimatePresence
 import { useQueryClient } from "react-query";
@@ -21,7 +21,7 @@ interface IImoveisTable {
 }
 const MotionFlex = motion(Flex);
 
-const ImoveisTable: FunctionComponent<IImoveisTable> = ({
+const ShareholdersTable: FunctionComponent<IImoveisTable> = ({
 	token,
 	dataShare,
 	enterpriseId,
@@ -52,7 +52,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 	console.log(dataShare);
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"9.75rem"}>
-			<ImoveisTableHeader />
+			<ShareholdersTableHeader />
 			<AnimatePresence initial={false} mode="wait">
 				{!isLoading && dataShare?.shareholders && (
 					<motion.div
@@ -85,7 +85,7 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 						) : (
 							dataShare?.shareholders?.map((data, index) => (
 								<MotionFlex initial="hidden" animate="visible" key={index}>
-									<ImoveisTableRow
+									<ShareholdersTableRow
 										oportunityImage={data?.opportunity?.images[0]}
 										oportunityName={data?.opportunity?.name}
 										oportunityType={data?.opportunity?.enterprise_type}
@@ -155,4 +155,4 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 	);
 };
 
-export default ImoveisTable;
+export default ShareholdersTable;

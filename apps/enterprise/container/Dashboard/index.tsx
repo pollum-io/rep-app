@@ -2,13 +2,12 @@ import { FunctionComponent, useState, useLayoutEffect } from "react";
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { GeralInfoEnterpriseComponent } from "../../components/Dashboard/GeralInfoEnterpriseComponent";
-import ImoveisTable from "../../components/Dashboard/ImoveisTable/ImoveisTable";
+import ImoveisTable from "../../components/Dashboard/ShareholdersTable/ImoveisTable";
 import { EmptyInvest } from "../../components/Dashboard/EmptyInvest";
 import { useUser } from "../../hooks/useUser";
 import dynamic from "next/dynamic";
 import { IMonthlyForecast } from "../../types/IMonthlyForecast";
 import { IGeneralForecast } from "../../types/IGeneralForecast";
-import { IShareholder } from "../../types/IShareholders";
 import { fetchEnterpriseShareholders } from "services";
 import { useQuery, useQueryClient } from "react-query";
 

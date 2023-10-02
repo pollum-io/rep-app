@@ -101,7 +101,7 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 		<Flex flexDir={"column"} w={"100%"}>
 			<Flex
 				boxShadow="0px 1px 2px 0px rgba(0, 0, 0, 0.06), 0px 1px 3px 0px rgba(0, 0, 0, 0.10);"
-				w={"70rem"}
+				w={"max"}
 				borderRadius={"0.75rem"}
 				py={"1rem"}
 				px={"0.8rem"}
