@@ -6,7 +6,6 @@ import Document, {
 	DocumentContext,
 	DocumentInitialProps,
 } from "next/document";
-import Script from "next/script";
 
 class MyDocument extends Document {
 	static async getInitialProps(
@@ -19,20 +18,6 @@ class MyDocument extends Document {
 	render() {
 		return (
 			<Html lang="en">
-				<Script
-					strategy="lazyOnload"
-					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-				/>
-				<Script id="GA" strategy="lazyOnload">
-					{`
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-                    page_path: window.location.pathname,
-                    });
-                `}
-				</Script>
 				<Head>
 					<link rel="preconnect" href="https://fonts.googleapis.com" />
 					<link
