@@ -1,24 +1,41 @@
 import React from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { formatCurrency } from "ui";
 
-const cards = [
-	{
-		id: 1,
-		logo: "/logos/receitas.svg",
-		title: "Receitas LIVN",
-		value: "R$20.000.000,00",
-	},
-	{ id: 2, logo: "/logos/bagpack.svg", title: "Empresas", value: "4" },
-	{ id: 3, logo: "/logos/cotistas.svg", title: "Cotistas", value: "213" },
-	{
-		id: 4,
-		logo: "/logos/oportunidades-logo-generalpanel.svg",
-		title: "Oportunidades",
-		value: "321",
-	},
-];
+interface IGeneralPanelInfoCards {
+	cardsData: any;
+}
 
-export const GeneralPanelInfoCards: React.FC = () => {
+export const GeneralPanelInfoCards: React.FC<IGeneralPanelInfoCards> = ({
+	cardsData,
+}) => {
+	const cards = [
+		{
+			id: 1,
+			logo: "/logos/receitas.svg",
+			title: "Receitas LIVN",
+			value: formatCurrency(cardsData?.revenue),
+		},
+		{
+			id: 2,
+			logo: "/logos/bagpack.svg",
+			title: "Empresas",
+			value: cardsData?.num_enterprises,
+		},
+		{
+			id: 3,
+			logo: "/logos/cotistas.svg",
+			title: "Cotistas",
+			value: cardsData?.num_stakeholders,
+		},
+		{
+			id: 4,
+			logo: "/logos/oportunidades-logo-generalpanel.svg",
+			title: "Oportunidades",
+			value: cardsData?.num_opportunities,
+		},
+	];
+
 	return (
 		<>
 			{cards?.map((data) => (
@@ -29,6 +46,7 @@ export const GeneralPanelInfoCards: React.FC = () => {
 					py={"1rem"}
 					gap={"1.5rem"}
 					borderRadius={"1.25rem"}
+					alignItems={"center"}
 				>
 					<Img src={data.logo} />
 					<Flex flexDir={"column"}>

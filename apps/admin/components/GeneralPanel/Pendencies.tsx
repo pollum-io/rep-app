@@ -1,7 +1,12 @@
 import React from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { formatCurrency } from "ui";
 
-export const Pendencias: React.FC = () => {
+interface IPendencies {
+	pendenciesData: any;
+}
+
+export const Pendencies: React.FC<IPendencies> = ({ pendenciesData }) => {
 	return (
 		<Flex
 			w={"23.875rem"}
@@ -27,7 +32,7 @@ export const Pendencias: React.FC = () => {
 					<Img src="/logos/info.svg" />
 				</Flex>
 				<Text color={"#E53E3E"} fontSize={"1.125rem"} fontWeight={"600"}>
-					R$ 3,7 M
+					{formatCurrency(pendenciesData?.pending_payments)}
 				</Text>
 			</Flex>
 			<Flex flexDir={"column"} gap={"0.25rem"}>
@@ -38,7 +43,7 @@ export const Pendencias: React.FC = () => {
 					<Img src="/logos/info.svg" />
 				</Flex>
 				<Text color={"#E53E3E"} fontSize={"1.125rem"} fontWeight={"600"}>
-					R$ 15,9 M{" "}
+					{formatCurrency(pendenciesData?.pending_investments)}
 				</Text>
 			</Flex>
 		</Flex>

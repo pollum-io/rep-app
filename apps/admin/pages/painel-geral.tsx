@@ -1,18 +1,27 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import { GeneralPanelContainer } from "../container/GeneralPanel";
+import { fetchGetAdmin, fetchGetContact } from "services";
 
-// interface IPage {
-// 	example: string;
-// }
+interface IGeneralPanel {
+	requestAdmin: any;
+}
 
-const Page: NextPage = () => <GeneralPanelContainer />;
+const GeneralPanel: NextPage<IGeneralPanel> = ({ requestAdmin }) => (
+	<GeneralPanelContainer adminData={requestAdmin} />
+);
 
-export default Page;
+export default GeneralPanel;
 
-// export const getServerSideProps: GetServerSideProps = async ({
-// 	req,
-// 	query,
-// }) => {
-// 	return {};
-// };
+export const getServerSideProps: GetServerSideProps = async ({
+	req,
+	query,
+}) => {
+	const requestAdmin = await fetchGetAdmin();
+
+	return {
+		props: {
+			requestAdmin,
+		},
+	};
+};

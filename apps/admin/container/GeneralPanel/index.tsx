@@ -3,9 +3,15 @@ import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { GeneralPanelInfoCards } from "../../components/GeneralPanel/GeneralPanelInfoCards";
 import { WaitListCard } from "../../components/GeneralPanel/WaitListCard";
-import { Pendencias } from "../../components/GeneralPanel/Pendencias";
+import { Pendencies } from "../../components/GeneralPanel/Pendencies";
 
-export const GeneralPanelContainer: FunctionComponent = () => {
+interface IGeneralPanelContainer {
+	adminData: any;
+}
+
+export const GeneralPanelContainer: FunctionComponent<
+	IGeneralPanelContainer
+> = ({ adminData }) => {
 	return (
 		<DefaultTemplate>
 			<Flex flexDir={"column"}>
@@ -20,11 +26,11 @@ export const GeneralPanelContainer: FunctionComponent = () => {
 				</Text>
 				<Flex flexDir={"column"} maxW={"62.625rem"} justifyContent={"stretch"}>
 					<Flex gap={"2rem"} mb={"2.75rem"}>
-						<GeneralPanelInfoCards />
+						<GeneralPanelInfoCards cardsData={adminData} />
 					</Flex>
 					<Flex gap={"2rem"}>
 						<WaitListCard />
-						<Pendencias />
+						<Pendencies pendenciesData={adminData} />
 					</Flex>
 				</Flex>
 			</Flex>
