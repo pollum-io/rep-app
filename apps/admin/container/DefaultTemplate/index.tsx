@@ -14,7 +14,7 @@ export const DefaultTemplate: FunctionComponent<BaseLayoutProps> = ({
 		<Flex p={"1rem"} h={"100%"} minH={"100vh"} bgColor={"#F7FAFC"}>
 			<Sidebar />
 			<Menu />
-			<Flex ml={"18.25rem"}>{children}</Flex>
+			<Flex ml={"16rem"}>{children}</Flex>
 		</Flex>
 	);
 };
