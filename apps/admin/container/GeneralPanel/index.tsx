@@ -24,7 +24,7 @@ export const GeneralPanelContainer: FunctionComponent<
 				>
 					Painel geral
 				</Text>
-				<Flex flexDir={"column"} maxW={"62.625rem"} justifyContent={"stretch"}>
+				<Flex flexDir={"column"} maxW={"62.625rem"}>
 					<Flex gap={"2rem"} mb={"2.75rem"}>
 						<GeneralPanelInfoCards cardsData={adminData} />
 					</Flex>

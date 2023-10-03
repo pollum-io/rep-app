@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const sideBarLinks = [
 	{
@@ -59,23 +60,25 @@ export const Sidebar: React.FC = () => {
 				</Flex>
 			</Flex>
 			{sideBarLinks?.map((data) => (
-				<Flex
-					key={data?.id}
-					gap={"0.75rem"}
-					mb={"0.5rem"}
-					py={"0.5rem"}
-					px={"1rem"}
-					cursor={"pointer"}
-					bgColor={router.pathname === data?.path ? "#E4F2F3" : "#FFF"}
-					borderRadius={"2.5rem"}
-					transition={"0.5s"}
-					_hover={{ backgroundColor: "#E4F2F3" }}
-				>
-					<Img src={data?.logo} />
-					<Text fontSize={"0.875rem"} color={"#007088"}>
-						{data?.name}
-					</Text>
-				</Flex>
+				<Link key={data?.id} href={data?.path}>
+					<Flex
+						key={data?.id}
+						gap={"0.75rem"}
+						mb={"0.5rem"}
+						py={"0.5rem"}
+						px={"1rem"}
+						cursor={"pointer"}
+						bgColor={router.pathname === data?.path ? "#E4F2F3" : "#FFF"}
+						borderRadius={"2.5rem"}
+						transition={"0.5s"}
+						_hover={{ backgroundColor: "#E4F2F3" }}
+					>
+						<Img src={data?.logo} />
+						<Text fontSize={"0.875rem"} color={"#007088"}>
+							{data?.name}
+						</Text>
+					</Flex>
+				</Link>
 			))}
 		</Flex>
 	);
