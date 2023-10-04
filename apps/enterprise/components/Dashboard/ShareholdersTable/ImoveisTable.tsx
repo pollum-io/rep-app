@@ -86,7 +86,7 @@ const ShareholdersTable: FunctionComponent<IImoveisTable> = ({
 							dataShare?.shareholders?.map((data, index) => (
 								<MotionFlex initial="hidden" animate="visible" key={index}>
 									<ShareholdersTableRow
-										oportunityImage={data?.opportunity?.images[0]}
+										oportunityImage={data?.opportunity?.images}
 										oportunityName={data?.opportunity?.name}
 										oportunityType={data?.opportunity?.enterprise_type}
 										oportunityUrl={data?.opportunity?.url}
