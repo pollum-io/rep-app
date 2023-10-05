@@ -11,6 +11,8 @@ import {
 	ICompaniesTeam,
 	OpportunitiesCards,
 } from "ui";
+import { useRegisterSteps } from "../../hooks";
+import { useOpportunities } from "../../hooks/useOpportunities";
 
 interface ICompanie {
 	companieDetail: ICompaniesDetails;
@@ -19,7 +21,10 @@ interface ICompanie {
 export const CompaniePage: FunctionComponent<ICompanie> = ({
 	companieDetail,
 }) => {
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
+	const { setCotas } = useOpportunities();
 	const { t } = useTranslation();
+
 	return (
 		<Flex flexDirection="column" gap="2rem" mt="6.25rem" mb="4.5rem">
 			<Flex
@@ -112,7 +117,12 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 				</Flex>
 			</Flex>
 			<Flex px="1.5rem" w="100%" justifyContent="center">
-				<OpportunitiesCards id={companieDetail?._id} />
+				<OpportunitiesCards
+					id={companieDetail?._id}
+					setFirstStep={setFirstStep}
+					setCotas={setCotas}
+					setSecondStep={setSecondStep}
+				/>
 			</Flex>
 		</Flex>
 	);

@@ -46,9 +46,12 @@ export const HeaderLinks: React.FC = () => {
 					color={pathname === item.url ? "#FFF" : "#B1D8DF"}
 					_hover={{
 						opacity: 0.7,
-						cursor: "pointer",
+						cursor:
+							item.url === "/repasse-financeiro" ? "not-allowed" : "pointer",
 					}}
-					onClick={() => push(item.url)}
+					onClick={() =>
+						item.url === "/repasse-financeiro" ? "" : push(item.url)
+					}
 				>
 					<Text fontSize={"sm"} fontWeight="medium">
 						{item.name}
