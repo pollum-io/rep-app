@@ -12,15 +12,16 @@ import { useTranslation } from "react-i18next";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useToasty } from "../../../hooks/useToasty";
-import { IChangePasswordData } from "../../../dtos/ChangePassword";
 import { fetchNewPassword } from "services";
+import { IChangePasswordData } from "ui";
 
 interface IChangePassword {
 	token?: string;
 }
 
-export const ChangePassword: React.FC<IChangePassword> = (props) => {
-	const { token } = props;
+export const ChangeEnterprisePasswordPage: React.FC<IChangePassword> = ({
+	token,
+}) => {
 	const [showOldPassword, setShowOldPassword] = useState<boolean>(true);
 	const [showPasswordInputOne, setShowPasswordInputOne] =
 		useState<boolean>(true);
@@ -76,10 +77,10 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 	}, [buttonScore, firstPassword, secondPassword]);
 
 	return (
-		<Flex w="100%" justifyContent="end" mb="2rem">
-			<Flex flexDirection="column" gap="2.75rem" w="100%" maxWidth="47.4375rem">
+		<Flex w="100%" justifyContent="center" mt={"6.75rem"} mb="19.0625rem">
+			<Flex flexDirection="column" gap="2.75rem">
 				<form onSubmit={handleSubmit(onSubmitForm)}>
-					<Flex justifyContent="space-between" w="100%">
+					<Flex>
 						<Flex
 							flexDirection="column"
 							fontFamily="Poppins"
@@ -104,8 +105,9 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 										{t("forgotPassword.currentPassword")}
 									</Text>
 								</Flex>
-								<InputGroup size="md">
+								<InputGroup>
 									<Input
+										w={"18.5rem"}
 										placeholder={"Digite aqui"}
 										_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 										border="0.0938rem solid #E2E8F0"
@@ -147,8 +149,9 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 										{t("forgotPassword.newPassword")}
 									</Text>
 								</Flex>
-								<InputGroup size="md">
+								<InputGroup>
 									<Input
+										w={"18.5rem"}
 										placeholder={"Digite aqui"}
 										_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 										border="0.0938rem solid #E2E8F0"
@@ -192,8 +195,9 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 										{t("forgotPassword.confirmPassword")}
 									</Text>
 								</Flex>
-								<InputGroup size="md">
+								<InputGroup>
 									<Input
+										w={"18.5rem"}
 										placeholder={t("forgotPassword.typeHere") as string}
 										_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 										border="0.0938rem solid #E2E8F0"

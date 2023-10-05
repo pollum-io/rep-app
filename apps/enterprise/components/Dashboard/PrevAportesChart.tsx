@@ -29,7 +29,6 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 	isOpportunityPage,
 }) => {
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
-	console.log(opForecast, "opForecast");
 
 	const yearlyData = isOpportunityPage
 		? opForecast
@@ -45,7 +44,6 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 		  }))
 		: [];
 
-	console.log(yearlyData, "yearlyData");
 	const formatCurrencyValue = (value: number) => {
 		return (value / 1).toLocaleString("pt-BR", {
 			style: "currency",
@@ -145,7 +143,12 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 				))}
 			</Flex>
 			<BarChart width={1104} height={90} data={chartData}>
-				<Bar radius={[8, 8, 0, 0]} dataKey="value" shape={<CustomBar />}>
+				<Bar
+					radius={[8, 8, 0, 0]}
+					dataKey="value"
+					shape={<CustomBar />}
+					isAnimationActive={false}
+				>
 					<LabelList dataKey="value" content={<CustomBarLabel />} />
 					{chartData.map((entry, index) => (
 						<Cell key={`cell-${index}`} fill={entry.fill} />

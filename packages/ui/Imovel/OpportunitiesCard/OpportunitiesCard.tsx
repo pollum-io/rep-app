@@ -71,7 +71,7 @@ export const OpportunitiesCard: FunctionComponent<
 			refetchInterval: false,
 		}
 	);
-	console.log(opportunitiesEnterprise);
+
 	const renderer = ({
 		days,
 		hours,

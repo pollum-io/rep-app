@@ -49,7 +49,7 @@ const ShareholdersTable: FunctionComponent<IImoveisTable> = ({
 		}
 	};
 	const hasNextPage = !isLoading && currentPage < totalPages - 1;
-	console.log(dataShare);
+
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"9.75rem"}>
 			<ShareholdersTableHeader />
