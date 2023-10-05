@@ -32,12 +32,13 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 	handleMouseLeave,
 	onImageChange,
 	index,
+	handleToggleImage,
 }) => {
-	const handleToggleImage = () => {
-		if (fileInputRef.current) {
-			fileInputRef.current.click();
-		}
-	};
+	// const handleToggleImage = () => {
+	// 	if (fileInputRef.current) {
+	// 		fileInputRef.current.click();
+	// 	}
+	// };
 
 	console.log(foto, "foto");
 	return (
@@ -51,6 +52,7 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 				onMouseEnter={handleMouseEnter} // Altere essa linha
 				onMouseLeave={handleMouseLeave} // Altere essa linha
 				position="relative"
+				bgImage={"url('/logos/avatarMember.svg')"}
 				w={"4rem"}
 				h={"4rem"}
 			>
@@ -67,7 +69,9 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 				<input
 					type="file"
 					accept="image/*"
+					style={{ display: "none" }}
 					onChange={(e) => onInputChange("foto", e.target.files[0])} // Captura e transmite as mudanças no cargo
+					ref={fileInputRef}
 				/>
 				{!foto && showImage && (
 					<Flex

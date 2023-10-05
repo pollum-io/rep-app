@@ -4,9 +4,9 @@ import { IRegisterSteps } from "./dto";
 
 import { BsCheck } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
-import { useCreateCompanieSteps } from "../../../hooks/useRegisterSteps";
+import { useCreateCompanieSteps } from "../../../../hooks/useRegisterSteps";
 
-const RegisterStep: FunctionComponent<IRegisterSteps> = ({
+const CreateStep: FunctionComponent<IRegisterSteps> = ({
 	step,
 	title,
 	barPercentage,
@@ -69,23 +69,23 @@ const RegisterStep: FunctionComponent<IRegisterSteps> = ({
 	);
 };
 
-export const RegisterSteps: FunctionComponent = () => {
+export const CreateSteps: FunctionComponent = () => {
 	const { firstStep, secondStep } = useCreateCompanieSteps();
 	const { t } = useTranslation();
 
 	return (
 		<Flex gap="3.875rem">
-			<RegisterStep
+			<CreateStep
 				step={1}
 				title={"Perfil da empresa"}
 				barPercentage={firstStep ? 50 : 100}
 			/>
-			<RegisterStep
+			<CreateStep
 				step={2}
 				title={"Links e contatos"}
 				barPercentage={secondStep ? 50 : firstStep ? 0 : 100}
 			/>
-			<RegisterStep
+			<CreateStep
 				step={3}
 				title={"Revisar e criar empresa"}
 				barPercentage={!firstStep && !secondStep ? 50 : 0}

@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
-import { CompaniesContainer } from "../container/Companies";
+import { CompaniesContainer } from "../container/CompaniesControll";
 
 // interface IPage {
 // 	example: string;
