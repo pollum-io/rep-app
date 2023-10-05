@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../styles/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { CreateCompanieStepsProvider } from "../contexts/register";
 
 const toasty = {
 	bg: "#FFFFFF",
@@ -14,7 +15,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ChakraProvider resetCSS theme={theme}>
-				<Component {...pageProps} />
+				<CreateCompanieStepsProvider>
+					<Component {...pageProps} />
+				</CreateCompanieStepsProvider>
 			</ChakraProvider>
 		</QueryClientProvider>
 	);

@@ -15,6 +15,7 @@ export const Pendencies: React.FC<IPendencies> = ({ pendenciesData }) => {
 			flexDir={"column"}
 			bg={"#fff"}
 			borderRadius={"1.25rem"}
+			h={"max"}
 		>
 			<Text
 				color={"#171923"}
