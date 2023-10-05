@@ -71,7 +71,7 @@ export const OpportunitiesCard: FunctionComponent<
 			refetchInterval: false,
 		}
 	);
-	console.log(opportunitiesEnterprise);
+
 	const renderer = ({
 		days,
 		hours,
@@ -124,9 +124,9 @@ export const OpportunitiesCard: FunctionComponent<
 							router.push({
 								pathname: `/oportunidades/${cards.url}`,
 							});
-							setFirstStep(true);
-							setSecondStep(false);
-							setCotas(0);
+							isEnterprise
+								? ""
+								: (setFirstStep(true), setSecondStep(false), setCotas(0));
 						}}
 					>
 						<Flex

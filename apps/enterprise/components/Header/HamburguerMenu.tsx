@@ -85,122 +85,13 @@ export const HamburguerMenu: React.FC = () => {
 					h="1.8rem"
 					_focus={{}}
 					_hover={{ bgColor: "#F7FAFC", opacity: 0.8 }}
-					onClick={() => push({ pathname: `/faturas` })}
-				>
-					Faturas
-				</MenuItem>
-				<MenuItem
-					fontFamily="Poppins"
-					fontSize="0.875rem"
-					lineHeight="1.25rem"
-					pr="1.1875rem"
-					color="#4A5568"
-					pl="0.9375rem"
-					mt="0.3rem"
-					h="1.8rem"
-					_focus={{}}
-					_hover={{ bgColor: "#F7FAFC", opacity: 0.8 }}
 					onClick={() =>
-						push({ pathname: `/usuario`, query: { id: userInfos } })
+						push({ pathname: `/trocar-senha`, query: { id: userInfos } })
 					}
 				>
-					<Flex alignItems={"center"} gap={"0.5rem"}>
-						<Text> {t("header.profile")}</Text>
-						{!isInvestorPerfilCompleted && (
-							<Text
-								px={"0.5rem"}
-								py={"0.1rem"}
-								h={"max"}
-								borderRadius={"0.75rem"}
-								bgColor={"#FED7D7"}
-								color={"#E53E3E"}
-								fontSize={"0.75rem"}
-								fontWeight={"500"}
-							>
-								Completar
-							</Text>
-						)}
-					</Flex>
+					Trocar senha
 				</MenuItem>
-				{/* <Accordion allowMultiple>
-					<AccordionItem border="none">
-						<AccordionButton
-							background="none"
-							_hover={{ bgColor: "#FFF" }}
-							_focus={{
-								background: "none !important",
-							}}
-							w="100%"
-							pr="1.1875rem"
-							pl="1rem"
-							h="1.8rem"
-						>
-							<Flex justifyContent="space-between" alignItems="center" w="100%">
-								<Text
-									fontFamily="Poppins"
-									fontSize="0.875rem"
-									lineHeight="1.25rem"
-									color="#4A5568"
-								>
-									{t("header.lang")}
-								</Text>
 
-								<AccordionIcon color="#666c77" />
-							</Flex>
-						</AccordionButton>
-
-						<AccordionPanel p="0" pb="0.375rem" pt="0.375rem" fontWeight="400">
-							<Flex flexDirection="column" gap="0.25rem">
-								<Flex
-									justifyContent="space-between"
-									_hover={{ bgColor: "#F7FAFC", cursor: "pointer" }}
-									pr="1.22rem"
-									pl="1.625rem"
-									py="0.2rem"
-									onClick={() => {
-										i18next.changeLanguage("br");
-									}}
-									bgColor={language === "br" ? "#F7FAFC" : "#ffffff"}
-								>
-									<Text
-										fontFamily="Poppins"
-										fontSize="0.875rem"
-										lineHeight="1.25rem"
-										color="#4A5568"
-									>
-										{t("header.pt")}
-									</Text>
-									<Flex display={language === "br" ? "flex" : "none"}>
-										<BsCheck color="#1789A3" size={18} />
-									</Flex>
-								</Flex>
-								<Flex
-									justifyContent="space-between"
-									_hover={{ bgColor: "#F7FAFC", cursor: "pointer" }}
-									pr="1.25rem"
-									pl="1.625rem"
-									py="0.2rem"
-									onClick={() => {
-										i18next.changeLanguage("en");
-									}}
-									bgColor={language === "en" ? "#F7FAFC" : "#ffffff"}
-								>
-									<Text
-										fontFamily="Poppins"
-										fontSize="0.875rem"
-										lineHeight="1.25rem"
-										color="#4A5568"
-									>
-										{t("header.en")}
-									</Text>
-									<Flex display={language === "en" ? "flex" : "none"}>
-										<BsCheck color="#1789A3" size={18} />
-									</Flex>
-								</Flex>
-							</Flex>
-						</AccordionPanel>
-					</AccordionItem>
-				</Accordion> */}
 				<MenuItem
 					fontFamily="Poppins"
 					fontSize="0.875rem"

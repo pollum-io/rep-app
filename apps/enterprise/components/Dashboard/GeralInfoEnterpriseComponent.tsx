@@ -74,7 +74,7 @@ export const GeralInfoEnterpriseComponent: React.FC<IGeralInfoEnterprise> = ({
 							xl: "14rem",
 							"2xl": "9rem",
 						}}
-						w={"45rem"}
+						w={"max"}
 						px={"1.5rem"}
 						py={"1rem"}
 						borderRadius={"0.75rem"}

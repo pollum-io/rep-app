@@ -49,7 +49,7 @@ const ShareholdersTable: FunctionComponent<IImoveisTable> = ({
 		}
 	};
 	const hasNextPage = !isLoading && currentPage < totalPages - 1;
-	console.log(dataShare);
+
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"9.75rem"}>
 			<ShareholdersTableHeader />
@@ -86,7 +86,7 @@ const ShareholdersTable: FunctionComponent<IImoveisTable> = ({
 							dataShare?.shareholders?.map((data, index) => (
 								<MotionFlex initial="hidden" animate="visible" key={index}>
 									<ShareholdersTableRow
-										oportunityImage={data?.opportunity?.images[0]}
+										oportunityImage={data?.opportunity?.images}
 										oportunityName={data?.opportunity?.name}
 										oportunityType={data?.opportunity?.enterprise_type}
 										oportunityUrl={data?.opportunity?.url}

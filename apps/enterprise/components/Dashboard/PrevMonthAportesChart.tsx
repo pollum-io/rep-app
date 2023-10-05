@@ -137,7 +137,12 @@ export const PrevMonthAportesChart: FunctionComponent<
 				))}
 			</Flex>
 			<BarChart width={1114} height={290} data={chartData}>
-				<Bar radius={[8, 8, 0, 0]} dataKey="value" shape={<CustomBar />}>
+				<Bar
+					radius={[8, 8, 0, 0]}
+					dataKey="value"
+					shape={<CustomBar />}
+					isAnimationActive={false}
+				>
 					<LabelList dataKey="value" content={<CustomBarLabel />} />
 					{chartData.map((entry, index) => (
 						<Cell key={`cell-${index}`} fill={entry.fill} />
