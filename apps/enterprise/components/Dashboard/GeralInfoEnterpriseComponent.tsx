@@ -74,6 +74,13 @@ export const GeralInfoEnterpriseComponent: React.FC<IGeralInfoEnterprise> = ({
 							xl: "14rem",
 							"2xl": "9rem",
 						}}
+						left={{
+							sm: "24px",
+							md: "14rem",
+							lg: "14rem",
+							xl: "14rem",
+							"2xl": "9rem",
+						}}
 						w={"max"}
 						px={"1.5rem"}
 						py={"1rem"}
