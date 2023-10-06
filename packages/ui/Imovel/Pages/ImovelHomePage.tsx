@@ -1,8 +1,6 @@
 import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
-import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities";
-import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import { formatDate } from "../../../../apps/investor/utils/formatDate";
 import { Maps } from "../../../../apps/investor/components/Maps/index";
 import { Carousel } from "../ImovelHomePageComponents";
@@ -13,15 +11,29 @@ import {
 	PriceCard,
 	TimeCard,
 } from "../SharedComponents";
+import { UserLogin } from "../../GlobalDtos";
+import { IOpportunitiesCard } from "../dtos/Oportunities";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	usersId: UserInfo;
+	opportuntyDetails?: any;
+	usersId: UserLogin;
+	setFirstStep: any;
+	setSecondStep: any;
+	setCotas: any;
+	cotas: any;
+	token?: string;
 }
 
 export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
+	opportuntyDetails,
 	usersId,
+	setFirstStep,
+	setSecondStep,
+	setCotas,
+	cotas,
+	token,
 }) => {
 	const { t } = useTranslation();
 	return (
@@ -194,10 +206,15 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
-								investor_pf={usersId?.investor_pf}
-								investor_pj={usersId?.investor_pj}
+								isEnterprise={usersId.enterprise ? true : false}
 								unitPrice={imovelDetails?.min_investment}
 								opportunitiesDetails={imovelDetails?.opportunities_details}
+								cotas={cotas}
+								setCotas={setCotas}
+								setFirstStep={setFirstStep}
+								setSecondStep={setSecondStep}
+								opportunitiesDetailsToEnteprise={opportuntyDetails}
+								token={token}
 							/>{" "}
 						</Flex>
 					</Flex>

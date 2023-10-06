@@ -1,7 +1,6 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
-import { fetchGetInvestorPFById } from "../services/fetchGetInvestorPFById";
-import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
-import PersistentFramework from "../utils/persistent";
+import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
+import { PersistentFramework } from "ui";
 interface IRegister {
 	setUserInfos: React.Dispatch<React.SetStateAction<string>>;
 	getUserInfos: (id: string, token?: string) => Promise<void>;
@@ -100,23 +99,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 		}
 	}, [isInvestor, userInfos, username, contributionId]);
 
-	// useEffect(() => {
-	// 	const contractLink = PersistentFramework.get("signContract") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	const investmentCheckoutId = PersistentFramework.get("investmentId") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	const contributionIdStorage = PersistentFramework.get("contributionId") as {
-	// 		[k: string]: string;
-	// 	};
-	// 	console.log(contributionId, "contributionId");
-	// 	console.log(investmentId, "investmentId");
-
-	// 	setDocLink(String(contractLink));
-	// 	setInvestmentId(String(investmentCheckoutId));
-	// 	setContributionId(String(contributionIdStorage));
-	// }, [docLink, investmentId, contributionId]);
 	const providerValue = useMemo(
 		() => ({
 			isUserLogged,

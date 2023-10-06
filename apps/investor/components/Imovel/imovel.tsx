@@ -1,24 +1,26 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent, useState } from "react";
-import { IOpportunitiesCard } from "../../dtos/Oportunities";
-import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { motion } from "framer-motion";
 import {
 	ImovelAportesPage,
 	ImovelHomePage,
 	ImovelOverviewPage,
 	ImovelTechnicalDetailPage,
+	UserLogin,
 } from "ui";
 import {
 	Collections,
-	ImovelInfoDefault,
 	MoreAbout,
 	OportunitiesNavBar,
 } from "ui/Imovel/SharedComponents";
+import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
+import { useOpportunities } from "../../hooks/useOpportunities";
+import { useRegisterSteps } from "../../hooks";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	usersId: UserInfo;
+	usersId: UserLogin;
+	token: string;
 }
 
 export const ImovelDetail: FunctionComponent<IImovelProps> = ({
@@ -26,6 +28,9 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	usersId,
 }) => {
 	const [page, setPage] = useState("oportunidade");
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
+	const { cotas, setCotas } = useOpportunities();
+
 	return (
 		<Flex w={"100%"} maxW={"70rem"} margin={"0 auto"} justifyContent={"center"}>
 			<motion.div
@@ -51,6 +56,10 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 									<ImovelHomePage
 										imovelDetails={imovelDetails}
 										usersId={usersId}
+										cotas={cotas}
+										setCotas={setCotas}
+										setFirstStep={setFirstStep}
+										setSecondStep={setSecondStep}
 									/>
 								</motion.div>
 							)}
@@ -65,6 +74,10 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 									<ImovelTechnicalDetailPage
 										imovelDetails={imovelDetails}
 										usersId={usersId}
+										cotas={cotas}
+										setCotas={setCotas}
+										setFirstStep={setFirstStep}
+										setSecondStep={setSecondStep}
 									/>{" "}
 								</motion.div>
 							)}
@@ -79,6 +92,10 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 									<ImovelAportesPage
 										imovelDetails={imovelDetails}
 										usersId={usersId}
+										cotas={cotas}
+										setCotas={setCotas}
+										setFirstStep={setFirstStep}
+										setSecondStep={setSecondStep}
 									/>
 								</motion.div>
 							)}
@@ -93,6 +110,10 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 									<ImovelOverviewPage
 										imovelDetails={imovelDetails}
 										usersId={usersId}
+										cotas={cotas}
+										setCotas={setCotas}
+										setFirstStep={setFirstStep}
+										setSecondStep={setSecondStep}
 									/>
 								</motion.div>
 							)}

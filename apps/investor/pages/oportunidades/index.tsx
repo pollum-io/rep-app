@@ -2,10 +2,9 @@ import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { OpportunitiesContainer } from "../../container";
 import { UserLogin } from "../../dtos/IUserLogin";
-import { fetchGetInvestorPFById } from "../../services";
-import { fetchGetInvestorPJById } from "../../services/fetchGetInvestorPJById";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
+import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
 
 interface IOpportunities {
 	token: string;

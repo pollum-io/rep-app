@@ -1,19 +1,14 @@
 import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
-import { IOpportunitiesCard } from "../dtos/Oportunities";
-import { fetchImovelDetail } from "../services/fetchImovelDetail";
 import { UserLogin } from "../dtos/IUserLogin";
-import {
-	fetchEnterpriseById,
-	fetchGetInvestorPFById,
-	fetchGetInvestorPJById,
-} from "../services";
 import { UserDataPF } from "../dtos/UserPF";
 import { UserDataPJ } from "../dtos/UserPJ";
-import { ICompaniesDetails } from "../components/Companies/CompaniesCard/dto";
 import { PaymentContainer } from "../container/Payment";
-import { fetchGetPayment } from "../services/fetchGetPayment";
-
+import {
+	fetchGetInvestorPFById,
+	fetchGetPayment,
+	fetchGetInvestorPJById,
+} from "services";
 interface IPayment {
 	token: string;
 	investor_pj?: string;

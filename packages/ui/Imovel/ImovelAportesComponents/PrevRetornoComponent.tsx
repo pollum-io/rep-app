@@ -4,13 +4,15 @@ import { formatCurrency } from "../../utils/BRCurrency";
 import { formatDateOnlyDayMonthCompleteYear } from "../../../../apps/investor/utils/formatDate";
 
 interface IComponentProps {
-	data?: any; //TODO
+	data?: any; //
+	imovelDetails?: any;
 	isMyInvest: boolean;
 }
 
 export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 	data,
 	isMyInvest,
+	imovelDetails,
 }) => {
 	let isMozilla = false;
 	if (typeof window !== "undefined") {
@@ -37,7 +39,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 							color={"#007D99"}
 							fontWeight={"500"}
 						>
-							Valor estimado
+							{isMyInvest ? "Valor estimado" : "Previsão de retorno"}{" "}
 						</Text>
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>

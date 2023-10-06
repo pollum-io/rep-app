@@ -2,6 +2,8 @@ import { Flex, Img, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { CollectionsModal } from "./CollectionsModal";
 
+const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+
 interface ICollections {
 	images: string[];
 }
@@ -10,7 +12,6 @@ export const Collections: React.FC<ICollections> = (props) => {
 	const { images } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [selectedImage, setSelectedImage] = useState<any>();
-
 	return (
 		<Flex
 			w="100%"
@@ -26,6 +27,7 @@ export const Collections: React.FC<ICollections> = (props) => {
 				isOpen={isOpen}
 				onClose={onClose}
 				selectedImage={selectedImage}
+				setSelectedImage={setSelectedImage}
 			/>
 			<Flex
 				onClick={() => {
@@ -36,7 +38,7 @@ export const Collections: React.FC<ICollections> = (props) => {
 				<Img
 					width="34.75rem"
 					height="25rem"
-					src={`/api/file/${images[0]}`}
+					src={`${url}/file/${images[0]}`}
 					borderLeftRadius="0.75rem"
 					_hover={{ cursor: "pointer", filter: "brightness(90%)" }}
 					transition="200ms"
@@ -46,7 +48,7 @@ export const Collections: React.FC<ICollections> = (props) => {
 				<Img
 					w="17.125rem"
 					h="12.25rem"
-					src={`/api/file/${images[1]}`}
+					src={`${url}/file/${images[1]}`}
 					onClick={() => {
 						onOpen;
 						setSelectedImage(images[1]);
@@ -57,7 +59,7 @@ export const Collections: React.FC<ICollections> = (props) => {
 				<Img
 					w="17.125rem"
 					h="12.25rem"
-					src={`/api/file/${images[2]}`}
+					src={`${url}/file/${images[2]}`}
 					borderTopRightRadius="0.75rem"
 					onClick={() => {
 						onOpen;
@@ -69,7 +71,7 @@ export const Collections: React.FC<ICollections> = (props) => {
 				<Img
 					w="17.125rem"
 					h="12.25rem"
-					src={`/api/file/${images[3]}`}
+					src={`${url}/file/${images[3]}`}
 					onClick={() => {
 						onOpen;
 						setSelectedImage(images[3]);
@@ -80,7 +82,7 @@ export const Collections: React.FC<ICollections> = (props) => {
 				<Img
 					w="17.125rem"
 					h="12.25rem"
-					src={`/api/file/${images[4]}`}
+					src={`${url}/file/${images[4]}`}
 					borderBottomRightRadius="0.75rem"
 					onClick={() => {
 						onOpen;

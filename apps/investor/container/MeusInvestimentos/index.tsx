@@ -17,8 +17,8 @@ import { MeusInvestimentosPage } from "../../components/MeusInvestimentos/Page/M
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { EmptyInvest } from "../../components/MeusInvestimentos/EmptyInvest";
 import { useQuery } from "react-query";
-import { fetchInvestmentByUser } from "../../services/fetchInvestmentByUser";
 import { Oval } from "react-loader-spinner";
+import { fetchInvestmentByUser } from "services";
 
 interface UserData {
 	token: string;

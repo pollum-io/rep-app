@@ -6,6 +6,13 @@
 		"/packages/ui/Imovel/ImovelAportesComponents",
 		"/packages/ui/Imovel/SharedComponents",
 		"/packages/ui/Imovel/Pages",
-		"/packages/ui/Imovel/ImovelOverviewComponents"
+		"/packages/ui/Imovel/ImovelOverviewComponents",
+		"/packages/ui/GlobalDtos",
+		"/packages/ui/utils",
+		"/apps/enterprise/components",
+		"/packages/ui/Faturas",
+		"/packages/services/investor",
+		"/packages/services/enterprise",
+		"/packages/services/sharedFetchs"
 	]
 }

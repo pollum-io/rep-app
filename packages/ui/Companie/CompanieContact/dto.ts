@@ -1,7 +1,7 @@
 export interface ICompanieContact {
 	website?: string;
-	whats?: string;
-	phone?: string;
+	whatsapp?: string;
+	telephone?: string;
 	email?: string;
 	instagram?: ISocial;
 	twitter?: ISocial;

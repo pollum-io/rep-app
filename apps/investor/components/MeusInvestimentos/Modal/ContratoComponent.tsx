@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { fetchGetDocumentLinks } from "../../../services/fetchGetDocumentLinks";
+import { fetchGetDocumentLinks } from "services";
 
 type ComponentProps = {
 	document?: string;

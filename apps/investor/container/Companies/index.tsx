@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useLayoutEffect, useState } from "react";
+import { FunctionComponent, useLayoutEffect, useState } from "react";
 import {
 	Flex,
 	Input,
@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { ICompanieData } from "../../dtos/ICompaniesData";
 import { useUser } from "../../hooks/useUser";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
-import { motion } from "framer-motion"; // Import motion from framer-motion
+import { motion } from "framer-motion";
 
 interface ICompanies {
 	data: ICompanieData[];

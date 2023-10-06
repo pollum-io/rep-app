@@ -1,11 +1,12 @@
 import { Flex, Img, Text, Icon } from "@chakra-ui/react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { FiMapPin } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
-import { fetchEnterpriseById } from "../../../../apps/investor/services/fetchEnterpriseById";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
 import { useRouter } from "next/router";
+
+const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 interface IImovelInfoDefault {
 	imovelDetails?: IOpportunitiesCard;
@@ -14,16 +15,10 @@ interface IImovelInfoDefault {
 export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 	imovelDetails,
 }) => {
-	const [enterpriseName, setEnterpriseName] = useState();
 	const { hasToken } = useOpportunities();
 	const [cota] = useState<number>(0);
 	const { t } = useTranslation();
 	const { push } = useRouter();
-
-	useMemo(async () => {
-		const name = await fetchEnterpriseById(imovelDetails?.enterprise_id);
-		setEnterpriseName(name?.data?.enterprise_name);
-	}, [imovelDetails?.enterprise_id]);
 
 	return (
 		<Flex flexDir={"column"}>
@@ -40,7 +35,11 @@ export const ImovelInfoDefault: React.FC<IImovelInfoDefault> = ({
 				w={"max"}
 				_hover={{ cursor: "pointer", opacity: 0.6 }}
 			>
-				<Img w="6" h="6" src={`/api/file/${imovelDetails?.enterprise_logo}`} />
+				<Img
+					w="6"
+					h="6"
+					src={`${url}/file/${imovelDetails?.enterprise_logo}`}
+				/>
 				<Text fontWeight={"400"} color="#171923">
 					{imovelDetails?.enterprise_name}
 				</Text>

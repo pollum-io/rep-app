@@ -1,6 +1,7 @@
 export * from "./Collections";
 export * from "./CollectionsModal";
 export * from "./DocsComponent";
+export * from "./EnterpriseDetailsCard";
 export * from "./ImovelInfoDefault";
 export * from "./MoreAbout";
 export * from "./ObraSteps";

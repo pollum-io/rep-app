@@ -12,8 +12,8 @@ import { useTranslation } from "react-i18next";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useToasty } from "../../../hooks/useToasty";
-import { fetchNewPassword } from "../../../services/fetchNewPassword";
 import { IChangePasswordData } from "../../../dtos/ChangePassword";
+import { fetchNewPassword } from "services";
 
 interface IChangePassword {
 	token?: string;
@@ -47,7 +47,7 @@ export const ChangePassword: React.FC<IChangePassword> = (props) => {
 			newPassword: data.newPassword,
 		};
 
-		await fetchNewPassword(request);
+		await fetchNewPassword(request, token);
 		if (isSubmitSuccessful) {
 			toast({
 				id: "toast-edit",

@@ -1,14 +1,12 @@
 import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { UserLogin } from "../dtos/IUserLogin";
-import { fetchGetInvestorPFById } from "../services";
-import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
 import { UserDataPF } from "../dtos/UserPF";
 import { UserDataPJ } from "../dtos/UserPJ";
 import { MeusInvestimentosContainer } from "../container/MeusInvestimentos";
 import { UserInfo } from "../dtos/GlobalUserInfo";
-import { fetchInvestmentByUser } from "../services/fetchInvestmentByUser";
 import { InvestmentModel } from "../dtos/IInvestment";
+import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
 
 interface UserData {
 	token: string;

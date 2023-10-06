@@ -4,22 +4,22 @@ import { useRegisterSteps } from "../../hooks/useRegisterSteps";
 import { useToasty } from "../../hooks/useToasty";
 import { InputComponent } from "../Inputs/DeafultInput/InputComponent";
 import { useForm } from "react-hook-form";
-import {
-	BsArrowRightShort,
-	BsArrowLeftShort,
-	BsCircleFill,
-} from "react-icons/bs";
+import { BsArrowRightShort, BsArrowLeftShort } from "react-icons/bs";
 import { RiCheckFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { SelectComponent } from "../Select/SelectComponent";
 import { brasilStates } from "./states";
 import { useTranslation } from "react-i18next";
-import { fetchCreateInvestorPF, fetchEnterprise, logout } from "../../services";
-import { fetchCreateInvestorPJ } from "../../services/fetchCreateInvestorPJ";
 import { ICreateInvestorPF } from "../../dtos/ICreateInvestorPF";
 import { ICreateInvestorPJ } from "../../dtos/ICreateInvestorPJ";
 import PersistentFramework from "../../utils/persistent";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
+import {
+	fetchCreateInvestorPF,
+	fetchCreateInvestorPJ,
+	fetchEnterprise,
+	logout,
+} from "services";
 
 interface IRegisterContent {
 	token: string;

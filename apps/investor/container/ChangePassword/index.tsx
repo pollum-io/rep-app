@@ -13,8 +13,8 @@ import React, { FunctionComponent, useMemo, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useTranslation } from "react-i18next";
-import { fetchChangePassword } from "../../services/fetchChangePassword";
 import { useToasty } from "../../hooks/useToasty";
+import { fetchChangePassword } from "services";
 
 interface IChangePasswordData {
 	code?: string;

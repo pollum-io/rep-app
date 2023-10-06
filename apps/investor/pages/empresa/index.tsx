@@ -2,9 +2,9 @@ import { GetServerSideProps, NextPage } from "next";
 import { ICompaniesDetails } from "../../components/Companies/CompaniesCard/dto";
 import { CompanieContainer } from "../../container";
 import { UserLogin } from "../../dtos/IUserLogin";
-import { fetchEnterpriseById } from "../../services/fetchEnterpriseById";
 import jwt_decode from "jwt-decode";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
+import { fetchEnterpriseById } from "services";
 
 interface ICompanieProps {
 	data: ICompaniesDetails;
@@ -34,7 +34,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 	const user: UserLogin = jwt_decode(token);
-	const response = await fetchEnterpriseById(String(query.enterprise_id));
+	const response = await fetchEnterpriseById(
+		String(query.enterprise_id),
+		token
+	);
 
 	return {
 		props: {

@@ -2,11 +2,11 @@ import { Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 
 import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities";
-import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import PrevFinanceiraTable from "../ImovelOverviewComponents/PrevFinanceiraTable";
 import PositiveAndNegativeBarChart from "../ImovelOverviewComponents/FluxoDeCaixaChart";
 import { ImovelInfoDefault, PriceCard, TimeCard } from "../SharedComponents";
 import dynamic from "next/dynamic";
+import { UserLogin } from "../../GlobalDtos";
 
 const PieChartComponent = dynamic(
 	async () => {
@@ -19,12 +19,24 @@ const PieChartComponent = dynamic(
 );
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	usersId: UserInfo;
+	opportuntyDetails?: any;
+	usersId: UserLogin;
+	setFirstStep: any;
+	setSecondStep: any;
+	setCotas: any;
+	cotas: any;
+	token?: string;
 }
 
 export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
+	opportuntyDetails,
 	usersId,
+	setFirstStep,
+	setSecondStep,
+	setCotas,
+	cotas,
+	token,
 }) => {
 	return (
 		<>
@@ -183,10 +195,15 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
-								investor_pf={usersId?.investor_pf}
-								investor_pj={usersId?.investor_pj}
+								isEnterprise={usersId.enterprise ? true : false}
 								unitPrice={imovelDetails?.min_investment}
 								opportunitiesDetails={imovelDetails?.opportunities_details}
+								cotas={cotas}
+								setCotas={setCotas}
+								setFirstStep={setFirstStep}
+								setSecondStep={setSecondStep}
+								opportunitiesDetailsToEnteprise={opportuntyDetails}
+								token={token}
 							/>{" "}
 						</Flex>
 					</Flex>

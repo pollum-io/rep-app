@@ -1,13 +1,13 @@
-import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
+import React, { FunctionComponent, useLayoutEffect } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { ImovelDetail } from "../../components/Imovel/imovel";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
-import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { useUser } from "../../hooks/useUser";
+import { UserLogin } from "ui";
 
 interface IImovelProps {
 	imovel: IOpportunitiesCard;
-	usersId: UserInfo;
+	usersId: UserLogin;
 	token: string;
 }
 
@@ -29,7 +29,7 @@ export const ImovelContainer: FunctionComponent<IImovelProps> = ({
 
 	return (
 		<DefaultTemplate>
-			<ImovelDetail imovelDetails={imovel} usersId={usersId} />
+			<ImovelDetail imovelDetails={imovel} usersId={usersId} token={token} />
 		</DefaultTemplate>
 	);
 };

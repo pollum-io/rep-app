@@ -1,6 +1,5 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
-import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import PlantaCarrousel from "../ImovelDetailComponents/PlantaCarrouselComponent";
 import { TimelineComponent } from "../ImovelDetailComponents";
 import {
@@ -10,15 +9,28 @@ import {
 	TimeCard,
 } from "../SharedComponents";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
+import { UserLogin } from "../../GlobalDtos";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	usersId: UserInfo;
+	opportuntyDetails?: any;
+	usersId: UserLogin;
+	setFirstStep: any;
+	setSecondStep: any;
+	setCotas: any;
+	cotas: any;
+	token?: string;
 }
 
 export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
+	opportuntyDetails,
 	usersId,
+	setFirstStep,
+	setSecondStep,
+	setCotas,
+	cotas,
+	token,
 }) => {
 	return (
 		<>
@@ -174,10 +186,15 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
-								investor_pf={usersId?.investor_pf}
-								investor_pj={usersId?.investor_pj}
 								unitPrice={imovelDetails?.min_investment}
+								isEnterprise={usersId.enterprise ? true : false}
 								opportunitiesDetails={imovelDetails?.opportunities_details}
+								cotas={cotas}
+								setCotas={setCotas}
+								setFirstStep={setFirstStep}
+								setSecondStep={setSecondStep}
+								opportunitiesDetailsToEnteprise={opportuntyDetails}
+								token={token}
 							/>{" "}
 						</Flex>
 					</Flex>

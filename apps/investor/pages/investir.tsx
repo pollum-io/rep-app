@@ -2,16 +2,16 @@ import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { InvestContainer } from "../container";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
-import { fetchImovelDetail } from "../services/fetchImovelDetail";
 import { UserLogin } from "../dtos/IUserLogin";
+import { UserDataPF } from "../dtos/UserPF";
+import { UserDataPJ } from "../dtos/UserPJ";
+import { ICompaniesDetails } from "../components/Companies/CompaniesCard/dto";
 import {
 	fetchEnterpriseById,
 	fetchGetInvestorPFById,
 	fetchGetInvestorPJById,
-} from "../services";
-import { UserDataPF } from "../dtos/UserPF";
-import { UserDataPJ } from "../dtos/UserPJ";
-import { ICompaniesDetails } from "../components/Companies/CompaniesCard/dto";
+	fetchImovelDetail,
+} from "services";
 
 interface IInvest {
 	token: string;
@@ -73,7 +73,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 	const imovel = await fetchImovelDetail(String(query?.id));
-	const enterprise = await fetchEnterpriseById(String(imovel?.enterprise_id));
+	const enterprise = await fetchEnterpriseById(
+		String(imovel?.enterprise_id),
+		token
+	);
 
 	if (user?.investor_pf) {
 		const response = await fetchGetInvestorPFById(user?.investor_pf, token);

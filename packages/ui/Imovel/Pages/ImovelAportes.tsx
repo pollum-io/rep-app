@@ -1,7 +1,6 @@
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities";
-import { UserInfo } from "../../../../apps/investor/dtos/GlobalUserInfo";
 import Table from "../ImovelAportesComponents/AportesTable";
 import {
 	DocsComponent,
@@ -10,15 +9,28 @@ import {
 	TimeCard,
 } from "../SharedComponents";
 import { PrevRetornoComponent } from "../ImovelAportesComponents";
+import { UserLogin } from "../../GlobalDtos";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	usersId: UserInfo;
+	opportuntyDetails?: any;
+	usersId: UserLogin;
+	setFirstStep: any;
+	setSecondStep: any;
+	setCotas: any;
+	cotas: any;
+	token?: string;
 }
 
 export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 	imovelDetails,
+	opportuntyDetails,
 	usersId,
+	setFirstStep,
+	setSecondStep,
+	setCotas,
+	cotas,
+	token,
 }) => {
 	return (
 		<>
@@ -26,7 +38,10 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 				<Flex gap="1rem" maxWidth="75rem" position={"relative"}>
 					<Flex flexDir={"column"}>
 						<ImovelInfoDefault imovelDetails={imovelDetails} />
-						<PrevRetornoComponent data={imovelDetails} isMyInvest={false} />
+						<PrevRetornoComponent
+							imovelDetails={imovelDetails}
+							isMyInvest={false}
+						/>
 						<Flex flexDir={"row"} maxWidth={"70%"} mr={"0rem"} gap={"1.7rem"}>
 							<Flex flexDir={"column"}>
 								<Flex alignItems={"baseline"} gap={"1.5"}>
@@ -67,10 +82,15 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 							<TimeCard imovelDetails={imovelDetails} />
 							<PriceCard
 								url={imovelDetails?.url}
-								investor_pf={usersId?.investor_pf}
-								investor_pj={usersId?.investor_pj}
 								unitPrice={imovelDetails?.min_investment}
+								isEnterprise={usersId.enterprise ? true : false}
 								opportunitiesDetails={imovelDetails?.opportunities_details}
+								cotas={cotas}
+								setCotas={setCotas}
+								setFirstStep={setFirstStep}
+								setSecondStep={setSecondStep}
+								opportunitiesDetailsToEnteprise={opportuntyDetails}
+								token={token}
 							/>{" "}
 						</Flex>
 					</Flex>

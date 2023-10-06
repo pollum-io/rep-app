@@ -1,0 +1,20 @@
+.scrollbarInvest {
+	width: none;
+	height: 90%;
+	scrollbar-color: rgba(0, 0, 0, 0.08) #081120;
+}
+
+.scrollbarInvest::-webkit-scrollbar {
+	width: 0.45rem;
+}
+
+.scrollbarInvest::-webkit-scrollbar-track {
+	background: #edf2f7;
+	border-radius: 2.3223rem;
+	margin-top: 4.25rem;
+}
+
+.scrollbarInvest::-webkit-scrollbar-thumb {
+	background: #cbd5e0;
+	border-radius: 2.3223rem;
+}

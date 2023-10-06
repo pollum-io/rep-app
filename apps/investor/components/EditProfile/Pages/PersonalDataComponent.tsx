@@ -1,12 +1,8 @@
 import { Flex } from "@chakra-ui/react";
-import { useUser } from "../../../hooks/useUser";
 import { PersonalDataPF } from "../PersonalDataPF";
 import { PersonalDataPJ } from "../PersonalDataPJ";
 import { UserDataPF } from "../../../dtos/UserPF";
 import { UserDataPJ } from "../../../dtos/UserPJ";
-import { useQuery } from "react-query";
-import { fetchGetInvestorPFById } from "../../../services";
-import { Oval } from "react-loader-spinner";
 
 interface IChangePassword {
 	userDataPF?: UserDataPF;
