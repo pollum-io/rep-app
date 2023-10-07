@@ -64,7 +64,7 @@ const EmpreendimentoTable: FunctionComponent<EmpreendimentoTable> = ({
 		} else {
 			push({
 				pathname: `/pagamento/`,
-				query: { id: id },
+				query: { id: id, has_contribution: true },
 			});
 		}
 	};

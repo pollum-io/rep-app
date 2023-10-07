@@ -78,7 +78,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 		} else if (isRealizarPagamento) {
 			push({
 				pathname: `/pagamento/`,
-				query: { id: props?.contributionId },
+				query: { id: props?.contributionId, has_contribution: true },
 			});
 		} else if (isVerAportesRetornos) {
 			props.setEmpreendimento(props);

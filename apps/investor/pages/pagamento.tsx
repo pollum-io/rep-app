@@ -7,6 +7,7 @@ import { PaymentContainer } from "../container/Payment";
 import {
 	fetchGetInvestorPFById,
 	fetchGetPayment,
+	fetchCreatePayment,
 	fetchGetInvestorPJById,
 } from "services";
 interface IPayment {
@@ -25,16 +26,18 @@ const Pagamento: NextPage<IPayment> = ({
 	userDataPJ,
 	investor_pf,
 	investor_pj,
-}) => (
-	<PaymentContainer
-		imovelPayment={imovelPayment}
-		token={token}
-		userDataPF={userDataPF}
-		userDataPJ={userDataPJ}
-		investor_pf={investor_pf}
-		investor_pj={investor_pj}
-	/>
-);
+}) => {
+	return (
+		<PaymentContainer
+			imovelPayment={imovelPayment}
+			token={token}
+			userDataPF={userDataPF}
+			userDataPJ={userDataPJ}
+			investor_pf={investor_pf}
+			investor_pj={investor_pj}
+		/>
+	);
+};
 
 export default Pagamento;
 
@@ -54,8 +57,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
+	const has_contribution: bool = query.has_contribution;
+
 	const user: UserLogin = jwt_decode(token);
 
+	// why is this here?
 	if (!user?.investor_pf && !user?.investor_pj) {
 		return {
 			redirect: {
@@ -65,7 +71,13 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {},
 		};
 	}
-	const imovelPayment = await fetchGetPayment(String(query?.id), token);
+
+	let imovelPayment: any;
+	if (has_contribution === true) {
+		imovelPayment = await fetchGetPayment(String(query?.id), token);
+	} else {
+		imovelPayment = await fetchCreatePayment(query);
+	}
 
 	if (user?.investor_pf) {
 		const response = await fetchGetInvestorPFById(user?.investor_pf, token);

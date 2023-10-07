@@ -2,6 +2,7 @@ import { Flex, Text, Img, Button } from "@chakra-ui/react";
 import { FunctionComponent, useMemo } from "react";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { formatDate, formatFullDate } from "../../utils/formatDate";
+import { useRouter } from "next/router";
 
 interface IValueTable {
 	isCronograma?: boolean;
@@ -36,7 +37,7 @@ export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 						bg: "#F0E8FF",
 						color: "#6E40E7",
 						statusText: "Em aberto",
-						action: "Realizar pagamento",
+						action: "Realizar ",
 					};
 				default:
 					return {
@@ -50,6 +51,24 @@ export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 
 		return getStatusColor;
 	}, []);
+
+	const { push } = useRouter();
+
+	const handleButtonClick = (
+		investor_id: string,
+		investment_id: string,
+		contribution_order: string
+	) => {
+		push({
+			pathname: `/pagamento/`,
+			query: {
+				investor_id,
+				investment_id,
+				contribution_order,
+				has_contribution: false,
+			},
+		});
+	};
 
 	const renderRows = () => {
 		return data?.data?.disbursement_schedule?.map((item, index) => (
@@ -100,6 +119,13 @@ export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
 						fontWeight={"500"}
 						_hover={{}}
 						m={"0"}
+						onClick={() =>
+							handleButtonClick(
+								data?.data?.investor_id,
+								data?.data?._id,
+								item.contribution_order
+							)
+						}
 					>
 						{getStatusColorAndText(item?.status)?.action}
 					</Button>

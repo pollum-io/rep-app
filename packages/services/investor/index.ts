@@ -21,6 +21,7 @@ export * from "./fetchGetInvestmentDetailByUser";
 export * from "./fetchGetInvestorPFById";
 export * from "./fetchGetInvestorPJById";
 export * from "./fetchGetPayment";
+export * from "./fetchCreatePayment";
 export * from "./fetchImages";
 export * from "./fetchImovelDetail";
 export * from "./fetchInvestmentByUser";
