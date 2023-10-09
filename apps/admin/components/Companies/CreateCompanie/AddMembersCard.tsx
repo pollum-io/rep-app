@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Flex, Img, Input, Text } from "@chakra-ui/react";
-import { InputComponent } from "./CompanieFormCreateInput/InputComponent";
+import { Flex, Img, Input, Text } from "@chakra-ui/react";
+import { Avatar } from "./Avatar";
 
 type IAddMembersCard = {
 	setShowImage: any;
@@ -31,91 +31,21 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 	handleMouseEnter,
 	handleMouseLeave,
 	onImageChange,
-	index,
 	handleToggleImage,
 }) => {
-	// const handleToggleImage = () => {
-	// 	if (fileInputRef.current) {
-	// 		fileInputRef.current.click();
-	// 	}
-	// };
-
-	console.log(foto, "foto");
 	return (
 		<Flex alignItems={"end"} pb={"1.5rem"}>
-			<Flex
-				bgColor={"#E2E8F0"}
-				borderRadius={"624.9375rem"}
-				mr={"1.1875rem"}
-				alignItems={"end"}
-				transition={"0.5s"}
-				onMouseEnter={handleMouseEnter} // Altere essa linha
-				onMouseLeave={handleMouseLeave} // Altere essa linha
-				position="relative"
-				bgImage={"url('/logos/avatarMember.svg')"}
-				w={"4rem"}
-				h={"4rem"}
-			>
-				{avatarVisible ? (
-					<Img src="/logos/avatarMember.svg" />
-				) : (
-					<Img
-						w={"4rem"}
-						h={"4rem"}
-						borderRadius={"624.9375rem"}
-						src={foto ? URL.createObjectURL(foto) : null}
-					/>
-				)}
-				<input
-					type="file"
-					accept="image/*"
-					style={{ display: "none" }}
-					onChange={(e) => onInputChange("foto", e.target.files[0])} // Captura e transmite as mudanças no cargo
-					ref={fileInputRef}
-				/>
-				{!foto && showImage && (
-					<Flex
-						top="25%"
-						left="25%"
-						w="50%"
-						h="50%"
-						bgColor={"#B1D8DF"}
-						borderRadius={"50%"}
-						alignItems="center"
-						justifyContent="center"
-						position="absolute"
-						transition={"0.5s"}
-						onClick={handleToggleImage}
-					>
-						<Img
-							src={"/logos/bluePlus.svg"}
-							cursor="pointer"
-							position="absolute"
-						/>
-					</Flex>
-				)}
-				{foto && showImage && (
-					<Flex
-						top="25%"
-						left="25%"
-						w="50%"
-						h="50%"
-						bgColor={"#B1D8DF"}
-						borderRadius={"50%"}
-						alignItems="center"
-						justifyContent="center"
-						transition={"0.5s"}
-						position="absolute"
-						onClick={() => onImageChange("foto")}
-					>
-						<Img
-							src={"/logos/blueTrash.svg"}
-							cursor="pointer"
-							position="absolute"
-						/>
-					</Flex>
-				)}
-			</Flex>
+			<Avatar
+				handleMouseEnter={handleMouseEnter}
+				handleMouseLeave={handleMouseLeave}
+				avatarVisible={avatarVisible}
+				fileInputRef={fileInputRef}
+				showImage={showImage}
+				foto={foto}
+				onImageChange={onImageChange}
+				handleToggleImage={handleToggleImage}
+				onInputChange={onInputChange}
+			/>
 			<Flex flexDir={"column"} pr={"1.5rem"}>
 				<Text
 					as="span"

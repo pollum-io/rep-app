@@ -1,10 +1,27 @@
 import React from "react";
 import { Button, Flex } from "@chakra-ui/react";
 import { InputComponent } from "../CompanieFormCreateInput/InputComponent";
-import { useCreateCompanieSteps } from "../../../../hooks/useRegisterSteps";
+import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
+import { useCreateCompany } from "../../../../hooks/useCreateCompany";
 
-export const SecondCompaniesInfo: React.FC = () => {
+interface ISecondCompaniesInfo {
+	onOpenModal?: any;
+}
+
+export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
+	onOpenModal,
+}) => {
 	const { setFirstStep, setSecondStep } = useCreateCompanieSteps();
+	const { handleSaveFormData, companyFormData, setCompanyFormData } =
+		useCreateCompany();
+
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setCompanyFormData({
+			...companyFormData,
+			[name]: value,
+		});
+	};
 
 	return (
 		<Flex flexDir={"column"}>
@@ -16,20 +33,28 @@ export const SecondCompaniesInfo: React.FC = () => {
 						width={"18.5rem"}
 						label="E-mail de contato"
 						placeholderText="exemplo@exemplo.com"
+						onChange={handleInputChange}
+						value={companyFormData.contactEmail}
 					/>
 					<InputComponent
 						type="text"
 						name="whatsapp"
+						maskType="Telefone"
 						width={"18.5rem"}
 						label="WhatsApp"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.whatsapp}
 					/>
 					<InputComponent
 						type="text"
 						name="contactPhone"
+						maskType="Telefone"
 						width={"18.5rem"}
 						label="Telefone de contato"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.contactPhone}
 					/>
 					<InputComponent
 						type="text"
@@ -37,6 +62,8 @@ export const SecondCompaniesInfo: React.FC = () => {
 						width={"18.5rem"}
 						label="Instagram"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.instagram}
 					/>
 					<InputComponent
 						type="text"
@@ -44,15 +71,28 @@ export const SecondCompaniesInfo: React.FC = () => {
 						width={"18.5rem"}
 						label="Página do Facebook"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.facebook}
 					/>
 				</Flex>
 				<Flex flexDir={"column"} gap={"1.5rem"}>
 					<InputComponent
-						type="email"
+						type="text"
+						name="website"
+						width={"18.5rem"}
+						label="Website"
+						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.website}
+					/>
+					<InputComponent
+						type="text"
 						name="telegram"
 						width={"18.5rem"}
 						label="Telegram"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.telegram}
 					/>
 					<InputComponent
 						type="text"
@@ -60,6 +100,8 @@ export const SecondCompaniesInfo: React.FC = () => {
 						width={"18.5rem"}
 						label="Twitter"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.twitter}
 					/>
 					<InputComponent
 						type="text"
@@ -67,6 +109,8 @@ export const SecondCompaniesInfo: React.FC = () => {
 						width={"18.5rem"}
 						label="Perfil do Jusbrasil"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.jusbrasil}
 					/>
 					<InputComponent
 						type="text"
@@ -74,6 +118,8 @@ export const SecondCompaniesInfo: React.FC = () => {
 						width={"18.5rem"}
 						label="Perfil do Reclame Aqui"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={companyFormData.reclame}
 					/>
 				</Flex>
 			</Flex>
@@ -90,6 +136,7 @@ export const SecondCompaniesInfo: React.FC = () => {
 					onClick={() => {
 						setFirstStep(true);
 						setSecondStep(false);
+						handleSaveFormData();
 					}}
 				>
 					Voltar
@@ -105,6 +152,8 @@ export const SecondCompaniesInfo: React.FC = () => {
 					onClick={() => {
 						setFirstStep(false);
 						setSecondStep(true);
+						handleSaveFormData();
+						onOpenModal();
 					}}
 				>
 					Avançar

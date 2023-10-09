@@ -1,10 +1,30 @@
-import React, { useState } from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import React from "react";
+import { Flex, Text, Img } from "@chakra-ui/react";
+import { useCreateCompany } from "../../../hooks/useCreateCompany";
+import { useCreateCompanieSteps } from "../../../hooks/useCreateCompanieSteps";
 
-// type ComponentProps = {};
+interface ICompaniesCard {
+	logo?: any;
+	nome?: string;
+	opAvailable?: number;
+	opFinished?: number;
+	receita?: number;
+	isFinisished?: boolean;
+}
 
-export const CompaniesCard: React.FC = () => {
-	const [state] = useState();
+export const CompaniesCard: React.FC<ICompaniesCard> = ({
+	logo,
+	nome,
+	opAvailable,
+	opFinished,
+	receita,
+	isFinisished,
+}) => {
+	console.log(opAvailable);
+	const { setIsEditing, setIsCreating, isNotCretedYet, companyImages } =
+		useCreateCompany();
+	const { isCreatePage, setFirstStep, setSecondStep, setIsCreatePage } =
+		useCreateCompanieSteps();
 
 	return (
 		<Flex
@@ -14,19 +34,53 @@ export const CompaniesCard: React.FC = () => {
 			borderRadius={"0.75rem"}
 			flexDir={"row"}
 		>
-			<Flex
-				bgColor={"#9E7AFA"}
-				borderRadius={"624.9375rem"}
-				w={"5rem"}
-				h={"4rem"}
-				justifyContent={"center"}
-				alignItems={"center"}
-				mr={"1rem"}
-			>
-				<Text color={"white"} fontSize={"1.625rem"}>
-					SA
-				</Text>
-			</Flex>
+			{!isFinisished ? (
+				<Flex
+					bgColor={"#9E7AFA"}
+					borderRadius={"624.9375rem"}
+					w={"5rem"}
+					h={"4rem"}
+					justifyContent={"center"}
+					alignItems={"center"}
+					mr={"1rem"}
+				>
+					{companyImages?.logo ? (
+						<Img
+							borderRadius={"624.9375rem"}
+							objectFit={"cover"}
+							w={"5rem"}
+							h={"4rem"}
+							src={
+								companyImages?.logo
+									? URL.createObjectURL(companyImages?.logo)
+									: null
+							}
+						/>
+					) : (
+						<Text color={"white"} fontSize={"1.625rem"}>
+							SA
+						</Text>
+					)}
+				</Flex>
+			) : (
+				<Flex
+					bgColor={"#9E7AFA"}
+					borderRadius={"624.9375rem"}
+					w={"5rem"}
+					h={"4rem"}
+					justifyContent={"center"}
+					alignItems={"center"}
+					mr={"1rem"}
+				>
+					{logo ? (
+						<Img src={logo} />
+					) : (
+						<Text color={"white"} fontSize={"1.625rem"}>
+							SA
+						</Text>
+					)}
+				</Flex>
+			)}
 			<Flex flexDir={"column"} w={"100%"} gap={"0.75rem"}>
 				<Flex
 					flexDir={"row"}
@@ -36,9 +90,9 @@ export const CompaniesCard: React.FC = () => {
 				>
 					<Flex>
 						<Text fontSize={"0.875rem"} color={"#171923"} fontWeight={"500"}>
-							Nome da Empresa{" "}
+							{nome ? nome : "-"}
 						</Text>
-						{!state && (
+						{!isFinisished && (
 							<Flex
 								fontSize={"0.75rem"}
 								fontWeight={"500"}
@@ -54,7 +108,7 @@ export const CompaniesCard: React.FC = () => {
 							</Flex>
 						)}
 					</Flex>
-					{!state ? (
+					{!isFinisished ? (
 						<Flex
 							fontSize={"0.75rem"}
 							fontWeight={"500"}
@@ -66,6 +120,13 @@ export const CompaniesCard: React.FC = () => {
 							alignItems={"center"}
 							transition={"0.3s"}
 							_hover={{ opacity: 0.7, cursor: "pointer" }}
+							onClick={() => {
+								setIsEditing(true);
+								setIsCreating(false);
+								setFirstStep(true);
+								setSecondStep(false);
+								setIsCreatePage(true);
+							}}
 						>
 							Retomar criação
 						</Flex>
@@ -86,19 +147,19 @@ export const CompaniesCard: React.FC = () => {
 						<Text fontSize={"0.75rem"} color={"#718096"}>
 							Oportunidades Disponíveis
 						</Text>
-						<Text color={"#171923"}></Text>
+						<Text color={"#171923"}> {opAvailable ? opAvailable : "-"}</Text>
 					</Flex>
 					<Flex alignItems={"center"} gap={"0.5rem"} w={"6.3125rem"}>
 						<Text fontSize={"0.75rem"} color={"#718096"}>
 							Encerradas
 						</Text>
-						<Text color={"#171923"}>-</Text>
+						<Text color={"#171923"}> {opFinished ? opFinished : "-"}</Text>
 					</Flex>
 					<Flex alignItems={"center"} gap={"0.5rem"} w={"7.125rem"}>
 						<Text fontSize={"0.75rem"} color={"#718096"}>
 							Receita
 						</Text>
-						<Text color={"#171923"}>R$ -</Text>
+						<Text color={"#171923"}>R$ {receita ? receita : "-"}</Text>
 					</Flex>
 				</Flex>
 			</Flex>

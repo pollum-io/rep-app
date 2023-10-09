@@ -1,12 +1,23 @@
 import React from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { CompaniesCard } from "./CompaniesCard";
-import { useCreateCompanieSteps } from "../../../hooks/useRegisterSteps";
+import { useCreateCompanieSteps } from "../../../hooks/useCreateCompanieSteps";
+import { useCreateCompany } from "../../../hooks/useCreateCompany";
+import { fetchEnterprise } from "services";
+import { useQuery } from "react-query";
 
-// type ComponentProps = {};
+const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 export const CompaniesControll: React.FC = () => {
 	const { setIsCreatePage, setFirstStep } = useCreateCompanieSteps();
+	const { setIsEditing, setIsCreating, isNotCretedYet, companyFormData } =
+		useCreateCompany();
+
+	const { data, isLoading, error } = useQuery(
+		["enterpriseShareholdersFilter"],
+		async () => await fetchEnterprise()
+	);
+
 	return (
 		<Flex flexDir={"column"}>
 			<Text
@@ -52,13 +63,35 @@ export const CompaniesControll: React.FC = () => {
 							onClick={() => {
 								setIsCreatePage(true);
 								setFirstStep(true);
+								setIsEditing(false);
+								setIsCreating(true);
 							}}
+							isDisabled={isNotCretedYet ? true : false}
 						>
 							Criar empresa
 						</Button>
 					</Flex>
 				</Flex>
-				<CompaniesCard />
+				<CompaniesCard
+					logo={companyFormData?.logo}
+					nome={companyFormData?.nome}
+					opAvailable={companyFormData?.obrasAndamento}
+					opFinished={companyFormData?.obrasEntregues}
+					receita={0}
+					isFinisished={false}
+				/>
+				{!isLoading &&
+					data?.enterprises?.map((data, index) => (
+						<CompaniesCard
+							key={index}
+							logo={`${url}/file/${data?.enterprise_logo}`}
+							nome={data?.enterprise_name}
+							opAvailable={data?.opportunities_available}
+							opFinished={data?.opportunities_closed}
+							receita={0}
+							isFinisished={true}
+						/>
+					))}
 				<Flex justifyContent={"center"} alignItems={"center"} gap={"1rem"}>
 					<Button bgColor={"#718096"} borderRadius={"6.25rem"} p="0.75rem">
 						<Img src={"/logos/leftArrow.svg"} />

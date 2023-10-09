@@ -3,6 +3,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../styles/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { CreateCompanieStepsProvider } from "../contexts/register";
+import "../styles/appScrollbar.css";
+import { CreateCompanyProvider } from "../contexts/createCompany";
 
 const toasty = {
 	bg: "#FFFFFF",
@@ -15,9 +17,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ChakraProvider resetCSS theme={theme}>
-				<CreateCompanieStepsProvider>
-					<Component {...pageProps} />
-				</CreateCompanieStepsProvider>
+				<CreateCompanyProvider>
+					<CreateCompanieStepsProvider>
+						<Component {...pageProps} />
+					</CreateCompanieStepsProvider>
+				</CreateCompanyProvider>
 			</ChakraProvider>
 		</QueryClientProvider>
 	);

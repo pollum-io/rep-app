@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useCreateCompanieSteps } from "../../hooks/useCreateCompanieSteps";
 
 const sideBarLinks = [
 	{
@@ -27,7 +28,8 @@ const sideBarLinks = [
 
 export const Sidebar: React.FC = () => {
 	const router = useRouter();
-
+	const { isCreatePage, setFirstStep, setSecondStep, setIsCreatePage } =
+		useCreateCompanieSteps();
 	return (
 		<Flex
 			position={"fixed"}
@@ -72,6 +74,11 @@ export const Sidebar: React.FC = () => {
 						borderRadius={"2.5rem"}
 						transition={"0.5s"}
 						_hover={{ backgroundColor: "#E4F2F3" }}
+						onClick={() => {
+							setFirstStep(true);
+							setSecondStep(false);
+							setIsCreatePage(false);
+						}}
 					>
 						<Img src={data?.logo} />
 						<Text fontSize={"0.875rem"} color={"#007088"}>

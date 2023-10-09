@@ -18,6 +18,7 @@ interface InputProps extends ChakraInputProps {
 	maxLength?: number;
 	placeholderText?: string;
 	setInputValues?: React.Dispatch<string>;
+	handleInputChange?: any;
 }
 
 export const InputBase: ForwardRefRenderFunction<
@@ -33,6 +34,7 @@ export const InputBase: ForwardRefRenderFunction<
 		type,
 		maxLength,
 		placeholderText,
+		handleInputChange,
 		...rest
 	},
 	ref

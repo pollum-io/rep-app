@@ -1,19 +1,9 @@
-import { FunctionComponent, useState, useRef } from "react";
-import {
-	Button,
-	Flex,
-	Img,
-	Text,
-	Input,
-	Textarea,
-	useDisclosure,
-} from "@chakra-ui/react";
+import { FunctionComponent } from "react";
+import { Button, Flex, Img, Text, useDisclosure } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { CompaniesControll } from "../../components/Companies/CompanieControllPage/CompaniesControll";
-import { useCreateCompanieSteps } from "../../hooks/useRegisterSteps";
+import { useCreateCompanieSteps } from "../../hooks/useCreateCompanieSteps";
 import { CreateSteps } from "../../components/Companies/CreateCompanie/CreateSteps/CreateSteps";
-import { InputComponent } from "../../components/Companies/CreateCompanie/CompanieFormCreateInput/InputComponent";
-import { AddMembersCard } from "../../components/Companies/CreateCompanie/AddMembersCard";
 import { FirstCompaniesInfo } from "../../components/Companies/CreateCompanie/FirstCompaniesInfo";
 import { SecondCompaniesInfo } from "../../components/Companies/CreateCompanie/SecondCompaniesInfo";
 import { DrawerComponent } from "../../components/Companies/CreateCompanie/Drawer";
@@ -22,9 +12,9 @@ export const CompaniesContainer: FunctionComponent = () => {
 	const {
 		isCreatePage,
 		firstStep,
-		setFirstStep,
 		secondStep,
 		setSecondStep,
+		setFirstStep,
 		setIsCreatePage,
 	} = useCreateCompanieSteps();
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,11 +27,23 @@ export const CompaniesContainer: FunctionComponent = () => {
 				) : (
 					<>
 						<Flex flexDir={"column"}>
-							<Flex alignItems={"baseline"} gap={"1rem"}>
+							<Flex
+								alignItems={"baseline"}
+								gap={"1rem"}
+								transition={"0.5s"}
+								cursor={"pointer"}
+								_hover={{ opacity: 0.6 }}
+								w={"max"}
+							>
 								<Button
 									bgColor={"#B1D8DF"}
 									borderRadius={"6.25rem"}
 									p="0.75rem"
+									onClick={() => {
+										setIsCreatePage(false);
+										setFirstStep(false);
+										setSecondStep(false);
+									}}
 								>
 									<Img src={"/logos/leftArrowBlue.svg"} />
 								</Button>
@@ -51,7 +53,9 @@ export const CompaniesContainer: FunctionComponent = () => {
 									fontWeight={"500"}
 									mt={"1rem"}
 									mb={"2rem"}
-									onClick={onOpen}
+									transition={"0.5s"}
+									cursor={"pointer"}
+									_hover={{ opacity: 0.6 }}
 								>
 									Criar empresa
 								</Text>
@@ -90,7 +94,7 @@ export const CompaniesContainer: FunctionComponent = () => {
 									</Text>
 								</Flex>
 								{firstStep && <FirstCompaniesInfo />}
-								{secondStep && <SecondCompaniesInfo />}
+								{secondStep && <SecondCompaniesInfo onOpenModal={onOpen} />}
 								<DrawerComponent isOpen={isOpen} onClose={onClose} />
 							</Flex>
 						</Flex>

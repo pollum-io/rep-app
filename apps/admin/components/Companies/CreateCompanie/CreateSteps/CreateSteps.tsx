@@ -4,7 +4,7 @@ import { IRegisterSteps } from "./dto";
 
 import { BsCheck } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
-import { useCreateCompanieSteps } from "../../../../hooks/useRegisterSteps";
+import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
 
 const CreateStep: FunctionComponent<IRegisterSteps> = ({
 	step,

@@ -6,13 +6,19 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 	image,
 	name,
 	occupation,
+	isDrawer,
 }) => {
 	const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
+	console.log(image);
 
 	return (
 		<Flex flexDirection="column" gap="0.5rem" alignItems="center">
 			<Flex w="4rem" h="4rem">
-				<Img src={`${url}/file/${image}`} />
+				{!isDrawer ? (
+					<Img src={URL.createObjectURL(image)} borderRadius={"62.4375rem"} />
+				) : (
+					<Img src={`${url}/file/${image}`} />
+				)}
 			</Flex>
 			<Flex
 				fontFamily="Poppins"
@@ -42,6 +48,7 @@ export const CompanieMembers: FunctionComponent<ICompanieMembers> = ({
 			w="fit-content"
 			rowGap="2.75rem"
 			mt="2rem"
+			flexDir={"row"}
 		>
 			<CompanieMember image={image} name={name} occupation={occupation} />
 		</SimpleGrid>
