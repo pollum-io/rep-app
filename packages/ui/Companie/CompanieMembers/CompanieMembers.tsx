@@ -9,13 +9,15 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 	isDrawer,
 }) => {
 	const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
-	console.log(image);
 
 	return (
-		<Flex flexDirection="column" gap="0.5rem" alignItems="center">
+		<Flex flexDirection="column" gap="0.5rem" alignItems="center" m={"0 auto"}>
 			<Flex w="4rem" h="4rem">
 				{!isDrawer ? (
-					<Img src={URL.createObjectURL(image)} borderRadius={"62.4375rem"} />
+					<Img
+						src={image ? URL?.createObjectURL(image) : ""}
+						borderRadius={"62.4375rem"}
+					/>
 				) : (
 					<Img src={`${url}/file/${image}`} />
 				)}
@@ -28,6 +30,8 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 				color="#171923"
 				gap="0.25rem"
 				flexDirection="column"
+				w={"10rem"}
+				textAlign={"center"}
 			>
 				<Text>{name}</Text>
 				<Text fontWeight="400">{occupation}</Text>

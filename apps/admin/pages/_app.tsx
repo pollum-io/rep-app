@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { CreateCompanieStepsProvider } from "../contexts/register";
 import "../styles/appScrollbar.css";
 import { CreateCompanyProvider } from "../contexts/createCompany";
+import { UserProvider } from "../contexts/user";
+import { ToastyProvider } from "../contexts/toasty";
 
 const toasty = {
 	bg: "#FFFFFF",
@@ -17,11 +19,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ChakraProvider resetCSS theme={theme}>
-				<CreateCompanyProvider>
-					<CreateCompanieStepsProvider>
-						<Component {...pageProps} />
-					</CreateCompanieStepsProvider>
-				</CreateCompanyProvider>
+				<UserProvider>
+					<ToastyProvider {...toasty}>
+						<CreateCompanyProvider>
+							<CreateCompanieStepsProvider>
+								<Component {...pageProps} />
+							</CreateCompanieStepsProvider>
+						</CreateCompanyProvider>
+					</ToastyProvider>
+				</UserProvider>
 			</ChakraProvider>
 		</QueryClientProvider>
 	);
