@@ -5,6 +5,7 @@ import { useCreateCompanieSteps } from "../../../hooks/useCreateCompanieSteps";
 
 interface ICompaniesCard {
 	logo?: any;
+	id?: string;
 	nome?: string;
 	opAvailable?: number;
 	opFinished?: number;
@@ -14,16 +15,16 @@ interface ICompaniesCard {
 
 export const CompaniesCard: React.FC<ICompaniesCard> = ({
 	logo,
+	id,
 	nome,
 	opAvailable,
 	opFinished,
 	receita,
 	isFinisished,
 }) => {
-	console.log(opAvailable);
-	const { setIsEditing, setIsCreating, isNotCretedYet, companyImages } =
+	const { setIsEditing, setIsCreating, companyImages, setEntepriseId } =
 		useCreateCompany();
-	const { isCreatePage, setFirstStep, setSecondStep, setIsCreatePage } =
+	const { setFirstStep, setSecondStep, setIsCreatePage } =
 		useCreateCompanieSteps();
 
 	return (
@@ -121,7 +122,7 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 							transition={"0.3s"}
 							_hover={{ opacity: 0.7, cursor: "pointer" }}
 							onClick={() => {
-								setIsEditing(true);
+								setIsEditing(false);
 								setIsCreating(false);
 								setFirstStep(true);
 								setSecondStep(false);
@@ -137,6 +138,14 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 							color={"#007D99"}
 							transition={"0.3s"}
 							_hover={{ opacity: 0.7, cursor: "pointer" }}
+							onClick={() => {
+								setIsEditing(true);
+								setIsCreating(false);
+								setFirstStep(true);
+								setSecondStep(false);
+								setIsCreatePage(true);
+								setEntepriseId(id);
+							}}
 						>
 							Editar
 						</Text>

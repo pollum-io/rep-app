@@ -3,6 +3,8 @@ import { Button, Flex } from "@chakra-ui/react";
 import { InputComponent } from "../CompanieFormCreateInput/InputComponent";
 import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
 import { useCreateCompany } from "../../../../hooks/useCreateCompany";
+import { fetchEnterpriseById } from "services";
+import { useQuery } from "react-query";
 
 interface ISecondCompaniesInfo {
 	onOpenModal?: any;
@@ -12,8 +14,22 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 	onOpenModal,
 }) => {
 	const { setFirstStep, setSecondStep } = useCreateCompanieSteps();
-	const { handleSaveFormData, companyFormData, setCompanyFormData } =
-		useCreateCompany();
+	const {
+		handleSaveFormData,
+		companyFormData,
+		setCompanyFormData,
+		entepriseId,
+		isEditing,
+	} = useCreateCompany();
+
+	const { data, isLoading, error } = useQuery(
+		["enterpriseById"],
+		async () =>
+			await fetchEnterpriseById(
+				entepriseId,
+				"livn_auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGJiZDYyN2ViNmE5YTgzNDQ1MzNjMyIsImVtYWlsIjoibGl2bkBwb2xsdW0uaW8iLCJpbnZlc3Rvcl9wZiI6bnVsbCwiaW52ZXN0b3JfcGoiOm51bGwsImVudGVycHJpc2UiOiI2NDBhMjFlMjJmZTI0ZWVjN2FiNWViMDkiLCJpYXQiOjE2OTY4NTM0NjQsImV4cCI6MTY5NjkzOTg2NH0.wYxJ0qOTYNinIM864UgS7_eLeipFghgcxO9jfZCTLKY; Max-Age=604800; Domain=localhost; Path=/; HttpOnly; Secure; SameSite=None"
+			)
+	);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -22,7 +38,7 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 			[name]: value,
 		});
 	};
-
+	console.log(companyFormData, "companyFormData");
 	return (
 		<Flex flexDir={"column"}>
 			<Flex w={"100%"} justifyContent={"space-between"}>
@@ -34,7 +50,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="E-mail de contato"
 						placeholderText="exemplo@exemplo.com"
 						onChange={handleInputChange}
-						value={companyFormData.contactEmail}
+						value={
+							isEditing
+								? data?.email
+								: companyFormData.social_media?.contactEmail
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -44,7 +64,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="WhatsApp"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.whatsapp}
+						value={
+							isEditing
+								? data?.social_media?.whatsapp
+								: companyFormData?.social_media?.whatsapp
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -54,7 +78,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="Telefone de contato"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.contactPhone}
+						value={
+							isEditing
+								? data?.social_media?.telephone
+								: companyFormData?.social_media?.contactPhone
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -63,7 +91,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="Instagram"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.instagram}
+						value={
+							isEditing
+								? data?.social_media?.instagram
+								: companyFormData?.social_media?.instagram
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -72,7 +104,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="Página do Facebook"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.facebook}
+						value={
+							isEditing
+								? data?.social_media?.facebook
+								: companyFormData?.social_media?.facebook
+						}
 					/>
 				</Flex>
 				<Flex flexDir={"column"} gap={"1.5rem"}>
@@ -83,7 +119,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="Website"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.website}
+						value={
+							isEditing
+								? data?.social_media?.site_url
+								: companyFormData?.social_media?.website
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -92,7 +132,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="Telegram"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.telegram}
+						value={
+							isEditing
+								? data?.social_media?.telegram
+								: companyFormData?.social_media?.telegram
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -101,7 +145,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="Twitter"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.twitter}
+						value={
+							isEditing
+								? data?.social_media?.twitter
+								: companyFormData?.social_media?.twitter
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -110,7 +158,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="Perfil do Jusbrasil"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.jusbrasil}
+						value={
+							isEditing
+								? data?.social_media?.jusbrasil
+								: companyFormData?.social_media?.jusbrasil
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -119,7 +171,11 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						label="Perfil do Reclame Aqui"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData.reclame}
+						value={
+							isEditing
+								? data?.social_media?.reclame
+								: companyFormData?.social_media?.reclame
+						}
 					/>
 				</Flex>
 			</Flex>

@@ -5,33 +5,35 @@ import { Avatar } from "./Avatar";
 type IAddMembersCard = {
 	setShowImage: any;
 	avatarVisible: any;
-	fileInputRef: any;
-	showImage: any;
+	showImage?: any;
 	handleToggleImage: any;
-	foto?: any;
-	nome?: string;
-	cargo?: string;
+	image?: any;
+	name?: string;
+	position?: string;
 	onInputChange?: any;
 	onImageChange?: any;
 	handleMouseEnter?: any;
 	handleMouseLeave?: any;
 	deleteUser?: any;
 	index: any;
+	orginalFile?: boolean;
+	setorginalFile?: any;
 };
 
 export const AddMembersCard: React.FC<IAddMembersCard> = ({
 	avatarVisible,
-	fileInputRef,
 	showImage,
 	deleteUser,
-	foto,
-	nome,
-	cargo,
+	image,
+	orginalFile,
+	name,
+	position,
 	onInputChange,
 	handleMouseEnter,
 	handleMouseLeave,
 	onImageChange,
 	handleToggleImage,
+	setorginalFile,
 }) => {
 	return (
 		<Flex alignItems={"end"} pb={"1.5rem"}>
@@ -39,9 +41,11 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 				handleMouseEnter={handleMouseEnter}
 				handleMouseLeave={handleMouseLeave}
 				avatarVisible={avatarVisible}
-				fileInputRef={fileInputRef}
 				showImage={showImage}
-				foto={foto}
+				foto={image}
+				orginalFile={orginalFile}
+				setorginalFile={setorginalFile}
+				imageFromBack={image}
 				onImageChange={onImageChange}
 				handleToggleImage={handleToggleImage}
 				onInputChange={onInputChange}
@@ -71,8 +75,8 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 						boxShadow: "none",
 						border: "0.0938rem solid #E2E8F0",
 					}}
-					value={nome}
-					onChange={(e) => onInputChange("nome", e.target.value)} // Captura e transmite as mudanças no cargo
+					value={name}
+					onChange={(e) => onInputChange("name", e.target.value)} // Captura e transmite as mudanças no cargo
 				/>
 			</Flex>
 			<Flex flexDir={"column"} mr={"0.6875rem"}>
@@ -100,8 +104,8 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 						boxShadow: "none",
 						border: "0.0938rem solid #E2E8F0",
 					}}
-					value={cargo}
-					onChange={(e) => onInputChange("cargo", e.target.value)} // Captura e transmite as mudanças no cargo
+					value={position}
+					onChange={(e) => onInputChange("position", e.target.value)} // Captura e transmite as mudanças no cargo
 				/>
 			</Flex>
 			<Flex

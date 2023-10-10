@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { useCreateCompany } from "../../../hooks/useCreateCompany";
+
+const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 type IAvatar = {
 	setShowImage?: any;
 	avatarVisible?: any;
-	fileInputRef?: any;
 	showImage?: any;
 	handleToggleImage?: any;
 	foto?: any;
@@ -16,10 +18,11 @@ type IAvatar = {
 	handleMouseLeave?: any;
 	deleteUser?: any;
 	index?: any;
+	imageFromBack?: string;
+	orginalFile?: boolean;
+	setorginalFile?: any;
 };
 export const Avatar: React.FC<IAvatar> = ({
-	avatarVisible,
-	fileInputRef,
 	showImage,
 	foto,
 	onInputChange,
@@ -27,7 +30,35 @@ export const Avatar: React.FC<IAvatar> = ({
 	handleMouseLeave,
 	onImageChange,
 	handleToggleImage,
+	imageFromBack,
 }) => {
+	const { isEditing } = useCreateCompany();
+	const [avatarVisible, setAvatarVisible] = useState(foto ? false : true);
+	const [fotoFromBack, setfotoFromBack] = useState(false);
+	const [newFoto, setnewFoto] = useState(false);
+
+	useEffect(() => {
+		if (typeof foto === "string") {
+			setfotoFromBack(true);
+			setnewFoto(false);
+		} else {
+			setfotoFromBack(false);
+			setnewFoto(true);
+		}
+	}, [foto]); // Execute isso apenas quando "foto" mudar
+	console.log(newFoto);
+	console.log(fotoFromBack);
+
+	let imageUrl = null;
+	if (foto) {
+		if (fotoFromBack) {
+			imageUrl = `${url}/file/${foto}`;
+		} else if (newFoto) {
+			imageUrl = URL.createObjectURL(foto);
+		} else {
+			imageUrl = null;
+		}
+	}
 	return (
 		<Flex
 			bgColor={"#E2E8F0"}
@@ -43,42 +74,48 @@ export const Avatar: React.FC<IAvatar> = ({
 			h={"4rem"}
 		>
 			{avatarVisible ? (
-				<Img src="/logos/avatarMember.svg" />
+				<Flex bgImage={"url('/logos/avatarMember.svg')"} />
 			) : (
 				<Img
 					w={"4rem"}
 					h={"4rem"}
 					borderRadius={"624.9375rem"}
-					src={foto ? URL.createObjectURL(foto) : null}
+					src={imageUrl}
 				/>
 			)}
-			<input
-				type="file"
-				accept="image/*"
-				style={{ display: "none" }}
-				onChange={(e) => onInputChange("foto", e.target.files[0])} // Captura e transmite as mudanças no cargo
-				ref={fileInputRef}
-			/>
+
 			{!foto && showImage && (
-				<Flex
+				<Button
+					as="span"
 					top="25%"
-					left="25%"
-					w="50%"
-					h="50%"
+					left="20%"
+					w="1rem"
+					h="2rem"
+					p={"0"}
+					m={"0"}
 					bgColor={"#B1D8DF"}
 					borderRadius={"50%"}
 					alignItems="center"
 					justifyContent="center"
 					position="absolute"
 					transition={"0.5s"}
-					onClick={handleToggleImage}
+					onClick={() => {
+						setAvatarVisible(false);
+						handleToggleImage();
+					}}
 				>
 					<Img
 						src={"/logos/bluePlus.svg"}
 						cursor="pointer"
 						position="absolute"
 					/>
-				</Flex>
+					<input
+						id="#fileInputAvatar"
+						type="file"
+						accept="image/*"
+						onChange={(e) => onInputChange("image", e.target.files[0])}
+					/>
+				</Button>
 			)}
 			{foto && showImage && (
 				<Flex
@@ -92,7 +129,10 @@ export const Avatar: React.FC<IAvatar> = ({
 					justifyContent="center"
 					transition={"0.5s"}
 					position="absolute"
-					onClick={() => onImageChange("foto")}
+					onClick={() => {
+						onImageChange("image");
+						setAvatarVisible(true);
+					}}
 				>
 					<Img
 						src={"/logos/blueTrash.svg"}

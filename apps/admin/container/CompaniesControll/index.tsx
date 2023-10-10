@@ -7,6 +7,8 @@ import { CreateSteps } from "../../components/Companies/CreateCompanie/CreateSte
 import { FirstCompaniesInfo } from "../../components/Companies/CreateCompanie/FirstCompaniesInfo";
 import { SecondCompaniesInfo } from "../../components/Companies/CreateCompanie/SecondCompaniesInfo";
 import { DrawerComponent } from "../../components/Companies/CreateCompanie/Drawer";
+import { PersistentFramework } from "ui";
+import { useCreateCompany } from "../../hooks/useCreateCompany";
 
 export const CompaniesContainer: FunctionComponent = () => {
 	const {
@@ -17,8 +19,8 @@ export const CompaniesContainer: FunctionComponent = () => {
 		setFirstStep,
 		setIsCreatePage,
 	} = useCreateCompanieSteps();
+	const { handleHasCompanyBeingCreated, isEditing } = useCreateCompany();
 	const { isOpen, onOpen, onClose } = useDisclosure();
-
 	return (
 		<DefaultTemplate>
 			<Flex flexDir={"column"}>
@@ -34,16 +36,16 @@ export const CompaniesContainer: FunctionComponent = () => {
 								cursor={"pointer"}
 								_hover={{ opacity: 0.6 }}
 								w={"max"}
+								onClick={() => {
+									setIsCreatePage(false);
+									setFirstStep(false);
+									setSecondStep(false);
+								}}
 							>
 								<Button
 									bgColor={"#B1D8DF"}
 									borderRadius={"6.25rem"}
 									p="0.75rem"
-									onClick={() => {
-										setIsCreatePage(false);
-										setFirstStep(false);
-										setSecondStep(false);
-									}}
 								>
 									<Img src={"/logos/leftArrowBlue.svg"} />
 								</Button>
@@ -83,15 +85,24 @@ export const CompaniesContainer: FunctionComponent = () => {
 									>
 										Dados gerais
 									</Text>
-									<Text
-										fontSize={"0.75rem"}
-										color={"#007D99"}
-										fontWeight={"500"}
-										transition={"0.3s"}
-										_hover={{ opacity: 0.7, cursor: "pointer" }}
-									>
-										Cancelar criação
-									</Text>
+									{!isEditing && (
+										<Text
+											fontSize={"0.75rem"}
+											color={"#007D99"}
+											fontWeight={"500"}
+											transition={"0.3s"}
+											_hover={{ opacity: 0.7, cursor: "pointer" }}
+											onClick={() => {
+												PersistentFramework.remove("formData");
+												setIsCreatePage(false);
+												setFirstStep(false);
+												setSecondStep(false);
+												handleHasCompanyBeingCreated(false);
+											}}
+										>
+											Cancelar criação
+										</Text>
+									)}
 								</Flex>
 								{firstStep && <FirstCompaniesInfo />}
 								{secondStep && <SecondCompaniesInfo onOpenModal={onOpen} />}

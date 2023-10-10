@@ -17,7 +17,7 @@ import {
 	ICompaniesTeam,
 } from "ui";
 import { useCreateCompany } from "../../../../hooks/useCreateCompany";
-import { fetchCreateEnterprise } from "services";
+import { fetchCreateEnterprise, fetchUploadImages } from "services";
 
 interface IDrawerComponent {
 	onClose: any;
@@ -29,49 +29,63 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 	onClose,
 }) => {
 	const btnRef = useRef();
-	const { companyFormData, setIsCreating, companyImages } = useCreateCompany();
+	const { companyFormData, setIsCreating, companyImages, isEditing } =
+		useCreateCompany();
 
 	const updatedCompanyFormData = { ...companyFormData };
 
+	if (companyImages.logo) {
+		updatedCompanyFormData.logo = companyImages.logo;
+	}
+
+	if (companyImages.banner) {
+		updatedCompanyFormData.banner = companyImages.banner;
+	}
+
 	updatedCompanyFormData.companyMember.forEach((member, index) => {
 		if (companyImages[index]) {
-			member.foto = URL.createObjectURL(companyImages[index]);
+			member.image = URL.createObjectURL(companyImages[index]);
 		}
 	});
 
 	const handleCreateCompany = async (data: any) => {
-		console.log(data);
 		let request: any;
+		console.log(data, "data");
+		const formData = new FormData();
+		formData.append("logo", data?.logo);
+		formData.append("banner", data?.banner);
+		// data?.companyMember.forEach((teamMember, index) => {
+		// 	formData.append("team", teamMember.image, `file${index}`);
+		// });
+
+		const retornoDasImagens = await fetchUploadImages(formData);
+
+		//logo tem que ser no indice 0
+		//banner é no indice 1, teria que verificar se o logo foi editado, se for editado o banner é indice 1, se nao no indice 0
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
 		request = {
-			enterprise_name: data?.nome,
-			enterprise_logo: data?.logo,
-			enterprise_banner: data?.banner,
-			cnpj: data?.cnpj,
-			contact_number: data?.contactPhone,
-			social_media: {
-				twitter: data?.twitter,
-				instagram: data?.instagram,
-				telegram: data?.telegram,
-				facebook: data?.facebook,
-				email: data?.contactEmail,
-				site_url: data?.website,
-				whatsapp: data?.whatsapp,
-				telephone: data?.contactPhone,
-			},
-			description: data?.description,
+			...(data?.nome && { enterprise_name: data?.nome }),
+			...(data?.logo && { enterprise_logo: retornoDasImagens[0] }),
+			...(data?.banner && {
+				enterprise_banner:
+					data?.logo !== null ? retornoDasImagens[1] : retornoDasImagens[0],
+			}),
+			...(data?.cnpj.replace(/[-./]/g, "") && {
+				cnpj: data?.cnpj.replace(/[-./]/g, ""),
+			}),
+			...(data?.contactPhone && { contact_number: data?.contactPhone }),
+			...(Object.keys(data.social_media).length && {
+				social_media: data.social_media,
+			}),
+			...(data?.description && { description: data?.description }),
 			team: data?.companyMember,
-			enterprise_info: {
-				enterprises_livn: null,
-				delivered_enterprises: data?.obrasEntregues,
-				in_progress: data?.obrasAndamento,
-				total_vgv: data?.vgv,
-			},
+			...(Object.keys(data.enterprise_info).length && {
+				enterprise_info: data.enterprise_info,
+			}),
 		};
-		// await fetchCreateEnterprise(request);
+		//await fetchCreateEnterprise(request);
 	};
-
 	return (
 		<>
 			<Drawer
@@ -134,10 +148,14 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 												/>
 											</Flex>
 											<CompanieInfoInProgress
-												delivered={companyFormData?.obrasEntregues}
-												inProgress={companyFormData?.obrasAndamento}
+												delivered={
+													companyFormData?.enterprise_info?.obrasEntregues
+												}
+												inProgress={
+													companyFormData?.enterprise_info?.obrasAndamento
+												}
 												livnProp={3}
-												vgv={companyFormData?.vgv}
+												vgv={companyFormData?.enterprise_info?.vgv}
 											/>
 											<Flex gap="5.75rem" mt="8.5rem">
 												<Flex
@@ -156,9 +174,9 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 																// eslint-disable-next-line react/jsx-key
 																<CompanieMembers
 																	key={index}
-																	name={team.nome}
-																	occupation={team.cargo}
-																	image={team.foto}
+																	name={team.name}
+																	occupation={team.position}
+																	image={team.image}
 																	isDrawer={true}
 																/>
 															)
@@ -170,14 +188,16 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 										<Flex>
 											<Flex h="100%">
 												<CompanieContact
-													website={companyFormData?.website}
-													whatsapp={companyFormData?.whatsapp}
-													telephone={companyFormData?.contactPhone}
-													email={companyFormData?.contactEmail}
-													instagram={companyFormData?.instagram}
-													twitter={companyFormData?.twitter}
-													facebook={companyFormData?.facebook}
-													telegram={companyFormData?.telegram}
+													website={companyFormData?.social_media?.website}
+													whatsapp={companyFormData?.social_media?.whatsapp}
+													telephone={
+														companyFormData?.social_media?.contactPhone
+													}
+													email={companyFormData?.social_media?.contactEmail}
+													instagram={companyFormData?.social_media?.instagram}
+													twitter={companyFormData?.social_media?.twitter}
+													facebook={companyFormData?.social_media?.facebook}
+													telegram={companyFormData?.social_media?.telegram}
 												/>
 											</Flex>
 										</Flex>

@@ -5,19 +5,26 @@ import { useCreateCompanieSteps } from "../../../hooks/useCreateCompanieSteps";
 import { useCreateCompany } from "../../../hooks/useCreateCompany";
 import { fetchEnterprise } from "services";
 import { useQuery } from "react-query";
+import { PersistentFramework } from "ui";
 
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 export const CompaniesControll: React.FC = () => {
 	const { setIsCreatePage, setFirstStep } = useCreateCompanieSteps();
-	const { setIsEditing, setIsCreating, isNotCretedYet, companyFormData } =
-		useCreateCompany();
+	const {
+		setIsEditing,
+		setIsCreating,
+		setCompanyFormData,
+		companyFormData,
+		haveCompanyCreateInProcess,
+		handleHasCompanyBeingCreated,
+		setMembers,
+	} = useCreateCompany();
 
 	const { data, isLoading, error } = useQuery(
 		["enterpriseShareholdersFilter"],
 		async () => await fetchEnterprise()
 	);
-
 	return (
 		<Flex flexDir={"column"}>
 			<Text
@@ -65,29 +72,63 @@ export const CompaniesControll: React.FC = () => {
 								setFirstStep(true);
 								setIsEditing(false);
 								setIsCreating(true);
+								handleHasCompanyBeingCreated(true);
+								setMembers([{ image: null, name: "", position: "" }]);
+								PersistentFramework.remove("formData");
+								setCompanyFormData({
+									email: "",
+									nome: "",
+									localizacao: "",
+									cnpj: "",
+									logo: null,
+									banner: null,
+									description: "",
+									companyMember: [],
+									contact_number: "",
+									enterprise_info: {
+										obrasEntregues: "",
+										obrasAndamento: "",
+										vgv: "",
+									},
+									social_media: {
+										contactEmail: "",
+										whatsapp: "",
+										contactPhone: "",
+										instagram: "",
+										facebook: "",
+										telegram: "",
+										twitter: "",
+										jusbrasil: "",
+										website: "",
+										reclame: "",
+									},
+								});
 							}}
-							isDisabled={isNotCretedYet ? true : false}
+							isDisabled={haveCompanyCreateInProcess ? true : false}
 						>
 							Criar empresa
 						</Button>
 					</Flex>
 				</Flex>
-				<CompaniesCard
-					logo={companyFormData?.logo}
-					nome={companyFormData?.nome}
-					opAvailable={companyFormData?.obrasAndamento}
-					opFinished={companyFormData?.obrasEntregues}
-					receita={0}
-					isFinisished={false}
-				/>
+				{haveCompanyCreateInProcess && (
+					<CompaniesCard
+						logo={companyFormData?.logo}
+						nome={companyFormData?.nome}
+						opAvailable={companyFormData?.enterprise_info?.obrasAndamento}
+						opFinished={companyFormData?.enterprise_info?.obrasEntregues}
+						receita={0}
+						isFinisished={false}
+					/>
+				)}
 				{!isLoading &&
 					data?.enterprises?.map((data, index) => (
 						<CompaniesCard
 							key={index}
+							id={data?._id}
 							logo={`${url}/file/${data?.enterprise_logo}`}
 							nome={data?.enterprise_name}
-							opAvailable={data?.opportunities_available}
-							opFinished={data?.opportunities_closed}
+							opAvailable={data?.enterprise_info?.in_progress}
+							opFinished={data?.enterprise_info?.delivered_enterprises}
 							receita={0}
 							isFinisished={true}
 						/>
