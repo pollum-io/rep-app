@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
-import { useCreateCompany } from "../../../hooks/useCreateCompany";
+import { Button, Flex, Img } from "@chakra-ui/react";
 
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
@@ -18,9 +17,6 @@ type IAvatar = {
 	handleMouseLeave?: any;
 	deleteUser?: any;
 	index?: any;
-	imageFromBack?: string;
-	orginalFile?: boolean;
-	setorginalFile?: any;
 };
 export const Avatar: React.FC<IAvatar> = ({
 	showImage,
@@ -30,9 +26,7 @@ export const Avatar: React.FC<IAvatar> = ({
 	handleMouseLeave,
 	onImageChange,
 	handleToggleImage,
-	imageFromBack,
 }) => {
-	const { isEditing } = useCreateCompany();
 	const [avatarVisible, setAvatarVisible] = useState(foto ? false : true);
 	const [fotoFromBack, setfotoFromBack] = useState(false);
 	const [newFoto, setnewFoto] = useState(false);
@@ -46,8 +40,6 @@ export const Avatar: React.FC<IAvatar> = ({
 			setnewFoto(true);
 		}
 	}, [foto]); // Execute isso apenas quando "foto" mudar
-	console.log(newFoto);
-	console.log(fotoFromBack);
 
 	let imageUrl = null;
 	if (foto) {

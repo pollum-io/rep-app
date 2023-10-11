@@ -65,7 +65,7 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 				</Flex>
 			) : (
 				<Flex
-					bgColor={"#9E7AFA"}
+					bgColor={logo ? "#FFF" : "#9E7AFA"}
 					borderRadius={"624.9375rem"}
 					w={"5rem"}
 					h={"4rem"}
@@ -74,7 +74,13 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 					mr={"1rem"}
 				>
 					{logo ? (
-						<Img src={logo} />
+						<Img
+							w={"5rem"}
+							h={"4rem"}
+							borderRadius={"624.9375rem"}
+							src={logo}
+							objectFit={"cover"}
+						/>
 					) : (
 						<Text color={"white"} fontSize={"1.625rem"}>
 							SA

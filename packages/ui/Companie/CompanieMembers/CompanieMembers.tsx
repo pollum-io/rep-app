@@ -1,5 +1,5 @@
 import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { ICompanieMembers } from "./dto";
 
 export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
@@ -10,16 +10,44 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 }) => {
 	const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
+	const [fotoFromBack, setfotoFromBack] = useState(false);
+	const [newFoto, setnewFoto] = useState(false);
+
+	useEffect(() => {
+		if (typeof image === "string") {
+			setfotoFromBack(true);
+			setnewFoto(false);
+		} else {
+			setfotoFromBack(false);
+			setnewFoto(true);
+		}
+	}, [image]);
+
+	let imageUrl: string | Blob | MediaSource = "";
+	if (image) {
+		if (fotoFromBack) {
+			imageUrl = `${url}/file/${image}`;
+		} else if (newFoto) {
+			imageUrl = URL.createObjectURL(image);
+		} else {
+			imageUrl = "";
+		}
+	}
+
 	return (
-		<Flex flexDirection="column" gap="0.5rem" alignItems="center" m={"0 auto"}>
+		<Flex
+			flexDirection="column"
+			gap="0.5rem"
+			alignItems="center"
+			m={"0 auto"}
+			py="1rem"
+			w={"max"}
+		>
 			<Flex w="4rem" h="4rem">
-				{!isDrawer ? (
-					<Img
-						src={image ? URL?.createObjectURL(image) : ""}
-						borderRadius={"62.4375rem"}
-					/>
-				) : (
+				{isDrawer ? (
 					<Img src={`${url}/file/${image}`} />
+				) : (
+					<Img src={imageUrl} borderRadius={"62.4375rem"} />
 				)}
 			</Flex>
 			<Flex
@@ -46,15 +74,8 @@ export const CompanieMembers: FunctionComponent<ICompanieMembers> = ({
 	occupation,
 }) => {
 	return (
-		<SimpleGrid
-			columns={{ sm: 1, md: 2, lg: 3, xl: 3 }}
-			spacing={["unset", "unset", "unset", "4rem", "6.625rem"]}
-			w="fit-content"
-			rowGap="2.75rem"
-			mt="2rem"
-			flexDir={"row"}
-		>
+		<Flex my={"2rem"} pr={"3rem"} flexWrap={"wrap"}>
 			<CompanieMember image={image} name={name} occupation={occupation} />
-		</SimpleGrid>
+		</Flex>
 	);
 };

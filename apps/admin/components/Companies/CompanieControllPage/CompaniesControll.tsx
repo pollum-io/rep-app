@@ -14,7 +14,7 @@ export const CompaniesControll: React.FC = () => {
 	const {
 		setIsEditing,
 		setIsCreating,
-		setCompanyFormData,
+		createDefaultCompanyFormData,
 		companyFormData,
 		haveCompanyCreateInProcess,
 		handleHasCompanyBeingCreated,
@@ -75,34 +75,7 @@ export const CompaniesControll: React.FC = () => {
 								handleHasCompanyBeingCreated(true);
 								setMembers([{ image: null, name: "", position: "" }]);
 								PersistentFramework.remove("formData");
-								setCompanyFormData({
-									email: "",
-									nome: "",
-									localizacao: "",
-									cnpj: "",
-									logo: null,
-									banner: null,
-									description: "",
-									companyMember: [],
-									contact_number: "",
-									enterprise_info: {
-										obrasEntregues: "",
-										obrasAndamento: "",
-										vgv: "",
-									},
-									social_media: {
-										contactEmail: "",
-										whatsapp: "",
-										contactPhone: "",
-										instagram: "",
-										facebook: "",
-										telegram: "",
-										twitter: "",
-										jusbrasil: "",
-										website: "",
-										reclame: "",
-									},
-								});
+								createDefaultCompanyFormData();
 							}}
 							isDisabled={haveCompanyCreateInProcess ? true : false}
 						>
@@ -112,10 +85,10 @@ export const CompaniesControll: React.FC = () => {
 				</Flex>
 				{haveCompanyCreateInProcess && (
 					<CompaniesCard
-						logo={companyFormData?.logo}
-						nome={companyFormData?.nome}
-						opAvailable={companyFormData?.enterprise_info?.obrasAndamento}
-						opFinished={companyFormData?.enterprise_info?.obrasEntregues}
+						logo={companyFormData?.enterprise_logo}
+						nome={companyFormData?.enterprise_name}
+						opAvailable={companyFormData?.enterprise_info?.in_progress}
+						opFinished={companyFormData?.enterprise_info?.delivered_enterprises}
 						receita={0}
 						isFinisished={false}
 					/>

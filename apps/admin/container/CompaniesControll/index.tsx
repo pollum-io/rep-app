@@ -19,7 +19,13 @@ export const CompaniesContainer: FunctionComponent = () => {
 		setFirstStep,
 		setIsCreatePage,
 	} = useCreateCompanieSteps();
-	const { handleHasCompanyBeingCreated, isEditing } = useCreateCompany();
+	const {
+		handleHasCompanyBeingCreated,
+		isEditing,
+		setMembers,
+		setCompanyFormData,
+		createDefaultCompanyFormData,
+	} = useCreateCompany();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<DefaultTemplate>
@@ -40,6 +46,11 @@ export const CompaniesContainer: FunctionComponent = () => {
 									setIsCreatePage(false);
 									setFirstStep(false);
 									setSecondStep(false);
+									if (isEditing) {
+										setMembers([{ image: null, name: "", position: "" }]);
+										PersistentFramework.remove("formData");
+										createDefaultCompanyFormData();
+									}
 								}}
 							>
 								<Button
@@ -98,6 +109,7 @@ export const CompaniesContainer: FunctionComponent = () => {
 												setFirstStep(false);
 												setSecondStep(false);
 												handleHasCompanyBeingCreated(false);
+												createDefaultCompanyFormData();
 											}}
 										>
 											Cancelar criação

@@ -16,8 +16,6 @@ type IAddMembersCard = {
 	handleMouseLeave?: any;
 	deleteUser?: any;
 	index: any;
-	orginalFile?: boolean;
-	setorginalFile?: any;
 };
 
 export const AddMembersCard: React.FC<IAddMembersCard> = ({
@@ -25,7 +23,6 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 	showImage,
 	deleteUser,
 	image,
-	orginalFile,
 	name,
 	position,
 	onInputChange,
@@ -33,7 +30,6 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 	handleMouseLeave,
 	onImageChange,
 	handleToggleImage,
-	setorginalFile,
 }) => {
 	return (
 		<Flex alignItems={"end"} pb={"1.5rem"}>
@@ -43,9 +39,6 @@ export const AddMembersCard: React.FC<IAddMembersCard> = ({
 				avatarVisible={avatarVisible}
 				showImage={showImage}
 				foto={image}
-				orginalFile={orginalFile}
-				setorginalFile={setorginalFile}
-				imageFromBack={image}
 				onImageChange={onImageChange}
 				handleToggleImage={handleToggleImage}
 				onInputChange={onInputChange}

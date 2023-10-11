@@ -5,6 +5,7 @@ import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps
 import { useCreateCompany } from "../../../../hooks/useCreateCompany";
 import { fetchEnterpriseById } from "services";
 import { useQuery } from "react-query";
+import { PersistentFramework } from "ui";
 
 interface ISecondCompaniesInfo {
 	onOpenModal?: any;
@@ -26,18 +27,70 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 		["enterpriseById"],
 		async () =>
 			await fetchEnterpriseById(
-				entepriseId,
+				"6525aff783f44e9898f3b9c4",
 				"livn_auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGJiZDYyN2ViNmE5YTgzNDQ1MzNjMyIsImVtYWlsIjoibGl2bkBwb2xsdW0uaW8iLCJpbnZlc3Rvcl9wZiI6bnVsbCwiaW52ZXN0b3JfcGoiOm51bGwsImVudGVycHJpc2UiOiI2NDBhMjFlMjJmZTI0ZWVjN2FiNWViMDkiLCJpYXQiOjE2OTY4NTM0NjQsImV4cCI6MTY5NjkzOTg2NH0.wYxJ0qOTYNinIM864UgS7_eLeipFghgcxO9jfZCTLKY; Max-Age=604800; Domain=localhost; Path=/; HttpOnly; Secure; SameSite=None"
-			)
+			),
+		{
+			onSuccess: (data) => {
+				if (isEditing && !isLoading) {
+					PersistentFramework.add("formData", JSON.stringify(data));
+					setCompanyFormData({
+						...data,
+						name: data?.enterprise_name || "",
+						email: data?.email || "",
+						localizacao: data?.address?.neighborhood || "",
+						cnpj: data?.cnpj || "",
+						logo: data?.enterprise_logo || null,
+						banner: data?.enterprise_banner || null,
+						description: data?.description || "",
+						companyMember: data?.team || [],
+						contact_number: data?.contact_number || "",
+						enterprise_info: {
+							delivered_enterprises:
+								data?.enterprise_info?.delivered_enterprises || "",
+							in_progress: data?.enterprise_info?.in_progress || "",
+							vgv: data?.enterprise_info?.total_vgv || "",
+						},
+						social_media: {
+							contactEmail: data?.social_media?.email || "",
+							whatsapp: data?.social_media?.whatsapp || "",
+							contactPhone: data?.social_media?.telephone || "",
+							instagram: data?.social_media?.instagram || "",
+							facebook: data?.social_media?.facebook || "",
+							telegram: data?.social_media?.telegram || "",
+							twitter: data?.social_media?.twitter || "",
+							jusbrasil: data?.social_media?.jusbrasil || "",
+							website: data?.social_media?.site_url || "",
+							reclame: data?.social_media?.reclame || "",
+						},
+					});
+				}
+			},
+		}
 	);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
-		setCompanyFormData({
-			...companyFormData,
-			[name]: value,
-		});
+
+		if (name.includes(".")) {
+			const nameParts = name.split(".");
+			let formData = { ...companyFormData };
+
+			for (let i = 0; i < nameParts.length - 1; i++) {
+				formData = formData[nameParts[i]];
+			}
+
+			formData[nameParts[nameParts.length - 1]] = value;
+
+			setCompanyFormData({ ...companyFormData });
+		} else {
+			setCompanyFormData({
+				...companyFormData,
+				[name]: value,
+			});
+		}
 	};
+
 	console.log(companyFormData, "companyFormData");
 	return (
 		<Flex flexDir={"column"}>
@@ -45,137 +98,97 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 				<Flex flexDir={"column"} gap={"1.5rem"}>
 					<InputComponent
 						type="email"
-						name="contactEmail"
+						name="social_media.contactEmail"
 						width={"18.5rem"}
 						label="E-mail de contato"
 						placeholderText="exemplo@exemplo.com"
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.email
-								: companyFormData.social_media?.contactEmail
-						}
+						value={companyFormData.social_media?.contactEmail}
 					/>
 					<InputComponent
 						type="text"
-						name="whatsapp"
+						name="social_media.whatsapp"
 						maskType="Telefone"
 						width={"18.5rem"}
 						label="WhatsApp"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.whatsapp
-								: companyFormData?.social_media?.whatsapp
-						}
+						value={companyFormData?.social_media?.whatsapp}
 					/>
 					<InputComponent
 						type="text"
-						name="contactPhone"
+						name="social_media.contactPhone"
 						maskType="Telefone"
 						width={"18.5rem"}
 						label="Telefone de contato"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.telephone
-								: companyFormData?.social_media?.contactPhone
-						}
+						value={companyFormData?.social_media?.contactPhone}
 					/>
 					<InputComponent
 						type="text"
-						name="instagram"
+						name="social_media.instagram"
 						width={"18.5rem"}
 						label="Instagram"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.instagram
-								: companyFormData?.social_media?.instagram
-						}
+						value={companyFormData?.social_media?.instagram}
 					/>
 					<InputComponent
 						type="text"
-						name="facebook"
+						name="social_media.facebook"
 						width={"18.5rem"}
 						label="Página do Facebook"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.facebook
-								: companyFormData?.social_media?.facebook
-						}
+						value={companyFormData?.social_media?.facebook}
 					/>
 				</Flex>
 				<Flex flexDir={"column"} gap={"1.5rem"}>
 					<InputComponent
 						type="text"
-						name="website"
+						name="social_media.website"
 						width={"18.5rem"}
 						label="Website"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.site_url
-								: companyFormData?.social_media?.website
-						}
+						value={companyFormData?.social_media?.website}
 					/>
 					<InputComponent
 						type="text"
-						name="telegram"
+						name="social_media.telegram"
 						width={"18.5rem"}
 						label="Telegram"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.telegram
-								: companyFormData?.social_media?.telegram
-						}
+						value={companyFormData?.social_media?.telegram}
 					/>
 					<InputComponent
 						type="text"
-						name="twitter"
+						name="social_media.twitter"
 						width={"18.5rem"}
 						label="Twitter"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.twitter
-								: companyFormData?.social_media?.twitter
-						}
+						value={companyFormData?.social_media?.twitter}
 					/>
 					<InputComponent
 						type="text"
-						name="jusbrasil"
+						name="social_media.jusbrasil"
 						width={"18.5rem"}
 						label="Perfil do Jusbrasil"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.jusbrasil
-								: companyFormData?.social_media?.jusbrasil
-						}
+						value={companyFormData?.social_media?.jusbrasil}
 					/>
 					<InputComponent
 						type="text"
-						name="reclame"
+						name="social_media.reclame"
 						width={"18.5rem"}
 						label="Perfil do Reclame Aqui"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={
-							isEditing
-								? data?.social_media?.reclame
-								: companyFormData?.social_media?.reclame
-						}
+						value={companyFormData?.social_media.reclame}
 					/>
 				</Flex>
 			</Flex>

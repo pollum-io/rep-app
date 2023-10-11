@@ -24,23 +24,23 @@ interface ICreateCompany {
 	logo: any;
 	setLogo: any;
 	handleHasCompanyBeingCreated: any;
+	createDefaultCompanyFormData: any;
 }
 
 type CreateData = {
 	email?: string;
-	nome?: string;
+	enterprise_name?: string;
 	localizacao?: string;
-
 	cnpj?: string;
 	contact_number?: string;
-	logo?: any;
-	banner?: any;
+	enterprise_logo?: any;
+	enterprise_banner?: any;
 	description?: string;
-	companyMember?: Array<{ image?: string; name?: string; position?: string }>;
+	team?: Array<{ image?: string; name?: string; position?: string }>;
 	enterprise_info?: {
-		obrasEntregues?: any;
-		obrasAndamento?: any;
-		vgv?: any;
+		delivered_enterprises?: number;
+		in_progress?: number;
+		total_vgv?: number;
 	};
 	social_media: {
 		contactEmail?: string;
@@ -75,18 +75,18 @@ export const CreateCompanyProvider: React.FC<{
 }> = ({ children }) => {
 	const [companyFormData, setCompanyFormData] = useState<CreateData>({
 		email: "",
-		nome: "",
+		enterprise_name: "",
 		localizacao: "",
 		cnpj: "",
-		logo: null,
-		banner: null,
+		enterprise_logo: null,
+		enterprise_banner: null,
 		description: "",
-		companyMember: [],
+		team: [],
 		contact_number: "",
 		enterprise_info: {
-			obrasEntregues: "",
-			obrasAndamento: "",
-			vgv: "",
+			delivered_enterprises: null,
+			in_progress: null,
+			total_vgv: null,
 		},
 		social_media: {
 			contactEmail: "",
@@ -119,6 +119,43 @@ export const CreateCompanyProvider: React.FC<{
 		membersImages: [],
 	});
 
+	// Função zerar os estados de controle no form
+	function createDefaultCompanyFormData() {
+		setCompanyFormData({
+			email: "",
+			enterprise_name: "",
+			localizacao: "",
+			cnpj: "",
+			enterprise_logo: null,
+			enterprise_banner: null,
+			description: "",
+			team: [],
+			contact_number: "",
+			enterprise_info: {
+				delivered_enterprises: null,
+				in_progress: null,
+				total_vgv: null,
+			},
+			social_media: {
+				contactEmail: "",
+				whatsapp: "",
+				contactPhone: "",
+				instagram: "",
+				facebook: "",
+				telegram: "",
+				twitter: "",
+				jusbrasil: "",
+				website: "",
+				reclame: "",
+			},
+		});
+		setCompanyImages({
+			logo: null,
+			banner: null,
+			membersImages: [],
+		});
+	}
+	console.log(companyImages, "companyimages");
 	const handleSaveFormData = () => {
 		PersistentFramework.add("formData", JSON.stringify(companyFormData));
 	};
@@ -131,9 +168,7 @@ export const CreateCompanyProvider: React.FC<{
 		const getformData = PersistentFramework.get("formData");
 		if (getformData) {
 			setCompanyFormData(JSON?.parse(getformData));
-			const companyMemberData = companyFormData?.companyMember?.map(
-				(data) => data
-			);
+			const companyMemberData = companyFormData?.team?.map((data) => data);
 			setMembers(companyMemberData);
 			const isSomeValueIncompleted = Object.values(companyFormData)?.some(
 				(valor) => valor === ""
@@ -143,7 +178,7 @@ export const CreateCompanyProvider: React.FC<{
 			}
 		}
 	}, [isCreating]);
-
+	console.log(companyFormData, "companyFormData");
 	const providerValue = useMemo(
 		() => ({
 			companyFormData,
@@ -168,6 +203,7 @@ export const CreateCompanyProvider: React.FC<{
 			logo,
 			setLogo,
 			handleHasCompanyBeingCreated,
+			createDefaultCompanyFormData,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[

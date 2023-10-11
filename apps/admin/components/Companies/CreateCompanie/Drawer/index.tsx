@@ -35,56 +35,96 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 	const updatedCompanyFormData = { ...companyFormData };
 
 	if (companyImages.logo) {
-		updatedCompanyFormData.logo = companyImages.logo;
+		updatedCompanyFormData.enterprise_logo = companyImages.logo;
 	}
 
 	if (companyImages.banner) {
-		updatedCompanyFormData.banner = companyImages.banner;
+		updatedCompanyFormData.enterprise_banner = companyImages.banner;
 	}
-
-	updatedCompanyFormData.companyMember.forEach((member, index) => {
+	updatedCompanyFormData.contact_number =
+		updatedCompanyFormData.social_media?.contactPhone;
+	console.log(
+		updatedCompanyFormData.social_media?.contactPhone,
+		"111111111111"
+	);
+	updatedCompanyFormData?.team?.forEach((member, index) => {
 		if (companyImages[index]) {
 			member.image = URL.createObjectURL(companyImages[index]);
 		}
 	});
+	console.log(companyFormData);
+	console.log(updatedCompanyFormData, "updatedCompanyFormData");
 
 	const handleCreateCompany = async (data: any) => {
 		let request: any;
 		console.log(data, "data");
+
 		const formData = new FormData();
-		formData.append("logo", data?.logo);
-		formData.append("banner", data?.banner);
-		// data?.companyMember.forEach((teamMember, index) => {
-		// 	formData.append("team", teamMember.image, `file${index}`);
-		// });
+		formData.append("logo", data?.enterprise_logo);
+		formData.append("banner", data?.enterprise_banner);
+		data?.team.forEach((teamMember, index) => {
+			formData.append("team", teamMember.image, `file${index}`);
+		});
 
 		const retornoDasImagens = await fetchUploadImages(formData);
 
-		//logo tem que ser no indice 0
-		//banner é no indice 1, teria que verificar se o logo foi editado, se for editado o banner é indice 1, se nao no indice 0
+		let startIndex = 0;
+
+		if (data?.enterprise_logo !== null || data?.enterprise_banner !== null) {
+			startIndex = 1;
+			if (data?.enterprise_logo !== null && data?.enterprise_banner !== null) {
+				startIndex = 2;
+			}
+		}
+
+		if (data?.team) {
+			data.team.forEach((teamMember, index) => {
+				const imageIndex = startIndex + index;
+
+				if (imageIndex < retornoDasImagens.files.length) {
+					teamMember.image = retornoDasImagens.files[imageIndex];
+				}
+
+				console.log(teamMember.image, "teamMember.image");
+			});
+		}
+
+		data.enterprise_info = {
+			...data.enterprise_info,
+			enterprises_livn: 0,
+			delivered_enterprises: Number(data.enterprise_info.delivered_enterprises),
+			in_progress: Number(data.enterprise_info.in_progress),
+			total_vgv: Number(data.enterprise_info.total_vgv),
+		};
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
 		request = {
-			...(data?.nome && { enterprise_name: data?.nome }),
-			...(data?.logo && { enterprise_logo: retornoDasImagens[0] }),
-			...(data?.banner && {
+			...(data?.enterprise_name && { enterprise_name: data?.enterprise_name }),
+			...(data?.enterprise_logo && {
+				enterprise_logo: retornoDasImagens?.files[0],
+			}),
+			...(data?.enterprise_banner && {
 				enterprise_banner:
-					data?.logo !== null ? retornoDasImagens[1] : retornoDasImagens[0],
+					data?.enterprise_logo !== null
+						? retornoDasImagens?.files[1]
+						: retornoDasImagens?.files[0],
 			}),
 			...(data?.cnpj.replace(/[-./]/g, "") && {
 				cnpj: data?.cnpj.replace(/[-./]/g, ""),
 			}),
-			...(data?.contactPhone && { contact_number: data?.contactPhone }),
+			...(data?.contact_number && { contact_number: data?.contact_number }),
 			...(Object.keys(data.social_media).length && {
 				social_media: data.social_media,
 			}),
 			...(data?.description && { description: data?.description }),
-			team: data?.companyMember,
+			...(data?.team && { team: data?.team }),
 			...(Object.keys(data.enterprise_info).length && {
 				enterprise_info: data.enterprise_info,
 			}),
 		};
-		//await fetchCreateEnterprise(request);
+		console.log(request, "asd");
+
+		await fetchCreateEnterprise(request);
 	};
 	return (
 		<>
@@ -141,7 +181,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 															? URL.createObjectURL(companyImages?.banner)
 															: null
 													}
-													name={companyFormData?.nome}
+													name={companyFormData?.enterprise_name}
 													id={`CNPJ: ${companyFormData?.cnpj}`}
 													location={companyFormData?.localizacao}
 													description={companyFormData?.description}
@@ -149,13 +189,14 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 											</Flex>
 											<CompanieInfoInProgress
 												delivered={
-													companyFormData?.enterprise_info?.obrasEntregues
+													companyFormData?.enterprise_info
+														?.delivered_enterprises
 												}
 												inProgress={
-													companyFormData?.enterprise_info?.obrasAndamento
+													companyFormData?.enterprise_info?.in_progress
 												}
 												livnProp={3}
-												vgv={companyFormData?.enterprise_info?.vgv}
+												vgv={companyFormData?.enterprise_info?.total_vgv}
 											/>
 											<Flex gap="5.75rem" mt="8.5rem">
 												<Flex
@@ -168,8 +209,8 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 												>
 													<Text>Quem constrói nossa história</Text>
 
-													<Flex>
-														{updatedCompanyFormData?.companyMember?.map(
+													{/* <Flex>
+														{updatedCompanyFormData?.team?.map(
 															(team: any, index: number) => (
 																// eslint-disable-next-line react/jsx-key
 																<CompanieMembers
@@ -181,13 +222,13 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 																/>
 															)
 														)}
-													</Flex>
+													</Flex> */}
 												</Flex>
 											</Flex>
 										</Flex>
 										<Flex>
 											<Flex h="100%">
-												<CompanieContact
+												{/* <CompanieContact
 													website={companyFormData?.social_media?.website}
 													whatsapp={companyFormData?.social_media?.whatsapp}
 													telephone={
@@ -198,7 +239,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 													twitter={companyFormData?.social_media?.twitter}
 													facebook={companyFormData?.social_media?.facebook}
 													telegram={companyFormData?.social_media?.telegram}
-												/>
+												/> */}
 											</Flex>
 										</Flex>
 									</Flex>
@@ -278,7 +319,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 							handleCreateCompany(updatedCompanyFormData);
 						}}
 					>
-						Criar página da empresa
+						{isEditing ? "Confirmar edições" : "Criar página da empresa"}
 					</Button>
 				</Flex>
 			)}
