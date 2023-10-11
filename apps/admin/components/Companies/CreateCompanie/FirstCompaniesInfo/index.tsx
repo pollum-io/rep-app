@@ -263,45 +263,41 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 	const handleDeleteLogo = () => {
 		setLogo(null);
 	};
-
 	useEffect(() => {
-		if (
-			isEditing &&
-			!isLoading &&
-			(companyFormData?.enterprise_logo !== "" ||
-				companyFormData?.enterprise_banner !== "")
-		) {
-			//quando esta editando e vem a imagem do back
-			setLogo(`${url}/file/${companyFormData?.enterprise_logo}`);
-			setBanner(`${url}/file/${companyFormData?.enterprise_banner}`);
-		} else if (
-			isEditing &&
-			!isLoading &&
-			(companyFormData?.enterprise_logo !== "string" ||
-				companyFormData?.enterprise_banner !== "string")
-		) {
-			//quando esta editando e o user upou um nova imagem
-			setLogo(URL.createObjectURL(companyFormData?.enterprise_logo));
-			setBanner(URL.createObjectURL(companyFormData?.enterprise_banner));
-		} else if (
-			!isEditing &&
-			(companyImages?.enterprise_logo || companyImages?.enterprise_banner)
-		) {
-			//quando nao esta editando e a imagem é file
-			setLogo(URL.createObjectURL(companyImages?.enterprise_logo));
-			setBanner(URL.createObjectURL(companyImages?.enterprise_banner));
+		if (!isLoading) {
+			if (isEditing) {
+				if (typeof companyFormData?.enterprise_logo === "string") {
+					setLogo(`${url}/file/${companyFormData?.enterprise_logo}`);
+				} else if (companyFormData?.enterprise_logo !== "string") {
+					setLogo(URL.createObjectURL(companyFormData?.enterprise_logo));
+				}
+				if (typeof companyFormData?.enterprise_banner === "string") {
+					setBanner(`${url}/file/${companyFormData?.enterprise_banner}`);
+				} else if (companyFormData?.enterprise_banner !== "string") {
+					setBanner(URL.createObjectURL(companyFormData?.enterprise_banner));
+				}
+			} else if (companyImages) {
+				if (companyImages.enterprise_logo) {
+					setLogo(URL.createObjectURL(companyImages.enterprise_logo));
+				}
+				if (companyImages.enterprise_banner) {
+					setBanner(URL.createObjectURL(companyImages.enterprise_banner));
+				}
+			}
 		}
 	}, [
 		companyFormData?.enterprise_banner,
 		companyFormData?.enterprise_logo,
-		companyImages?.enterprise_banner,
-		companyImages?.enterprise_logo,
+		companyImages.enterprise_banner,
+		companyImages.enterprise_logo,
 		isEditing,
 		isLoading,
 		setLogo,
+		setBanner,
+		companyImages,
 	]);
 
-	console.log(logo && !isLoading, "logo && !isLoading");
+	console.log(banner, "logo && !isLoading");
 	return (
 		<Flex flexDir={"column"} gap={"1.5rem"}>
 			{!isLoading ? (
