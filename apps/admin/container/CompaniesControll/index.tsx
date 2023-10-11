@@ -9,8 +9,15 @@ import { SecondCompaniesInfo } from "../../components/Companies/CreateCompanie/S
 import { DrawerComponent } from "../../components/Companies/CreateCompanie/Drawer";
 import { PersistentFramework } from "ui";
 import { useCreateCompany } from "../../hooks/useCreateCompany";
+import { WarnCancelCreationModal } from "../../components/Companies/CreateCompanie/WarnCancelCreationModal";
 
-export const CompaniesContainer: FunctionComponent = () => {
+type CompaniesContainer = {
+	token: string;
+};
+
+export const CompaniesContainer: FunctionComponent<CompaniesContainer> = ({
+	token,
+}) => {
 	const {
 		isCreatePage,
 		firstStep,
@@ -24,9 +31,15 @@ export const CompaniesContainer: FunctionComponent = () => {
 		isEditing,
 		setMembers,
 		setCompanyFormData,
-		createDefaultCompanyFormData,
+		deleteAllDataFromStateCompanyForm,
 	} = useCreateCompany();
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const {
+		isOpen: isOpenWarnModal,
+		onOpen: onOpennWarnModal,
+		onClose: onCloseWarnModal,
+	} = useDisclosure();
+
 	return (
 		<DefaultTemplate>
 			<Flex flexDir={"column"}>
@@ -43,13 +56,15 @@ export const CompaniesContainer: FunctionComponent = () => {
 								_hover={{ opacity: 0.6 }}
 								w={"max"}
 								onClick={() => {
-									setIsCreatePage(false);
-									setFirstStep(false);
-									setSecondStep(false);
 									if (isEditing) {
 										setMembers([{ image: null, name: "", position: "" }]);
-										PersistentFramework.remove("formData");
-										createDefaultCompanyFormData();
+										PersistentFramework.remove("formDataEdit");
+										deleteAllDataFromStateCompanyForm();
+										setIsCreatePage(false);
+										setFirstStep(false);
+										setSecondStep(false);
+									} else {
+										onOpennWarnModal();
 									}
 								}}
 							>
@@ -70,7 +85,7 @@ export const CompaniesContainer: FunctionComponent = () => {
 									cursor={"pointer"}
 									_hover={{ opacity: 0.6 }}
 								>
-									Criar empresa
+									{isEditing ? "Editar empresas" : "Criar empresa"}
 								</Text>
 							</Flex>
 						</Flex>
@@ -104,21 +119,27 @@ export const CompaniesContainer: FunctionComponent = () => {
 											transition={"0.3s"}
 											_hover={{ opacity: 0.7, cursor: "pointer" }}
 											onClick={() => {
-												PersistentFramework.remove("formData");
-												setIsCreatePage(false);
-												setFirstStep(false);
-												setSecondStep(false);
-												handleHasCompanyBeingCreated(false);
-												createDefaultCompanyFormData();
+												onOpennWarnModal();
 											}}
 										>
 											Cancelar criação
 										</Text>
 									)}
 								</Flex>
-								{firstStep && <FirstCompaniesInfo />}
-								{secondStep && <SecondCompaniesInfo onOpenModal={onOpen} />}
-								<DrawerComponent isOpen={isOpen} onClose={onClose} />
+								<WarnCancelCreationModal
+									isOpen={isOpenWarnModal}
+									onClose={onCloseWarnModal}
+								/>
+
+								{firstStep && <FirstCompaniesInfo token={token} />}
+								{secondStep && (
+									<SecondCompaniesInfo onOpenModal={onOpen} token={token} />
+								)}
+								<DrawerComponent
+									isOpen={isOpen}
+									onClose={onClose}
+									token={token}
+								/>
 							</Flex>
 						</Flex>
 					</>

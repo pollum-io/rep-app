@@ -1,16 +1,8 @@
 import { api } from "../api";
 
-export const fetchCreateEnterprise = async (data: any, token?: string) => {
+export const fetchCreateEnterprise = async (data: any) => {
 	try {
-		const response = await api.post(
-			`/enterprise`,
-			data
-			// {
-			// 	headers: {
-			// 		Authorization: `Bearer ${token}`,
-			// 	},
-			// }
-		);
+		const response = await api.post(`/enterprise`, data);
 		return response.data;
 	} catch (error) {
 		if (error instanceof Error) {

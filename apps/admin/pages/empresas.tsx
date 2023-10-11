@@ -1,17 +1,52 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import { CompaniesContainer } from "../container/CompaniesControll";
+import { UserLogin } from "ui";
 
-// interface IPage {
-// 	example: string;
-// }
+interface ICompany {
+	token: string;
+}
 
-const Company: NextPage = () => <CompaniesContainer />;
+const Company: NextPage<ICompany> = ({ token }) => (
+	<CompaniesContainer token={token} />
+);
 
 export default Company;
 
-// export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+	req,
+	query,
+}) => {
+	const token = req.cookies["livn_auth"];
 
-// return {}
+	if (!token) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/",
+			},
+			props: {},
+		};
+	}
 
-// };
+	const user: UserLogin = jwt_decode(token);
+
+	if (!user?.admin) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/",
+			},
+			props: {
+				user,
+				token,
+			},
+		};
+	}
+
+	return {
+		props: {
+			token: token,
+		},
+	};
+};

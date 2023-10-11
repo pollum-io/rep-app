@@ -9,10 +9,12 @@ import { PersistentFramework } from "ui";
 
 interface ISecondCompaniesInfo {
 	onOpenModal?: any;
+	token: string;
 }
 
 export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 	onOpenModal,
+	token,
 }) => {
 	const { setFirstStep, setSecondStep } = useCreateCompanieSteps();
 	const {
@@ -21,40 +23,75 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 		setCompanyFormData,
 		entepriseId,
 		isEditing,
+		setMembers,
+		isNotCretedYet,
 	} = useCreateCompany();
 
 	const { data, isLoading, error } = useQuery(
 		["enterpriseById"],
-		async () =>
-			await fetchEnterpriseById(
-				"6525aff783f44e9898f3b9c4",
-				"livn_auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGJiZDYyN2ViNmE5YTgzNDQ1MzNjMyIsImVtYWlsIjoibGl2bkBwb2xsdW0uaW8iLCJpbnZlc3Rvcl9wZiI6bnVsbCwiaW52ZXN0b3JfcGoiOm51bGwsImVudGVycHJpc2UiOiI2NDBhMjFlMjJmZTI0ZWVjN2FiNWViMDkiLCJpYXQiOjE2OTY4NTM0NjQsImV4cCI6MTY5NjkzOTg2NH0.wYxJ0qOTYNinIM864UgS7_eLeipFghgcxO9jfZCTLKY; Max-Age=604800; Domain=localhost; Path=/; HttpOnly; Secure; SameSite=None"
-			),
+		async () => await fetchEnterpriseById(entepriseId, token),
 		{
+			refetchOnWindowFocus: false,
 			onSuccess: (data) => {
 				if (isEditing && !isLoading) {
-					PersistentFramework.add("formData", JSON.stringify(data));
+					PersistentFramework.add("formDataEdit", JSON.stringify(data));
+					setMembers(data?.team);
 					setCompanyFormData({
 						...data,
-						name: data?.enterprise_name || "",
-						email: data?.email || "",
+						enterprise_name:
+							companyFormData?.enterprise_name !== data?.enterprise_name
+								? companyFormData?.enterprise_name
+								: data?.enterprise_name,
+						email:
+							companyFormData?.email !== data?.email
+								? companyFormData?.email
+								: data?.email,
 						localizacao: data?.address?.neighborhood || "",
-						cnpj: data?.cnpj || "",
-						logo: data?.enterprise_logo || null,
-						banner: data?.enterprise_banner || null,
-						description: data?.description || "",
-						companyMember: data?.team || [],
-						contact_number: data?.contact_number || "",
+						cnpj:
+							companyFormData?.cnpj !== data?.cnpj
+								? companyFormData?.cnpj
+								: data?.cnpj,
+						enterprise_logo:
+							companyFormData?.enterprise_logo !== data?.enterprise_logo
+								? companyFormData?.enterprise_logo
+								: data?.enterprise_logo,
+						enterprise_banner:
+							companyFormData?.enterprise_banner !== data?.enterprise_banner
+								? companyFormData?.enterprise_banner
+								: data?.enterprise_banner,
+						description:
+							companyFormData?.description !== data?.description
+								? companyFormData?.description
+								: data?.description,
+						team:
+							companyFormData?.team !== data?.team
+								? companyFormData?.team
+								: data?.team,
+						contact_number:
+							companyFormData?.contact_number !== data?.contact_number
+								? companyFormData?.contact_number
+								: data?.social_media?.telephone,
 						enterprise_info: {
 							delivered_enterprises:
-								data?.enterprise_info?.delivered_enterprises || "",
-							in_progress: data?.enterprise_info?.in_progress || "",
-							vgv: data?.enterprise_info?.total_vgv || "",
+								companyFormData?.enterprise_info?.delivered_enterprises !==
+								data?.enterprise_info?.delivered_enterprises
+									? companyFormData?.enterprise_info?.delivered_enterprises
+									: data?.enterprise_info?.delivered_enterprises,
+							in_progress:
+								companyFormData?.enterprise_info?.in_progress !==
+								data?.enterprise_info?.in_progress
+									? companyFormData?.enterprise_info?.in_progress
+									: data?.enterprise_info?.in_progress,
+							total_vgv:
+								companyFormData?.enterprise_info?.total_vgv !==
+								data?.enterprise_info?.total_vgv
+									? companyFormData?.enterprise_info?.total_vgv
+									: data?.enterprise_info?.total_vgv,
 						},
 						social_media: {
 							contactEmail: data?.social_media?.email || "",
 							whatsapp: data?.social_media?.whatsapp || "",
-							contactPhone: data?.social_media?.telephone || "",
+							telephone: data?.social_media?.telephone || "",
 							instagram: data?.social_media?.instagram || "",
 							facebook: data?.social_media?.facebook || "",
 							telegram: data?.social_media?.telegram || "",
@@ -81,8 +118,13 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 			}
 
 			formData[nameParts[nameParts.length - 1]] = value;
-
 			setCompanyFormData({ ...companyFormData });
+			if (name === "social_media.telephone") {
+				setCompanyFormData({
+					...companyFormData,
+					contact_number: value,
+				});
+			}
 		} else {
 			setCompanyFormData({
 				...companyFormData,
@@ -91,7 +133,6 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 		}
 	};
 
-	console.log(companyFormData, "companyFormData");
 	return (
 		<Flex flexDir={"column"}>
 			<Flex w={"100%"} justifyContent={"space-between"}>
@@ -117,13 +158,13 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 					/>
 					<InputComponent
 						type="text"
-						name="social_media.contactPhone"
+						name="social_media.telephone"
 						maskType="Telefone"
 						width={"18.5rem"}
 						label="Telefone de contato"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={companyFormData?.social_media?.contactPhone}
+						value={companyFormData?.social_media?.telephone}
 					/>
 					<InputComponent
 						type="text"
@@ -224,6 +265,7 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						handleSaveFormData();
 						onOpenModal();
 					}}
+					isDisabled={isNotCretedYet === true ? true : false}
 				>
 					Avançar
 				</Button>

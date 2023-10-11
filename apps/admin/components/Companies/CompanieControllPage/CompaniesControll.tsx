@@ -14,7 +14,7 @@ export const CompaniesControll: React.FC = () => {
 	const {
 		setIsEditing,
 		setIsCreating,
-		createDefaultCompanyFormData,
+		deleteAllDataFromStateCompanyForm,
 		companyFormData,
 		haveCompanyCreateInProcess,
 		handleHasCompanyBeingCreated,
@@ -75,7 +75,7 @@ export const CompaniesControll: React.FC = () => {
 								handleHasCompanyBeingCreated(true);
 								setMembers([{ image: null, name: "", position: "" }]);
 								PersistentFramework.remove("formData");
-								createDefaultCompanyFormData();
+								deleteAllDataFromStateCompanyForm();
 							}}
 							isDisabled={haveCompanyCreateInProcess ? true : false}
 						>

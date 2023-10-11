@@ -39,16 +39,16 @@ export const InputBase: ForwardRefRenderFunction<
 	},
 	ref
 ) => {
-	const maskValidation = useMemo(() => {
-		if (maskType === "CPF" || maskType === "CPF do Cônjuge") {
-			return "999.999.999-99";
-		} else if (maskType === "CNPJ") {
-			return "99.999.999/9999-99";
-		} else if (maskType === "Telefone") {
-			return "(99) 9 9999-9999";
-		}
-		return "";
-	}, [maskType]);
+	// const maskValidation = useMemo(() => {
+	// 	if (maskType === "CPF" || maskType === "CPF do Cônjuge") {
+	// 		return "999.999.999-99";
+	// 	} else if (maskType === "CNPJ") {
+	// 		return "99.999.999/9999-99";
+	// 	} else if (maskType === "Telefone") {
+	// 		return "(99) 9 9999-9999";
+	// 	}
+	// 	return "";
+	// }, [maskType]);
 
 	return (
 		<FormControl id={name}>
@@ -65,7 +65,7 @@ export const InputBase: ForwardRefRenderFunction<
 				</FormLabel>
 			)}
 			<InputMask
-				mask={String(maskValidation)}
+				mask={null} //TODO TA DANDO ERRO AQUI POR CAUSA QUE O SOCIAL MEDIA NAO ESTA RETORNANDO COMO DEVERIA
 				value={rest.value}
 				onBlur={rest.onBlur}
 				onChange={rest.onChange}

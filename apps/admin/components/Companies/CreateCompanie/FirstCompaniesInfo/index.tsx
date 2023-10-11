@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Button, Flex, Img, Text, Textarea } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import {
+	Button,
+	Flex,
+	Img,
+	Text,
+	Textarea,
+	useDisclosure,
+} from "@chakra-ui/react";
 import { InputComponent } from "../CompanieFormCreateInput/InputComponent";
 import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
 import { AddMembersCard } from "../AddMembersCard";
@@ -7,10 +14,15 @@ import { useCreateCompany } from "../../../../hooks/useCreateCompany";
 import { useQuery } from "react-query";
 import { fetchEnterpriseById } from "services";
 import { PersistentFramework } from "ui";
+import { WarnCancelCreationModal } from "../WarnCancelCreationModal";
+
+type FirstCompaniesInfo = {
+	token: string;
+};
 
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
-export const FirstCompaniesInfo: React.FC = () => {
+export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 	const {
 		handleSaveFormData,
 		members,
@@ -22,41 +34,75 @@ export const FirstCompaniesInfo: React.FC = () => {
 		isEditing,
 		entepriseId,
 	} = useCreateCompany();
-	const { setFirstStep, setSecondStep, setIsCreatePage } =
+	const { setFirstStep, setSecondStep, firstStep, secondStep } =
 		useCreateCompanieSteps();
 
 	const { data, isLoading, error } = useQuery(
 		["enterpriseById"],
-		async () =>
-			await fetchEnterpriseById(
-				"6525aff783f44e9898f3b9c4",
-				"livn_auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGJiZDYyN2ViNmE5YTgzNDQ1MzNjMyIsImVtYWlsIjoibGl2bkBwb2xsdW0uaW8iLCJpbnZlc3Rvcl9wZiI6bnVsbCwiaW52ZXN0b3JfcGoiOm51bGwsImVudGVycHJpc2UiOiI2NDBhMjFlMjJmZTI0ZWVjN2FiNWViMDkiLCJpYXQiOjE2OTY4NTM0NjQsImV4cCI6MTY5NjkzOTg2NH0.wYxJ0qOTYNinIM864UgS7_eLeipFghgcxO9jfZCTLKY; Max-Age=604800; Domain=localhost; Path=/; HttpOnly; Secure; SameSite=None"
-			),
+		async () => await fetchEnterpriseById(entepriseId, token),
 		{
+			refetchOnWindowFocus: false,
 			onSuccess: (data) => {
 				if (isEditing && !isLoading) {
-					PersistentFramework.add("formData", JSON.stringify(data));
+					PersistentFramework.add("formDataEdit", JSON.stringify(data));
+					setMembers(data?.team);
+					console.log(data?.team, "12121212");
 					setCompanyFormData({
 						...data,
-						name: data?.enterprise_name || "",
-						email: data?.email || "",
+						enterprise_name:
+							companyFormData?.enterprise_name !== data?.enterprise_name
+								? companyFormData?.enterprise_name
+								: data?.enterprise_name,
+						email:
+							companyFormData?.email !== data?.email
+								? companyFormData?.email
+								: data?.email,
 						localizacao: data?.address?.neighborhood || "",
-						cnpj: data?.cnpj || "",
-						logo: data?.enterprise_logo || null,
-						banner: data?.enterprise_banner || null,
-						description: data?.description || "",
-						companyMember: data?.team || [],
-						contact_number: data?.contact_number || "",
+						cnpj:
+							companyFormData?.cnpj !== data?.cnpj
+								? companyFormData?.cnpj
+								: data?.cnpj,
+						enterprise_logo:
+							companyFormData?.enterprise_logo !== data?.enterprise_logo
+								? companyFormData?.enterprise_logo
+								: data?.enterprise_logo,
+						enterprise_banner:
+							companyFormData?.enterprise_banner !== data?.enterprise_banner
+								? companyFormData?.enterprise_banner
+								: data?.enterprise_banner,
+						description:
+							companyFormData?.description !== data?.description
+								? companyFormData?.description
+								: data?.description,
+						team:
+							companyFormData?.team !== data?.team
+								? companyFormData?.team
+								: data?.team,
+						contact_number:
+							companyFormData?.contact_number !== data?.contact_number
+								? companyFormData?.contact_number
+								: data?.social_media?.telephone,
 						enterprise_info: {
 							delivered_enterprises:
-								data?.enterprise_info?.delivered_enterprises || "",
-							in_progress: data?.enterprise_info?.in_progress || "",
-							vgv: data?.enterprise_info?.total_vgv || "",
+								companyFormData?.enterprise_info?.delivered_enterprises !==
+								data?.enterprise_info?.delivered_enterprises
+									? companyFormData?.enterprise_info?.delivered_enterprises
+									: data?.enterprise_info?.delivered_enterprises,
+							in_progress:
+								companyFormData?.enterprise_info?.in_progress !==
+								data?.enterprise_info?.in_progress
+									? companyFormData?.enterprise_info?.in_progress
+									: data?.enterprise_info?.in_progress,
+							total_vgv:
+								companyFormData?.enterprise_info?.total_vgv !==
+								data?.enterprise_info?.total_vgv
+									? companyFormData?.enterprise_info?.total_vgv
+									: data?.enterprise_info?.total_vgv,
 						},
 						social_media: {
 							contactEmail: data?.social_media?.email || "",
 							whatsapp: data?.social_media?.whatsapp || "",
-							contactPhone: data?.social_media?.telephone || "",
+							telephone: data?.social_media?.telephone || "",
 							instagram: data?.social_media?.instagram || "",
 							facebook: data?.social_media?.facebook || "",
 							telegram: data?.social_media?.telegram || "",
@@ -72,19 +118,11 @@ export const FirstCompaniesInfo: React.FC = () => {
 	);
 	const [showImage, setShowImage] = useState(members?.map(() => false));
 	const [avatarVisible, setAvatarVisible] = useState(true);
-	const [banner, setBanner] = useState(
-		isEditing ? `${url}/file/${companyFormData?.enterprise_banner}` : null
-	);
-	const [wantToEditMember, setWantToEditMember] = useState(
-		isEditing ? false : true
-	);
-	const [logo, setLogo] = useState(
-		isEditing ? `${url}/file/${companyFormData?.enterprise_logo}` : null
-	);
+	const [banner, setBanner] = useState(null);
+	const [logo, setLogo] = useState(null);
 
 	const handleEditMembers = () => {
 		setMembers(data?.team);
-		setWantToEditMember(true);
 	};
 
 	const handleAddMember = () => {
@@ -185,9 +223,9 @@ export const FirstCompaniesInfo: React.FC = () => {
 		if (file) {
 			setCompanyImages({
 				...companyImages,
-				banner: file,
+				enterprise_banner: file,
 			});
-			setCompanyImages({ ...companyImages, banner: file });
+			setCompanyFormData({ ...companyFormData, enterprise_banner: file });
 			setBanner(URL.createObjectURL(file));
 		}
 	};
@@ -206,10 +244,10 @@ export const FirstCompaniesInfo: React.FC = () => {
 		if (file) {
 			setCompanyImages({
 				...companyImages,
-				logo: file,
+				enterprise_logo: file,
 			});
-			setCompanyImages({ ...companyImages, logo: file });
-			setLogo(URL.createObjectURL(file)); //problem
+			setCompanyFormData({ ...companyFormData, enterprise_logo: file });
+			setLogo(URL.createObjectURL(file));
 		}
 	};
 
@@ -225,6 +263,45 @@ export const FirstCompaniesInfo: React.FC = () => {
 	const handleDeleteLogo = () => {
 		setLogo(null);
 	};
+
+	useEffect(() => {
+		if (
+			isEditing &&
+			!isLoading &&
+			(companyFormData?.enterprise_logo !== "" ||
+				companyFormData?.enterprise_banner !== "")
+		) {
+			//quando esta editando e vem a imagem do back
+			setLogo(`${url}/file/${companyFormData?.enterprise_logo}`);
+			setBanner(`${url}/file/${companyFormData?.enterprise_banner}`);
+		} else if (
+			isEditing &&
+			!isLoading &&
+			(companyFormData?.enterprise_logo !== "string" ||
+				companyFormData?.enterprise_banner !== "string")
+		) {
+			//quando esta editando e o user upou um nova imagem
+			setLogo(URL.createObjectURL(companyFormData?.enterprise_logo));
+			setBanner(URL.createObjectURL(companyFormData?.enterprise_banner));
+		} else if (
+			!isEditing &&
+			(companyImages?.enterprise_logo || companyImages?.enterprise_banner)
+		) {
+			//quando nao esta editando e a imagem é file
+			setLogo(URL.createObjectURL(companyImages?.enterprise_logo));
+			setBanner(URL.createObjectURL(companyImages?.enterprise_banner));
+		}
+	}, [
+		companyFormData?.enterprise_banner,
+		companyFormData?.enterprise_logo,
+		companyImages?.enterprise_banner,
+		companyImages?.enterprise_logo,
+		isEditing,
+		isLoading,
+		setLogo,
+	]);
+
+	console.log(logo && !isLoading, "logo && !isLoading");
 	return (
 		<Flex flexDir={"column"} gap={"1.5rem"}>
 			{!isLoading ? (
@@ -343,7 +420,7 @@ export const FirstCompaniesInfo: React.FC = () => {
 								fontSize={"1.5rem"}
 								mr={"1rem"}
 							>
-								{logo && !isLoading ? (
+								{logo ? (
 									<Flex objectFit={"cover"}>
 										<Img
 											src={logo}
@@ -412,8 +489,9 @@ export const FirstCompaniesInfo: React.FC = () => {
 								<Button
 									as="span"
 									bg={
-										data?.enterprise_banner && isEditing
-											? "#fff"
+										data?.enterprise_banner ||
+										companyFormData?.enterprise_banner
+											? "#ffffff"
 											: "transparent"
 									}
 									color={"#007D99"}
@@ -436,7 +514,9 @@ export const FirstCompaniesInfo: React.FC = () => {
 										style={{ display: "none" }}
 										onChange={handleBannerChange}
 									/>
-									Clique para adicionar imagem
+									{data?.enterprise_banner || companyFormData?.enterprise_banner
+										? "Trocar banner"
+										: "Adicionar banner"}
 								</Button>
 							</Flex>
 							<Text color={"#171923"} fontSize={"0.875rem"}>
@@ -455,69 +535,39 @@ export const FirstCompaniesInfo: React.FC = () => {
 							<Text fontWeight={"500"} color={"#171923"} fontSize={"1.125rem"}>
 								Dados da equipe
 							</Text>
-							{wantToEditMember && (
-								<Button
-									bgColor={"transparent"}
-									fontSize={"0.75rem"}
-									fontWeight={"500"}
-									color={"#007D99"}
-									border={"1px solid #007D99"}
-									borderRadius={"6.25rem"}
-									w={"8.8125rem"}
-									h={"1.5rem"}
-									px={"0.5rem"}
-									py={"0.825rem"}
-									transition={"0.3s"}
-									_hover={{ opacity: 0.7, cursor: "pointer" }}
-									onClick={handleAddMember}
-									isDisabled={
-										members?.some(
-											(member) => member.nome === "" || member.cargo === ""
-										)
-											? true
-											: false
-									}
-									cursor={
-										members?.some(
-											(member) => member.nome === "" || member.cargo === ""
-										)
-											? "not-allowed"
-											: "pointer"
-									}
-								>
-									Adicionar integrante
-								</Button>
-							)}
-						</Flex>
-						{wantToEditMember === false && (
-							<Flex
-								justifyContent={"center"}
-								alignItems={"center"}
-								flexDir={"column"}
-								my={"2rem"}
-								gap={"1rem"}
+							<Button
+								bgColor={"transparent"}
+								fontSize={"0.75rem"}
+								fontWeight={"500"}
+								color={"#007D99"}
+								border={"1px solid #007D99"}
+								borderRadius={"6.25rem"}
+								w={"8.8125rem"}
+								h={"1.5rem"}
+								px={"0.5rem"}
+								py={"0.825rem"}
+								transition={"0.3s"}
+								_hover={{ opacity: 0.7, cursor: "pointer" }}
+								onClick={handleAddMember}
+								isDisabled={
+									members?.some(
+										(member) => member.nome === "" || member.cargo === ""
+									)
+										? true
+										: false
+								}
+								cursor={
+									members?.some(
+										(member) => member.nome === "" || member.cargo === ""
+									)
+										? "not-allowed"
+										: "pointer"
+								}
 							>
-								<Text>Deseja editar algum membro da equipe?</Text>
-								<Button
-									bgColor={"transparent"}
-									fontSize={"0.75rem"}
-									fontWeight={"500"}
-									color={"#007D99"}
-									border={"1px solid #007D99"}
-									borderRadius={"6.25rem"}
-									w={"8.8125rem"}
-									h={"1.5rem"}
-									px={"0.5rem"}
-									py={"0.825rem"}
-									transition={"0.3s"}
-									_hover={{ opacity: 0.7, cursor: "pointer" }}
-									onClick={handleEditMembers}
-								>
-									Sim
-								</Button>
-							</Flex>
-						)}
-						{wantToEditMember && (
+								Adicionar integrante
+							</Button>
+						</Flex>
+						{!isLoading ? (
 							<>
 								{members?.map((member, index) => (
 									<AddMembersCard
@@ -540,6 +590,8 @@ export const FirstCompaniesInfo: React.FC = () => {
 									/>
 								))}
 							</>
+						) : (
+							<Text>Loading...</Text>
 						)}
 					</Flex>
 					<Flex gap={"1.5rem"} mb={"10.875rem"}>
@@ -553,10 +605,10 @@ export const FirstCompaniesInfo: React.FC = () => {
 							fontSize={"0.875rem"}
 							fontWeight={"500"}
 							onClick={() => {
-								setIsCreatePage(false);
-								setFirstStep(false);
+								setFirstStep(true);
 								setSecondStep(false);
 							}}
+							isDisabled={firstStep && !secondStep ? true : false}
 						>
 							Voltar
 						</Button>

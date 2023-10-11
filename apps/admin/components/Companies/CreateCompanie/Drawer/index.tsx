@@ -22,15 +22,19 @@ import { fetchCreateEnterprise, fetchUploadImages } from "services";
 interface IDrawerComponent {
 	onClose: any;
 	isOpen: any;
+	token: string;
 }
 
 export const DrawerComponent: React.FC<IDrawerComponent> = ({
 	isOpen,
 	onClose,
+	token,
 }) => {
 	const btnRef = useRef();
 	const { companyFormData, setIsCreating, companyImages, isEditing } =
 		useCreateCompany();
+	console.log(companyFormData, "companyFormData");
+	console.log(companyImages, "companyImages");
 
 	const updatedCompanyFormData = { ...companyFormData };
 
@@ -42,18 +46,13 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 		updatedCompanyFormData.enterprise_banner = companyImages.banner;
 	}
 	updatedCompanyFormData.contact_number =
-		updatedCompanyFormData.social_media?.contactPhone;
-	console.log(
-		updatedCompanyFormData.social_media?.contactPhone,
-		"111111111111"
-	);
+		updatedCompanyFormData.social_media?.telephone;
+
 	updatedCompanyFormData?.team?.forEach((member, index) => {
 		if (companyImages[index]) {
 			member.image = URL.createObjectURL(companyImages[index]);
 		}
 	});
-	console.log(companyFormData);
-	console.log(updatedCompanyFormData, "updatedCompanyFormData");
 
 	const handleCreateCompany = async (data: any) => {
 		let request: any;
@@ -63,7 +62,9 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 		formData.append("logo", data?.enterprise_logo);
 		formData.append("banner", data?.enterprise_banner);
 		data?.team.forEach((teamMember, index) => {
-			formData.append("team", teamMember.image, `file${index}`);
+			if (typeof teamMember.image !== "string") {
+				formData.append("team", teamMember.image, `file${index}`);
+			}
 		});
 
 		const retornoDasImagens = await fetchUploadImages(formData);
@@ -124,8 +125,13 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 		};
 		console.log(request, "asd");
 
-		await fetchCreateEnterprise(request);
+		if (isEditing) {
+			await fetchCreateEnterprise(request);
+		} else {
+			await fetchCreateEnterprise(request);
+		}
 	};
+
 	return (
 		<>
 			<Drawer
@@ -172,13 +178,17 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 											<Flex>
 												<CompanieDetails
 													logo={
-														companyImages?.logo
-															? URL.createObjectURL(companyImages?.logo)
+														companyImages?.enterprise_logo
+															? URL.createObjectURL(
+																	companyImages?.enterprise_logo
+															  )
 															: null
 													}
 													banner={
-														companyImages?.banner
-															? URL.createObjectURL(companyImages?.banner)
+														companyImages?.enterprise_banner
+															? URL.createObjectURL(
+																	companyImages?.enterprise_banner
+															  )
 															: null
 													}
 													name={companyFormData?.enterprise_name}
@@ -209,7 +219,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 												>
 													<Text>Quem constrói nossa história</Text>
 
-													{/* <Flex>
+													<Flex>
 														{updatedCompanyFormData?.team?.map(
 															(team: any, index: number) => (
 																// eslint-disable-next-line react/jsx-key
@@ -222,24 +232,22 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 																/>
 															)
 														)}
-													</Flex> */}
+													</Flex>
 												</Flex>
 											</Flex>
 										</Flex>
 										<Flex>
 											<Flex h="100%">
-												{/* <CompanieContact
+												<CompanieContact
 													website={companyFormData?.social_media?.website}
 													whatsapp={companyFormData?.social_media?.whatsapp}
-													telephone={
-														companyFormData?.social_media?.contactPhone
-													}
+													telephone={companyFormData?.social_media?.telephone}
 													email={companyFormData?.social_media?.contactEmail}
 													instagram={companyFormData?.social_media?.instagram}
 													twitter={companyFormData?.social_media?.twitter}
 													facebook={companyFormData?.social_media?.facebook}
 													telegram={companyFormData?.social_media?.telegram}
-												/> */}
+												/>
 											</Flex>
 										</Flex>
 									</Flex>

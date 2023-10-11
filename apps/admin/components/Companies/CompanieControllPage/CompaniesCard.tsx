@@ -22,8 +22,14 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 	receita,
 	isFinisished,
 }) => {
-	const { setIsEditing, setIsCreating, companyImages, setEntepriseId } =
-		useCreateCompany();
+	const {
+		setIsEditing,
+		setIsCreating,
+		companyImages,
+		setEntepriseId,
+		setCompanyImages,
+		setMembers,
+	} = useCreateCompany();
 	const { setFirstStep, setSecondStep, setIsCreatePage } =
 		useCreateCompanieSteps();
 
@@ -151,6 +157,12 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 								setSecondStep(false);
 								setIsCreatePage(true);
 								setEntepriseId(id);
+								setCompanyImages({
+									enterprise_logo: null,
+									enterprise_banner: null,
+									membersImages: [],
+								});
+								setMembers([{ image: null, name: "", position: "" }]);
 							}}
 						>
 							Editar

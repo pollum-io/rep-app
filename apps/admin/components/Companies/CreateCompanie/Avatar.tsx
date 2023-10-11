@@ -30,27 +30,27 @@ export const Avatar: React.FC<IAvatar> = ({
 	const [avatarVisible, setAvatarVisible] = useState(foto ? false : true);
 	const [fotoFromBack, setfotoFromBack] = useState(false);
 	const [newFoto, setnewFoto] = useState(false);
-
 	useEffect(() => {
-		if (typeof foto === "string") {
-			setfotoFromBack(true);
-			setnewFoto(false);
-		} else {
+		if (typeof foto !== "string") {
 			setfotoFromBack(false);
 			setnewFoto(true);
+		} else {
+			setfotoFromBack(true);
+			setnewFoto(false);
 		}
 	}, [foto]); // Execute isso apenas quando "foto" mudar
-
-	let imageUrl = null;
-	if (foto) {
-		if (fotoFromBack) {
-			imageUrl = `${url}/file/${foto}`;
-		} else if (newFoto) {
-			imageUrl = URL.createObjectURL(foto);
-		} else {
-			imageUrl = null;
-		}
-	}
+	console.log(foto, "foto");
+	const imageUrl = null;
+	// if (foto) {
+	// 	if (fotoFromBack) {
+	// 		imageUrl = `${url}/file/${foto}`;
+	// 	} else if (newFoto) {
+	// 		console.log(foto, "foto");
+	// 		imageUrl = URL.createObjectURL(foto);
+	// 	} else {
+	// 		imageUrl = null;
+	// 	}
+	// }
 	return (
 		<Flex
 			bgColor={"#E2E8F0"}

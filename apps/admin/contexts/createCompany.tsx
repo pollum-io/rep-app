@@ -24,7 +24,7 @@ interface ICreateCompany {
 	logo: any;
 	setLogo: any;
 	handleHasCompanyBeingCreated: any;
-	createDefaultCompanyFormData: any;
+	deleteAllDataFromStateCompanyForm: any;
 }
 
 type CreateData = {
@@ -46,7 +46,7 @@ type CreateData = {
 		contactEmail?: string;
 		whatsapp?: string;
 		website?: string;
-		contactPhone?: string;
+		telephone?: string;
 		instagram?: string;
 		facebook?: string;
 		telegram?: string;
@@ -63,9 +63,25 @@ type companyMember = {
 };
 
 type CompanyImages = {
-	logo: any;
-	banner: any;
+	enterprise_logo: any;
+	enterprise_banner: any;
 	membersImages: any[];
+};
+
+const companyFormDataFirstInputs = {
+	email: "",
+	enterprise_name: "",
+	localizacao: "",
+	cnpj: "",
+	enterprise_logo: null,
+	enterprise_banner: null,
+	description: "",
+	team: [],
+	enterprise_info: {
+		delivered_enterprises: null,
+		in_progress: null,
+		total_vgv: null,
+	},
 };
 
 export const CreateCompanyContext = createContext({} as ICreateCompany);
@@ -91,7 +107,7 @@ export const CreateCompanyProvider: React.FC<{
 		social_media: {
 			contactEmail: "",
 			whatsapp: "",
-			contactPhone: "",
+			telephone: "",
 			instagram: "",
 			facebook: "",
 			telegram: "",
@@ -114,13 +130,13 @@ export const CreateCompanyProvider: React.FC<{
 		{ image: null, name: "", position: "" },
 	]);
 	const [companyImages, setCompanyImages] = useState<CompanyImages>({
-		logo: null,
-		banner: null,
+		enterprise_logo: null,
+		enterprise_banner: null,
 		membersImages: [],
 	});
 
 	// Função zerar os estados de controle no form
-	function createDefaultCompanyFormData() {
+	function deleteAllDataFromStateCompanyForm() {
 		setCompanyFormData({
 			email: "",
 			enterprise_name: "",
@@ -139,7 +155,7 @@ export const CreateCompanyProvider: React.FC<{
 			social_media: {
 				contactEmail: "",
 				whatsapp: "",
-				contactPhone: "",
+				telephone: "",
 				instagram: "",
 				facebook: "",
 				telegram: "",
@@ -150,14 +166,18 @@ export const CreateCompanyProvider: React.FC<{
 			},
 		});
 		setCompanyImages({
-			logo: null,
-			banner: null,
+			enterprise_logo: null,
+			enterprise_banner: null,
 			membersImages: [],
 		});
 	}
-	console.log(companyImages, "companyimages");
+
 	const handleSaveFormData = () => {
-		PersistentFramework.add("formData", JSON.stringify(companyFormData));
+		if (isEditing) {
+			PersistentFramework.add("formDataEdit", JSON.stringify(companyFormData));
+		} else if (!isEditing) {
+			PersistentFramework.add("formData", JSON.stringify(companyFormData));
+		}
 	};
 
 	const handleHasCompanyBeingCreated = (value: boolean) => {
@@ -165,20 +185,43 @@ export const CreateCompanyProvider: React.FC<{
 		PersistentFramework.add("companyBeingCreated", value);
 	};
 	useEffect(() => {
-		const getformData = PersistentFramework.get("formData");
-		if (getformData) {
-			setCompanyFormData(JSON?.parse(getformData));
-			const companyMemberData = companyFormData?.team?.map((data) => data);
-			setMembers(companyMemberData);
-			const isSomeValueIncompleted = Object.values(companyFormData)?.some(
-				(valor) => valor === ""
-			);
-			if (isSomeValueIncompleted === true) {
-				setIsNotCretedYet(true);
+		let getformData: any;
+		let getformDataEdit: any;
+		console.log(isEditing, "EDITINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+
+		if (isEditing) {
+			console.log("1111111111111111111111111111111111111111111111");
+			getformDataEdit = PersistentFramework.get("formDataEdit");
+			if (getformDataEdit) {
+				setCompanyFormData(JSON?.parse(getformDataEdit));
+				const companyMemberData = companyFormData?.team?.map((data) => data);
+				setMembers(companyMemberData);
+				console.log(companyMemberData, "companyMemberData");
+			}
+		} else if (!isEditing) {
+			console.log("222222222222222222222222222222222222222222222");
+
+			getformData = PersistentFramework.get("formData");
+			if (getformData) {
+				setCompanyFormData(JSON?.parse(getformData));
+				const companyMemberData = companyFormData?.team?.map((data) => data);
+				setMembers(companyMemberData);
 			}
 		}
-	}, [isCreating]);
-	console.log(companyFormData, "companyFormData");
+	}, [isCreating, isEditing]);
+
+	useEffect(() => {
+		const isSomeValueIncompleted = Object.values(companyFormData)?.some(
+			(valor) => valor === "" || valor === null
+		);
+		if (isSomeValueIncompleted === true) {
+			setIsNotCretedYet(true);
+		} else {
+			setIsNotCretedYet(false);
+		}
+	}, [companyFormData, isNotCretedYet]);
+	console.log(members, "membersmembersmembersmembersmembersmembersmembers");
+
 	const providerValue = useMemo(
 		() => ({
 			companyFormData,
@@ -203,7 +246,7 @@ export const CreateCompanyProvider: React.FC<{
 			logo,
 			setLogo,
 			handleHasCompanyBeingCreated,
-			createDefaultCompanyFormData,
+			deleteAllDataFromStateCompanyForm,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[
