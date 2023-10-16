@@ -220,7 +220,6 @@ export const CreateCompanyProvider: React.FC<{
 			setIsNotCretedYet(false);
 		}
 	}, [companyFormData, isNotCretedYet]);
-	console.log(members, "membersmembersmembersmembersmembersmembersmembers");
 
 	const providerValue = useMemo(
 		() => ({

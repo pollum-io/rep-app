@@ -67,7 +67,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 			}
 		});
 
-		const retornoDasImagens = await fetchUploadImages(formData);
+		const retornoDasImagens = await fetchUploadImages(formData, token);
 
 		let startIndex = 0;
 

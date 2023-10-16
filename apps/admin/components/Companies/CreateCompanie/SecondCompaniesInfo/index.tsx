@@ -265,7 +265,7 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 						handleSaveFormData();
 						onOpenModal();
 					}}
-					isDisabled={isNotCretedYet === true ? true : false}
+					isDisabled={!isEditing && isNotCretedYet === true ? true : false}
 				>
 					Avançar
 				</Button>

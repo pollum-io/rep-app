@@ -45,10 +45,12 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 			onSuccess: (data) => {
 				if (isEditing && !isLoading) {
 					PersistentFramework.add("formDataEdit", JSON.stringify(data));
+					console.log(data, "12121212");
+					console.log(data, "data?.membersdata?.membersdata?.members");
 					setMembers(data?.team);
-					console.log(data?.team, "12121212");
+
 					setCompanyFormData({
-						...data,
+						...companyFormData,
 						enterprise_name:
 							companyFormData?.enterprise_name !== data?.enterprise_name
 								? companyFormData?.enterprise_name
@@ -62,10 +64,7 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 							companyFormData?.cnpj !== data?.cnpj
 								? companyFormData?.cnpj
 								: data?.cnpj,
-						enterprise_logo:
-							companyFormData?.enterprise_logo !== data?.enterprise_logo
-								? companyFormData?.enterprise_logo
-								: data?.enterprise_logo,
+						enterprise_logo: data?.enterprise_logo,
 						enterprise_banner:
 							companyFormData?.enterprise_banner !== data?.enterprise_banner
 								? companyFormData?.enterprise_banner
@@ -116,6 +115,11 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 			},
 		}
 	);
+	console.log(
+		companyFormData,
+		"companyFormDatacompanyFormDatacompanyFormDatacompanyFormDatacompanyFormData"
+	);
+
 	const [showImage, setShowImage] = useState(members?.map(() => false));
 	const [avatarVisible, setAvatarVisible] = useState(true);
 	const [banner, setBanner] = useState(null);
@@ -263,9 +267,16 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 	const handleDeleteLogo = () => {
 		setLogo(null);
 	};
+
+	console.log(members, "membersmembersmembersmembersmembersmembersmembers");
+
 	useEffect(() => {
 		if (!isLoading) {
-			if (isEditing) {
+			if (
+				isEditing &&
+				companyFormData?.enterprise_logo &&
+				data?.enterprise_logo
+			) {
 				if (typeof companyFormData?.enterprise_logo === "string") {
 					setLogo(`${url}/file/${companyFormData?.enterprise_logo}`);
 				} else if (companyFormData?.enterprise_logo !== "string") {
@@ -277,10 +288,10 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 					setBanner(URL.createObjectURL(companyFormData?.enterprise_banner));
 				}
 			} else if (companyImages) {
-				if (companyImages.enterprise_logo) {
+				if (companyImages.enterprise_logo !== null) {
 					setLogo(URL.createObjectURL(companyImages.enterprise_logo));
 				}
-				if (companyImages.enterprise_banner) {
+				if (companyImages.enterprise_banner !== null) {
 					setBanner(URL.createObjectURL(companyImages.enterprise_banner));
 				}
 			}
@@ -295,9 +306,9 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 		setLogo,
 		setBanner,
 		companyImages,
+		data?.enterprise_logo,
 	]);
 
-	console.log(banner, "logo && !isLoading");
 	return (
 		<Flex flexDir={"column"} gap={"1.5rem"}>
 			{!isLoading ? (
@@ -563,32 +574,26 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 								Adicionar integrante
 							</Button>
 						</Flex>
-						{!isLoading ? (
-							<>
-								{members?.map((member, index) => (
-									<AddMembersCard
-										key={index}
-										index={index}
-										avatarVisible={avatarVisible}
-										handleToggleImage={handleToggleImage}
-										handleMouseEnter={() => handleMouseEnter(index)}
-										handleMouseLeave={() => handleMouseLeave(index)}
-										setShowImage={setShowImage}
-										showImage={showImage[index]}
-										image={member.image}
-										name={member.name}
-										position={member.position}
-										onInputChange={(key, value) =>
-											handleMemberChange(index, key, value)
-										}
-										onImageChange={() => handleDeleteImage(index)}
-										deleteUser={() => handleDeleteUser(index)}
-									/>
-								))}
-							</>
-						) : (
-							<Text>Loading...</Text>
-						)}
+						{members?.map((member, index) => (
+							<AddMembersCard
+								key={index}
+								index={index}
+								avatarVisible={avatarVisible}
+								handleToggleImage={handleToggleImage}
+								handleMouseEnter={() => handleMouseEnter(index)}
+								handleMouseLeave={() => handleMouseLeave(index)}
+								setShowImage={setShowImage}
+								showImage={showImage[index]}
+								image={member.image}
+								name={member.name}
+								position={member.position}
+								onInputChange={(key, value) =>
+									handleMemberChange(index, key, value)
+								}
+								onImageChange={() => handleDeleteImage(index)}
+								deleteUser={() => handleDeleteUser(index)}
+							/>
+						))}
 					</Flex>
 					<Flex gap={"1.5rem"} mb={"10.875rem"}>
 						<Button

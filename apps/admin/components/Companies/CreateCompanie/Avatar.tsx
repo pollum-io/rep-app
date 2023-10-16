@@ -28,29 +28,41 @@ export const Avatar: React.FC<IAvatar> = ({
 	handleToggleImage,
 }) => {
 	const [avatarVisible, setAvatarVisible] = useState(foto ? false : true);
-	const [fotoFromBack, setfotoFromBack] = useState(false);
-	const [newFoto, setnewFoto] = useState(false);
+	const [fotoFromBack, setfotoFromBack] = useState<boolean>();
+	const [newFoto, setnewFoto] = useState<boolean>();
+	const [imageUrl, setImageUrl] = useState(null);
+
 	useEffect(() => {
-		if (typeof foto !== "string") {
-			setfotoFromBack(false);
-			setnewFoto(true);
-		} else {
-			setfotoFromBack(true);
-			setnewFoto(false);
+		if (foto) {
+			console.log(foto, "dsadsadasdadasa");
+
+			console.log(typeof foto, "dsadsadasdadasa");
+
+			if (typeof foto === "string") {
+				console.log("OI");
+
+				setfotoFromBack(true);
+				setnewFoto(false);
+			} else if (typeof foto !== "string") {
+				console.log("TCHAU");
+				setfotoFromBack(false);
+				setnewFoto(true);
+			}
 		}
-	}, [foto]); // Execute isso apenas quando "foto" mudar
-	console.log(foto, "foto");
-	const imageUrl = null;
-	// if (foto) {
-	// 	if (fotoFromBack) {
-	// 		imageUrl = `${url}/file/${foto}`;
-	// 	} else if (newFoto) {
-	// 		console.log(foto, "foto");
-	// 		imageUrl = URL.createObjectURL(foto);
-	// 	} else {
-	// 		imageUrl = null;
-	// 	}
-	// }
+	}, [foto]);
+
+	useEffect(() => {
+		if (foto) {
+			if (fotoFromBack === true && newFoto === false) {
+				setImageUrl(`${url}/file/${foto}`);
+			} else if (newFoto === true && fotoFromBack === false) {
+				setImageUrl(URL.createObjectURL(foto));
+			} else {
+				setImageUrl(null);
+			}
+		}
+	}, [foto, fotoFromBack, newFoto]);
+
 	return (
 		<Flex
 			bgColor={"#E2E8F0"}

@@ -39,7 +39,7 @@ export const CompaniesContainer: FunctionComponent<CompaniesContainer> = ({
 		onOpen: onOpennWarnModal,
 		onClose: onCloseWarnModal,
 	} = useDisclosure();
-
+	console.log(token);
 	return (
 		<DefaultTemplate>
 			<Flex flexDir={"column"}>
@@ -94,7 +94,7 @@ export const CompaniesContainer: FunctionComponent<CompaniesContainer> = ({
 							w={"45rem"}
 							justifyContent={"center"}
 							alignItems={"center"}
-							ml={"60%"}
+							ml={"20%"}
 						>
 							<CreateSteps />
 							<Flex mt={"2.25rem"} flexDir={"column"} w={"100%"}>
