@@ -15,9 +15,12 @@ import {
 	CompanieMembers,
 	Header,
 	ICompaniesTeam,
+	PersistentFramework,
 } from "ui";
 import { useCreateCompany } from "../../../../hooks/useCreateCompany";
 import { fetchCreateEnterprise, fetchUploadImages } from "services";
+import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
+import { useToasty } from "../../../../hooks/useToasty";
 
 interface IDrawerComponent {
 	onClose: any;
@@ -31,8 +34,20 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 	token,
 }) => {
 	const btnRef = useRef();
-	const { companyFormData, setIsCreating, companyImages, isEditing } =
-		useCreateCompany();
+	const {
+		companyFormData,
+		setIsCreating,
+		companyImages,
+		isEditing,
+		deleteAllDataFromStateCompanyForm,
+		haveCompanyCreateInProcess,
+		handleHasCompanyBeingCreated,
+		setMembers,
+	} = useCreateCompany();
+	const { setFirstStep, setSecondStep, setIsCreatePage } =
+		useCreateCompanieSteps();
+	const { toast } = useToasty();
+
 	console.log(companyFormData, "companyFormData");
 	console.log(companyImages, "companyImages");
 
@@ -127,8 +142,33 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 
 		if (isEditing) {
 			await fetchCreateEnterprise(request);
+			setFirstStep(false);
+			setSecondStep(false);
+			setIsCreatePage(false);
+			onClose();
+			toast({
+				id: "toast-edit-suc",
+				position: "top-right",
+				status: "success",
+				title: "Empresa editada!",
+			});
 		} else {
 			await fetchCreateEnterprise(request);
+			setFirstStep(false);
+			setSecondStep(false);
+			setIsCreatePage(false);
+			onClose();
+			handleHasCompanyBeingCreated(false);
+			setMembers([{ image: null, name: "", position: "" }]);
+			PersistentFramework.remove("formData");
+			deleteAllDataFromStateCompanyForm();
+			setIsCreating(false);
+			toast({
+				id: "toast-create-suc",
+				position: "top-right",
+				status: "success",
+				title: "Empresa criada!",
+			});
 		}
 	};
 

@@ -34,17 +34,10 @@ export const Avatar: React.FC<IAvatar> = ({
 
 	useEffect(() => {
 		if (foto) {
-			console.log(foto, "dsadsadasdadasa");
-
-			console.log(typeof foto, "dsadsadasdadasa");
-
 			if (typeof foto === "string") {
-				console.log("OI");
-
 				setfotoFromBack(true);
 				setnewFoto(false);
 			} else if (typeof foto !== "string") {
-				console.log("TCHAU");
 				setfotoFromBack(false);
 				setnewFoto(true);
 			}
@@ -53,9 +46,17 @@ export const Avatar: React.FC<IAvatar> = ({
 
 	useEffect(() => {
 		if (foto) {
-			if (fotoFromBack === true && newFoto === false) {
+			if (
+				fotoFromBack === true &&
+				newFoto === false &&
+				typeof foto === "string"
+			) {
 				setImageUrl(`${url}/file/${foto}`);
-			} else if (newFoto === true && fotoFromBack === false) {
+			} else if (
+				newFoto === true &&
+				fotoFromBack === false &&
+				foto instanceof Blob
+			) {
 				setImageUrl(URL.createObjectURL(foto));
 			} else {
 				setImageUrl(null);

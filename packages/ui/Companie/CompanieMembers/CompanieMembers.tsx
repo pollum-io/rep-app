@@ -1,4 +1,4 @@
-import { Flex, Img, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Img, Text } from "@chakra-ui/react";
 import { FunctionComponent, useEffect, useState } from "react";
 import { ICompanieMembers } from "./dto";
 
@@ -12,27 +12,41 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 
 	const [fotoFromBack, setfotoFromBack] = useState(false);
 	const [newFoto, setnewFoto] = useState(false);
+	const [imageUrl, setImageUrl] = useState("");
 
 	useEffect(() => {
-		if (typeof image === "string") {
-			setfotoFromBack(true);
-			setnewFoto(false);
-		} else {
-			setfotoFromBack(false);
-			setnewFoto(true);
+		if (image) {
+			if (typeof image === "string") {
+				console.log("OI");
+				setfotoFromBack(true);
+				setnewFoto(false);
+			} else if (typeof image !== "string") {
+				console.log("TCHAU");
+				setfotoFromBack(false);
+				setnewFoto(true);
+			}
 		}
 	}, [image]);
 
-	let imageUrl: string | Blob | MediaSource = "";
-	if (image) {
-		if (fotoFromBack) {
-			imageUrl = `${url}/file/${image}`;
-		} else if (newFoto) {
-			imageUrl = URL.createObjectURL(image);
-		} else {
-			imageUrl = "";
+	useEffect(() => {
+		if (image) {
+			if (
+				fotoFromBack === true &&
+				newFoto === false &&
+				typeof image === "string"
+			) {
+				setImageUrl(`${url}/file/${image}`);
+			} else if (
+				newFoto === true &&
+				fotoFromBack === false &&
+				image instanceof Blob
+			) {
+				setImageUrl(URL.createObjectURL(image));
+			} else {
+				setImageUrl("");
+			}
 		}
-	}
+	}, [image, fotoFromBack, newFoto, url]);
 
 	return (
 		<Flex
