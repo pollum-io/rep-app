@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { WhitelistCard } from "../../components/Accounts/WhitelistCard";
 import { AdminsCard } from "../../components/Accounts/AdminsCard";

@@ -1,7 +1,10 @@
 import React from "react";
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { WhitelistModal } from "./WhitelistModal";
 
 export const WhitelistCard: React.FC = () => {
+	const { isOpen, onOpen, onClose } = useDisclosure();
+
 	return (
 		<Flex
 			w={"29.4375rem"}
@@ -11,6 +14,7 @@ export const WhitelistCard: React.FC = () => {
 			p={"1rem"}
 			flexDir={"column"}
 		>
+			<WhitelistModal isOpen={isOpen} onClose={onClose} />
 			<Flex
 				alignItems={"center"}
 				justifyContent={"space-between"}
@@ -31,8 +35,8 @@ export const WhitelistCard: React.FC = () => {
 					h={"2rem"}
 					transition={"0.3s"}
 					_hover={{ opacity: 0.7, cursor: "pointer" }}
+					onClick={onOpen}
 				>
-					{" "}
 					Criar nova conta
 				</Button>
 			</Flex>

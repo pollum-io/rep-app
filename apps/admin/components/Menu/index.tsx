@@ -16,7 +16,7 @@ export const Menu: React.FC = () => {
 			gap={"1rem"}
 			alignItems={"center"}
 			right={"1%"}
-			zIndex="99999"
+			zIndex="999"
 		>
 			<Text fontSize={"0.875rem"} color={"#007088"}>
 				Olá, João Antônio

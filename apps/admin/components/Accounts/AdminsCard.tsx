@@ -1,7 +1,10 @@
 import React from "react";
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { AdminsModal } from "./AdminsModal";
 
 export const AdminsCard: React.FC = () => {
+	const { isOpen, onOpen, onClose } = useDisclosure();
+
 	return (
 		<Flex
 			w={"29.4375rem"}
@@ -11,6 +14,8 @@ export const AdminsCard: React.FC = () => {
 			p={"1rem"}
 			flexDir={"column"}
 		>
+			<AdminsModal isOpen={isOpen} onClose={onClose} />
+
 			<Flex
 				alignItems={"center"}
 				justifyContent={"space-between"}
@@ -31,8 +36,8 @@ export const AdminsCard: React.FC = () => {
 					h={"2rem"}
 					transition={"0.3s"}
 					_hover={{ opacity: 0.7, cursor: "pointer" }}
+					onClick={onOpen}
 				>
-					{" "}
 					Criar novo admin
 				</Button>
 			</Flex>
