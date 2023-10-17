@@ -18,9 +18,15 @@ import {
 	PersistentFramework,
 } from "ui";
 import { useCreateCompany } from "../../../../hooks/useCreateCompany";
-import { fetchCreateEnterprise, fetchUploadImages } from "services";
+import {
+	fetchCreateEnterprise,
+	fetchUpdateEnterprise,
+	fetchUploadImages,
+} from "services";
 import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
 import { useToasty } from "../../../../hooks/useToasty";
+
+const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 interface IDrawerComponent {
 	onClose: any;
@@ -43,13 +49,11 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 		haveCompanyCreateInProcess,
 		handleHasCompanyBeingCreated,
 		setMembers,
+		entepriseId,
 	} = useCreateCompany();
 	const { setFirstStep, setSecondStep, setIsCreatePage } =
 		useCreateCompanieSteps();
 	const { toast } = useToasty();
-
-	console.log(companyFormData, "companyFormData");
-	console.log(companyImages, "companyImages");
 
 	const updatedCompanyFormData = { ...companyFormData };
 
@@ -71,7 +75,6 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 
 	const handleCreateCompany = async (data: any) => {
 		let request: any;
-		console.log(data, "data");
 
 		const formData = new FormData();
 		formData.append("logo", data?.enterprise_logo);
@@ -100,8 +103,6 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 				if (imageIndex < retornoDasImagens.files.length) {
 					teamMember.image = retornoDasImagens.files[imageIndex];
 				}
-
-				console.log(teamMember.image, "teamMember.image");
 			});
 		}
 
@@ -116,6 +117,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
 		request = {
 			...(data?.enterprise_name && { enterprise_name: data?.enterprise_name }),
+			...(data?.email && { email: data?.email }),
 			...(data?.enterprise_logo && {
 				enterprise_logo: retornoDasImagens?.files[0],
 			}),
@@ -138,36 +140,44 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 				enterprise_info: data.enterprise_info,
 			}),
 		};
-		console.log(request, "asd");
 
-		if (isEditing) {
-			await fetchCreateEnterprise(request);
-			setFirstStep(false);
-			setSecondStep(false);
-			setIsCreatePage(false);
-			onClose();
-			toast({
-				id: "toast-edit-suc",
-				position: "top-right",
-				status: "success",
-				title: "Empresa editada!",
-			});
-		} else {
-			await fetchCreateEnterprise(request);
-			setFirstStep(false);
-			setSecondStep(false);
-			setIsCreatePage(false);
-			onClose();
-			handleHasCompanyBeingCreated(false);
-			setMembers([{ image: null, name: "", position: "" }]);
-			PersistentFramework.remove("formData");
-			deleteAllDataFromStateCompanyForm();
-			setIsCreating(false);
+		try {
+			if (isEditing) {
+				await fetchUpdateEnterprise(request, entepriseId);
+				setFirstStep(false);
+				setSecondStep(false);
+				setIsCreatePage(false);
+				onClose();
+				toast({
+					id: "toast-edit-suc",
+					position: "top-right",
+					status: "success",
+					title: "Empresa editada!",
+				});
+			} else {
+				await fetchCreateEnterprise(request);
+				setFirstStep(false);
+				setSecondStep(false);
+				setIsCreatePage(false);
+				onClose();
+				handleHasCompanyBeingCreated(false);
+				setMembers([{ image: null, name: "", position: "" }]);
+				PersistentFramework.remove("formData");
+				deleteAllDataFromStateCompanyForm();
+				setIsCreating(false);
+				toast({
+					id: "toast-create-suc",
+					position: "top-right",
+					status: "success",
+					title: "Empresa criada!",
+				});
+			}
+		} catch {
 			toast({
 				id: "toast-create-suc",
 				position: "top-right",
-				status: "success",
-				title: "Empresa criada!",
+				status: "error",
+				title: "Erro!",
 			});
 		}
 	};
@@ -222,14 +232,14 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 															? URL.createObjectURL(
 																	companyImages?.enterprise_logo
 															  )
-															: null
+															: `${url}/file/${updatedCompanyFormData?.enterprise_logo}`
 													}
 													banner={
 														companyImages?.enterprise_banner
 															? URL.createObjectURL(
 																	companyImages?.enterprise_banner
 															  )
-															: null
+															: `${url}/file/${updatedCompanyFormData?.enterprise_banner}`
 													}
 													name={companyFormData?.enterprise_name}
 													id={`CNPJ: ${companyFormData?.cnpj}`}

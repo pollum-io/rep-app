@@ -27,7 +27,7 @@ export const Avatar: React.FC<IAvatar> = ({
 	onImageChange,
 	handleToggleImage,
 }) => {
-	const [avatarVisible, setAvatarVisible] = useState(foto ? false : true);
+	const [avatarVisible, setAvatarVisible] = useState<boolean>();
 	const [fotoFromBack, setfotoFromBack] = useState<boolean>();
 	const [newFoto, setnewFoto] = useState<boolean>();
 	const [imageUrl, setImageUrl] = useState(null);
@@ -46,6 +46,7 @@ export const Avatar: React.FC<IAvatar> = ({
 
 	useEffect(() => {
 		if (foto) {
+			setAvatarVisible(false);
 			if (
 				fotoFromBack === true &&
 				newFoto === false &&
@@ -61,6 +62,8 @@ export const Avatar: React.FC<IAvatar> = ({
 			} else {
 				setImageUrl(null);
 			}
+		} else {
+			setAvatarVisible(true);
 		}
 	}, [foto, fotoFromBack, newFoto]);
 
@@ -105,7 +108,7 @@ export const Avatar: React.FC<IAvatar> = ({
 					position="absolute"
 					transition={"0.5s"}
 					onClick={() => {
-						setAvatarVisible(false);
+						setAvatarVisible(true);
 						handleToggleImage();
 					}}
 				>

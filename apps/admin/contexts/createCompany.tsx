@@ -184,23 +184,19 @@ export const CreateCompanyProvider: React.FC<{
 		setHaveCompanyCreateInProcess(value);
 		PersistentFramework.add("companyBeingCreated", value);
 	};
+
 	useEffect(() => {
 		let getformData: any;
 		let getformDataEdit: any;
-		console.log(isEditing, "EDITINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
 
 		if (isEditing) {
-			console.log("1111111111111111111111111111111111111111111111");
 			getformDataEdit = PersistentFramework.get("formDataEdit");
 			if (getformDataEdit) {
 				setCompanyFormData(JSON?.parse(getformDataEdit));
 				const companyMemberData = companyFormData?.team?.map((data) => data);
 				setMembers(companyMemberData);
-				console.log(companyMemberData, "companyMemberData");
 			}
 		} else if (!isEditing) {
-			console.log("222222222222222222222222222222222222222222222");
-
 			getformData = PersistentFramework.get("formData");
 			if (getformData) {
 				setCompanyFormData(JSON?.parse(getformData));

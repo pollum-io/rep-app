@@ -39,7 +39,6 @@ export const CompaniesContainer: FunctionComponent<CompaniesContainer> = ({
 		onOpen: onOpennWarnModal,
 		onClose: onCloseWarnModal,
 	} = useDisclosure();
-	console.log(token);
 	return (
 		<DefaultTemplate>
 			<Flex flexDir={"column"}>

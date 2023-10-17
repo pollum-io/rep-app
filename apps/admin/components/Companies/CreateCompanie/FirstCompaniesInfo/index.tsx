@@ -45,89 +45,19 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 			onSuccess: (data) => {
 				if (isEditing && !isLoading) {
 					PersistentFramework.add("formDataEdit", JSON.stringify(data));
-					console.log(data, "12121212");
-					console.log(data, "data?.membersdata?.membersdata?.members");
 					setMembers(data?.team);
-
 					setCompanyFormData({
-						...companyFormData,
-						enterprise_name:
-							companyFormData?.enterprise_name !== data?.enterprise_name
-								? companyFormData?.enterprise_name
-								: data?.enterprise_name,
-						email:
-							companyFormData?.email !== data?.email
-								? companyFormData?.email
-								: data?.email,
-						localizacao: data?.address?.neighborhood || "",
-						cnpj:
-							companyFormData?.cnpj !== data?.cnpj
-								? companyFormData?.cnpj
-								: data?.cnpj,
-						enterprise_logo: data?.enterprise_logo,
-						enterprise_banner:
-							companyFormData?.enterprise_banner !== data?.enterprise_banner
-								? companyFormData?.enterprise_banner
-								: data?.enterprise_banner,
-						description:
-							companyFormData?.description !== data?.description
-								? companyFormData?.description
-								: data?.description,
-						team:
-							companyFormData?.team !== data?.team
-								? companyFormData?.team
-								: data?.team,
-						contact_number:
-							companyFormData?.contact_number !== data?.contact_number
-								? companyFormData?.contact_number
-								: data?.social_media?.telephone,
-						enterprise_info: {
-							delivered_enterprises:
-								companyFormData?.enterprise_info?.delivered_enterprises !==
-								data?.enterprise_info?.delivered_enterprises
-									? companyFormData?.enterprise_info?.delivered_enterprises
-									: data?.enterprise_info?.delivered_enterprises,
-							in_progress:
-								companyFormData?.enterprise_info?.in_progress !==
-								data?.enterprise_info?.in_progress
-									? companyFormData?.enterprise_info?.in_progress
-									: data?.enterprise_info?.in_progress,
-							total_vgv:
-								companyFormData?.enterprise_info?.total_vgv !==
-								data?.enterprise_info?.total_vgv
-									? companyFormData?.enterprise_info?.total_vgv
-									: data?.enterprise_info?.total_vgv,
-						},
-						social_media: {
-							contactEmail: data?.social_media?.email || "",
-							whatsapp: data?.social_media?.whatsapp || "",
-							telephone: data?.social_media?.telephone || "",
-							instagram: data?.social_media?.instagram || "",
-							facebook: data?.social_media?.facebook || "",
-							telegram: data?.social_media?.telegram || "",
-							twitter: data?.social_media?.twitter || "",
-							jusbrasil: data?.social_media?.jusbrasil || "",
-							website: data?.social_media?.site_url || "",
-							reclame: data?.social_media?.reclame || "",
-						},
+						...data,
 					});
 				}
 			},
 		}
-	);
-	console.log(
-		companyFormData,
-		"companyFormDatacompanyFormDatacompanyFormDatacompanyFormDatacompanyFormData"
 	);
 
 	const [showImage, setShowImage] = useState(members?.map(() => false));
 	const [avatarVisible, setAvatarVisible] = useState(true);
 	const [banner, setBanner] = useState(null);
 	const [logo, setLogo] = useState(null);
-
-	const handleEditMembers = () => {
-		setMembers(data?.team);
-	};
 
 	const handleAddMember = () => {
 		setMembers([...members, { image: null, name: "", position: "" }]);
@@ -268,23 +198,20 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 		setLogo(null);
 	};
 
-	console.log(members, "membersmembersmembersmembersmembersmembersmembers");
-
 	useEffect(() => {
 		if (!isLoading) {
 			if (
 				isEditing &&
-				companyFormData?.enterprise_logo &&
-				data?.enterprise_logo
+				(companyFormData?.enterprise_logo || data?.enterprise_logo)
 			) {
 				if (typeof companyFormData?.enterprise_logo === "string") {
 					setLogo(`${url}/file/${companyFormData?.enterprise_logo}`);
-				} else if (companyFormData?.enterprise_logo !== "string") {
+				} else if (companyFormData?.enterprise_logo instanceof Blob) {
 					setLogo(URL.createObjectURL(companyFormData?.enterprise_logo));
 				}
 				if (typeof companyFormData?.enterprise_banner === "string") {
 					setBanner(`${url}/file/${companyFormData?.enterprise_banner}`);
-				} else if (companyFormData?.enterprise_banner !== "string") {
+				} else if (companyFormData?.enterprise_banner instanceof Blob) {
 					setBanner(URL.createObjectURL(companyFormData?.enterprise_banner));
 				}
 			} else if (companyImages) {

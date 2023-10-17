@@ -30,6 +30,7 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 		setEntepriseId,
 		setCompanyImages,
 		setMembers,
+		deleteAllDataFromStateCompanyForm,
 	} = useCreateCompany();
 	const { setFirstStep, setSecondStep, setIsCreatePage } =
 		useCreateCompanieSteps();
@@ -163,6 +164,7 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 									enterprise_banner: null,
 									membersImages: [],
 								});
+								deleteAllDataFromStateCompanyForm();
 								setMembers([{ image: null, name: "", position: "" }]);
 							}}
 						>

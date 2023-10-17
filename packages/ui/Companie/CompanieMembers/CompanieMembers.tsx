@@ -17,11 +17,9 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 	useEffect(() => {
 		if (image) {
 			if (typeof image === "string") {
-				console.log("OI");
 				setfotoFromBack(true);
 				setnewFoto(false);
 			} else if (typeof image !== "string") {
-				console.log("TCHAU");
 				setfotoFromBack(false);
 				setnewFoto(true);
 			}
@@ -61,7 +59,13 @@ export const CompanieMember: FunctionComponent<ICompanieMembers> = ({
 				{isDrawer ? (
 					<Img src={`${url}/file/${image}`} />
 				) : (
-					<Img src={imageUrl} borderRadius={"62.4375rem"} />
+					<Img
+						src={imageUrl}
+						borderRadius={"62.4375rem"}
+						objectFit={"cover"}
+						w={"4rem"}
+						h={"4rem"}
+					/>
 				)}
 			</Flex>
 			<Flex

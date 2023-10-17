@@ -37,69 +37,7 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 					PersistentFramework.add("formDataEdit", JSON.stringify(data));
 					setMembers(data?.team);
 					setCompanyFormData({
-						...data,
-						enterprise_name:
-							companyFormData?.enterprise_name !== data?.enterprise_name
-								? companyFormData?.enterprise_name
-								: data?.enterprise_name,
-						email:
-							companyFormData?.email !== data?.email
-								? companyFormData?.email
-								: data?.email,
-						localizacao: data?.address?.neighborhood || "",
-						cnpj:
-							companyFormData?.cnpj !== data?.cnpj
-								? companyFormData?.cnpj
-								: data?.cnpj,
-						enterprise_logo:
-							companyFormData?.enterprise_logo !== data?.enterprise_logo
-								? companyFormData?.enterprise_logo
-								: data?.enterprise_logo,
-						enterprise_banner:
-							companyFormData?.enterprise_banner !== data?.enterprise_banner
-								? companyFormData?.enterprise_banner
-								: data?.enterprise_banner,
-						description:
-							companyFormData?.description !== data?.description
-								? companyFormData?.description
-								: data?.description,
-						team:
-							companyFormData?.team !== data?.team
-								? companyFormData?.team
-								: data?.team,
-						contact_number:
-							companyFormData?.contact_number !== data?.contact_number
-								? companyFormData?.contact_number
-								: data?.social_media?.telephone,
-						enterprise_info: {
-							delivered_enterprises:
-								companyFormData?.enterprise_info?.delivered_enterprises !==
-								data?.enterprise_info?.delivered_enterprises
-									? companyFormData?.enterprise_info?.delivered_enterprises
-									: data?.enterprise_info?.delivered_enterprises,
-							in_progress:
-								companyFormData?.enterprise_info?.in_progress !==
-								data?.enterprise_info?.in_progress
-									? companyFormData?.enterprise_info?.in_progress
-									: data?.enterprise_info?.in_progress,
-							total_vgv:
-								companyFormData?.enterprise_info?.total_vgv !==
-								data?.enterprise_info?.total_vgv
-									? companyFormData?.enterprise_info?.total_vgv
-									: data?.enterprise_info?.total_vgv,
-						},
-						social_media: {
-							contactEmail: data?.social_media?.email || "",
-							whatsapp: data?.social_media?.whatsapp || "",
-							telephone: data?.social_media?.telephone || "",
-							instagram: data?.social_media?.instagram || "",
-							facebook: data?.social_media?.facebook || "",
-							telegram: data?.social_media?.telegram || "",
-							twitter: data?.social_media?.twitter || "",
-							jusbrasil: data?.social_media?.jusbrasil || "",
-							website: data?.social_media?.site_url || "",
-							reclame: data?.social_media?.reclame || "",
-						},
+						...companyFormData,
 					});
 				}
 			},
