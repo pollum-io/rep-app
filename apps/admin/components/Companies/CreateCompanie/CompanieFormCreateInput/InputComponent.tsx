@@ -21,6 +21,23 @@ interface InputProps extends ChakraInputProps {
 	handleInputChange?: any;
 }
 
+const maskPhone = "(99) 99999-9999";
+const maskCPF = "999.999.999-99";
+const maskCNPJ = "99.999.999/9999-99";
+
+const getMask = (inputType) => {
+	switch (inputType) {
+		case "Telefone":
+			return maskPhone;
+		case "cpf":
+			return maskCPF;
+		case "CNPJ":
+			return maskCNPJ;
+		default:
+			return null; // No mask for other input types
+	}
+};
+
 export const InputBase: ForwardRefRenderFunction<
 	HTMLInputElement,
 	InputProps
@@ -39,16 +56,7 @@ export const InputBase: ForwardRefRenderFunction<
 	},
 	ref
 ) => {
-	// const maskValidation = useMemo(() => {
-	// 	if (maskType === "CPF" || maskType === "CPF do Cônjuge") {
-	// 		return "999.999.999-99";
-	// 	} else if (maskType === "CNPJ") {
-	// 		return "99.999.999/9999-99";
-	// 	} else if (maskType === "Telefone") {
-	// 		return "(99) 9 9999-9999";
-	// 	}
-	// 	return "";
-	// }, [maskType]);
+	const mask = getMask(maskType);
 
 	return (
 		<FormControl id={name}>
@@ -65,7 +73,7 @@ export const InputBase: ForwardRefRenderFunction<
 				</FormLabel>
 			)}
 			<InputMask
-				mask={null} //TODO TA DANDO ERRO AQUI POR CAUSA QUE O SOCIAL MEDIA NAO ESTA RETORNANDO COMO DEVERIA
+				mask={mask} // <-- CHAT AQUI
 				value={rest.value}
 				onBlur={rest.onBlur}
 				onChange={rest.onChange}

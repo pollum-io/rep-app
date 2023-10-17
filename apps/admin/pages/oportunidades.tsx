@@ -1,18 +1,15 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
-import { GeneralPanelContainer } from "../container/GeneralPanel";
-import { fetchGetAdmin, fetchGetContact } from "services";
+import { OpportunitiesControllContainer } from "../container/OpportunitiesControll";
 import { UserLogin } from "ui";
 
-interface IGeneralPanel {
-	requestAdmin: any;
-}
+// interface IPage {
+// 	example: string;
+// }
 
-const GeneralPanel: NextPage<IGeneralPanel> = ({ requestAdmin }) => (
-	<GeneralPanelContainer adminData={requestAdmin} />
-);
+const Opportunities: NextPage = () => <OpportunitiesControllContainer />;
 
-export default GeneralPanel;
+export default Opportunities;
 
 export const getServerSideProps: GetServerSideProps = async ({
 	req,
@@ -45,11 +42,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 		};
 	}
 
-	const requestAdmin = await fetchGetAdmin();
-
 	return {
 		props: {
-			requestAdmin,
 			token: token,
 		},
 	};

@@ -42,6 +42,8 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 		async () => await fetchEnterpriseById(entepriseId, token),
 		{
 			refetchOnWindowFocus: false,
+			initialData: null,
+			refetchOnMount: true,
 			onSuccess: (data) => {
 				if (isEditing && !isLoading) {
 					PersistentFramework.add("formDataEdit", JSON.stringify(data));

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { CompaniesCard } from "./CompaniesCard";
 import { useCreateCompanieSteps } from "../../../hooks/useCreateCompanieSteps";
 import { useCreateCompany } from "../../../hooks/useCreateCompany";
 import { fetchEnterprise } from "services";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { PersistentFramework } from "ui";
 
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
@@ -20,11 +20,34 @@ export const CompaniesControll: React.FC = () => {
 		handleHasCompanyBeingCreated,
 		setMembers,
 	} = useCreateCompany();
-
+	const [currentPage, setCurrentPage] = useState(1);
+	const queryClient = useQueryClient();
 	const { data, isLoading, error } = useQuery(
 		["enterpriseShareholdersFilter"],
 		async () => await fetchEnterprise()
 	);
+
+	const totalPages = data?.totalPages;
+
+	const handleNextPageClick = () => {
+		if (currentPage < totalPages - 1) {
+			setCurrentPage(currentPage + 1);
+			const queryKey = ["enterpriseShareholders", currentPage];
+			queryClient.invalidateQueries(queryKey);
+		}
+	};
+
+	const handlePreviousPageClick = () => {
+		if (currentPage > 1) {
+			setCurrentPage(currentPage - 1);
+			const queryKey = ["enterpriseShareholders", currentPage];
+			queryClient.invalidateQueries(queryKey);
+		}
+	};
+
+	const hasNextPage = !isLoading && currentPage < totalPages - 1;
+	const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
 	return (
 		<Flex flexDir={"column"}>
 			<Text
@@ -51,7 +74,8 @@ export const CompaniesControll: React.FC = () => {
 							Todas as empresas
 						</Text>
 						<Text color={"#2D3748"} fontSize={"0.75rem"} fontWeight={"400"}>
-							6 de 320 resultados
+							{data?.enterprises?.length} de{" "}
+							{data?.enterprises?.length * data?.totalPages} resultados
 						</Text>
 					</Flex>
 					<Flex>
@@ -107,11 +131,41 @@ export const CompaniesControll: React.FC = () => {
 						/>
 					))}
 				<Flex justifyContent={"center"} alignItems={"center"} gap={"1rem"}>
-					<Button bgColor={"#718096"} borderRadius={"6.25rem"} p="0.75rem">
+					<Button
+						bgColor={"#718096"}
+						borderRadius={"6.25rem"}
+						p="0.75rem"
+						isDisabled={currentPage === 1}
+						onClick={handlePreviousPageClick}
+						transition={"0.3s"}
+						_hover={{ opacity: 0.7, cursor: "pointer" }}
+					>
 						<Img src={"/logos/leftArrow.svg"} />
 					</Button>
-
-					<Button bgColor={"#718096"} borderRadius={"6.25rem"} p="0.75rem">
+					{pageNumbers.map((pageNumber) => (
+						<Button
+							key={pageNumber}
+							bgColor={"transparent"}
+							borderRadius={"6.25rem"}
+							p="0.75rem"
+							fontWeight={pageNumber === currentPage ? "600" : "normal"}
+							color={pageNumber === currentPage ? "#1A202C" : "#A0AEC0"}
+							onClick={() => setCurrentPage(pageNumber)}
+							transition={"0.3s"}
+							_hover={{ opacity: 0.7, cursor: "pointer" }}
+						>
+							{pageNumber}
+						</Button>
+					))}
+					<Button
+						bgColor={"#718096"}
+						borderRadius={"6.25rem"}
+						p="0.75rem"
+						onClick={handleNextPageClick}
+						isDisabled={!hasNextPage}
+						transition={"0.3s"}
+						_hover={{ opacity: 0.7, cursor: "pointer" }}
+					>
 						<Img src={"/logos/rightArrow.svg"} />
 					</Button>
 				</Flex>
