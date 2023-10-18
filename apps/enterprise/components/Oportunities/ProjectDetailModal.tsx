@@ -60,7 +60,11 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 					>
 						<Flex>
 							<Text fontSize={"1.5rem"} color={"#171923"} fontWeight={"600"}>
-								Detalhamento {opportunitiesDetailsToEnteprise[0]?.name}
+								Detalhamento{" "}
+								{opportunitiesDetailsToEnteprise &&
+								opportunitiesDetailsToEnteprise[0]
+									? opportunitiesDetailsToEnteprise[0].name
+									: "Nome não disponível"}
 							</Text>
 						</Flex>
 						<Flex
@@ -80,9 +84,12 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 								Total arrecadado
 							</Text>
 							<Text fontSize={"1.125rem"} fontWeight={"600"} color={"#171923"}>
-								{formatCurrency(
-									opportunitiesDetailsToEnteprise[0]?.totalRaised
-								)}
+								{opportunitiesDetailsToEnteprise &&
+								opportunitiesDetailsToEnteprise[0]
+									? formatCurrency(
+											opportunitiesDetailsToEnteprise[0]?.totalRaised
+									  )
+									: "Nome não disponível"}
 							</Text>
 						</Flex>
 						<Flex flexDir={"column"}>
@@ -90,7 +97,10 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 								Cotistas
 							</Text>
 							<Text fontSize={"1.125rem"} fontWeight={"600"} color={"#171923"}>
-								{opportunitiesDetailsToEnteprise[0]?.totalShareholders}
+								{opportunitiesDetailsToEnteprise &&
+								opportunitiesDetailsToEnteprise[0]
+									? opportunitiesDetailsToEnteprise[0].totalShareholders
+									: "Valor não disponível"}
 							</Text>
 						</Flex>
 						<Flex flexDir={"column"}>
@@ -98,7 +108,10 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 								Cotas emitidas
 							</Text>
 							<Text fontSize={"1.125rem"} fontWeight={"600"} color={"#171923"}>
-								{opportunitiesDetailsToEnteprise[0]?.totalCotas}
+								{opportunitiesDetailsToEnteprise &&
+								opportunitiesDetailsToEnteprise[0]
+									? opportunitiesDetailsToEnteprise[0].totalCotas
+									: "Valor não disponível"}
 							</Text>
 						</Flex>
 						<Flex flexDir={"column"}>
@@ -106,9 +119,12 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 								Previsão de aportes
 							</Text>
 							<Text fontSize={"1.125rem"} fontWeight={"600"} color={"#171923"}>
-								{formatCurrency(
-									opportunitiesDetailsToEnteprise[0]?.contributionForecast
-								)}
+								{opportunitiesDetailsToEnteprise &&
+								opportunitiesDetailsToEnteprise[0]
+									? formatCurrency(
+											opportunitiesDetailsToEnteprise[0]?.contributionForecast
+									  )
+									: "Valor não disponível"}
 							</Text>
 						</Flex>
 					</Flex>
@@ -129,22 +145,27 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 							borderBottomRadius={"0.75rem"}
 						>
 							<ShareHoldersTableHeader />
-							{opportunitiesDetailsToEnteprise[0]?.shareholders?.map(
-								(data, index) => (
-									<ShareHoldersTableRow
-										key={index}
-										name={data?.name}
-										cpfOrCnpj={data?.cpfOrCnpj}
-										totalInvested={data?.totalInvested}
-										totalCotas={data?.totalCotas}
-										totalPaid={data?.totalPaid}
-										numInstallments={data?.numInstallments}
-										status={data?.status}
-										documentKey={data?.documentKey}
-										token={token}
-									/>
-								)
-							)}
+							{opportunitiesDetailsToEnteprise &&
+							opportunitiesDetailsToEnteprise[0] &&
+							Array.isArray(opportunitiesDetailsToEnteprise[0].shareholders)
+								? opportunitiesDetailsToEnteprise[0].shareholders.map(
+										(data, index) => (
+											<ShareHoldersTableRow
+												key={index}
+												name={data?.name}
+												cpfOrCnpj={data?.cpfOrCnpj}
+												totalInvested={data?.totalInvested}
+												totalCotas={data?.totalCotas}
+												totalPaid={data?.totalPaid}
+												numInstallments={data?.numInstallments}
+												status={data?.status}
+												documentKey={data?.documentKey}
+												token={token}
+											/>
+										)
+								  )
+								: "Valores nao disponíveis"}
+
 							<ShareHoldersTableFooter
 								opportunitiesDetailsToEnteprise={
 									opportunitiesDetailsToEnteprise
@@ -163,7 +184,12 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 						</Text>
 						<PrevAportesChart
 							isOpportunityPage={true}
-							opForecast={opportunitiesDetailsToEnteprise[0]?.forecast}
+							opForecast={
+								opportunitiesDetailsToEnteprise &&
+								opportunitiesDetailsToEnteprise[0]
+									? opportunitiesDetailsToEnteprise[0]?.forecast
+									: ""
+							}
 						/>
 					</Flex>
 					<Flex justifyContent={"center"}>
