@@ -89,7 +89,7 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 									? formatCurrency(
 											opportunitiesDetailsToEnteprise[0]?.totalRaised
 									  )
-									: "Nome não disponível"}
+									: "0"}
 							</Text>
 						</Flex>
 						<Flex flexDir={"column"}>
@@ -100,7 +100,7 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 								{opportunitiesDetailsToEnteprise &&
 								opportunitiesDetailsToEnteprise[0]
 									? opportunitiesDetailsToEnteprise[0].totalShareholders
-									: "Valor não disponível"}
+									: "0"}
 							</Text>
 						</Flex>
 						<Flex flexDir={"column"}>
@@ -111,7 +111,7 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 								{opportunitiesDetailsToEnteprise &&
 								opportunitiesDetailsToEnteprise[0]
 									? opportunitiesDetailsToEnteprise[0].totalCotas
-									: "Valor não disponível"}
+									: "0"}
 							</Text>
 						</Flex>
 						<Flex flexDir={"column"}>
@@ -124,7 +124,7 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 									? formatCurrency(
 											opportunitiesDetailsToEnteprise[0]?.contributionForecast
 									  )
-									: "Valor não disponível"}
+									: "0"}
 							</Text>
 						</Flex>
 					</Flex>
@@ -188,7 +188,7 @@ export const ProjectDetailModal: FunctionComponent<ICreateAccountModal> = ({
 								opportunitiesDetailsToEnteprise &&
 								opportunitiesDetailsToEnteprise[0]
 									? opportunitiesDetailsToEnteprise[0]?.forecast
-									: ""
+									: "0"
 							}
 						/>
 					</Flex>
