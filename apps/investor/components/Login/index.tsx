@@ -79,22 +79,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 				fontFamily="Poppins"
 			>
 				<Flex flexDirection="column" w="22rem" justifyContent="center">
-					<Flex flexDirection="column" gap="2">
-						<Img
-							w="max-content"
-							h="max-content"
-							src="images/backgrounds/LivnLogo.png"
-						/>
-						<Text
-							color="#1789A3"
-							fontSize="0.875rem"
-							fontWeight="normal"
-							lineHeight="150%"
-							fontStyle="normal"
-						>
-							{t("login.liveInvesting")}
-						</Text>
-					</Flex>
+					<Flex flexDirection="column" gap="2"></Flex>
 					<Flex flexDirection="column" mt="1rem" gap="12px">
 						<Text
 							flexDirection="column"

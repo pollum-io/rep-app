@@ -81,7 +81,7 @@ export const CreateAccountModal: FunctionComponent<ICreateAccountModal> = (
 							color={"#007D99"}
 							pb={"1rem"}
 						>
-							Bem-vindo a LIVN
+							Bem-vindo
 						</Text>
 						<Text fontWeight={400} fontSize={"0.75rem"} pb={"1.4375rem"}>
 							Complete o seu cadastro para poder investir nas oportunidades
