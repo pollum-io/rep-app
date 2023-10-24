@@ -32,6 +32,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 	cotas,
 	token,
 }) => {
+	console.log(imovelDetails, "imovelDetails");
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
