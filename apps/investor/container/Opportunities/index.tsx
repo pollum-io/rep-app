@@ -124,9 +124,7 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 								color="#FFFFFF"
 								zIndex="docked"
 								mt="2.5rem"
-							>
-								{t("opportunities.investingIs")}
-							</Text>
+							></Text>
 						</Flex>
 						<Flex
 							h="21.3125rem"

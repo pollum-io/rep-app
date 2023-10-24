@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
 					justifyContent={"flex-start"}
 					w={"100%"}
 				>
-					<Img src={"/images/livnlogo.png"} w="5" h="7" alt="Livn logo" />
+					{/* <Img src={"/images/livnlogo.png"} w="5" h="7" alt="Livn logo" /> */}
 				</Flex>
 				<Flex justifyContent={"center"} w={"100%"} alignItems={"center"}>
 					<HeaderLinks />
