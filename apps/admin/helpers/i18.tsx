@@ -12,8 +12,10 @@ const resources = {
 		translation: transPt,
 	},
 };
+console.log(resources);
+console.log(i18next);
 
 i18next.use(initReactI18next).init({
 	resources,
-	lng: "br",
+	lng: "en",
 });

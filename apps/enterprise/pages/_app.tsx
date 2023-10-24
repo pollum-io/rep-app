@@ -18,6 +18,7 @@ import "../styles/investModalScrollbar.css";
 import "../styles/appScrollbar.css";
 import "../styles/confirmedAnimation.css";
 import { RegisterStepsProvider } from "../contexts";
+import "../helpers/i18";
 
 const toasty = {
 	bg: "#FFFFFF",

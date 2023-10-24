@@ -3,11 +3,13 @@ import type { GetServerSideProps, NextPage } from "next";
 import { OpportunitiesControllContainer } from "../container/OpportunitiesControll";
 import { UserLogin } from "ui";
 
-// interface IPage {
-// 	example: string;
-// }
+interface IOpportunities {
+	token: string;
+}
 
-const Opportunities: NextPage = () => <OpportunitiesControllContainer />;
+const Opportunities: NextPage<IOpportunities> = ({ token }) => (
+	<OpportunitiesControllContainer token={token} />
+);
 
 export default Opportunities;
 

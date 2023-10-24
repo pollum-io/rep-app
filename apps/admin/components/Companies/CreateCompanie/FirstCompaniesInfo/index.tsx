@@ -8,7 +8,7 @@ import {
 	useDisclosure,
 } from "@chakra-ui/react";
 import { InputComponent } from "../CompanieFormCreateInput/InputComponent";
-import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../../../hooks/useCreateAdminCreateSteps";
 import { AddMembersCard } from "../AddMembersCard";
 import { useCreateCompany } from "../../../../hooks/useCreateCompany";
 import { useQuery } from "react-query";
@@ -35,7 +35,7 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 		entepriseId,
 	} = useCreateCompany();
 	const { setFirstStep, setSecondStep, firstStep, secondStep } =
-		useCreateCompanieSteps();
+		useCreateAdminCreateSteps();
 
 	const { data, isLoading, error } = useQuery(
 		["enterpriseById"],

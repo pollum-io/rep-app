@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Text, Img } from "@chakra-ui/react";
 import { useCreateCompany } from "../../../hooks/useCreateCompany";
-import { useCreateCompanieSteps } from "../../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
 import { PersistentFramework } from "ui";
 
 interface ICompaniesCard {
@@ -33,7 +33,7 @@ export const CompaniesCard: React.FC<ICompaniesCard> = ({
 		deleteAllDataFromStateCompanyForm,
 	} = useCreateCompany();
 	const { setFirstStep, setSecondStep, setIsCreatePage } =
-		useCreateCompanieSteps();
+		useCreateAdminCreateSteps();
 
 	return (
 		<Flex

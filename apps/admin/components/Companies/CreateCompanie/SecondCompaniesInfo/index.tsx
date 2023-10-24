@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Flex } from "@chakra-ui/react";
 import { InputComponent } from "../CompanieFormCreateInput/InputComponent";
-import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../../../hooks/useCreateAdminCreateSteps";
 import { useCreateCompany } from "../../../../hooks/useCreateCompany";
 import { fetchEnterpriseById } from "services";
 import { useQuery } from "react-query";
@@ -16,7 +16,7 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 	onOpenModal,
 	token,
 }) => {
-	const { setFirstStep, setSecondStep } = useCreateCompanieSteps();
+	const { setFirstStep, setSecondStep } = useCreateAdminCreateSteps();
 	const {
 		handleSaveFormData,
 		companyFormData,

@@ -4,7 +4,7 @@ import { IRegisterSteps } from "./dto";
 
 import { BsCheck } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
-import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../../../hooks/useCreateAdminCreateSteps";
 
 const CreateStep: FunctionComponent<IRegisterSteps> = ({
 	step,
@@ -70,26 +70,42 @@ const CreateStep: FunctionComponent<IRegisterSteps> = ({
 };
 
 export const CreateSteps: FunctionComponent = () => {
-	const { firstStep, secondStep } = useCreateCompanieSteps();
+	const { firstStep, secondStep, isCreateOpportunityPage } =
+		useCreateAdminCreateSteps();
 	const { t } = useTranslation();
 
 	return (
 		<Flex gap="3.875rem">
 			<CreateStep
 				step={1}
-				title={"Perfil da empresa"}
+				title={isCreateOpportunityPage ? "Dados gerais" : "Perfil da empresa"}
 				barPercentage={firstStep ? 50 : 100}
 			/>
 			<CreateStep
 				step={2}
-				title={"Links e contatos"}
+				title={
+					isCreateOpportunityPage ? "Detalhamento técnico" : "Links e contatos"
+				}
 				barPercentage={secondStep ? 50 : firstStep ? 0 : 100}
 			/>
 			<CreateStep
 				step={3}
-				title={"Revisar e criar empresa"}
+				title={isCreateOpportunityPage ? "Aportes" : "Revisar e criar empresa"}
 				barPercentage={!firstStep && !secondStep ? 50 : 0}
 			/>
+			{isCreateOpportunityPage && (
+				<>
+					<CreateStep
+						step={4}
+						title={
+							isCreateOpportunityPage
+								? "Visão geral"
+								: "Revisar e criar empresa"
+						}
+						barPercentage={!firstStep && !secondStep ? 50 : 0}
+					/>
+				</>
+			)}
 		</Flex>
 	);
 };

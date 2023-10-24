@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { Button, Flex, Img, Text, useDisclosure } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { CompaniesControll } from "../../components/Companies/CompanieControllPage/CompaniesControll";
-import { useCreateCompanieSteps } from "../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../hooks/useCreateAdminCreateSteps";
 import { CreateSteps } from "../../components/Companies/CreateCompanie/CreateSteps/CreateSteps";
 import { FirstCompaniesInfo } from "../../components/Companies/CreateCompanie/FirstCompaniesInfo";
 import { SecondCompaniesInfo } from "../../components/Companies/CreateCompanie/SecondCompaniesInfo";
@@ -25,7 +25,7 @@ export const CompaniesContainer: FunctionComponent<CompaniesContainer> = ({
 		setSecondStep,
 		setFirstStep,
 		setIsCreatePage,
-	} = useCreateCompanieSteps();
+	} = useCreateAdminCreateSteps();
 	const {
 		handleHasCompanyBeingCreated,
 		isEditing,

@@ -23,7 +23,7 @@ import {
 	fetchUpdateEnterprise,
 	fetchUploadImages,
 } from "services";
-import { useCreateCompanieSteps } from "../../../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../../../hooks/useCreateAdminCreateSteps";
 import { useToasty } from "../../../../hooks/useToasty";
 
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
@@ -52,7 +52,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 		entepriseId,
 	} = useCreateCompany();
 	const { setFirstStep, setSecondStep, setIsCreatePage } =
-		useCreateCompanieSteps();
+		useCreateAdminCreateSteps();
 	const { toast } = useToasty();
 
 	const updatedCompanyFormData = { ...companyFormData };

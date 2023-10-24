@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { CompaniesCard } from "./CompaniesCard";
-import { useCreateCompanieSteps } from "../../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
 import { useCreateCompany } from "../../../hooks/useCreateCompany";
 import { fetchEnterprise } from "services";
 import { useQuery, useQueryClient } from "react-query";
@@ -10,7 +10,7 @@ import { PersistentFramework } from "ui";
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 export const CompaniesControll: React.FC = () => {
-	const { setIsCreatePage, setFirstStep } = useCreateCompanieSteps();
+	const { setIsCreatePage, setFirstStep } = useCreateAdminCreateSteps();
 	const {
 		setIsEditing,
 		setIsCreating,

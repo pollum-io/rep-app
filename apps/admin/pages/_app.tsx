@@ -2,11 +2,12 @@ import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../styles/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { CreateCompanieStepsProvider } from "../contexts/register";
+import { CreateAdminCreateStepsProvider } from "../contexts/register";
 import "../styles/appScrollbar.css";
 import { CreateCompanyProvider } from "../contexts/createCompany";
 import { UserProvider } from "../contexts/user";
 import { ToastyProvider } from "../contexts/toasty";
+import "../helpers/i18";
 
 const toasty = {
 	bg: "#FFFFFF",
@@ -22,9 +23,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 				<UserProvider>
 					<ToastyProvider {...toasty}>
 						<CreateCompanyProvider>
-							<CreateCompanieStepsProvider>
+							<CreateAdminCreateStepsProvider>
 								<Component {...pageProps} />
-							</CreateCompanieStepsProvider>
+							</CreateAdminCreateStepsProvider>
 						</CreateCompanyProvider>
 					</ToastyProvider>
 				</UserProvider>

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useCreateCompany } from "../../../hooks/useCreateCompany";
 import { PersistentFramework } from "ui";
-import { useCreateCompanieSteps } from "../../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
 
 interface IWarnCancelCreationModal {
 	isOpen: boolean;
@@ -34,7 +34,7 @@ export const WarnCancelCreationModal: FunctionComponent<
 		setSecondStep,
 		setFirstStep,
 		setIsCreatePage,
-	} = useCreateCompanieSteps();
+	} = useCreateAdminCreateSteps();
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} size={"md"}>
 			<ModalOverlay />

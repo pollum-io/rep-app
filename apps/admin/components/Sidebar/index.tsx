@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useCreateCompanieSteps } from "../../hooks/useCreateCompanieSteps";
+import { useCreateAdminCreateSteps } from "../../hooks/useCreateAdminCreateSteps";
 
 const sideBarLinks = [
 	{
@@ -29,7 +29,7 @@ const sideBarLinks = [
 export const Sidebar: React.FC = () => {
 	const router = useRouter();
 	const { isCreatePage, setFirstStep, setSecondStep, setIsCreatePage } =
-		useCreateCompanieSteps();
+		useCreateAdminCreateSteps();
 	return (
 		<Flex
 			position={"fixed"}
