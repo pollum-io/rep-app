@@ -65,7 +65,7 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 			>
 				<Flex gap={"0.5rem"}>
 					<Text color={"#007D99"} fontSize={"0.875rem"} fontWeight={"500"}>
-						Total de cotas na LIVN
+						Total de cotas
 					</Text>
 					<Img src="/icons/info-circle-littlegray.svg" />
 				</Flex>

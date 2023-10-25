@@ -18,6 +18,8 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 	if (typeof window !== "undefined") {
 		isMozilla = /firefox/i.test(window.navigator.userAgent);
 	}
+	console.log(data?.data?.estimated_value);
+	console.log(data?.forecast_return);
 	return (
 		<Flex mb={"2rem"} flexDir={"column"}>
 			{isMyInvest && (
@@ -47,14 +49,16 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 						<Text fontSize={"1.125rem"} fontWeight={"600"} color={"#171923"}>
 							+{" "}
 							{formatCurrency(
-								isMyInvest ? data?.data?.estimated_value : data?.forecast_return
+								isMyInvest
+									? data?.data?.estimated_value
+									: imovelDetails?.forecast_return
 							)}
 						</Text>
 						<Text fontSize={"1.125rem"} fontWeight={"400"} color={"#38A169"}>
-							%{""}
 							{isMyInvest
 								? data?.data?.expected_rentability?.toFixed(2)
-								: data?.profitability}
+								: imovelDetails?.profitability}
+							%{""}
 						</Text>
 					</Flex>
 				</Flex>
