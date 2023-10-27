@@ -19,7 +19,7 @@ interface IEnterpriseDetailsCard {
 	cotas: any;
 	opportunitiesDetails?: {
 		constructed_area: number;
-		estimated_vgv: number;
+		estimated_vgv: string;
 		total_units: number;
 		available_units: number;
 		average_price: number;

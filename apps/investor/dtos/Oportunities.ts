@@ -29,7 +29,7 @@ export interface IOpportunitiesCard {
 	blueprints?: Array<{ file: string; name: string }>;
 	opportunities_details?: {
 		constructed_area: number;
-		estimated_vgv: number;
+		estimated_vgv: string;
 		total_units: number;
 		available_units: number;
 		average_price: number;
