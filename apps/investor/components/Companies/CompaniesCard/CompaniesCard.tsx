@@ -70,17 +70,17 @@ export const CompaniesCard: FunctionComponent<ICompaniesCard> = ({
 										{t("companies.card.opportunities")}
 									</Text>
 									<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
-										{opportunities_available}
+										{opportunities_available ?? 0}
 									</Text>
 								</Flex>
 							)}
-							{opportunities_closed !== 0 && (
+							{opportunities_available !== 0 && (
 								<Flex gap="0.5rem" alignItems="baseline">
 									<Text fontSize="0.75rem" lineHeight="1rem" color="#718096">
 										{t("companies.card.closed")}
 									</Text>
 									<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
-										{opportunities_closed}
+										{opportunities_closed ?? 0}
 									</Text>
 								</Flex>
 							)}

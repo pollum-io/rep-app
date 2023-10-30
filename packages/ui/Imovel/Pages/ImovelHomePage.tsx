@@ -113,7 +113,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 									</Text>
 									<Flex gap="0.25rem">
 										<Text color="#000000">
-											{imovelDetails?.opportunity_resume?.total_deadline} anos
+											{imovelDetails?.opportunity_resume?.total_deadline} meses
 										</Text>
 										<Img
 											src="/icons/info-circle-littlegray.svg"
