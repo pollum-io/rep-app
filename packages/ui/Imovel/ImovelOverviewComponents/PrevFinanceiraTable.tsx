@@ -149,7 +149,7 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
-						Recita Total
+						Receita Total
 					</Text>
 				</Flex>
 				<Flex flex="1">
