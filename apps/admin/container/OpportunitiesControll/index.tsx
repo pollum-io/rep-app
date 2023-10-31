@@ -16,6 +16,8 @@ import { OpportunitiesControll } from "../../components/Opportunities/Opportunit
 import { CreateSteps } from "../../components/Companies/CreateCompanie/CreateSteps/CreateSteps";
 import { FirstOpportunitiesInfo } from "../../components/Opportunities/FirstOpportunitiesInfo";
 import { SecondOpportunitiesInfo } from "../../components/Opportunities/SecondOpportunitiesInfo";
+import { ThirdOpportunitiesInfo } from "../../components/Opportunities/ThirdOpportunitiesInfo";
+import { FourthOpportunitiesInfo } from "../../components/Opportunities/FourthOpportunitiesInfo";
 
 interface IOpportunitiesControllContainer {
 	token: string;
@@ -138,6 +140,12 @@ export const OpportunitiesControllContainer: FunctionComponent<
 								)}
 								{isCreateOpportunityPage && secondStep && (
 									<SecondOpportunitiesInfo token={token} />
+								)}
+								{isCreateOpportunityPage && thirdStep && (
+									<ThirdOpportunitiesInfo token={token} />
+								)}
+								{isCreateOpportunityPage && fourthStep && (
+									<FourthOpportunitiesInfo token={token} />
 								)}
 							</Flex>
 						</Flex>
