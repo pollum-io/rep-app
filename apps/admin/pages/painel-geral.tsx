@@ -49,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	return {
 		props: {
-			requestAdmin,
+			requestAdmin: null,
 			token: token,
 		},
 	};

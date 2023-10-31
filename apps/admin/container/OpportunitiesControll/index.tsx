@@ -15,6 +15,7 @@ import { useCreateAdminCreateSteps } from "../../hooks/useCreateAdminCreateSteps
 import { OpportunitiesControll } from "../../components/Opportunities/OpportunitiesControll";
 import { CreateSteps } from "../../components/Companies/CreateCompanie/CreateSteps/CreateSteps";
 import { FirstOpportunitiesInfo } from "../../components/Opportunities/FirstOpportunitiesInfo";
+import { SecondOpportunitiesInfo } from "../../components/Opportunities/SecondOpportunitiesInfo";
 
 interface IOpportunitiesControllContainer {
 	token: string;
@@ -26,6 +27,8 @@ export const OpportunitiesControllContainer: FunctionComponent<
 	const {
 		firstStep,
 		secondStep,
+		thirdStep,
+		fourthStep,
 		setSecondStep,
 		setFirstStep,
 		setThirdStep,
@@ -33,6 +36,17 @@ export const OpportunitiesControllContainer: FunctionComponent<
 		setIsCreatOpportunityePage,
 		isCreateOpportunityPage,
 	} = useCreateAdminCreateSteps();
+
+	const pageTitle = firstStep
+		? "Dados gerais"
+		: secondStep
+		? "Detalhamento técnico"
+		: thirdStep
+		? "Aportes"
+		: fourthStep
+		? "Visão Geral"
+		: "";
+
 	return (
 		<DefaultTemplate>
 			<Flex flexDir={"column"}>
@@ -97,7 +111,7 @@ export const OpportunitiesControllContainer: FunctionComponent<
 										color={"#171923"}
 										fontSize={"1.125rem"}
 									>
-										Dados gerais
+										{pageTitle}
 									</Text>
 									{/* {!isEditing && (
 										<Text
@@ -121,6 +135,9 @@ export const OpportunitiesControllContainer: FunctionComponent<
 
 								{isCreateOpportunityPage && firstStep && (
 									<FirstOpportunitiesInfo token={token} />
+								)}
+								{isCreateOpportunityPage && secondStep && (
+									<SecondOpportunitiesInfo token={token} />
 								)}
 							</Flex>
 						</Flex>

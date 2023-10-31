@@ -1,17 +1,6 @@
-import React, { useEffect, useState } from "react";
-import {
-	Button,
-	Flex,
-	Img,
-	Text,
-	Textarea,
-	Select,
-	useDisclosure,
-} from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Button, Flex, Img, Text, Textarea, Select } from "@chakra-ui/react";
 
-import { useQuery } from "react-query";
-import { fetchEnterpriseById } from "services";
-import { PersistentFramework } from "ui";
 import { InputComponent } from "../../Companies/CreateCompanie/CompanieFormCreateInput/InputComponent";
 import { DocComponent } from "./DocComponent";
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
