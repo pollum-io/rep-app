@@ -182,8 +182,8 @@ export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
 					fontWeight={"500"}
 					onClick={() => {
 						setFirstStep(false);
-						setSecondStep(true);
-						setThirdStep(false);
+						setSecondStep(false);
+						setThirdStep(true);
 						setFourthStep(false);
 					}}
 					isDisabled={firstStep && !secondStep ? true : false}

@@ -30,6 +30,7 @@ export const OpportunitiesControll: React.FC<IOpportunitiesControll> = ({
 		useCreateAdminCreateSteps();
 
 	const queryClient = useQueryClient();
+
 	const { data, isLoading, error } = useQuery(
 		["enterpriseShareholdersFilter"],
 		async () => await fetchEnterprise()

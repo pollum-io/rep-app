@@ -17,6 +17,30 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 }) => {
 	const { setFirstStep, setSecondStep, firstStep, secondStep, setThirdStep } =
 		useCreateAdminCreateSteps();
+	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
+		enterprise_name: "",
+		name: "",
+		localizacao: "",
+		min_investment: 0,
+		init_date: "",
+		expected_delivery_date: "",
+		profitability: 0,
+		opportunity_resume: {
+			total_deadline: "",
+			percentage_final_return: "",
+			min_invest: "",
+		},
+		opportunities_details: {
+			total_units: "",
+			constructed_area: "",
+			estimated_vgv: "",
+			average_price: "",
+		},
+		approval_process: "",
+		description: "",
+		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
+		opportunity_resume_files: [], // esse é o array docs
+	});
 	const [docs, setDocs] = useState([{ name: "", file: null }]);
 
 	const [estimatedTimeline, setEstimatedTimeline] = useState([
@@ -83,7 +107,7 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 					<InputComponent
 						type="text"
 						width={"18.5rem"}
-						name=" opportunities_details.constructed_area"
+						name="opportunities_details.constructed_area"
 						label="Área construída"
 						placeholderText="m2"
 					/>
@@ -124,9 +148,19 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 							fontSize={"0.875rem"}
 							color={"rgba(0, 0, 0, 0.36))"}
 						>
-							<option value="option1">Option 1</option>
-							<option value="option2">Option 2</option>
-							<option value="option3">Option 3</option>
+							<option value="Memorial em elaboração">
+								Memorial em elaboração
+							</option>
+							<option value="Memorial protocolado/ sob análise do R.I">
+								Memorial protocolado/ sob análise do R.I
+							</option>
+							<option value="Em cumprimento das exigências do R.I">
+								Em cumprimento das exigências do R.I
+							</option>
+							<option value="Exigências cumpridas/sob análise do R.I">
+								Exigências cumpridas/sob análise do R.I
+							</option>
+							<option value="Memorial registrado">Memorial registrado</option>
 						</Select>
 					</Flex>
 				</Flex>

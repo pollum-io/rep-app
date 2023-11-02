@@ -70,8 +70,13 @@ const CreateStep: FunctionComponent<IRegisterSteps> = ({
 };
 
 export const CreateSteps: FunctionComponent = () => {
-	const { firstStep, secondStep, isCreateOpportunityPage } =
-		useCreateAdminCreateSteps();
+	const {
+		firstStep,
+		secondStep,
+		thirdStep,
+		fourthStep,
+		isCreateOpportunityPage,
+	} = useCreateAdminCreateSteps();
 	const { t } = useTranslation();
 
 	return (
@@ -91,7 +96,7 @@ export const CreateSteps: FunctionComponent = () => {
 			<CreateStep
 				step={3}
 				title={isCreateOpportunityPage ? "Aportes" : "Revisar e criar empresa"}
-				barPercentage={!firstStep && !secondStep ? 50 : 0}
+				barPercentage={thirdStep ? 50 : secondStep ? 0 : 100}
 			/>
 			{isCreateOpportunityPage && (
 				<>
@@ -102,7 +107,7 @@ export const CreateSteps: FunctionComponent = () => {
 								? "Visão geral"
 								: "Revisar e criar empresa"
 						}
-						barPercentage={!firstStep && !secondStep ? 50 : 0}
+						barPercentage={fourthStep ? 50 : 0}
 					/>
 				</>
 			)}
