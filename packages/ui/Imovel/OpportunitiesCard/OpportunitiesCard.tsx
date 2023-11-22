@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 import { Button, Flex, Img, Text, SimpleGrid } from "@chakra-ui/react";
 import { IOpportunitiesCard } from "./dto";
 import { useRouter } from "next/router";
@@ -15,6 +15,7 @@ import {
 	fetchOpportunity,
 } from "services";
 import { formatCurrencyWithoutSymbol } from "../../utils";
+import { useCreateAdminCreateSteps } from "../../../../apps/admin/hooks/useCreateAdminCreateSteps";
 
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
@@ -26,6 +27,7 @@ interface IOpportunitiesCompaniesCard {
 	isPortfolio?: boolean;
 	host?: string;
 	isEnterprise?: boolean;
+	isAdmin?: boolean;
 	setFirstStep?: any;
 	setSecondStep?: any;
 	setCotas?: any;
@@ -37,6 +39,7 @@ export const OpportunitiesCard: FunctionComponent<
 > = ({
 	id,
 	isEnterprise,
+	isAdmin,
 	setFirstStep,
 	setSecondStep,
 	setCotas,
@@ -47,11 +50,12 @@ export const OpportunitiesCard: FunctionComponent<
 	const router = useRouter();
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
+	const { setIsCreatOpportunityePage } = useCreateAdminCreateSteps();
 
 	const { data: cardsInfo, isLoading } = query(
 		["oportunity", router.query],
 		() =>
-			id
+			id || isAdmin === true
 				? fetchOpportunitiesByCompany(router.query)
 				: fetchOpportunity(router.query),
 		{
@@ -59,7 +63,7 @@ export const OpportunitiesCard: FunctionComponent<
 			refetchInterval: false,
 		}
 	);
-
+	console.log(cardsInfo);
 	const {
 		data: opportunitiesEnterprise,
 		isLoading: opportunitiesEnterpriseLoading,
@@ -95,20 +99,24 @@ export const OpportunitiesCard: FunctionComponent<
 			);
 		}
 	};
-
+	console.log(
+		(cardsInfo !== undefined && !isLoading) ||
+			(opportunitiesEnterprise !== undefined && !opportunitiesEnterpriseLoading)
+	);
+	console.log(!isEnterprise || !isAdmin, "!isEnterprise || !isAdmin");
 	return (
 		<>
 			{(cardsInfo !== undefined && !isLoading) ||
 			(opportunitiesEnterprise !== undefined &&
 				!opportunitiesEnterpriseLoading) ? (
-				(!isEnterprise
+				(!isEnterprise || !isAdmin
 					? cardsInfo?.opportunities
 					: opportunitiesEnterprise
 				)?.map((cards: IOpportunitiesCard) => (
 					<Flex
 						key={cards._id}
 						w="19.125rem"
-						h={isEnterprise ? "max" : "24.5625rem"}
+						h={isEnterprise || isAdmin ? "max" : "24.5625rem"}
 						background="#FFFFFF"
 						boxShadow="0rem 0rem 0rem 0.0625rem rgba(0, 0, 0, 0.05)"
 						borderRadius="0.75rem"
@@ -121,12 +129,16 @@ export const OpportunitiesCard: FunctionComponent<
 						mr={isEnterprise ? "1.5rem" : "unset"}
 						transition="150ms"
 						onClick={() => {
-							router.push({
-								pathname: `/oportunidades/${cards.url}`,
-							});
-							isEnterprise
-								? ""
-								: (setFirstStep(true), setSecondStep(false), setCotas(0));
+							if (isAdmin) {
+								setIsCreatOpportunityePage(true);
+							} else if (!isAdmin) {
+								router.push({
+									pathname: `/oportunidades/${cards.url}`,
+								});
+								setFirstStep(true);
+								setSecondStep(false);
+								setCotas(0);
+							}
 						}}
 					>
 						<Flex
@@ -187,23 +199,39 @@ export const OpportunitiesCard: FunctionComponent<
 						</Flex>
 						<Flex mt="1rem" px="1rem" flexDirection="column" pb="0.9375rem">
 							<Flex gap="0.3125rem" flexDirection="column">
-								<Flex gap="0.5rem" alignItems="center">
-									{!cards.isPortfolio && (
-										<Img
-											w={4}
-											h={4}
-											src={`${url}/file/${cards.enterprise_logo}`}
-										/>
+								<Flex justifyContent={"space-between"} alignItems="center">
+									<Flex gap="0.5rem" alignItems="center">
+										{!cards.isPortfolio && (
+											<Img
+												w={4}
+												h={4}
+												src={`${url}/file/${cards.enterprise_logo}`}
+											/>
+										)}
+										<Text
+											fontFamily="Poppins"
+											fontWeight="500"
+											fontSize="1rem"
+											lineHeight="1.5rem"
+											color="#171923"
+										>
+											{cards.name}
+										</Text>
+									</Flex>
+									{isAdmin && (
+										<Flex>
+											<Flex
+												bgColor={"#E2E8F0"}
+												borderRadius={"6.25rem"}
+												p={"0.625rem 0.5625rem"}
+												transition={"0.5s"}
+												_hover={{ opacity: 0.6 }}
+												onClick={() => console.log()}
+											>
+												<Img w={4} h={4} src={`logos/edit.svg`} />
+											</Flex>
+										</Flex>
 									)}
-									<Text
-										fontFamily="Poppins"
-										fontWeight="500"
-										fontSize="1rem"
-										lineHeight="1.5rem"
-										color="#171923"
-									>
-										{cards.name}
-									</Text>
 								</Flex>
 								<Flex gap="0.5rem">
 									<FiMapPin color="#718096" />
@@ -230,7 +258,7 @@ export const OpportunitiesCard: FunctionComponent<
 							</Flex>
 
 							<Flex flexDirection="column" gap="1rem" mt="1.5rem">
-								{!isEnterprise ? (
+								{!isEnterprise && !isAdmin ? ( //TODO Validar isso no enterprise
 									<Flex
 										alignItems="center"
 										justifyContent="space-between"
@@ -389,7 +417,7 @@ export const OpportunitiesCard: FunctionComponent<
 										</Flex>
 									</Flex>
 								)}
-								{!isEnterprise ? (
+								{!isEnterprise && !isAdmin ? ( //TODO Validar isso no enterprise
 									<Flex
 										w="max"
 										background="#E4F2F3"
@@ -478,6 +506,8 @@ export const OpportunitiesCards: FunctionComponent<
 	setFirstStep,
 	setSecondStep,
 	setCotas,
+	isAdmin,
+	isEnterprise,
 }) => {
 	return (
 		<SimpleGrid
@@ -491,6 +521,8 @@ export const OpportunitiesCards: FunctionComponent<
 				investorId={investorId}
 				enterpriseData={enterpriseData}
 				isPortfolio={isPortfolio}
+				isAdmin={isAdmin}
+				isEnterprise={isEnterprise}
 				host={host}
 				token={token}
 				setFirstStep={setFirstStep}
