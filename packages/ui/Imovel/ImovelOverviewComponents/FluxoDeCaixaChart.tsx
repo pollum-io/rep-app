@@ -9,6 +9,7 @@ import {
 	Rectangle,
 	Cell,
 } from "recharts";
+import { formatCurrency } from "../../utils";
 
 interface IScheduleItem {
 	period?: number;
@@ -29,7 +30,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
 
 	const formatCurrencyValue = (value: number) => {
-		return (value / 100).toLocaleString("pt-BR", {
+		return (value / 10).toLocaleString("pt-BR", {
 			style: "currency",
 			currency: "BRL",
 		});
@@ -42,13 +43,14 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 	const CustomBarLabel = (props: any) => {
 		const { x, y, width, value, index } = props;
 		const isPositive = (value ? value : 0) >= 0;
+		const yPosition = isPositive ? y - -18 : y + -12;
 
 		return (
 			<>
 				{x && y && width && value && (
 					<text
-						x={x + width / 2.2}
-						y={isPositive ? y - -18 : y + -13}
+						x={x + width / 2.4}
+						y={yPosition}
 						fill="white"
 						fontSize={12}
 						textAnchor="middle"
@@ -56,7 +58,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 						onMouseEnter={() => setHighlightedCell(index)}
 						onMouseLeave={() => setHighlightedCell(null)}
 					>
-						{formatCurrencyValue(value)}
+						{formatCurrency(value)}
 					</text>
 				)}
 			</>
@@ -111,7 +113,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 				mb={"2rem"}
 			>
 				{data?.map((data, index) => (
-					<Flex key={index} width={"8.2rem"} justifyContent={"center"}>
+					<Flex key={index} width={"9.2rem"} justifyContent={"center"}>
 						<Text
 							textAlign={"center"}
 							color="#171923"
@@ -123,10 +125,15 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 					</Flex>
 				))}
 			</Flex>
-			<BarChart width={280} height={220} data={chartData}>
+			<BarChart width={610} height={220} data={chartData}>
 				<XAxis hide={true} />
 				<YAxis hide={true} />
-				<Bar radius={[8, 8, 0, 0]} dataKey="value" shape={<CustomBar />}>
+				<Bar
+					radius={[8, 8, 0, 0]}
+					dataKey="value"
+					minPointSize={50}
+					shape={<CustomBar />}
+				>
 					{chartData?.map((entry, index) => (
 						<Cell key={`cell-${index}`} fill={entry.fill} />
 					))}
