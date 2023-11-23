@@ -37,6 +37,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
 		opportunity_resume_files: [], // esse é o array docs
 	});
+
 	const [selectedOpportunitiesPictures, setSelectedOpportuntiesPictures] =
 		useState([]);
 	const [hoveredImage, setHoveredImage] = useState(null);

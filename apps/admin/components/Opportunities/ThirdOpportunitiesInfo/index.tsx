@@ -27,15 +27,12 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 	const [estimatedTimeline, setEstimatedTimeline] = useState([
 		{
 			year: "",
-			data: [
+
+			quarter: "",
+			info: [
 				{
-					quarter: "",
-					info: [
-						{
-							name: "",
-							status: "",
-						},
-					],
+					name: "",
+					status: "",
 				},
 			],
 		},
@@ -66,15 +63,11 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 			...estimatedTimeline,
 			{
 				year: "",
-				data: [
+				quarter: "",
+				info: [
 					{
-						quarter: "",
-						info: [
-							{
-								name: "",
-								status: "",
-							},
-						],
+						name: "",
+						status: "",
 					},
 				],
 			},
