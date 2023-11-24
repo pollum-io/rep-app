@@ -36,7 +36,7 @@ export const CompanieInfoInProgress: FunctionComponent<
 			>
 				<Flex flexDirection="column" gap="0.25rem">
 					<Text fontSize="0.875rem" lineHeight="1.25rem" color="#007D99">
-						{t("companieDetails.livnProp")}
+						{/* {t("companieDetails.livnProp")} */}Empreendimentos LIVN
 					</Text>
 					<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
 						{livnProp}
@@ -44,7 +44,7 @@ export const CompanieInfoInProgress: FunctionComponent<
 				</Flex>
 				<Flex flexDirection="column" gap="0.25rem">
 					<Text fontSize="0.875rem" lineHeight="1.25rem" color="#007D99">
-						{t("companieDetails.delivered")}
+						{/* {t("companieDetails.delivered")} */}Obras entregues
 					</Text>
 					<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
 						{delivered}
@@ -52,7 +52,7 @@ export const CompanieInfoInProgress: FunctionComponent<
 				</Flex>
 				<Flex flexDirection="column" gap="0.25rem">
 					<Text fontSize="0.875rem" lineHeight="1.25rem" color="#007D99">
-						{t("companieDetails.inProgress")}
+						{/* {t("companieDetails.inProgress")} */}Em andamento
 					</Text>
 					<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
 						{inProgress}
@@ -60,7 +60,7 @@ export const CompanieInfoInProgress: FunctionComponent<
 				</Flex>
 				<Flex flexDirection="column" gap="0.25rem">
 					<Text fontSize="0.875rem" lineHeight="1.25rem" color="#007D99">
-						{t("companieDetails.vgv")}
+						{/* {t("companieDetails.vgv")} */}VGV Total
 					</Text>
 					<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
 						{vgv}

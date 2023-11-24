@@ -13,6 +13,7 @@
 		"/packages/ui/Faturas",
 		"/packages/services/investor",
 		"/packages/services/enterprise",
-		"/packages/services/sharedFetchs"
+		"/packages/services/sharedFetchs",
+		"/packages/services/admin"
 	]
 }
