@@ -4,6 +4,7 @@ export interface UserLogin {
 	investor_pf?: string;
 	investor_pj?: string;
 	enterprise?: string;
+	admin?: string;
 	iat: number;
 	exo: number;
 }
