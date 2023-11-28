@@ -4,6 +4,7 @@ import { Button, Flex, Text, Textarea } from "@chakra-ui/react";
 import { InputComponent } from "../../Companies/CreateCompanie/CompanieFormCreateInput/InputComponent";
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
 import { CronAportesComponent } from "./CronAportes";
+import { useCreateOpportunity } from "../../../hooks/useCreateOpportunity";
 
 type IThirdOpportunitiesInfo = {
 	token: string;
@@ -23,57 +24,8 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 		setFourthStep,
 	} = useCreateAdminCreateSteps();
 
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
-		enterprise_name: "",
-		name: "",
-		localizacao: "",
-		min_investment: 0,
-		init_date: "",
-		expected_delivery_date: "",
-		profitability: 0,
-		opportunity_resume: {
-			total_deadline: "",
-			percentage_final_return: "",
-			min_invest: "",
-			return_descritption: "",
-		},
-		opportunities_details: {
-			total_units: "",
-			constructed_area: "",
-			estimated_vgv: "",
-			average_price: "",
-		},
-		approval_process: "",
-		description: "",
-		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
-		opportunity_resume_files: [], // esse é o array docs
-		incorporation_enrollment: "",
-		estimated_timeline: [
-			{
-				year: "",
-				quarter: "",
-				info: [
-					{
-						name: "",
-						status: "",
-					},
-				],
-			},
-		],
-		disbursement_schedule: [
-			{
-				year: "",
-				info: [
-					{
-						month: "",
-						value: "",
-					},
-				],
-			},
-		],
-		blueprints: [],
-		schedule_table: [],
-	});
+	const { opportunitiesFormData, setOpportunitiesFormData } =
+		useCreateOpportunity();
 
 	return (
 		<Flex flexDir={"column"} gap={"1.5rem"}>
@@ -93,8 +45,8 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 				/>
 			</Flex>
 			<CronAportesComponent
-				setOpportuntiesFormData={setOpportuntiesFormData}
-				opportuntiesFormData={opportuntiesFormData}
+				setOpportunitiesFormData={setOpportunitiesFormData}
+				opportunitiesFormData={opportunitiesFormData}
 			/>
 			<Flex gap={"1.5rem"} mb={"10.875rem"}>
 				<Button

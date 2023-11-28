@@ -5,6 +5,7 @@ import { InputComponent } from "../../Companies/CreateCompanie/CompanieFormCreat
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
 import { EstimatedTimelineComponent } from "./EstimatedTimeline";
 import { DocComponent } from "../FirstOpportunitiesInfo/DocComponent";
+import { useCreateOpportunity } from "../../../hooks/useCreateOpportunity";
 
 type ISecondOpportunitiesInfo = {
 	token: string;
@@ -17,44 +18,8 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 }) => {
 	const { setFirstStep, setSecondStep, firstStep, secondStep, setThirdStep } =
 		useCreateAdminCreateSteps();
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
-		enterprise_name: "",
-		name: "",
-		localizacao: "",
-		min_investment: 0,
-		init_date: "",
-		expected_delivery_date: "",
-		profitability: 0,
-		opportunity_resume: {
-			total_deadline: "",
-			percentage_final_return: "",
-			min_invest: "",
-		},
-		opportunities_details: {
-			total_units: "",
-			constructed_area: "",
-			estimated_vgv: "",
-			average_price: "",
-		},
-		approval_process: "",
-		description: "",
-		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
-		opportunity_resume_files: [], // esse é o array docs
-		incorporation_enrollment: "",
-		estimated_timeline: [
-			{
-				year: "",
-				quarter: "",
-				info: [
-					{
-						name: "",
-						status: "",
-					},
-				],
-			},
-		],
-		blueprints: [],
-	});
+	const { opportunitiesFormData, setOpportunitiesFormData } =
+		useCreateOpportunity();
 	const [plantas, setPlantas] = useState([{ name: "", file: null }]);
 
 	const handleAddPlantas = () => {
@@ -65,8 +30,8 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 		const updatedBlueprints = [...plantas];
 		updatedBlueprints.splice(index, 1);
 		setPlantas(updatedBlueprints);
-		setOpportuntiesFormData({
-			...opportuntiesFormData,
+		setOpportunitiesFormData({
+			...opportunitiesFormData,
 			blueprints: updatedBlueprints,
 		});
 	};
@@ -75,8 +40,8 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 		const updatedBlueprints = [...plantas];
 		updatedBlueprints[index]["file"] = value;
 		updatedBlueprints[index]["name"] = value.name;
-		setOpportuntiesFormData({
-			...opportuntiesFormData,
+		setOpportunitiesFormData({
+			...opportunitiesFormData,
 			blueprints: updatedBlueprints,
 		});
 		setPlantas(updatedBlueprints);
@@ -86,15 +51,15 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 		const { name, value } = e.target;
 		if (name.includes(".")) {
 			const nameParts = name.split(".");
-			let formData = { ...opportuntiesFormData };
+			let formData = { ...opportunitiesFormData };
 			for (let i = 0; i < nameParts.length - 1; i++) {
 				formData = formData[nameParts[i]];
 			}
 			formData[nameParts[nameParts.length - 1]] = value;
-			setOpportuntiesFormData({ ...opportuntiesFormData });
+			setOpportunitiesFormData({ ...opportunitiesFormData });
 		} else {
-			setOpportuntiesFormData({
-				...opportuntiesFormData,
+			setOpportunitiesFormData({
+				...opportunitiesFormData,
 				[name]: value,
 			});
 		}
@@ -112,7 +77,7 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 						placeholderText="m2"
 						onChange={handleInputChange}
 						value={
-							opportuntiesFormData?.opportunities_details?.constructed_area
+							opportunitiesFormData?.opportunities_details?.constructed_area
 						}
 					/>
 					<InputComponent
@@ -122,16 +87,16 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 						label="Lotes ou unidades"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.opportunities_details?.total_units}
+						value={opportunitiesFormData?.opportunities_details?.total_units}
 					/>
 					<InputComponent
 						type="number"
-						name=" opportunities_details.estimated_vgv"
+						name="opportunities_details.estimated_vgv"
 						width={"18.5rem"}
 						label="VGV estimado"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.opportunities_details?.estimated_vgv}
+						value={opportunitiesFormData?.opportunities_details?.estimated_vgv}
 					/>
 				</Flex>
 				<Flex flexDir={"column"} gap={"1.5rem"}>
@@ -142,7 +107,7 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 						label="Preço médio"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.opportunities_details?.average_price}
+						value={opportunitiesFormData?.opportunities_details?.average_price}
 					/>
 					<Flex flexDirection={"column"} gap={"0.5rem"}>
 						<Text
@@ -159,7 +124,7 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 							color={"rgba(0, 0, 0, 0.36))"}
 							name="incorporation_enrollment"
 							onChange={handleInputChange}
-							value={opportuntiesFormData?.incorporation_enrollment}
+							value={opportunitiesFormData?.incorporation_enrollment}
 						>
 							<option value="Memorial em elaboração">
 								Memorial em elaboração
@@ -190,14 +155,16 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 					}}
 					borderRadius={"0.375rem"}
 					border={"1px solid #E2E8F0"}
-					name="description"
+					name="opportunities_details.technical_description"
 					onChange={handleInputChange}
-					value={opportuntiesFormData?.description}
+					value={
+						opportunitiesFormData?.opportunities_details?.technical_description
+					}
 				/>
 			</Flex>
 			<EstimatedTimelineComponent
-				setOpportuntiesFormData={setOpportuntiesFormData}
-				opportuntiesFormData={opportuntiesFormData}
+				setOpportunitiesFormData={setOpportunitiesFormData}
+				opportunitiesFormData={opportunitiesFormData}
 			/>
 			<Flex>
 				<Flex flexDir={"column"} gap={"0.5rem"} w={"100%"}>

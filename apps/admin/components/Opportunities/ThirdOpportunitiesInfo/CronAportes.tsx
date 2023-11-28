@@ -5,13 +5,13 @@ import { monthsInPortuguese } from "ui";
 type ComponentProps = {
 	data: any;
 	onInputChange: any;
-	setOpportuntiesFormData: any;
+	setOpportunitiesFormData: any;
 	indexA: any;
 };
 
 const CronAportes: React.FC<ComponentProps> = ({
 	onInputChange,
-	setOpportuntiesFormData,
+	setOpportunitiesFormData,
 	indexA,
 }) => {
 	const [infos, setInfos] = useState([{ month: "", value: "" }]);
@@ -36,7 +36,7 @@ const CronAportes: React.FC<ComponentProps> = ({
 			return newInfos;
 		});
 
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			const newInfos = prevFormData?.disbursement_schedule[indexA].info.filter(
 				(_, i) => i !== index
@@ -55,7 +55,7 @@ const CronAportes: React.FC<ComponentProps> = ({
 			newInfos[index][field] = value;
 			return newInfos;
 		});
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			newFormData.disbursement_schedule[indexA] = {
 				...newFormData.disbursement_schedule[indexA],
@@ -192,11 +192,11 @@ const CronAportes: React.FC<ComponentProps> = ({
 };
 
 export const CronAportesComponent: React.FC<any> = ({
-	setOpportuntiesFormData,
-	opportuntiesFormData,
+	setOpportunitiesFormData,
+	opportunitiesFormData,
 }) => {
 	const handleAddestimatedTimeline = () => {
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			const newTimelineItem = {
 				year: "",
@@ -221,7 +221,7 @@ export const CronAportesComponent: React.FC<any> = ({
 		type: string,
 		value: string | any[]
 	) => {
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			newFormData.disbursement_schedule[index] = {
 				...newFormData.disbursement_schedule[index],
@@ -256,7 +256,7 @@ export const CronAportesComponent: React.FC<any> = ({
 				</Button>
 			</Flex>
 			{/* mudar para o campo correto */}
-			{opportuntiesFormData?.disbursement_schedule?.map((data, index) => (
+			{opportunitiesFormData?.disbursement_schedule?.map((data, index) => (
 				<CronAportes
 					key={index}
 					data={data}
@@ -264,7 +264,7 @@ export const CronAportesComponent: React.FC<any> = ({
 					onInputChange={(type, value) =>
 						handleTimelineChange(index, type, value)
 					}
-					setOpportuntiesFormData={setOpportuntiesFormData}
+					setOpportunitiesFormData={setOpportunitiesFormData}
 				/>
 			))}
 		</Flex>

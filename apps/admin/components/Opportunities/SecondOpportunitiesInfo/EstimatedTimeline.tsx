@@ -31,7 +31,7 @@ const years = [
 
 const EstimatedTimeline: React.FC<any> = ({
 	onInputChange,
-	setOpportuntiesFormData,
+	setOpportunitiesFormData,
 	indexA,
 }) => {
 	const [infos, setInfos] = useState([{ name: "", status: "Not Completed" }]);
@@ -50,7 +50,7 @@ const EstimatedTimeline: React.FC<any> = ({
 			return newInfos;
 		});
 
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			console.log(prevFormData, "prevFormData");
 
@@ -72,7 +72,7 @@ const EstimatedTimeline: React.FC<any> = ({
 			newInfos[index][field] = value;
 			return newInfos;
 		});
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			newFormData.estimated_timeline[indexA] = {
 				...newFormData.estimated_timeline[indexA],
@@ -205,11 +205,11 @@ const EstimatedTimeline: React.FC<any> = ({
 };
 
 export const EstimatedTimelineComponent: React.FC<any> = ({
-	setOpportuntiesFormData,
-	opportuntiesFormData,
+	setOpportunitiesFormData,
+	opportunitiesFormData,
 }) => {
 	const handleAddestimatedTimeline = () => {
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			const newTimelineItem = {
 				year: "",
@@ -231,7 +231,7 @@ export const EstimatedTimelineComponent: React.FC<any> = ({
 		type: string,
 		value: string | any[]
 	) => {
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			const estimatedTimeline = { year: "", quarter: "", info: [] };
 
@@ -273,7 +273,7 @@ export const EstimatedTimelineComponent: React.FC<any> = ({
 					Adicionar ano
 				</Button>
 			</Flex>
-			{opportuntiesFormData?.estimated_timeline?.map((data, index) => (
+			{opportunitiesFormData?.estimated_timeline?.map((data, index) => (
 				<EstimatedTimeline
 					key={index}
 					data={data}
@@ -281,7 +281,7 @@ export const EstimatedTimelineComponent: React.FC<any> = ({
 					onInputChange={(type, value) =>
 						handleTimelineChange(index, type, value)
 					}
-					setOpportuntiesFormData={setOpportuntiesFormData}
+					setOpportunitiesFormData={setOpportunitiesFormData}
 				/>
 			))}
 		</Flex>

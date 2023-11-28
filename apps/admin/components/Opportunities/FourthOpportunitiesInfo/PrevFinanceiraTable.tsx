@@ -111,11 +111,11 @@ const PrevFinanceiraTableComponent: React.FC<ComponentProps> = ({
 };
 
 export const PrevFinanceiraTable: React.FC<any> = ({
-	setOpportuntiesFormData,
-	opportuntiesFormData,
+	setOpportunitiesFormData,
+	opportunitiesFormData,
 }) => {
 	const handleAddPrevAportes = () => {
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			const newTimelineItem = {
 				period: "",
@@ -133,7 +133,7 @@ export const PrevFinanceiraTable: React.FC<any> = ({
 	};
 
 	const handleRemoveInput = (index) => {
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			newFormData.schedule_table = prevFormData.schedule_table.filter(
 				(item, i) => i !== index
@@ -148,7 +148,7 @@ export const PrevFinanceiraTable: React.FC<any> = ({
 		type: string,
 		value: string | any[]
 	) => {
-		setOpportuntiesFormData((prevFormData) => {
+		setOpportunitiesFormData((prevFormData) => {
 			const newFormData = { ...prevFormData };
 			newFormData.schedule_table[index] = {
 				...newFormData.schedule_table[index],
@@ -183,7 +183,7 @@ export const PrevFinanceiraTable: React.FC<any> = ({
 					Adicionar ano
 				</Button>
 			</Flex>
-			{opportuntiesFormData?.schedule_table?.map((data, index) => (
+			{opportunitiesFormData?.schedule_table?.map((data, index) => (
 				<PrevFinanceiraTableComponent
 					key={index}
 					index={index}

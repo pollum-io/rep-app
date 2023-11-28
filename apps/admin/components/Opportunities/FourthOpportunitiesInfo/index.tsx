@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Flex, Img, Text, Textarea } from "@chakra-ui/react";
 import { PrevFinanceiraTable } from "./PrevFinanceiraTable";
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
+import { useCreateOpportunity } from "../../../hooks/useCreateOpportunity";
 
 type IFourthOpportunitiesInfo = {
 	token: string;
@@ -22,69 +23,9 @@ export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
 		setThirdStep,
 		setFourthStep,
 	} = useCreateAdminCreateSteps();
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
-		enterprise_name: "",
-		name: "",
-		localizacao: "",
-		min_investment: 0,
-		init_date: "",
-		expected_delivery_date: "",
-		profitability: 0,
-		opportunity_resume: {
-			total_deadline: "",
-			percentage_final_return: "",
-			min_invest: "",
-			return_descritption: "",
-		},
-		opportunities_details: {
-			total_units: "",
-			constructed_area: "",
-			estimated_vgv: "",
-			average_price: "",
-		},
-		approval_process: "",
-		description: "",
-		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
-		opportunity_resume_files: [], // esse é o array docs
-		incorporation_enrollment: "",
-		estimated_timeline: [
-			{
-				year: "",
-				quarter: "",
-				info: [
-					{
-						name: "",
-						status: "",
-					},
-				],
-			},
-		],
-		disbursement_schedule: [
-			{
-				year: "",
-				info: [
-					{
-						month: "",
-						value: "",
-					},
-				],
-			},
-		],
-		blueprints: [],
-		schedule_table: [
-			{
-				period: "",
-				cost: "",
-				total_revenue: "",
-				units_sold: "",
-			},
-		],
-		business_details: {
-			business_structure: "",
-			business_disclaimer: "",
-		},
-	});
-	const [banner, setBanner] = useState(null);
+	const { opportunitiesFormData, setOpportunitiesFormData } =
+		useCreateOpportunity();
+	const [business_structure, setBusiness_structure] = useState(null);
 
 	const handleBannerLogo = () => {
 		const fileInput = document.querySelector(
@@ -98,7 +39,7 @@ export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
 	const handleBannerChange = (event) => {
 		const file = event.target.files[0];
 		if (file) {
-			setBanner(URL.createObjectURL(file));
+			setBusiness_structure(URL.createObjectURL(file));
 		}
 	};
 
@@ -106,15 +47,15 @@ export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
 		const { name, value } = e.target;
 		if (name.includes(".")) {
 			const nameParts = name.split(".");
-			let formData = { ...opportuntiesFormData };
+			let formData = { ...opportunitiesFormData };
 			for (let i = 0; i < nameParts.length - 1; i++) {
 				formData = formData[nameParts[i]];
 			}
 			formData[nameParts[nameParts.length - 1]] = value;
-			setOpportuntiesFormData({ ...opportuntiesFormData });
+			setOpportunitiesFormData({ ...opportunitiesFormData });
 		} else {
-			setOpportuntiesFormData({
-				...opportuntiesFormData,
+			setOpportunitiesFormData({
+				...opportunitiesFormData,
 				[name]: value,
 			});
 		}
@@ -141,9 +82,9 @@ export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
 					alignItems={"center"}
 					borderRadius={"0.75rem"}
 				>
-					{banner && (
+					{business_structure && (
 						<Flex maxH={"9.3125rem"} objectFit={"cover"}>
-							<Img src={banner} objectFit={"cover"} />
+							<Img src={business_structure} objectFit={"cover"} />
 						</Flex>
 					)}
 
@@ -175,8 +116,8 @@ export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
 				</Flex>
 			</Flex>
 			<PrevFinanceiraTable
-				setOpportuntiesFormData={setOpportuntiesFormData}
-				opportuntiesFormData={opportuntiesFormData}
+				setOpportunitiesFormData={setOpportunitiesFormData}
+				opportunitiesFormData={opportunitiesFormData}
 			/>
 			<Flex gap={"1.5rem"} flexDir={"column"} mb={"2.75rem"}>
 				<Text fontSize={"0.875rem"} color={"#2D3748"} fontWeight={"500"}>
@@ -192,7 +133,7 @@ export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
 					border={"1px solid #E2E8F0"}
 					name="business_details.business_disclaimer"
 					onChange={handleInputChange}
-					value={opportuntiesFormData?.business_details.business_disclaimer}
+					value={opportunitiesFormData?.business_details.business_disclaimer}
 				/>
 			</Flex>
 			<Flex gap={"1.5rem"} mb={"10.875rem"}>
