@@ -5,4 +5,5 @@ export * from "./formatDate";
 export * from "./formatPhoneNumber";
 export * from "./getMonthNameFromDate";
 export * from "./getYearFromDate";
+export * from "./months";
 export * from "./persistent";

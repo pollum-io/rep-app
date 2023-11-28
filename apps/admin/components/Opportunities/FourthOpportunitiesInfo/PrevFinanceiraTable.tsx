@@ -11,27 +11,21 @@ import {
 } from "@chakra-ui/react";
 
 type ComponentProps = {
-	data: any;
 	index: any;
+	onInputChange: any;
+	handleRemoveInput: any;
 };
-
-export const PrevFinanceiraTable: React.FC<ComponentProps> = ({
-	data,
+const PrevFinanceiraTableComponent: React.FC<ComponentProps> = ({
 	index,
+	onInputChange,
+	handleRemoveInput,
 }) => {
-	const [additionalInputs, setAdditionalInputs] = useState([""]);
-
-	const handleAddInput = () => {
-		setAdditionalInputs([...additionalInputs, ""]);
-	};
-
-	const handleRemoveInput = (index) => {
-		if (additionalInputs.length > 1) {
-			const newInputs = [...additionalInputs];
-			newInputs.splice(index, 1);
-			setAdditionalInputs(newInputs);
-		}
-	};
+	const startYear = 2021;
+	const endYear = 2040;
+	const years = Array.from(
+		{ length: endYear - startYear + 1 },
+		(_, index) => startYear + index
+	);
 
 	return (
 		<Flex flexDir={"column"} gap={"0.75rem"} mb={"1.5rem"}>
@@ -54,10 +48,17 @@ export const PrevFinanceiraTable: React.FC<ComponentProps> = ({
 							border={"1px solid #E2E8F0"}
 							w={"7.5rem"}
 							h={"2rem"}
+							onChange={(e) => onInputChange("period", e.target.value)}
 						>
-							<option value="option1">2021</option>
-							<option value="option2">2022</option>
-							<option value="option3">2023</option>
+							{years.map((year) => (
+								<option
+									style={{ color: "rgba(0, 0, 0, 0.36)" }}
+									key={year}
+									value={year}
+								>
+									{year}
+								</option>
+							))}
 						</Select>
 					</Flex>
 					<Flex flexDir={"column"} gap={"0.5rem"} mr={"2.0625rem"}>
@@ -69,6 +70,7 @@ export const PrevFinanceiraTable: React.FC<ComponentProps> = ({
 							fontSize={"0.875rem"}
 							h={"2rem"}
 							w={"7.6875rem"}
+							onChange={(e) => onInputChange("cost", e.target.value)}
 						/>
 					</Flex>
 					<Flex flexDir={"column"} gap={"0.5rem"} mr={"2.0625rem"}>
@@ -80,6 +82,7 @@ export const PrevFinanceiraTable: React.FC<ComponentProps> = ({
 							fontSize={"0.875rem"}
 							h={"2rem"}
 							w={"7.6875rem"}
+							onChange={(e) => onInputChange("total_revenue", e.target.value)}
 						/>
 					</Flex>
 					<Flex flexDir={"column"} gap={"0.5rem"} mr={"2.0625rem"}>
@@ -91,6 +94,7 @@ export const PrevFinanceiraTable: React.FC<ComponentProps> = ({
 							fontSize={"0.875rem"}
 							h={"2rem"}
 							w={"4.8125rem"}
+							onChange={(e) => onInputChange("units_sold", e.target.value)}
 						/>
 					</Flex>
 					<Img
@@ -102,6 +106,93 @@ export const PrevFinanceiraTable: React.FC<ComponentProps> = ({
 					/>
 				</Flex>
 			</Flex>
+		</Flex>
+	);
+};
+
+export const PrevFinanceiraTable: React.FC<any> = ({
+	setOpportuntiesFormData,
+	opportuntiesFormData,
+}) => {
+	const handleAddPrevAportes = () => {
+		setOpportuntiesFormData((prevFormData) => {
+			const newFormData = { ...prevFormData };
+			const newTimelineItem = {
+				period: "",
+				cost: "",
+				total_revenue: "",
+				units_sold: "",
+			};
+			newFormData.schedule_table = [
+				...newFormData.schedule_table,
+				newTimelineItem,
+			];
+
+			return newFormData;
+		});
+	};
+
+	const handleRemoveInput = (index) => {
+		setOpportuntiesFormData((prevFormData) => {
+			const newFormData = { ...prevFormData };
+			newFormData.schedule_table = prevFormData.schedule_table.filter(
+				(item, i) => i !== index
+			);
+
+			return newFormData;
+		});
+	};
+
+	const handleTimelineChange = (
+		index: number,
+		type: string,
+		value: string | any[]
+	) => {
+		setOpportuntiesFormData((prevFormData) => {
+			const newFormData = { ...prevFormData };
+			newFormData.schedule_table[index] = {
+				...newFormData.schedule_table[index],
+				[type]: value,
+			};
+
+			return newFormData;
+		});
+	};
+
+	return (
+		<Flex flexDir={"column"} gap={"0.75rem"} mb={"0.125rem"}>
+			<Flex alignItems={"center"} justifyContent={"space-between"}>
+				<Text color={"#171923"} fontSize={"1.125rem"} fontWeight={"500"}>
+					Previsão financeira{" "}
+				</Text>
+				<Button
+					as="span"
+					bg={"#ffffff"}
+					color={"#007D99"}
+					fontSize={"0.75rem"}
+					fontWeight={"500"}
+					border={"1px solid #007D99"}
+					borderRadius={"6.25rem"}
+					h={"1rem"}
+					w={"max"}
+					py={"0.625rem"}
+					px={"0.5rem"}
+					cursor="pointer"
+					onClick={handleAddPrevAportes}
+				>
+					Adicionar ano
+				</Button>
+			</Flex>
+			{opportuntiesFormData?.schedule_table?.map((data, index) => (
+				<PrevFinanceiraTableComponent
+					key={index}
+					index={index}
+					onInputChange={(type, value) =>
+						handleTimelineChange(index, type, value)
+					}
+					handleRemoveInput={handleRemoveInput}
+				/>
+			))}
 		</Flex>
 	);
 };

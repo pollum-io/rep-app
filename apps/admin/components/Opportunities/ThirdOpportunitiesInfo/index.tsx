@@ -3,7 +3,7 @@ import { Button, Flex, Text, Textarea } from "@chakra-ui/react";
 
 import { InputComponent } from "../../Companies/CreateCompanie/CompanieFormCreateInput/InputComponent";
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
-import { CronAportes } from "./CronAportes";
+import { CronAportesComponent } from "./CronAportes";
 
 type IThirdOpportunitiesInfo = {
 	token: string;
@@ -22,45 +22,33 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 		setThirdStep,
 		setFourthStep,
 	} = useCreateAdminCreateSteps();
-	const [docs, setDocs] = useState([{ name: "", file: null }]);
 
-	const [estimatedTimeline, setEstimatedTimeline] = useState([
-		{
-			year: "",
-
-			quarter: "",
-			info: [
-				{
-					name: "",
-					status: "",
-				},
-			],
+	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
+		enterprise_name: "",
+		name: "",
+		localizacao: "",
+		min_investment: 0,
+		init_date: "",
+		expected_delivery_date: "",
+		profitability: 0,
+		opportunity_resume: {
+			total_deadline: "",
+			percentage_final_return: "",
+			min_invest: "",
+			return_descritption: "",
 		},
-	]);
-
-	const handleAddDoc = () => {
-		setDocs([...docs, { name: "", file: null }]);
-	};
-
-	const handleDeleteDoc = (index) => {
-		const updatedDocs = [...docs];
-		updatedDocs.splice(index, 1);
-		setDocs(updatedDocs);
-	};
-
-	const handleDocsChange = (index, value) => {
-		console.log({ index, value }, "index, key, value");
-
-		const updatedMembers = [...docs];
-		updatedMembers[index]["file"] = value;
-		updatedMembers[index]["name"] = value.name;
-
-		setDocs(updatedMembers);
-	};
-
-	const handleAddestimatedTimeline = () => {
-		setEstimatedTimeline([
-			...estimatedTimeline,
+		opportunities_details: {
+			total_units: "",
+			constructed_area: "",
+			estimated_vgv: "",
+			average_price: "",
+		},
+		approval_process: "",
+		description: "",
+		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
+		opportunity_resume_files: [], // esse é o array docs
+		incorporation_enrollment: "",
+		estimated_timeline: [
 			{
 				year: "",
 				quarter: "",
@@ -71,31 +59,24 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 					},
 				],
 			},
-		]);
-	};
+		],
+		disbursement_schedule: [
+			{
+				year: "",
+				info: [
+					{
+						month: "",
+						value: "",
+					},
+				],
+			},
+		],
+		blueprints: [],
+		schedule_table: [],
+	});
 
 	return (
 		<Flex flexDir={"column"} gap={"1.5rem"}>
-			<Flex justifyContent={"space-between"}>
-				<Flex flexDir={"column"} gap={"1.5rem"}>
-					<InputComponent
-						type="text"
-						width={"18.5rem"}
-						name=" opportunities_details.constructed_area" //TODO
-						label="Previsão de retorno (R$)"
-						placeholderText=""
-					/>
-				</Flex>
-				<Flex flexDir={"column"} gap={"1.5rem"}>
-					<InputComponent
-						type="date"
-						name="opportunities_details.average_price" //TODO
-						width={"18.5rem"}
-						label="Data da previsão"
-						placeholderText=""
-					/>
-				</Flex>
-			</Flex>
 			<Flex gap={"1.5rem"} flexDir={"column"} mb={"2.75rem"}>
 				<Text fontSize={"0.875rem"} color={"#2D3748"} fontWeight={"500"}>
 					Avisos
@@ -108,36 +89,13 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 					}}
 					borderRadius={"0.375rem"}
 					border={"1px solid #E2E8F0"}
-					name="description" //TODO
+					name="opportunity_resume.return_descritption"
 				/>
 			</Flex>
-			<Flex flexDir={"column"} gap={"0.75rem"} mb={"0.125rem"}>
-				<Flex alignItems={"center"} justifyContent={"space-between"}>
-					<Text color={"#171923"} fontSize={"1.125rem"} fontWeight={"500"}>
-						Cronograma de aportes
-					</Text>
-					<Button
-						as="span"
-						bg={"#ffffff"}
-						color={"#007D99"}
-						fontSize={"0.75rem"}
-						fontWeight={"500"}
-						border={"1px solid #007D99"}
-						borderRadius={"6.25rem"}
-						h={"1rem"}
-						w={"max"}
-						py={"0.625rem"}
-						px={"0.5rem"}
-						cursor="pointer"
-						onClick={handleAddestimatedTimeline}
-					>
-						Adicionar ano
-					</Button>
-				</Flex>
-				{estimatedTimeline?.map((data, index) => (
-					<CronAportes key={index} data={data} />
-				))}
-			</Flex>
+			<CronAportesComponent
+				setOpportuntiesFormData={setOpportuntiesFormData}
+				opportuntiesFormData={opportuntiesFormData}
+			/>
 			<Flex gap={"1.5rem"} mb={"10.875rem"}>
 				<Button
 					borderRadius={"100px"}

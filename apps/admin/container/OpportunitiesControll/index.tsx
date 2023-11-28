@@ -1,16 +1,6 @@
-import { FunctionComponent, useState } from "react";
-import {
-	Button,
-	Flex,
-	Img,
-	Radio,
-	RadioGroup,
-	Stack,
-	Text,
-} from "@chakra-ui/react";
+import { FunctionComponent } from "react";
+import { Button, Flex, Img, useDisclosure, Text } from "@chakra-ui/react";
 import { DefaultTemplate } from "../DefaultTemplate";
-import { OpportuntiesInfoCards } from "../../components/Opportunities/OpportuntiesInfoCards";
-import { OpportunitiesCard, OpportunitiesCards } from "ui";
 import { useCreateAdminCreateSteps } from "../../hooks/useCreateAdminCreateSteps";
 import { OpportunitiesControll } from "../../components/Opportunities/OpportunitiesControll";
 import { CreateSteps } from "../../components/Companies/CreateCompanie/CreateSteps/CreateSteps";
@@ -18,6 +8,7 @@ import { FirstOpportunitiesInfo } from "../../components/Opportunities/FirstOppo
 import { SecondOpportunitiesInfo } from "../../components/Opportunities/SecondOpportunitiesInfo";
 import { ThirdOpportunitiesInfo } from "../../components/Opportunities/ThirdOpportunitiesInfo";
 import { FourthOpportunitiesInfo } from "../../components/Opportunities/FourthOpportunitiesInfo";
+import { DrawerComponent } from "../../components/Opportunities/Drawer";
 
 interface IOpportunitiesControllContainer {
 	token: string;
@@ -38,6 +29,7 @@ export const OpportunitiesControllContainer: FunctionComponent<
 		setIsCreatOpportunityePage,
 		isCreateOpportunityPage,
 	} = useCreateAdminCreateSteps();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const pageTitle = firstStep
 		? "Dados gerais"
@@ -145,8 +137,13 @@ export const OpportunitiesControllContainer: FunctionComponent<
 									<ThirdOpportunitiesInfo token={token} />
 								)}
 								{isCreateOpportunityPage && fourthStep && (
-									<FourthOpportunitiesInfo token={token} />
+									<FourthOpportunitiesInfo onOpenModal={onOpen} token={token} />
 								)}
+								<DrawerComponent
+									isOpen={isOpen}
+									onClose={onClose}
+									token={token}
+								/>
 							</Flex>
 						</Flex>
 					</>
