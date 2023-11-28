@@ -7,23 +7,16 @@ export const Footer: React.FC = () => {
 	return (
 		<Flex
 			w="100%"
-			h="15.0625rem"
+			h="max"
 			borderTopRadius="2xl"
 			bgColor={"#1789A3"}
-			px="4rem"
-			py="3rem"
+			px="2.8125rem"
+			py="1rem"
 			gap="10rem"
 			color="#ffffff"
+			flex={"1"}
 		>
-			<Flex flexDir={"column"} gap="0.4375rem">
-				<Img src={"/images/livnlogotext.png"} w="5.2763rem" h="1.5rem" />
-				<Text fontSize={"sm"} fontWeight="400">
-					{t("login.liveInvesting")}
-				</Text>
-			</Flex>
-			<Flex>
-				<FooterLinks />
-			</Flex>
+			<Flex flexDir={"column"} gap="0.4375rem"></Flex>
 		</Flex>
 	);
 };

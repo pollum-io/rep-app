@@ -1,26 +1,29 @@
 import React, { FunctionComponent, useState } from "react";
 import { Flex, Checkbox, Button, Text, SlideFade } from "@chakra-ui/react";
-import { useRegister } from "../../hooks/useRegister";
+import { useRegisterSteps } from "../../hooks/useRegisterSteps";
 import { useToasty } from "../../hooks/useToasty";
 import { InputComponent } from "../Inputs/DeafultInput/InputComponent";
 import { useForm } from "react-hook-form";
-import {
-	BsArrowRightShort,
-	BsArrowLeftShort,
-	BsCircleFill,
-} from "react-icons/bs";
+import { BsArrowRightShort, BsArrowLeftShort } from "react-icons/bs";
 import { RiCheckFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { SelectComponent } from "../Select/SelectComponent";
 import { brasilStates } from "./states";
 import { useTranslation } from "react-i18next";
-import { fetchCreateInvestorPF, fetchEnterprise, logout } from "../../services";
-import { fetchCreateInvestorPJ } from "../../services/fetchCreateInvestorPJ";
 import { ICreateInvestorPF } from "../../dtos/ICreateInvestorPF";
 import { ICreateInvestorPJ } from "../../dtos/ICreateInvestorPJ";
+import PersistentFramework from "../../utils/persistent";
+import { UserInfo } from "../../dtos/GlobalUserInfo";
+import {
+	fetchCreateInvestorPF,
+	fetchCreateInvestorPJ,
+	fetchEnterprise,
+	logout,
+} from "services";
 
 interface IRegisterContent {
 	token: string;
+	user: UserInfo;
 }
 
 type UfData = {
@@ -43,12 +46,15 @@ interface IRequestData {
 	birthday_date?: Date;
 	cnpj?: string;
 	uf?: string;
+	nationality?: string;
+	city_of_birth?: string;
 	is_legal_entity: boolean;
 	invited_by: string;
+	isPerfilCompleted: boolean;
 }
 
 export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
-	const { token } = props;
+	const { user } = props;
 	const [canSend, setCanSend] = useState(false);
 	const [buttonDisabled, setButtonDisabled] = useState("");
 	const [inputValuesUf, setInputValuesUf] = useState<UfData>();
@@ -59,7 +65,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 		setFirstStep,
 		setSecondStep,
 		setIsPhysical,
-	} = useRegister();
+	} = useRegisterSteps();
 	const { register, handleSubmit, reset, getValues } = useForm();
 	const { push } = useRouter();
 	const { toast } = useToasty();
@@ -70,18 +76,18 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 			? getValues(["cpf"])
 			: getValues(["enterprise_name", "cnpj"]);
 
-		const req = await fetchEnterprise();
-		const cnpjExistentes = req.data.map(
-			(values: ExistingPjData) => values.cnpj
-		);
-		const enterpriseNameExistentes = req.data.map(
-			(values: ExistingPjData) => values.full_name
-		);
-
 		if (isPhysical) {
 			//TODO: Retornar lista completa de cpfs dos usuarios
 			return setSecondStep(true), setFirstStep(false);
 		} else {
+			const req = await fetchEnterprise();
+			const cnpjExistentes = req.data.map(
+				(values: ExistingPjData) => values.cnpj
+			);
+			const enterpriseNameExistentes = req.data.map(
+				(values: ExistingPjData) => values.full_name
+			);
+
 			if (enterpriseNameExistentes.includes(data?.[0])) {
 				toast({
 					id: "toast-nome-empresarial-error",
@@ -117,6 +123,9 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				birthday_date: new Date(data?.birthday_date),
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
+				email: user.email,
+				nationality: data?.nationality,
+				city_of_birth: data?.city_of_birth,
 			};
 		} else {
 			dataPJ = {
@@ -125,12 +134,13 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 				uf: Object?.values(inputValuesUf)[0],
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
+				email: user.email,
 			};
 		}
 
 		await (isPhysical
-			? fetchCreateInvestorPF(dataPF, token)
-			: fetchCreateInvestorPJ(dataPJ, token)
+			? fetchCreateInvestorPF(dataPF)
+			: fetchCreateInvestorPJ(dataPJ)
 		)
 			.then((res) => {
 				if (res) {
@@ -142,11 +152,26 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 						description:
 							"Você receberá no e-mail informado mais informações em breve.",
 					});
+					PersistentFramework.add("popUp", true);
 					push("/oportunidades");
+				} else {
+					toast({
+						id: "toast1",
+						position: "top-right",
+						status: "error",
+						title: "Dado(s) invalidos!",
+						description: "Revise as informações preenchidas.",
+					});
 				}
 			})
 			.catch((err) => {
-				console.log({ err });
+				toast({
+					id: "toast1",
+					position: "top-right",
+					status: "error",
+					title: "Dado(s) invalidos!",
+					description: "Revise as informações preenchidas.",
+				});
 			});
 	};
 
@@ -163,17 +188,12 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 	};
 
 	return (
-		<Flex
-			w="100%"
-			alignItems="center"
-			justifyContent="flex-start"
-			pl={"42.12rem"}
-		>
+		<Flex w="100%">
 			<form onSubmit={handleSubmit(onSubmitForm)}>
 				{firstStep ? (
 					<SlideFade in={firstStep} offsetY="-30px">
 						<Flex flexDirection="column" gap="1.625rem">
-							<Flex gap="0.9375rem" fontFamily="Poppins">
+							{/* <Flex gap="0.9375rem" fontFamily="Poppins">
 								<Flex gap="0.75rem">
 									<Checkbox
 										spacing="0.75rem"
@@ -218,13 +238,13 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 										</Text>
 									</Checkbox>
 								</Flex>
-							</Flex>
+							</Flex> */}
 							<Flex flexDirection="column" gap="0rem">
 								{!isPhysical ? (
 									<>
 										<InputComponent
 											placeholderText={t("inputs.insertHere") as string}
-											label={t("register.corporateName") as string}
+											label={t("register.noAbbreviations") as string}
 											type="text"
 											{...register("enterprise_name")}
 										/>
@@ -253,9 +273,9 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 								) : (
 									<>
 										<InputComponent
-											label={t("register.noAbbreviations") as string}
+											label={t("register.fullName") as string}
 											type="text"
-											placeholderText={t("inputs.insertHere") as string}
+											placeholderText={t("register.noAbbreviations") as string}
 											{...register("full_name")}
 										/>
 										<InputComponent
@@ -276,6 +296,18 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 											type="text"
 											placeholderText={t("inputs.insertHere") as string}
 											{...register("invited_by")}
+											onChange={(e) => setButtonDisabled(e.target.value)}
+										/>
+										<InputComponent
+											label={t("register.nationality") as string}
+											type="text"
+											{...register("nationality")}
+											onChange={(e) => setButtonDisabled(e.target.value)}
+										/>
+										<InputComponent
+											label={t("register.cityOfBirth") as string}
+											type="text"
+											{...register("city_of_birth")}
 											onChange={(e) => setButtonDisabled(e.target.value)}
 										/>
 									</>

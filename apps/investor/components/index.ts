@@ -3,7 +3,6 @@ export * from "./Inputs/DeafultInput/InputComponent";
 export * from "../components/Invest/PaymentMethods/PaymentMethods";
 export * from "./Inputs/DeafultInput/InputComponent";
 export * from "./Inputs/MenuInput/MenuInput";
-export * from "./Opportunities/OpportunitiesCard/OpportunitiesCard";
 export * from "./Toasty/ToastyCard/toastyCard";
 export * from "./Companies/CompaniesCard/CompaniesCard";
 export * from "./Header";

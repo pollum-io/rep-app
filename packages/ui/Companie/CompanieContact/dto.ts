@@ -1,15 +1,15 @@
 export interface ICompanieContact {
 	website?: string;
-	whats?: string;
-	phone?: string;
+	whatsapp?: string;
+	telephone?: string;
 	email?: string;
-	instagram?: ISocial;
-	twitter?: ISocial;
-	telegram?: ISocial;
-	facebook?: ISocial;
+	instagram?: any;
+	twitter?: any;
+	telegram?: any;
+	facebook?: any;
 }
 
 interface ISocial {
-	username: string;
-	url: string;
+	username?: string;
+	url?: string;
 }

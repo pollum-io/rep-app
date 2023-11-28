@@ -1,0 +1,18 @@
+.custom-tooltip {
+	background-color: white;
+	padding: 5px 30px;
+	border-radius: 5px;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	border: none !important;
+	text-align: center;
+}
+
+.custom-tooltip .amount {
+	color: #342863;
+	font-weight: 600;
+}
+
+.custom-tooltip .investment_address {
+	color: #342863;
+	font-weight: 400;
+}

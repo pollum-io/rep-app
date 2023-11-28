@@ -1,0 +1,17 @@
+.confirmed-icon {
+	font-size: 2rem; /* Ajuste o tamanho do ícone conforme necessário */
+	color: #1789a3; /* Cor do ícone de confirmação */
+	animation: shine 2s infinite;
+}
+
+@keyframes shine {
+	0% {
+		filter: drop-shadow(0 0 0 transparent);
+	}
+	50% {
+		filter: drop-shadow(0 0 10px #9fe7f7); /* Brilho aparece */
+	}
+	100% {
+		filter: drop-shadow(0 0 0 transparent);
+	}
+}

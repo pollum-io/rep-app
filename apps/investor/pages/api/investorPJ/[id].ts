@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 
 import dbConnect from "../../../lib/dbConnect";
-import InvestorSchema from "../../../models/investor.pj";
+import InvestorSchema from "../../../models/investor-pj";
 import { verifyUser } from "../../../lib/auth";
 import { ApiResponse } from "../../../models/ApiResponse";
 import nextConnect from "next-connect";
@@ -52,6 +52,7 @@ router.put(verifyUser, async (req, res) => {
 			{
 				new: true,
 				runValidators: true,
+				isPerfilCompleted: true,
 			}
 		);
 

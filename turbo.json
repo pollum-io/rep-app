@@ -1,23 +1,25 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "globalEnv": [
-    "MONGODB_URI",
-    "NEXT_PUBLIC_GOOGLE_MAPS_APY_KEY",
-    "JWT_SECRET",
-    "EMAIL_PROVIDER",
-    "PASSWORD_PROVIDER",
-    "NODE_ENV"
-  ],
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
-    },
-    "lint": {},
-    "dev": {
-      "cache": false,
-      "persistent": true
-    }
-  }
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["**/.env.*local"],
+	"globalEnv": [
+		"MONGODB_URI",
+		"NEXT_PUBLIC_GOOGLE_MAPS_APY_KEY",
+		"JWT_SECRET",
+		"EMAIL_PROVIDER",
+		"PASSWORD_PROVIDER",
+		"NODE_ENV",
+		"NEXT_PUBLIC_BACKEND_URL",
+		"NEXT_PUBLIC_GOOGLE_ANALYTICS"
+	],
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": [".next/**", "!.next/cache/**"]
+		},
+		"lint": {},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		}
+	}
 }

@@ -38,7 +38,7 @@ const insertSchema = z.object({
 	birthday_date: z.string().datetime({ offset: true }),
 	cpf: z.string().min(11).max(11),
 	email: z.optional(z.string()),
-	phone_number: z.optional(z.string()),
+	contact_number: z.optional(z.string()),
 	city_of_birth: z.optional(z.string()),
 	rg: z.optional(z.string()),
 	profession: z.optional(z.string()),
@@ -48,6 +48,7 @@ const insertSchema = z.object({
 	invited_by: z.string(),
 	cnh: z.optional(z.string()),
 	opportunities_avaliable: z.optional(z.array(z.string())),
+	isPerfilCompleted: z.optional(z.boolean()),
 });
 
 router.post(verifyUser, async (req, res) => {

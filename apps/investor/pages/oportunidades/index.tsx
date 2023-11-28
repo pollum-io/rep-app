@@ -2,9 +2,32 @@ import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
 import { OpportunitiesContainer } from "../../container";
 import { UserLogin } from "../../dtos/IUserLogin";
+import { UserDataPF } from "../../dtos/UserPF";
+import { UserDataPJ } from "../../dtos/UserPJ";
+import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
 
-const Opportunities: NextPage = (props) => (
-	<OpportunitiesContainer {...props} />
+interface IOpportunities {
+	token: string;
+	investor_pj?: string;
+	investor_pf?: string;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
+}
+
+const Opportunities: NextPage<IOpportunities> = ({
+	token,
+	userDataPF,
+	userDataPJ,
+	investor_pf,
+	investor_pj,
+}) => (
+	<OpportunitiesContainer
+		token={token}
+		userDataPF={userDataPF}
+		userDataPJ={userDataPJ}
+		investor_pf={investor_pf}
+		investor_pj={investor_pj}
+	/>
 );
 
 export default Opportunities;
@@ -36,11 +59,34 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 			},
 		};
 	}
+	if (user?.investor_pf) {
+		const response = await fetchGetInvestorPFById(user?.investor_pf, token);
+
+		return {
+			props: {
+				investor_pf: user?.investor_pf,
+				userDataPF: response?.data,
+				token: token,
+			},
+		};
+	} else if (user?.investor_pj) {
+		const response = await fetchGetInvestorPJById(
+			String(user?.investor_pj),
+			token
+		);
+
+		return {
+			props: {
+				investor_pj: user?.investor_pj,
+				userDataPJ: response?.data,
+				token: token,
+			},
+		};
+	}
 
 	return {
 		props: {
 			user,
-			token,
 		},
 	};
 };

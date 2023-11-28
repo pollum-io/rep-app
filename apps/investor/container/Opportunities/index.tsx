@@ -1,47 +1,86 @@
-import { Flex, Img, Text, useMediaQuery } from "@chakra-ui/react";
-import { FunctionComponent, useEffect } from "react";
+import {
+	Flex,
+	Img,
+	Text,
+	useDisclosure,
+	useMediaQuery,
+} from "@chakra-ui/react";
+import { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { DefaultTemplate } from "../DefaultTemplate";
 import { MenuInputs } from "../../components";
-import { OpportunitiesCards } from "../../components";
 import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
+import { CreateAccountModal } from "../../components/CreateAccount/CreateAccountModal";
+import { UserDataPJ } from "../../dtos/UserPJ";
+import { UserDataPF } from "../../dtos/UserPF";
+import PersistentFramework from "../../utils/persistent";
+import { motion } from "framer-motion"; // Import motion from framer-motion
+import { OpportunitiesCards } from "ui";
+import { useOpportunities } from "../../hooks/useOpportunities";
+import { useRegisterSteps } from "../../hooks";
 
 interface UserData {
 	token: string;
-	user: {
-		investor_pj?: string;
-		investor_pf?: string;
-	};
+	investor_pj?: string;
+	investor_pf?: string;
+	userDataPF?: UserDataPF;
+	userDataPJ?: UserDataPJ;
 }
 
-export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
-	const { GetUserId, getInfos } = useUser();
+export const OpportunitiesContainer: FunctionComponent<UserData> = (
+	props: UserData
+) => {
+	const { getUserInfos } = useUser();
 	const [bannerRes] = useMediaQuery("(max-width: 1110px)");
 	const { t } = useTranslation();
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { setFirstStep, setSecondStep } = useRegisterSteps();
+	const { setCotas } = useOpportunities();
+
+	useLayoutEffect(() => {
+		getUserInfos(
+			props?.investor_pf === null ? props?.investor_pj : props?.investor_pf,
+			props?.token
+		);
+	}, [
+		getUserInfos,
+		props.token,
+		props?.investor_pj,
+		props?.investor_pf,
+		onOpen,
+	]);
 
 	useEffect(() => {
-		GetUserId(
-			props?.user?.investor_pf === null
-				? props?.user?.investor_pj
-				: props?.user?.investor_pf
-		);
-		getInfos(props.token);
+		const pops = PersistentFramework.get("popUp");
+
+		if (props?.investor_pf && pops === true) {
+			onOpen();
+			return;
+		}
+
+		if (props?.investor_pj && pops === true) {
+			onOpen();
+			return;
+		}
 	}, [
-		getInfos,
-		GetUserId,
-		props.token,
-		props?.user?.investor_pj,
-		props?.user?.investor_pf,
+		onOpen,
+		props?.investor_pf,
+		props?.investor_pj,
+		props?.userDataPF?.is_profile_filled,
+		props?.userDataPJ?.is_profile_filled,
 	]);
 
 	return (
 		<DefaultTemplate>
-			<Flex
-				flexDirection="column"
-				bgColor="#ffffff"
-				mb="11.0625rem"
-				justifyContent="center"
-			>
+			<Flex flexDirection="column" bgColor="#ffffff" justifyContent="center">
+				<CreateAccountModal
+					isOpen={isOpen}
+					onClose={onClose}
+					userId={props?.investor_pf ? props?.investor_pf : props?.investor_pj}
+					token={props.token}
+					investorPF={props?.userDataPF}
+					investorPJ={props?.userDataPJ}
+				/>
 				<Flex w="100%">
 					<Flex w="100%">
 						<Img w="100%" h="21.3125rem" src="images/backgrounds/marble.png" />
@@ -85,9 +124,7 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 								color="#FFFFFF"
 								zIndex="docked"
 								mt="2.5rem"
-							>
-								{t("opportunities.investingIs")}
-							</Text>
+							></Text>
 						</Flex>
 						<Flex
 							h="21.3125rem"
@@ -148,31 +185,18 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 						</Flex>
 					</Flex>
 				</Flex>
-				<Flex
-					px="1.5rem"
-					mt="2.9375rem"
-					flexDirection="column"
-					justifyContent="center"
-					alignItems="center"
+				<motion.div
+					initial={{ opacity: 0, y: 40 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5 }}
 				>
 					<Flex
-						alignItems={[
-							"unset",
-							"unset",
-							"unset",
-							"start",
-							"center",
-							"center",
-						]}
-						flexWrap="wrap"
-						gap="1.5rem"
-						flexDirection={["unset", "unset", "unset", "column", "row", "row"]}
-						fontFamily="Poppins"
+						px="1.5rem"
+						mt="2.9375rem"
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="center"
 					>
-						<Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
-							{t("opportunities.orderBy")}
-						</Text>
-
 						<Flex
 							alignItems={[
 								"unset",
@@ -183,7 +207,7 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 								"center",
 							]}
 							flexWrap="wrap"
-							gap="1.9375rem"
+							gap="1.5rem"
 							flexDirection={[
 								"unset",
 								"unset",
@@ -192,20 +216,49 @@ export const OpportunitiesContainer: FunctionComponent = (props: UserData) => {
 								"row",
 								"row",
 							]}
+							fontFamily="Poppins"
 						>
-							<MenuInputs />
-							{/* <Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
+							<Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
+								{t("opportunities.orderBy")}
+							</Text>
+
+							<Flex
+								alignItems={[
+									"unset",
+									"unset",
+									"unset",
+									"start",
+									"center",
+									"center",
+								]}
+								flexWrap="wrap"
+								gap="1.9375rem"
+								flexDirection={[
+									"unset",
+									"unset",
+									"unset",
+									"column",
+									"row",
+									"row",
+								]}
+							>
+								<MenuInputs />
+								{/* <Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
 								1 resultados
 							</Text> */}
+							</Flex>
+						</Flex>
+						<Flex mt="2.9375rem" w="100%" justifyContent="center">
+							<OpportunitiesCards
+								investorId={props?.investor_pf}
+								token={props.token}
+								setFirstStep={setFirstStep}
+								setCotas={setCotas}
+								setSecondStep={setSecondStep}
+							/>
 						</Flex>
 					</Flex>
-					<Flex mt="2.9375rem" w="100%" justifyContent="center">
-						<OpportunitiesCards
-							investorId={props?.user?.investor_pf}
-							token={props.token}
-						/>
-					</Flex>
-				</Flex>
+				</motion.div>
 			</Flex>
 		</DefaultTemplate>
 	);

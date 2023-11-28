@@ -6,6 +6,7 @@ import {
 	AccordionPanel,
 	Flex,
 	Icon,
+	Img,
 	Menu,
 	MenuButton,
 	MenuItem,
@@ -16,17 +17,18 @@ import { useRouter } from "next/router";
 import { BsCheck } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { useUser } from "../../hooks/useUser";
-import { logout } from "../../services/fetchLogout";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
+import { logout } from "services";
 
 export const HamburguerMenu: React.FC = () => {
 	const { push } = useRouter();
-	const { userInfos, username } = useUser();
-
+	const { userInfos, username, isInvestorPerfilCompleted } = useUser();
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
-	console.log(push, "push");
+	const parts = username.split(" ");
+	const firstName = parts[0];
+
 	return (
 		<Menu>
 			<MenuButton>
@@ -37,13 +39,15 @@ export const HamburguerMenu: React.FC = () => {
 					flexDir={"row"}
 					alignItems={"center"}
 					gap="3"
+					w={"max"}
 					border="0.0625rem solid #E2E8F0"
 					rounded={"1rem"}
 				>
+					{!isInvestorPerfilCompleted && <Img src="/icons/notification.svg" />}
 					{username ? (
 						<Text fontSize={"sm"} fontFamily="Poppins" color={"#4A5568"}>
 							{t("portfolio.hello", {
-								Name: username.slice(0, 8),
+								Name: firstName,
 							})}
 						</Text>
 					) : (
@@ -76,13 +80,44 @@ export const HamburguerMenu: React.FC = () => {
 					h="1.8rem"
 					_focus={{}}
 					_hover={{ bgColor: "#F7FAFC", opacity: 0.8 }}
+					onClick={() => push({ pathname: `/faturas` })}
+				>
+					Faturas
+				</MenuItem>
+				<MenuItem
+					fontFamily="Poppins"
+					fontSize="0.875rem"
+					lineHeight="1.25rem"
+					pr="1.1875rem"
+					color="#4A5568"
+					pl="0.9375rem"
+					mt="0.3rem"
+					h="1.8rem"
+					_focus={{}}
+					_hover={{ bgColor: "#F7FAFC", opacity: 0.8 }}
 					onClick={() =>
 						push({ pathname: `/usuario`, query: { id: userInfos } })
 					}
 				>
-					{t("header.profile")}
+					<Flex alignItems={"center"} gap={"0.5rem"}>
+						<Text> {t("header.profile")}</Text>
+						{!isInvestorPerfilCompleted && (
+							<Text
+								px={"0.5rem"}
+								py={"0.1rem"}
+								h={"max"}
+								borderRadius={"0.75rem"}
+								bgColor={"#FED7D7"}
+								color={"#E53E3E"}
+								fontSize={"0.75rem"}
+								fontWeight={"500"}
+							>
+								Completar
+							</Text>
+						)}
+					</Flex>
 				</MenuItem>
-				<Accordion allowMultiple>
+				{/* <Accordion allowMultiple>
 					<AccordionItem border="none">
 						<AccordionButton
 							background="none"
@@ -160,7 +195,7 @@ export const HamburguerMenu: React.FC = () => {
 							</Flex>
 						</AccordionPanel>
 					</AccordionItem>
-				</Accordion>
+				</Accordion> */}
 				<MenuItem
 					fontFamily="Poppins"
 					fontSize="0.875rem"

@@ -20,7 +20,11 @@ export const CompanieDetails: FunctionComponent<ICompanieDetails> = ({
 					borderRadius="0.75rem"
 					h="9.3125rem"
 				>
-					{banner ? <Img src={banner} h="100%" w="100%" /> : <Flex />}
+					{banner ? (
+						<Img objectFit={"cover"} src={banner} h="100%" w="100%" />
+					) : (
+						<Flex />
+					)}
 				</Flex>
 				<Flex
 					gap="1.5rem"

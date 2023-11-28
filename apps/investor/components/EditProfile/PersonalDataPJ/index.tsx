@@ -9,11 +9,12 @@ import { SelectComponent } from "../../Select/SelectComponent";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
 import { brasilStates } from "../../Register/states";
 import { UserDataPJ } from "../../../dtos/UserPJ";
-import { fetchEditInvestorPJ } from "../../../services/fetchEditInvestorPJ";
+import { fetchEditInvestorPJ } from "services";
 
 interface IChangePassword {
 	data?: UserDataPJ;
 	token?: string;
+	isCheckout: boolean;
 }
 
 type UfData = {
@@ -42,6 +43,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 				?.replace(/[^\w]/gi, "")
 				?.replace(/\s+/g, ""),
 			address: data?.address,
+			is_profile_filled: true,
 		};
 
 		await fetchEditInvestorPJ(userInfos, request, token)
@@ -64,19 +66,21 @@ export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 	return (
 		<Flex w="100%" justifyContent="end">
 			<Flex flexDirection="column" gap="2.75rem" w="100%" maxWidth="47.4375rem">
-				<Flex gap="1.5rem" alignItems="center">
-					<Img src="/icons/Avatar.png" w="6rem" h="6rem" />
-					<Text
-						fontFamily="Poppins"
-						fontWeight="600"
-						fontSize="1.5rem"
-						lineHeight="2rem"
-						alignItems="center"
-						color="#171923"
-					>
-						{t("editProfile.edit")}
-					</Text>
-				</Flex>
+				{!props?.isCheckout && (
+					<Flex gap="1.5rem" alignItems="center">
+						<Img src="/icons/Avatar.png" w="6rem" h="6rem" />
+						<Text
+							fontFamily="Poppins"
+							fontWeight="600"
+							fontSize="1.5rem"
+							lineHeight="2rem"
+							alignItems="center"
+							color="#171923"
+						>
+							{t("editProfile.edit")}
+						</Text>
+					</Flex>
+				)}
 
 				<form onSubmit={handleSubmit(onSubmitForm)}>
 					<Flex justifyContent="space-between" w="100%">
@@ -129,7 +133,7 @@ export const PersonalDataPJ: React.FC<IChangePassword> = (props) => {
 									label={t("editProfile.phone") as string}
 									type="text"
 									maskType={"Telefone"}
-									{...register("phone_number")}
+									{...register("contact_number")}
 									defaultValue={formatPhoneNumber(data?.contact_number)}
 								/>
 							</Flex>

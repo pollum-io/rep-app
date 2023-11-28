@@ -1,37 +1,48 @@
-import { Button, ButtonProps, Flex, Img, Input, Text } from "@chakra-ui/react";
+import {
+	Button,
+	ButtonProps,
+	Flex,
+	Img,
+	Input,
+	InputGroup,
+	InputRightElement,
+	Text,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { FunctionComponent, useState } from "react";
 import { useUser } from "../../hooks/useUser";
-import { apiInstance } from "../../services/api";
 import { useTranslation } from "react-i18next";
 import { useToasty } from "../../hooks/useToasty";
+import { fetchSignIn } from "services";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export const Login: FunctionComponent<ButtonProps> = () => {
 	const { push } = useRouter();
 	const [email, setEmail] = useState<string>();
 	const [password, setPassword] = useState<string>();
-	const { GetUserId } = useUser();
+	const { getUserInfos } = useUser();
+	const [showPassword, setShowPassword] = useState<boolean>(true);
 	const { toast } = useToasty();
-	const api = apiInstance();
 
 	const handleLogin = async () => {
 		try {
-			const data = await api.post("/user/authenticate", {
-				email: email,
-				password: password,
-			});
-			GetUserId(
-				data?.data?.user?.investor_pf === null
-					? data?.data?.user?.investor_pj
-					: data?.data?.user?.investor_pf
+			const data = await fetchSignIn(email, password);
+			getUserInfos(
+				data?.investor_pf === null ? data?.investor_pj : data?.investor_pf
 			);
-			toast({
-				id: "toast-login-suc",
-				position: "top-right",
-				status: "success",
-				title: "Seja bem-vindo!",
-			});
-			push(!data?.data?.user?.investor_pf ? "/registrar" : "/oportunidades");
+			// toast({
+			// 	id: "toast-login-suc",
+			// 	position: "top-right",
+			// 	status: "success",
+			// 	title: "Seja bem-vindo!",
+			// });
+			if (data?.investor_pf) {
+				push("/oportunidades");
+			} else if (data?.investor_pj) {
+				push("/oportunidades");
+			} else {
+				push("/registrar");
+			}
 		} catch (error) {
 			if (error instanceof Error) {
 				toast({
@@ -68,22 +79,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 				fontFamily="Poppins"
 			>
 				<Flex flexDirection="column" w="22rem" justifyContent="center">
-					<Flex flexDirection="column" gap="2">
-						<Img
-							w="max-content"
-							h="max-content"
-							src="images/backgrounds/LivnLogo.png"
-						/>
-						<Text
-							color="#1789A3"
-							fontSize="0.875rem"
-							fontWeight="normal"
-							lineHeight="150%"
-							fontStyle="normal"
-						>
-							{t("login.liveInvesting")}
-						</Text>
-					</Flex>
+					<Flex flexDirection="column" gap="2"></Flex>
 					<Flex flexDirection="column" mt="1rem" gap="12px">
 						<Text
 							flexDirection="column"
@@ -133,29 +129,44 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 								lineHeight="1rem"
 								color="#007D99"
 								_hover={{ cursor: "pointer" }}
-								onClick={() => push("/recover_password")}
+								onClick={() => push("/recuperar-senha")}
 							>
 								{t("login.forgot")}
 							</Text>
-						</Flex>
-						<Input
-							placeholder={t("login.placeholderSenha") as string}
-							_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
-							border="0.0938rem solid #E2E8F0"
-							_hover={{}}
-							_focus={{}}
-							fontStyle="normal"
-							fontWeight="400"
-							fontSize="0.875rem"
-							lineHeight="1.25rem"
-							borderRadius="0.375rem"
-							h="2rem"
-							pl="0.7rem"
-							color="#2D3748"
-							onChange={(e) => setPassword(e.target.value)}
-							type={"password"}
-							onKeyPress={handleKeyPress}
-						/>
+						</Flex>{" "}
+						<InputGroup size="md">
+							<Input
+								placeholder={t("login.placeholderSenha") as string}
+								_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
+								border="0.0938rem solid #E2E8F0"
+								_hover={{}}
+								_focus={{}}
+								fontStyle="normal"
+								fontWeight="400"
+								fontSize="0.875rem"
+								lineHeight="1.25rem"
+								borderRadius="0.375rem"
+								h="2rem"
+								pl="0.7rem"
+								color="#2D3748"
+								onChange={(e) => setPassword(e.target.value)}
+								type={showPassword ? "password" : "text"}
+								onKeyPress={handleKeyPress}
+							/>
+							<InputRightElement
+								display={"flex"}
+								onClick={() => setShowPassword(!showPassword)}
+								alignItems="center"
+								_hover={{ cursor: "pointer" }}
+								pb="0.55rem"
+							>
+								{showPassword ? (
+									<AiOutlineEyeInvisible size={25} color="#7a7a7a" />
+								) : (
+									<AiOutlineEye size={25} color="#7a7a7a" />
+								)}
+							</InputRightElement>
+						</InputGroup>
 					</Flex>
 					<Flex mt="2.5rem">
 						<Button
@@ -197,7 +208,6 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							{t("login.noAccount")}
 						</Text>
 						<Button
-							type="submit"
 							fontStyle="normal"
 							fontWeight="500"
 							fontSize="0.75rem"
@@ -205,6 +215,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							color="#007D99"
 							bg={"transparent"}
 							_hover={{ opacity: 0.8 }}
+							onClick={() => push("/create-account")}
 						>
 							{t("login.register")}
 						</Button>

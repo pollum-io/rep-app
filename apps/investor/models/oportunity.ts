@@ -99,6 +99,18 @@ const OpportunitySchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		approval_process: {
+			type: Array,
+		},
+		licensing_process: {
+			type: Array,
+		},
+		incorporation_enrollment: {
+			type: Array,
+		},
+		sub_categories: {
+			type: Array,
+		},
 	},
 	{
 		timestamps: true,

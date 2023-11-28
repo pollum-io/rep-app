@@ -1,0 +1,31 @@
+import type { GetServerSideProps, NextPage } from "next";
+import { CreatePasswordContainer } from "../container/CreatePassword";
+
+interface ICreatePasswordData {
+	code?: string;
+	isValid?: boolean;
+}
+
+const Create_Password: NextPage<ICreatePasswordData> = ({ code, isValid }) => (
+	<CreatePasswordContainer code={code} isValid={isValid} />
+);
+
+export default Create_Password;
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	if (!query?.code) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/",
+			},
+			props: {},
+		};
+	}
+
+	return {
+		props: {
+			code: query.code,
+		},
+	};
+};

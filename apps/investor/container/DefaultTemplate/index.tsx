@@ -14,13 +14,16 @@ export const DefaultTemplate: FunctionComponent<BaseLayoutProps> = ({
 		<Flex
 			id="default-template"
 			w="100%"
-			h="100%"
+			h="max"
+			minHeight={"100vh"}
 			flexDir={"column"}
-			bgColor="#FFFFFF"
+			bgColor="#ffffff"
 		>
 			<Header />
 			{children}
-			<Footer />
+			<Flex mt={"20.0625rem"}>
+				<Footer />
+			</Flex>
 		</Flex>
 	);
 };

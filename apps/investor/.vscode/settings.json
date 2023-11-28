@@ -1,4 +1,8 @@
 {
-	"typescript.tsdk": "node_modules\\typescript\\lib",
-	"exportall.config.relExclusion": ["/container/index.ts", "/services/index.ts"]
+  "typescript.tsdk": "..\\..\\node_modules\\typescript\\lib",
+  "exportall.config.relExclusion": [
+    "/container/index.ts",
+    "/services/index.ts"
+  ],
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

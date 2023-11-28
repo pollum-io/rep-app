@@ -15,7 +15,7 @@ const InvestorPFSchema = new mongoose.Schema(
 		email: {
 			type: String,
 		},
-		phone_number: {
+		contact_number: {
 			type: String,
 		},
 		city_of_birth: {
@@ -57,6 +57,9 @@ const InvestorPFSchema = new mongoose.Schema(
 		// uf: {
 		// 	type: String,
 		// },
+		isPerfilCompleted: {
+			type: Boolean,
+		},
 	},
 	{
 		timestamps: true,

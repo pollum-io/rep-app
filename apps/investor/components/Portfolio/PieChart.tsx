@@ -10,7 +10,7 @@ interface IPieChart {
 	data?: PieChartDataItem[];
 }
 
-export const PieChartPortfolio: React.FC<IPieChart> = (props) => {
+export const PieChartCom: React.FC<IPieChart> = (props) => {
 	const { data } = props;
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const onPieEnter = useCallback(

@@ -1,6 +1,7 @@
 export interface ICompanieMembers {
-	image?: string;
+	image?: any;
 	name?: string;
 	occupation?: string;
 	position?: string;
+	isDrawer?: boolean;
 }

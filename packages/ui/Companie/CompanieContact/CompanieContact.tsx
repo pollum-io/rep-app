@@ -5,11 +5,10 @@ import { BsFacebook, BsFillTelephoneFill, BsWhatsapp } from "react-icons/bs";
 import { FaGlobe, FaTelegramPlane } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { ICompanieContact } from "./dto";
-
 export const CompanieContact: FunctionComponent<ICompanieContact> = ({
 	website,
-	whats,
-	phone,
+	whatsapp,
+	telephone,
 	email,
 	instagram,
 	twitter,
@@ -18,62 +17,64 @@ export const CompanieContact: FunctionComponent<ICompanieContact> = ({
 }) => {
 	const infos = [
 		{
-			valid: website ? true : false,
+			valid: !!website,
 			content: website,
 			link: "",
 			icon: <FaGlobe size={24} color="#007D99" />,
 			id: 1,
 		},
 		{
-			valid: whats ? true : false,
-			content: whats,
-			link: "",
+			valid: !!whatsapp,
+			content: "Whatsapp",
+			link: whatsapp,
 			icon: <BsWhatsapp size={24} color="#007D99" />,
 			id: 2,
 		},
 		{
-			valid: phone ? true : false,
-			content: phone,
-			link: "",
+			valid: !!telephone,
+			content: "Telefone",
+			link: telephone,
 			icon: <BsFillTelephoneFill size={23} color="#007D99" />,
 			id: 3,
 		},
 		{
-			valid: email ? true : false,
+			valid: !!email,
 			content: email,
 			link: "",
 			icon: <MdEmail size={26} color="#007D99" />,
 			id: 4,
 		},
 		{
-			valid: instagram ? true : false,
-			content: instagram?.username,
-			link: instagram?.url,
+			valid: !!instagram,
+			content: `@${instagram?.split("/")?.pop()}`,
+			link: instagram,
 			icon: <AiFillInstagram size={26} color="#007D99" />,
 			id: 5,
 		},
 		{
-			valid: twitter ? true : false,
-			content: twitter?.username,
-			link: twitter?.url,
+			valid: !!twitter,
+			content: `@${twitter?.split("/")?.pop()}`,
+			link: twitter,
 			icon: <AiOutlineTwitter size={26} color="#007D99" />,
 			id: 6,
 		},
 		{
-			valid: telegram ? true : false,
-			content: telegram?.username,
-			link: telegram?.url,
+			valid: !!telegram,
+			content: `@${telegram?.split("/")?.pop()}`,
+			link: telegram,
 			icon: <FaTelegramPlane size={24} color="#007D99" />,
 			id: 7,
 		},
 		{
-			valid: facebook ? true : false,
-			content: facebook?.username,
-			link: facebook?.url,
+			valid: !!facebook,
+			content: `@${facebook?.split("/")?.pop()}`,
+			link: facebook,
 			icon: <BsFacebook size={24} color="#007D99" />,
 			id: 8,
 		},
 	];
+
+	const validInfos = infos.filter((item) => item.valid);
 
 	return (
 		<Flex
@@ -90,34 +91,31 @@ export const CompanieContact: FunctionComponent<ICompanieContact> = ({
 			position="sticky"
 			top="10%"
 		>
-			{infos.map(
-				(item) =>
-					item.content && (
-						<Link
-							key={item.id}
-							href={item?.link}
-							target="_blank"
-							_hover={{ textDecoration: "none", bgColor: "transparent" }}
-							_active={{ bgColor: "transparent" }}
+			{validInfos.map((item) => (
+				<Link
+					key={item.id}
+					href={item.link}
+					target="_blank"
+					_hover={{ textDecoration: "none", bgColor: "transparent" }}
+					_active={{ bgColor: "transparent" }}
+				>
+					<Flex gap="1rem" alignItems="center" position={"relative"}>
+						<Flex>{item.icon}</Flex>
+						<Text
+							fontFamily="Poppins"
+							fontSize="0.875rem"
+							lineHeight="1.25rem"
+							color="#171923"
+							textOverflow={"ellipsis"}
+							whiteSpace={"nowrap"}
+							overflow={"hidden"}
+							maxW={"18.125rem"}
 						>
-							<Flex
-								display={item.valid === true ? "flex" : "none"}
-								gap="1rem"
-								alignItems="center"
-							>
-								<Flex>{item.icon}</Flex>
-								<Text
-									fontFamily="Poppins"
-									fontSize="0.875rem"
-									lineHeight="1.25rem"
-									color="#171923"
-								>
-									{item.content}
-								</Text>
-							</Flex>
-						</Link>
-					)
-			)}
+							{item.content}
+						</Text>
+					</Flex>
+				</Link>
+			))}
 		</Flex>
 	);
 };

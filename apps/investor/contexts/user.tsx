@@ -1,15 +1,23 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
-import { fetchGetInvestorPFById } from "../services/fetchGetInvestorPFById";
-import { fetchGetInvestorPJById } from "../services/fetchGetInvestorPJById";
-import PersistentFramework from "../utils/persistent";
+import { fetchGetInvestorPFById, fetchGetInvestorPJById } from "services";
+import { PersistentFramework } from "ui";
 interface IRegister {
 	setUserInfos: React.Dispatch<React.SetStateAction<string>>;
-	GetUserId: (id: string) => Promise<void>;
-	getInfos: (id: string) => Promise<void>;
+	getUserInfos: (id: string, token?: string) => Promise<void>;
 	userInfos: string;
 	username: string;
 	isInvestor: boolean;
 	setIsInvestor: React.Dispatch<React.SetStateAction<boolean>>;
+	firstAccess: boolean;
+	setFirstAccess?: React.Dispatch<React.SetStateAction<boolean>>;
+	isInvestorPerfilCompleted?: boolean;
+	setIsInvestorPerfilCompleted?: React.Dispatch<React.SetStateAction<boolean>>;
+	docLink: string;
+	setDocLink: React.Dispatch<React.SetStateAction<string>>;
+	investmentId: string;
+	setInvestmentId: React.Dispatch<React.SetStateAction<string>>;
+	contributionId: string;
+	setContributionId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const UserContext = createContext({} as IRegister);
@@ -19,33 +27,47 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
 	const [isUserLogged, setIsUserLogged] = useState<boolean>(false);
 	const [isInvestor, setIsInvestor] = useState<boolean>(false);
+	const [isInvestorPerfilCompleted, setIsInvestorPerfilCompleted] =
+		useState<boolean>(false);
 
 	const [userInfos, setUserInfos] = useState<string>();
 	const [username, setUsername] = useState<string>();
+	const [firstAccess, setFirstAccess] = useState<boolean>();
 
-	const GetUserId = async (id: string) => {
+	const [docLink, setDocLink] = useState<string | undefined>("");
+	const [investmentId, setInvestmentId] = useState<string | undefined>("");
+	const [contributionId, setContributionId] = useState<string | undefined>("");
+
+	const getUserInfos = async (id: string, token?: string) => {
+		let name = "";
 		setUserInfos(id);
 
-		PersistentFramework.add("id", String(id));
-	};
+		const investorPF = await fetchGetInvestorPFById(id, token);
 
-	const getInfos = async (id: string) => {
-		let name = "";
-		const response = await fetchGetInvestorPFById(userInfos, id);
-		const enterprise = await fetchGetInvestorPJById(userInfos, id);
-
-		if (response?.data?.full_name) {
-			name = response?.data?.full_name;
+		if (investorPF) {
+			name = investorPF.data?.full_name;
 			setUsername(name);
 			setIsInvestor(true);
+			setIsInvestorPerfilCompleted(
+				investorPF?.data?.is_profile_filled === true ? true : false
+			);
 			PersistentFramework.add("name", String(name));
 			PersistentFramework.add("isInvestor", { isInvestor: true });
-		} else {
-			name = enterprise?.data?.full_name;
+			PersistentFramework.add("id", String(id));
+			return;
+		}
+
+		const investorPJ = await fetchGetInvestorPJById(id, token);
+		if (investorPJ) {
+			name = investorPJ.data?.full_name;
 			setUsername(name);
-			setIsInvestor(false);
+			setIsInvestor(true);
+			setIsInvestorPerfilCompleted(
+				investorPJ?.data?.is_profile_filled === true ? true : false
+			);
 			PersistentFramework.add("name", String(name));
-			PersistentFramework.add("isInvestor", { isInvestor: false });
+			PersistentFramework.add("isInvestor", { isInvestor: true });
+			PersistentFramework.add("id", String(id));
 		}
 	};
 
@@ -75,22 +97,38 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 		} else {
 			return;
 		}
-	}, [isInvestor, userInfos, username]);
+	}, [isInvestor, userInfos, username, contributionId]);
 
 	const providerValue = useMemo(
 		() => ({
 			isUserLogged,
 			setIsUserLogged,
 			userInfos,
-			getInfos,
+			getUserInfos,
 			username,
 			setUserInfos,
-			GetUserId,
 			isInvestor,
 			setIsInvestor,
+			firstAccess,
+			setFirstAccess,
+			isInvestorPerfilCompleted,
+			docLink,
+			setDocLink,
+			investmentId,
+			setInvestmentId,
+			contributionId,
+			setContributionId,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isUserLogged, userInfos, username]
+		[
+			isUserLogged,
+			userInfos,
+			username,
+			investmentId,
+			contributionId,
+			docLink,
+			isInvestorPerfilCompleted,
+		]
 	);
 
 	return (
