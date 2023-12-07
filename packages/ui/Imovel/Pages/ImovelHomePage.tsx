@@ -176,7 +176,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 									</Flex>
 									<Flex flexDir={"column"} color={"#171923"}>
 										<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
-											Processo de aprovação
+											Processo de licenciamento
 										</Text>
 										{imovelDetails?.licensing_process?.map((data, index) => (
 											<>
