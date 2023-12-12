@@ -106,7 +106,7 @@ export const GeralInfoEnterpriseComponent: React.FC<IGeralInfoEnterprise> = ({
 									color={"#171923"}
 								>
 									{" "}
-									{formatCurrency(generalForecast?.totalContributions)}
+									{formatCurrency(815012)}
 								</Text>
 							</Flex>
 						</Flex>
@@ -128,7 +128,7 @@ export const GeralInfoEnterpriseComponent: React.FC<IGeralInfoEnterprise> = ({
 									color={"#171923"}
 								>
 									{" "}
-									{formatCurrency(generalForecast?.totalRaised)}
+									{formatCurrency(63500000)}
 								</Text>
 							</Flex>
 						</Flex>

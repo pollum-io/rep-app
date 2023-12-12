@@ -4,6 +4,7 @@ export const fetchEnterpriseForecastGeneral = async (
 	id: string | undefined,
 	token: string
 ) => {
+	console.log(id, token);
 	try {
 		const response = await api.get(`/enterprise/${id}/forecast/general`, {
 			headers: {
