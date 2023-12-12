@@ -17,7 +17,6 @@ export const Footer: React.FC = () => {
 			flex={"1"}
 		>
 			<Flex flexDir={"row"} gap="5" alignItems={"center"}>
-				<Img src={"/images/livnlogotext.png"} w="5.2763rem" h="1.5rem" />
 				<Text fontSize={"sm"} fontWeight="400">
 					{t("login.liveInvesting")}
 				</Text>
