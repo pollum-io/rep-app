@@ -107,6 +107,7 @@ export const OpportunitiesCard: FunctionComponent<
 	} else if (isEnterprise) {
 		opportunitiesToMap = opportunitiesEnterprise;
 	}
+	console.log(opportunitiesToMap);
 
 	return (
 		<>
