@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 			String(user?.enterprise),
 			token
 		);
-
+		console.log(generalForecastResponse, "generalForecastResponse");
 		return {
 			props: {
 				enterpriseId: user?.enterprise,

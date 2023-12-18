@@ -321,7 +321,7 @@ export const InvestPayment: React.FC<IContractSign> = ({
 				>
 					Escaneie o código{" "}
 				</Text>
-				<Base64Image imageData={qrCodeImage} />
+				<Img src="images/qrcode.svg" />
 				<Button
 					px={"0.75rem"}
 					py={"0.625rem"}
