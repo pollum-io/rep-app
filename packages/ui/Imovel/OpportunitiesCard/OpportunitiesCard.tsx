@@ -102,10 +102,10 @@ export const OpportunitiesCard: FunctionComponent<
 
 	let opportunitiesToMap;
 
-	if (isAdmin) {
-		opportunitiesToMap = cardsInfo?.opportunities;
-	} else if (isEnterprise) {
+	if (isEnterprise) {
 		opportunitiesToMap = opportunitiesEnterprise;
+	} else {
+		opportunitiesToMap = cardsInfo?.opportunities;
 	}
 	console.log(opportunitiesToMap);
 
