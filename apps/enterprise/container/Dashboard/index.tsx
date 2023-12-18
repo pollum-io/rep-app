@@ -106,7 +106,10 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 							>
 								Previsão de aportes totais{" "}
 							</Text>
-							<PrevAportesChart generalForecast={generalForecast} />
+							<PrevAportesChart
+								generalForecast={generalForecast}
+								isOpportunityPage={false}
+							/>
 						</Flex>
 						<Flex flexDir={"column"} mt={"5rem"}>
 							<Text

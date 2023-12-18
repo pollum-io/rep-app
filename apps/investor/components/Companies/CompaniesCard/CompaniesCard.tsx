@@ -66,22 +66,22 @@ export const CompaniesCard: FunctionComponent<ICompaniesCard> = ({
 						<Flex gap="2.8125rem">
 							{opportunities_available !== 0 && (
 								<Flex gap="0.5rem" alignItems="baseline" fontFamily="Poppins">
-									<Text fontSize="0.75rem" lineHeight="1rem" color="#718096">
+									{/* <Text fontSize="0.75rem" lineHeight="1rem" color="#718096">
 										{t("companies.card.opportunities")}
 									</Text>
 									<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
 										{opportunities_available}
-									</Text>
+									</Text> */}
 								</Flex>
 							)}
 							{opportunities_closed !== 0 && (
 								<Flex gap="0.5rem" alignItems="baseline">
-									<Text fontSize="0.75rem" lineHeight="1rem" color="#718096">
+									{/* <Text fontSize="0.75rem" lineHeight="1rem" color="#718096">
 										{t("companies.card.closed")}
 									</Text>
 									<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
 										{opportunities_closed}
-									</Text>
+									</Text> */}
 								</Flex>
 							)}
 						</Flex>

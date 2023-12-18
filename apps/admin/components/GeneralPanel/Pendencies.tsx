@@ -33,7 +33,7 @@ export const Pendencies: React.FC<IPendencies> = ({ pendenciesData }) => {
 					<Img src="/logos/info.svg" />
 				</Flex>
 				<Text color={"#E53E3E"} fontSize={"1.125rem"} fontWeight={"600"}>
-					{formatCurrency(pendenciesData?.pending_payments)}
+					{pendenciesData?.pending_payments}
 				</Text>
 			</Flex>
 			<Flex flexDir={"column"} gap={"0.25rem"}>
@@ -44,7 +44,7 @@ export const Pendencies: React.FC<IPendencies> = ({ pendenciesData }) => {
 					<Img src="/logos/info.svg" />
 				</Flex>
 				<Text color={"#E53E3E"} fontSize={"1.125rem"} fontWeight={"600"}>
-					{formatCurrency(pendenciesData?.pending_investments)}
+					{pendenciesData?.pending_investments}
 				</Text>
 			</Flex>
 		</Flex>

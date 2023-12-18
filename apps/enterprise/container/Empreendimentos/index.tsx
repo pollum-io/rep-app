@@ -28,6 +28,7 @@ export const EmpreendimentosContainer: FunctionComponent<IEmpreendimento> = ({
 			<Flex my={"4rem"} mx={"1.5rem"} pb={"20rem"}>
 				<OpportunitiesCard
 					token={token}
+					isAdmin={false}
 					isEnterprise={true}
 					setFirstStep={setFirstStep}
 					setCotas={setCotas}

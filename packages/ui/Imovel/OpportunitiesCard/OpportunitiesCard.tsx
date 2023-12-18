@@ -63,7 +63,7 @@ export const OpportunitiesCard: FunctionComponent<
 			refetchInterval: false,
 		}
 	);
-	console.log(cardsInfo);
+
 	const {
 		data: opportunitiesEnterprise,
 		isLoading: opportunitiesEnterpriseLoading,
@@ -99,20 +99,22 @@ export const OpportunitiesCard: FunctionComponent<
 			);
 		}
 	};
-	console.log(
-		(cardsInfo !== undefined && !isLoading) ||
-			(opportunitiesEnterprise !== undefined && !opportunitiesEnterpriseLoading)
-	);
-	console.log(!isEnterprise || !isAdmin, "!isEnterprise || !isAdmin");
+
+	let opportunitiesToMap;
+
+	if (isAdmin) {
+		opportunitiesToMap = cardsInfo?.opportunities;
+	} else if (isEnterprise) {
+		opportunitiesToMap = opportunitiesEnterprise;
+	}
+	console.log(opportunitiesToMap);
+
 	return (
 		<>
 			{(cardsInfo !== undefined && !isLoading) ||
 			(opportunitiesEnterprise !== undefined &&
 				!opportunitiesEnterpriseLoading) ? (
-				(!isEnterprise || !isAdmin
-					? cardsInfo?.opportunities
-					: opportunitiesEnterprise
-				)?.map((cards: IOpportunitiesCard) => (
+				opportunitiesToMap?.map((cards: IOpportunitiesCard) => (
 					<Flex
 						key={cards._id}
 						w="19.125rem"

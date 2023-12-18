@@ -51,15 +51,9 @@ export const Sidebar: React.FC = () => {
 				gap={"0.25rem"}
 				mb={"2.75rem"}
 			>
-				<Flex gap={"0.7031rem"}>
-					<Img src={"/logos/livntext.svg"} />
-					<Img src={"/logos/livn.svg"} />
-				</Flex>
-				<Flex>
-					<Text fontSize={"0.875rem"} color={"#1789A3"}>
-						ADMIN
-					</Text>
-				</Flex>
+				<Text fontSize={"0.875rem"} color={"#1789A3"}>
+					ADMIN
+				</Text>
 			</Flex>
 			{sideBarLinks?.map((data) => (
 				<Link key={data?.id} href={data?.path}>
