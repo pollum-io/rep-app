@@ -8,7 +8,7 @@ const Login: NextPage = () => <LoginContainer />;
 export default Login;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-	const token = req.cookies["livn_auth"];
+	const token = req.cookies["inv_auth"];
 	let user: UserLogin;
 
 	if (!token) {
