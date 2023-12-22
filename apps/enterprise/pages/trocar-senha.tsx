@@ -19,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	req,
 	query,
 }) => {
-	const token = req.cookies["livn_auth"];
+	const token = req.cookies["inc_auth"];
 
 	if (!token) {
 		return {

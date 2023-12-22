@@ -35,7 +35,7 @@ const Meus_Investimentos: NextPage<UserData> = ({
 export default Meus_Investimentos;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-	const token = req.cookies["livn_auth"];
+	const token = req.cookies["inv_auth"];
 
 	if (!token) {
 		return {

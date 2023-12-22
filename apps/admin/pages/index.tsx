@@ -12,7 +12,7 @@ const Login: NextPage<ILogin> = ({ token }) => <LoginContainer token={token} />;
 export default Login;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-	const token = req.cookies["livn_auth"];
+	const token = req.cookies["adm_auth"];
 	let user: UserLogin;
 
 	if (!token) {

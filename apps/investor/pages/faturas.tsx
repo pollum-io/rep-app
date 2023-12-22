@@ -44,7 +44,7 @@ const Faturas: NextPage<UserData> = ({
 export default Faturas;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-	const token = req.cookies["livn_auth"];
+	const token = req.cookies["inv_auth"];
 
 	if (!token) {
 		return {
