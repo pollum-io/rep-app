@@ -75,12 +75,15 @@ export const RegisterSteps: FunctionComponent = () => {
 		<Flex gap="3.875rem">
 			<RegisterStep
 				step={1}
-				title={
-					isPhysical ? t("register.personalData") : t("register.companyData")
-				}
-				barPercentage={firstStep ? 50 : 100}
+				title={t("register.acceptTerms")}
+				barPercentage={secondStep ? 50 : firstStep ? 0 : 100}
 			/>
 			<RegisterStep
+				step={2}
+				title={t("register.whitelist")}
+				barPercentage={!firstStep && !secondStep ? 50 : 0}
+			/>
+			{/* <RegisterStep
 				step={2}
 				title={t("register.acceptTerms")}
 				barPercentage={secondStep ? 50 : firstStep ? 0 : 100}
@@ -89,7 +92,7 @@ export const RegisterSteps: FunctionComponent = () => {
 				step={3}
 				title={t("register.submit")}
 				barPercentage={!firstStep && !secondStep ? 50 : 0}
-			/>
+			/> */}
 		</Flex>
 	);
 };
