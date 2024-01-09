@@ -47,7 +47,12 @@
 		"send": "Send Registration",
 		"back": "Back",
 		"noAbbreviations": "No Abbreviations",
-		"whitelist": "Join the whitelist"
+		"whitelist": "Create Password",
+		"next": "Next",
+		"somethingWentWrong": "Something went wrong",
+		"passwordCreatedSuccessfully": "Password created successfully!",
+		"enterHere": "Enter here",
+		"password": "Password"
 	},
 	"opportunities": {
 		"investingIs": "Investing is much easier with LIVN!",

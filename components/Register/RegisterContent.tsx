@@ -1,107 +1,80 @@
 import React, { FunctionComponent, useMemo, useState } from "react";
-import { Flex, Checkbox, Button, Text, SlideFade } from "@chakra-ui/react";
+import {
+	Flex,
+	Checkbox,
+	Button,
+	Text,
+	SlideFade,
+	ScaleFade,
+	InputGroup,
+	Input,
+	InputRightElement,
+} from "@chakra-ui/react";
 import { useRegister } from "../../hooks/useRegister";
 import { useToasty } from "../../hooks/useToasty";
-import { InputComponent } from "../Inputs/DeafultInput/InputComponent";
-import { useForm } from "react-hook-form";
-import {
-	BsArrowRightShort,
-	BsArrowLeftShort,
-	BsCircleFill,
-} from "react-icons/bs";
+import { BsArrowLeftShort } from "react-icons/bs";
 import { RiCheckFill } from "react-icons/ri";
 import { useRouter } from "next/router";
-import { SelectComponent } from "../Select/SelectComponent";
-import { brasilStates } from "./states";
 import { useTranslation } from "react-i18next";
-import { useQuery as query } from "react-query";
-import { fetchCreateInvestorPF, fetchEnterprise, logout } from "../../services";
-import { fetchCreateInvestorPJ } from "../../services/fetchCreateInvestorPJ";
-import { useWallet } from "../../hooks/useWallet";
+
+import { fetchChangePassword } from "../../services/fetchChangePassword";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import PasswordStrengthBar from "react-password-strength-bar";
 
 export const RegisterContent: FunctionComponent<any> = props => {
 	const { token } = props;
+	const emailPage = true;
+	const [buttonScore, setButtonScore] = useState<any>();
+	const [isButtonValid, setIsButtonValid] = useState<any>();
+	const [firstPassword, setFirstPassword] = useState<any>();
+	const [secondPassword, setSecondPassword] = useState<any>();
+	const [password, setPassword] = useState<any>();
+	const [showPasswordInputOne, setShowPasswordInputOne] =
+		useState<boolean>(true);
+	const [showPasswordInputTwo, setShowPasswordInputTwo] =
+		useState<boolean>(true);
+	const isValid = true;
 	const [canSend, setCanSend] = useState(false);
-	const [buttonDisabled, setButtonDisabled] = useState("");
-	const [inputValuesUf, setInputValuesUf] = useState<any>();
-	const {
-		firstStep,
-		secondStep,
-		isPhysical,
-		setFirstStep,
-		setSecondStep,
-		setIsPhysical,
-	} = useRegister();
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { isSubmitSuccessful },
-		reset,
-		getValues,
-	} = useForm();
+
+	const { firstStep, secondStep, setFirstStep, setSecondStep } = useRegister();
+
 	const { push } = useRouter();
 	const { toast } = useToasty();
 	const { t } = useTranslation();
-	const { disconnectWallet } = useWallet();
 
-	const userWhiteListed = async () => {
-		//TODO
-	};
+	useMemo(() => {
+		if (buttonScore < 2 || firstPassword !== secondPassword) {
+			setIsButtonValid(false);
+		} else {
+			setPassword(secondPassword);
+			setIsButtonValid(true);
+		}
+	}, [buttonScore, firstPassword, secondPassword]);
 
-	const onSubmitForm = async (data: any) => {
-		const request = isPhysical
-			? {
-					full_name: String(data?.full_name),
-					cpf: data?.cpf?.replace(/[.-]/g, ""),
-					birthday_date: new Date(data?.birthday_date),
-					is_legal_entity: isPhysical,
-					invited_by: String(data?.invited_by),
-			  }
-			: {
-					full_name: String(data?.enterprise_name),
-					cnpj: data?.cnpj.replace(/[-./]/g, ""),
-					uf: Object?.values(inputValuesUf)[0],
-					is_legal_entity: isPhysical,
-					invited_by: String(data?.invited_by),
-			  };
-		await (isPhysical
-			? fetchCreateInvestorPF(request, token)
-			: fetchCreateInvestorPJ(request, token)
-		)
-			.then(res => {
-				if (res) {
-					toast({
-						id: "toast1",
-						position: "top-right",
-						status: "success",
-						title: "Cadastro enviado com sucesso!",
-						description:
-							"Você receberá no e-mail informado mais informações em breve.",
-					});
-					push("/oportunidades");
-				}
-			})
-			.catch(err => {
-				console.log({ err });
+	const handleVerifyPasswordChange = async () => {
+		//TODO analisar isso
+		if (isValid) {
+			await fetchChangePassword("", password);
+			toast({
+				id: "toast-login-suc",
+				position: "top-right",
+				status: "success",
+				title: t("register.passwordCreatedSuccessfully"),
 			});
-	};
-
-	const handleClearInputs = () => {
-		reset({
-			full_name: "",
-			enterprise_name: "",
-			cpf: "",
-			birthday_date: "",
-			cnpj: "",
-			uf: "",
-			corporate_name: "",
-		});
+			push("/oportunidades");
+		} else {
+			toast({
+				id: "toast-login-err",
+				position: "top-right",
+				status: "error",
+				title: t("register.somethingWentWrong"),
+			});
+		}
 	};
 
 	return (
 		<Flex w="100%" alignItems="center" justifyContent="center">
-			{firstStep && (
+			{firstStep ? (
 				<SlideFade in={firstStep} offsetY="-30px">
 					<Flex flexDirection="column" gap="1.625rem">
 						<Flex flexDirection="column" gap="0.5rem">
@@ -195,7 +168,7 @@ export const RegisterContent: FunctionComponent<any> = props => {
 									icon={<RiCheckFill size={20} />}
 									borderColor="#E2E8F0"
 									onChange={() => {
-										setCanSend(!canSend), setSecondStep(!secondStep);
+										setCanSend(!canSend), setSecondStep(secondStep);
 									}}
 								/>
 								<Text fontSize="0.875rem" lineHeight="1.25rem" color="#2D3748">
@@ -250,11 +223,190 @@ export const RegisterContent: FunctionComponent<any> = props => {
 									borderRadius="0.5rem"
 									color="#ffffff"
 									type="submit"
-									onClick={userWhiteListed}
+									onClick={() => {
+										setFirstStep(false), setSecondStep(true), setCanSend(false);
+									}}
 								>
-									{t("register.whitelist") as any}
+									{t("register.next") as any}
 								</Button>
 							</Flex>
+						</Flex>
+					</Flex>
+				</SlideFade>
+			) : (
+				<SlideFade in={secondStep} offsetY="-30px">
+					<Flex flexDirection="column" gap="1.625rem">
+						<ScaleFade in={emailPage}>
+							<Flex
+								flexDirection="column"
+								w="20rem"
+								justifyContent="center"
+								fontFamily="Poppins"
+							>
+								<Flex id="Insert new password" flexDirection="column" mt="1rem">
+									<Flex flexDirection="column" gap="0.5rem">
+										<Text
+											flexDirection="column"
+											fontStyle="normal"
+											fontWeight="500"
+											fontSize="0.875rem"
+											lineHeight="1.25rem"
+											color="#2D3748"
+											display={"flex"}
+										>
+											{t("register.password") as string}
+										</Text>
+										<InputGroup size="md">
+											<Input
+												placeholder={t("register.enterHere")}
+												_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
+												border="0.0938rem solid #E2E8F0"
+												type={showPasswordInputOne ? "password" : "text"}
+												_hover={{}}
+												fontStyle="normal"
+												fontWeight="400"
+												fontSize="0.875rem"
+												lineHeight="1.25rem"
+												borderRadius="0.375rem"
+												h="2rem"
+												pl="0.7rem"
+												color="#2D3748"
+												onChange={e => setFirstPassword(e.target.value)}
+											/>
+											<InputRightElement
+												display={"flex"}
+												onClick={() =>
+													setShowPasswordInputOne(!showPasswordInputOne)
+												}
+												alignItems="center"
+												_hover={{ cursor: "pointer" }}
+												pb="0.55rem"
+											>
+												{showPasswordInputOne ? (
+													<AiOutlineEyeInvisible size={25} color="#2D3748" />
+												) : (
+													<AiOutlineEye size={25} color="#2D3748" />
+												)}
+											</InputRightElement>
+										</InputGroup>
+										<Text
+											fontWeight={"400"}
+											fontSize={"xs"}
+											color={"rgba(0, 0, 0, 0.36)"}
+										>
+											{t("forgotPassword.mustHave") as string}
+										</Text>
+									</Flex>
+									<Flex flexDirection="column" gap="0.5rem" mt={"1.5rem"}>
+										<Text
+											flexDirection="column"
+											fontStyle="normal"
+											fontWeight="500"
+											fontSize="0.875rem"
+											lineHeight="1.25rem"
+											color="#2D3748"
+											display={"flex"}
+										>
+											{t("forgotPassword.confirmPassword") as string}
+										</Text>
+										<InputGroup size="md">
+											<Input
+												placeholder={t("forgotPassword.typeHere") as string}
+												_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
+												border="0.0938rem solid #E2E8F0"
+												type={showPasswordInputTwo ? "password" : "text"}
+												_hover={{}}
+												fontStyle="normal"
+												fontWeight="400"
+												fontSize="0.875rem"
+												lineHeight="1.25rem"
+												borderRadius="0.375rem"
+												h="2rem"
+												pl="0.7rem"
+												color="#2D3748"
+												onChange={e => setSecondPassword(e.target.value)}
+											/>
+											<InputRightElement
+												display={"flex"}
+												onClick={() =>
+													setShowPasswordInputTwo(!showPasswordInputTwo)
+												}
+												alignItems="center"
+												_hover={{ cursor: "pointer" }}
+												pb="0.55rem"
+											>
+												{showPasswordInputTwo ? (
+													<AiOutlineEyeInvisible size={25} color="#2D3748" />
+												) : (
+													<AiOutlineEye size={25} color="#2D3748" />
+												)}
+											</InputRightElement>
+										</InputGroup>
+										<PasswordStrengthBar
+											onChangeScore={(score, feedback) => setButtonScore(score)}
+											minLength={8}
+											password={firstPassword}
+										/>
+									</Flex>
+								</Flex>
+							</Flex>
+						</ScaleFade>
+					</Flex>
+					<Flex
+						flexDirection="column"
+						fontFamily="Poppins"
+						gap="2.125rem"
+						mt={"1rem"}
+					>
+						<Flex gap="1.5rem">
+							<Button
+								mt="0.375rem"
+								w="9.25rem"
+								h="2rem"
+								justifyContent="center"
+								padding="0.2188rem 1.25rem"
+								alignItems="center"
+								gap="0.5rem"
+								bgColor="transparent"
+								border="1px solid #323841"
+								color="#171923"
+								_hover={{ bgColor: "#F7FAFC" }}
+								fontFamily="Poppins"
+								fontStyle="normal"
+								fontWeight="500"
+								fontSize="0.875rem"
+								lineHeight="1.25rem"
+								borderRadius="0.5rem"
+								onClick={() => {
+									setFirstStep(true), setSecondStep(false), setCanSend(false);
+								}}
+							>
+								<BsArrowLeftShort size={22} />
+								{t("register.back") as any}
+							</Button>
+							<Button
+								mt="0.375rem"
+								w="9.25rem"
+								h="2rem"
+								isDisabled={isButtonValid === false}
+								justifyContent="center"
+								padding="0.2188rem 1.25rem"
+								alignItems="center"
+								gap="0.5rem"
+								bgColor="#2D3748"
+								_hover={!canSend ? { opacity: "0.3" } : { bgColor: "#171923" }}
+								fontFamily="Poppins"
+								fontStyle="normal"
+								fontWeight="500"
+								fontSize="0.875rem"
+								lineHeight="1.25rem"
+								borderRadius="0.5rem"
+								color="#ffffff"
+								type="submit"
+								onClick={handleVerifyPasswordChange}
+							>
+								{t("register.next") as string}
+							</Button>
 						</Flex>
 					</Flex>
 				</SlideFade>

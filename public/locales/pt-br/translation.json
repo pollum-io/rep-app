@@ -47,7 +47,12 @@
 		"send": "Enviar Cadastro",
 		"back": "Voltar",
 		"noAbbreviations": "Sem abreviações",
-		"whitelist": "Join the whitelist"
+		"whitelist": "Criar senha",
+		"next": "Avançar",
+		"somethingWentWrong": "Algo deu errado",
+		"passwordCreatedSuccessfully": "Senha criada com sucesso!",
+		"enterHere": "Digite aqui",
+		"password": "Senha"
 	},
 	"opportunities": {
 		"investingIs": "Investir é muito mais fácil com a LIVN",

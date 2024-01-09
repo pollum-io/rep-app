@@ -76,12 +76,12 @@ export const RegisterSteps: FunctionComponent = () => {
 			<RegisterStep
 				step={1}
 				title={t("register.acceptTerms")}
-				barPercentage={secondStep ? 50 : firstStep ? 0 : 100}
+				barPercentage={firstStep ? 50 : 100}
 			/>
 			<RegisterStep
 				step={2}
 				title={t("register.whitelist")}
-				barPercentage={!firstStep && !secondStep ? 50 : 0}
+				barPercentage={secondStep ? 50 : firstStep ? 0 : 100}
 			/>
 			{/* <RegisterStep
 				step={2}
