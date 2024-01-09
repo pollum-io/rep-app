@@ -26,8 +26,13 @@ export const OpportunitiesControll: React.FC<IOpportunitiesControll> = ({
 }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [value, setValue] = useState("1");
-	const { setFirstStep, setIsCreatOpportunityePage } =
-		useCreateAdminCreateSteps();
+	const {
+		setFirstStep,
+		setSecondStep,
+		setThirdStep,
+		setFourthStep,
+		setIsCreatOpportunityePage,
+	} = useCreateAdminCreateSteps();
 
 	const queryClient = useQueryClient();
 
@@ -106,6 +111,9 @@ export const OpportunitiesControll: React.FC<IOpportunitiesControll> = ({
 					onClick={() => {
 						setIsCreatOpportunityePage(true);
 						setFirstStep(true);
+						setSecondStep(false);
+						setThirdStep(false);
+						setFourthStep(false);
 					}}
 				>
 					Criar oportunidade

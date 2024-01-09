@@ -8,6 +8,7 @@ import { CreateCompanyProvider } from "../contexts/createCompany";
 import { UserProvider } from "../contexts/user";
 import { ToastyProvider } from "../contexts/toasty";
 import "../helpers/i18";
+import { CreateOpportuntyProvider } from "../contexts/createOpportunity";
 
 const toasty = {
 	bg: "#FFFFFF",
@@ -20,15 +21,17 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ChakraProvider resetCSS theme={theme}>
-				<UserProvider>
-					<ToastyProvider {...toasty}>
-						<CreateCompanyProvider>
-							<CreateAdminCreateStepsProvider>
-								<Component {...pageProps} />
-							</CreateAdminCreateStepsProvider>
-						</CreateCompanyProvider>
-					</ToastyProvider>
-				</UserProvider>
+				<CreateOpportuntyProvider>
+					<UserProvider>
+						<ToastyProvider {...toasty}>
+							<CreateCompanyProvider>
+								<CreateAdminCreateStepsProvider>
+									<Component {...pageProps} />
+								</CreateAdminCreateStepsProvider>
+							</CreateCompanyProvider>
+						</ToastyProvider>
+					</UserProvider>{" "}
+				</CreateOpportuntyProvider>
 			</ChakraProvider>
 		</QueryClientProvider>
 	);

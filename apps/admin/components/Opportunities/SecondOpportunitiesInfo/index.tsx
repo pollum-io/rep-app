@@ -3,8 +3,9 @@ import { Button, Flex, Text, Textarea, Select } from "@chakra-ui/react";
 
 import { InputComponent } from "../../Companies/CreateCompanie/CompanieFormCreateInput/InputComponent";
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
-import { EstimatedTimeline } from "./EstimatedTimeline";
+import { EstimatedTimelineComponent } from "./EstimatedTimeline";
 import { DocComponent } from "../FirstOpportunitiesInfo/DocComponent";
+import { useCreateOpportunity } from "../../../hooks/useCreateOpportunity";
 
 type ISecondOpportunitiesInfo = {
 	token: string;
@@ -17,87 +18,51 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 }) => {
 	const { setFirstStep, setSecondStep, firstStep, secondStep, setThirdStep } =
 		useCreateAdminCreateSteps();
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
-		enterprise_name: "",
-		name: "",
-		localizacao: "",
-		min_investment: 0,
-		init_date: "",
-		expected_delivery_date: "",
-		profitability: 0,
-		opportunity_resume: {
-			total_deadline: "",
-			percentage_final_return: "",
-			min_invest: "",
-		},
-		opportunities_details: {
-			total_units: "",
-			constructed_area: "",
-			estimated_vgv: "",
-			average_price: "",
-		},
-		approval_process: "",
-		description: "",
-		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
-		opportunity_resume_files: [], // esse é o array docs
-	});
-	const [docs, setDocs] = useState([{ name: "", file: null }]);
+	const { opportunitiesFormData, setOpportunitiesFormData } =
+		useCreateOpportunity();
+	const [plantas, setPlantas] = useState([{ name: "", file: null }]);
 
-	const [estimatedTimeline, setEstimatedTimeline] = useState([
-		{
-			year: "",
-			data: [
-				{
-					quarter: "",
-					info: [
-						{
-							name: "",
-							status: "",
-						},
-					],
-				},
-			],
-		},
-	]);
-
-	const handleAddDoc = () => {
-		setDocs([...docs, { name: "", file: null }]);
+	const handleAddPlantas = () => {
+		setPlantas([...plantas, { name: "", file: null }]);
 	};
 
-	const handleDeleteDoc = (index) => {
-		const updatedDocs = [...docs];
-		updatedDocs.splice(index, 1);
-		setDocs(updatedDocs);
+	const handleDeletePlantas = (index) => {
+		const updatedBlueprints = [...plantas];
+		updatedBlueprints.splice(index, 1);
+		setPlantas(updatedBlueprints);
+		setOpportunitiesFormData({
+			...opportunitiesFormData,
+			blueprints: updatedBlueprints,
+		});
 	};
 
-	const handleDocsChange = (index, value) => {
-		console.log({ index, value }, "index, key, value");
-
-		const updatedMembers = [...docs];
-		updatedMembers[index]["file"] = value;
-		updatedMembers[index]["name"] = value.name;
-
-		setDocs(updatedMembers);
+	const handlePlantasChange = (index, value) => {
+		const updatedBlueprints = [...plantas];
+		updatedBlueprints[index]["file"] = value;
+		updatedBlueprints[index]["name"] = value.name;
+		setOpportunitiesFormData({
+			...opportunitiesFormData,
+			blueprints: updatedBlueprints,
+		});
+		setPlantas(updatedBlueprints);
 	};
 
-	const handleAddestimatedTimeline = () => {
-		setEstimatedTimeline([
-			...estimatedTimeline,
-			{
-				year: "",
-				data: [
-					{
-						quarter: "",
-						info: [
-							{
-								name: "",
-								status: "",
-							},
-						],
-					},
-				],
-			},
-		]);
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		if (name.includes(".")) {
+			const nameParts = name.split(".");
+			let formData = { ...opportunitiesFormData };
+			for (let i = 0; i < nameParts.length - 1; i++) {
+				formData = formData[nameParts[i]];
+			}
+			formData[nameParts[nameParts.length - 1]] = value;
+			setOpportunitiesFormData({ ...opportunitiesFormData });
+		} else {
+			setOpportunitiesFormData({
+				...opportunitiesFormData,
+				[name]: value,
+			});
+		}
 	};
 
 	return (
@@ -110,6 +75,10 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 						name="opportunities_details.constructed_area"
 						label="Área construída"
 						placeholderText="m2"
+						onChange={handleInputChange}
+						value={
+							opportunitiesFormData?.opportunities_details?.constructed_area
+						}
 					/>
 					<InputComponent
 						type="text"
@@ -117,13 +86,17 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 						width={"18.5rem"}
 						label="Lotes ou unidades"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={opportunitiesFormData?.opportunities_details?.total_units}
 					/>
 					<InputComponent
 						type="number"
-						name=" opportunities_details.estimated_vgv"
+						name="opportunities_details.estimated_vgv"
 						width={"18.5rem"}
 						label="VGV estimado"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={opportunitiesFormData?.opportunities_details?.estimated_vgv}
 					/>
 				</Flex>
 				<Flex flexDir={"column"} gap={"1.5rem"}>
@@ -133,6 +106,8 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 						width={"18.5rem"}
 						label="Preço médio"
 						placeholderText=""
+						onChange={handleInputChange}
+						value={opportunitiesFormData?.opportunities_details?.average_price}
 					/>
 					<Flex flexDirection={"column"} gap={"0.5rem"}>
 						<Text
@@ -147,6 +122,9 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 							placeholder="Selecione"
 							fontSize={"0.875rem"}
 							color={"rgba(0, 0, 0, 0.36))"}
+							name="incorporation_enrollment"
+							onChange={handleInputChange}
+							value={opportunitiesFormData?.incorporation_enrollment}
 						>
 							<option value="Memorial em elaboração">
 								Memorial em elaboração
@@ -177,36 +155,17 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 					}}
 					borderRadius={"0.375rem"}
 					border={"1px solid #E2E8F0"}
-					name="description"
+					name="opportunities_details.technical_description"
+					onChange={handleInputChange}
+					value={
+						opportunitiesFormData?.opportunities_details?.technical_description
+					}
 				/>
 			</Flex>
-			<Flex flexDir={"column"} gap={"0.75rem"} mb={"3.125rem"}>
-				<Flex alignItems={"center"} justifyContent={"space-between"}>
-					<Text color={"#171923"} fontSize={"1.125rem"} fontWeight={"500"}>
-						Cronograma estimado
-					</Text>
-					<Button
-						as="span"
-						bg={"#ffffff"}
-						color={"#007D99"}
-						fontSize={"0.75rem"}
-						fontWeight={"500"}
-						border={"1px solid #007D99"}
-						borderRadius={"6.25rem"}
-						h={"1rem"}
-						w={"max"}
-						py={"0.625rem"}
-						px={"0.5rem"}
-						cursor="pointer"
-						onClick={handleAddestimatedTimeline}
-					>
-						Adicionar ano
-					</Button>
-				</Flex>
-				{estimatedTimeline?.map((data, index) => (
-					<EstimatedTimeline key={index} data={data} />
-				))}
-			</Flex>
+			<EstimatedTimelineComponent
+				setOpportunitiesFormData={setOpportunitiesFormData}
+				opportunitiesFormData={opportunitiesFormData}
+			/>
 			<Flex>
 				<Flex flexDir={"column"} gap={"0.5rem"} w={"100%"}>
 					<Flex justifyContent={"space-between"}>
@@ -226,24 +185,24 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 							py={"0.625rem"}
 							px={"0.5rem"}
 							cursor="pointer"
-							onClick={handleAddDoc}
+							onClick={handleAddPlantas}
 						>
 							Adicionar documento
 						</Button>
 					</Flex>
 
-					{docs?.map((data, index) => (
+					{plantas?.map((data, index) => (
 						<DocComponent
 							key={index}
 							index={index}
 							name={data?.name}
 							file={data?.file}
-							onDeleteDoc={() => handleDeleteDoc(index)}
-							onDocValueChange={(value) => handleDocsChange(index, value)}
+							onDeleteDoc={() => handleDeletePlantas(index)}
+							onDocValueChange={(value) => handlePlantasChange(index, value)}
 						/>
 					))}
 
-					{docs.length && (
+					{plantas.length && (
 						<Text color={"#171923"} fontSize={"0.875rem"}>
 							Os documentos adicionados irão aparecer aqui.
 						</Text>

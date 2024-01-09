@@ -6,6 +6,8 @@ import { DocComponent } from "./DocComponent";
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
 import { fetchEnterprise } from "services";
 import { useQuery, useQueryClient } from "react-query";
+import { useCreateOpportunity } from "../../../hooks/useCreateOpportunity";
+import { approval_process_data } from "./approval_process_data";
 
 type IFirstOpportunitiesInfo = {
 	token: string;
@@ -16,27 +18,8 @@ const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 	token,
 }) => {
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
-		enterprise_name: "",
-		name: "",
-		localizacao: "",
-		min_investment: 0,
-		init_date: "",
-		expected_delivery_date: "",
-		profitability: 0,
-		opportunity_resume: {
-			total_deadline: "",
-			percentage_final_return: "",
-			min_invest: "",
-		},
-		opportunities_details: {
-			total_units: "",
-		},
-		approval_process: "",
-		description: "",
-		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
-		opportunity_resume_files: [], // esse é o array docs
-	});
+	const { opportunitiesFormData, setOpportunitiesFormData } =
+		useCreateOpportunity();
 	const [selectedOpportunitiesPictures, setSelectedOpportuntiesPictures] =
 		useState([]);
 	const [hoveredImage, setHoveredImage] = useState(null);
@@ -60,8 +43,8 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 			...selectedOpportunitiesPictures,
 			...selectedImageUrls,
 		]);
-		setOpportuntiesFormData({
-			...opportuntiesFormData,
+		setOpportunitiesFormData({
+			...opportunitiesFormData,
 			pictures_enterprise: [
 				...selectedOpportunitiesPictures,
 				...selectedImageUrls,
@@ -73,8 +56,8 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 		const newImages = [...selectedOpportunitiesPictures];
 		newImages.splice(index, 1);
 		setSelectedOpportuntiesPictures(newImages);
-		setOpportuntiesFormData({
-			...opportuntiesFormData,
+		setOpportunitiesFormData({
+			...opportunitiesFormData,
 			pictures_enterprise: newImages,
 		});
 	};
@@ -87,8 +70,8 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 		const updatedDocs = [...docs];
 		updatedDocs.splice(index, 1);
 		setDocs(updatedDocs);
-		setOpportuntiesFormData({
-			...opportuntiesFormData,
+		setOpportunitiesFormData({
+			...opportunitiesFormData,
 			opportunity_resume_files: updatedDocs,
 		});
 	};
@@ -97,8 +80,8 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 		const updatedDocs = [...docs];
 		updatedDocs[index]["file"] = value;
 		updatedDocs[index]["name"] = value.name;
-		setOpportuntiesFormData({
-			...opportuntiesFormData,
+		setOpportunitiesFormData({
+			...opportunitiesFormData,
 			opportunity_resume_files: updatedDocs,
 		});
 		setDocs(updatedDocs);
@@ -108,15 +91,15 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 		const { name, value } = e.target;
 		if (name.includes(".")) {
 			const nameParts = name.split(".");
-			let formData = { ...opportuntiesFormData };
+			let formData = { ...opportunitiesFormData };
 			for (let i = 0; i < nameParts.length - 1; i++) {
 				formData = formData[nameParts[i]];
 			}
 			formData[nameParts[nameParts.length - 1]] = value;
-			setOpportuntiesFormData({ ...opportuntiesFormData });
+			setOpportunitiesFormData({ ...opportunitiesFormData });
 		} else {
-			setOpportuntiesFormData({
-				...opportuntiesFormData,
+			setOpportunitiesFormData({
+				...opportunitiesFormData,
 				[name]: value,
 			});
 		}
@@ -141,7 +124,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 							color={"rgba(0, 0, 0, 0.36))"}
 							name="enterprise_name"
 							onChange={handleInputChange}
-							value={opportuntiesFormData?.enterprise_name}
+							value={opportunitiesFormData?.enterprise_name}
 						>
 							{allEnterprises?.enterprises?.map((data) => (
 								<option key={data?._id} value={data?.enterprise_name}>
@@ -157,7 +140,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						label="Nome da oportunidade"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.name}
+						value={opportunitiesFormData?.name}
 					/>
 					<InputComponent
 						type="text"
@@ -166,7 +149,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						label="Localização"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.localizacao}
+						value={opportunitiesFormData?.localizacao}
 					/>
 					<InputComponent
 						type="number"
@@ -175,7 +158,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						label="Investimento mínimo (R$)"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.min_investment}
+						value={opportunitiesFormData?.min_investment}
 					/>
 					<InputComponent
 						type="date"
@@ -184,7 +167,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						label="Início da obra"
 						placeholderText="mm/aaaa"
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.init_date}
+						value={opportunitiesFormData?.init_date}
 					/>
 					<InputComponent
 						type="date"
@@ -193,7 +176,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						label="Previsão de conclusão"
 						placeholderText="mm/aaaa"
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.expected_delivery_date}
+						value={opportunitiesFormData?.expected_delivery_date}
 					/>
 				</Flex>
 				<Flex flexDir={"column"} gap={"1.5rem"}>
@@ -204,7 +187,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						label="Rentabilidade esperada"
 						placeholderText="% ao ano"
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.profitability}
+						value={opportunitiesFormData?.profitability}
 					/>
 					<InputComponent
 						type="number"
@@ -213,7 +196,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						label="Prazo total do investimento"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.opportunity_resume?.total_deadline}
+						value={opportunitiesFormData?.opportunity_resume?.total_deadline}
 					/>
 					<InputComponent
 						type="number"
@@ -223,7 +206,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						placeholderText="%"
 						onChange={handleInputChange}
 						value={
-							opportuntiesFormData?.opportunity_resume?.percentage_final_return
+							opportunitiesFormData?.opportunity_resume?.percentage_final_return
 						}
 					/>
 					<InputComponent
@@ -233,16 +216,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 						label="Preço unitário da cota"
 						placeholderText=""
 						onChange={handleInputChange}
-						value={opportuntiesFormData?.opportunity_resume?.min_invest}
-					/>
-					<InputComponent
-						type="number"
-						name="opportunities_details.total_units"
-						width={"18.5rem"}
-						label="Cotas emitidas"
-						placeholderText=""
-						onChange={handleInputChange}
-						value={opportuntiesFormData?.opportunities_details?.total_units}
+						value={opportunitiesFormData?.opportunity_resume?.min_invest}
 					/>
 					<Flex flexDirection={"column"} gap={"0.5rem"}>
 						<Text
@@ -260,19 +234,13 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 							maxW={"18.5rem"}
 							onChange={handleInputChange}
 							name="approval_process"
-							value={opportuntiesFormData?.approval_process}
+							value={opportunitiesFormData?.approval_process}
 						>
-							<option value="option1">Em desenvolvimento</option>
-							<option value="option2">Protocolado na Prefeitura</option>
-							<option value="option3">
-								Sob análise de Prefeitura processo de Aprovação
-							</option>
-							<option value="option3">Aprovado</option>
-							<option value="option3">Alvará solicitado</option>
-							<option value="option3">
-								Sob análise na Prefeitura processo de licenciamento
-							</option>
-							<option value="option3">Alvará expedido</option>
+							{approval_process_data.map((data) => (
+								<option key={data.id} value={data.label}>
+									{data.label}
+								</option>
+							))}
 						</Select>
 					</Flex>
 				</Flex>
@@ -291,7 +259,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 					border={"1px solid #E2E8F0"}
 					name="description"
 					onChange={handleInputChange}
-					value={opportuntiesFormData?.description}
+					value={opportunitiesFormData?.description}
 				/>
 			</Flex>
 			<Flex flexDir={"column"} gap={"0.75rem"}>

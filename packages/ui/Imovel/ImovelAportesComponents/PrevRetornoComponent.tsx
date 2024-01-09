@@ -18,8 +18,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 	if (typeof window !== "undefined") {
 		isMozilla = /firefox/i.test(window.navigator.userAgent);
 	}
-	console.log(data?.data?.estimated_value);
-	console.log(data?.forecast_return);
+
 	return (
 		<Flex mb={"2rem"} flexDir={"column"}>
 			{isMyInvest && (
