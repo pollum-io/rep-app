@@ -111,7 +111,9 @@
 		"priceCard": {
 			"sharesName": "Nome da Cota",
 			"shares": "{{value}} cota",
-			"endedSales": "Vendas encerradas"
+			"endedSales": "Vendas encerradas",
+			"joinWhitelist": "Entrar na whitelist",
+			"earnDrex": "Compre DREX"
 		}
 	},
 	"wantToInvest": {

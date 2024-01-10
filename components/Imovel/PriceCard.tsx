@@ -1,6 +1,6 @@
 import { Button, Flex, Icon, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiCopy } from "react-icons/fi";
 import { useOpportunities } from "../../hooks/useOpportunities";
@@ -27,7 +27,7 @@ export const PriceCard: React.FC<IPriceCard> = props => {
 		investor_pj,
 	} = props;
 	const [isInvestidor, setIsInvestidor] = useState(investor_pf ? true : false);
-	const { ended, hasToken } = useOpportunities();
+	const { ended, hasToken, isUserWhitelisted } = useOpportunities();
 	const { push } = useRouter();
 	const [cotas, setCotas] = useState<number>(0);
 	const [copied, setCopied] = useState(false);
@@ -57,6 +57,53 @@ export const PriceCard: React.FC<IPriceCard> = props => {
 	const earnTokens = () => {
 		//TODO
 	};
+
+	const handleInvestButtonClick = useCallback(() => {
+		if (ended) {
+			return null;
+		}
+
+		switch (true) {
+			case isUserWhitelisted && hasToken:
+				push({
+					pathname: "/investir",
+					query: { id, cotas, oportunitiesAddress },
+				});
+				break;
+
+			case !isUserWhitelisted && hasToken:
+				console.log("TODO: User needs to join on whitelist");
+				break;
+
+			case isUserWhitelisted && !hasToken:
+				console.log("TODO: User needs to earn a token");
+				break;
+
+			default:
+				// Handle any other cases if needed
+				break;
+		}
+	}, [
+		cotas,
+		ended,
+		hasToken,
+		id,
+		isUserWhitelisted,
+		oportunitiesAddress,
+		push,
+	]);
+
+	const investButtonName = useMemo(() => {
+		const buttonLabel = ended
+			? t("opportunitieDetails.priceCard.endedSales")
+			: isUserWhitelisted && hasToken
+			? t("opportunitieDetails.wantTo")
+			: !isUserWhitelisted
+			? t("opportunitieDetails.priceCard.joinWhitelist")
+			: t("opportunitieDetails.priceCard.earnDrex");
+
+		return buttonLabel;
+	}, [ended, hasToken, isUserWhitelisted, t]);
 
 	return (
 		<Flex
@@ -139,54 +186,21 @@ export const PriceCard: React.FC<IPriceCard> = props => {
 						</Flex>
 
 						<Flex alignItems="center" mt="1rem" gap={"1"}>
-							{hasToken ? (
-								<Button
-									fontWeight={"500"}
-									fontSize={"md"}
-									bgColor="#FFFFFF"
-									color="#007088"
-									w="100%"
-									px="0.625rem"
-									py="1rem"
-									mb={ended ? "none" : "1rem"}
-									isDisabled={ended && !hasToken}
-									_hover={
-										ended && !hasToken
-											? { opacity: "0.3" }
-											: { bgColor: "#F7FAFC" }
-									}
-									onClick={() =>
-										push({
-											pathname: "/investir",
-											query: { id, cotas, oportunitiesAddress },
-										})
-									}
-								>
-									{ended
-										? t("opportunitieDetails.endedSales")
-										: t("opportunitieDetails.wantTo")}
-								</Button>
-							) : (
-								<Button
-									fontWeight={"500"}
-									fontSize={"md"}
-									bgColor="#FFFFFF"
-									color="#007088"
-									w="100%"
-									px="0.625rem"
-									py="1rem"
-									mb={ended ? "none" : "1rem"}
-									isDisabled={ended && !hasToken}
-									_hover={
-										ended && !hasToken
-											? { opacity: "0.3" }
-											: { bgColor: "#F7FAFC" }
-									}
-									onClick={earnTokens}
-								>
-									Earn tokens
-								</Button>
-							)}
+							<Button
+								fontWeight={"500"}
+								fontSize={"md"}
+								bgColor="#FFFFFF"
+								color="#007088"
+								w="100%"
+								px="0.625rem"
+								py="1rem"
+								mb={ended ? "none" : "1rem"}
+								isDisabled={ended}
+								_hover={ended ? { opacity: "0.3" } : { bgColor: "#F7FAFC" }}
+								onClick={handleInvestButtonClick}
+							>
+								{investButtonName}
+							</Button>
 						</Flex>
 					</Flex>
 				</Flex>

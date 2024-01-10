@@ -7,6 +7,8 @@ interface IOpportunities {
 	setHasToken: React.Dispatch<React.SetStateAction<boolean>>;
 	cotas: number;
 	setCotas: React.Dispatch<React.SetStateAction<number>>;
+	isUserWhitelisted: boolean;
+	setIsUserWhitelisted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const OpportunitiesContext = createContext({} as IOpportunities);
@@ -16,6 +18,8 @@ export const OpportunitiesProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
 	const [ended, setEnded] = useState(false);
 	const [hasToken, setHasToken] = useState(false);
+	const [isUserWhitelisted, setIsUserWhitelisted] = useState(false);
+
 	const [cotas, setCotas] = useState<number>(0);
 	const providerValue = useMemo(
 		() => ({
@@ -24,7 +28,9 @@ export const OpportunitiesProvider: React.FC<{ children: React.ReactNode }> = ({
 			hasToken,
 			setHasToken,
 			cotas,
-			setCotas
+			setCotas,
+			isUserWhitelisted,
+			setIsUserWhitelisted,
 		}),
 		[
 			ended,
@@ -32,7 +38,9 @@ export const OpportunitiesProvider: React.FC<{ children: React.ReactNode }> = ({
 			hasToken,
 			setHasToken,
 			cotas,
-			setCotas
+			setCotas,
+			isUserWhitelisted,
+			setIsUserWhitelisted,
 		]
 	);
 
