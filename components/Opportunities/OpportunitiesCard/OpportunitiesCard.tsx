@@ -31,7 +31,7 @@ export const OpportunitiesCard: FunctionComponent<
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
 	const isEnterprise = investorId ? false : true;
-	console.log(router.query._id, "router.query");
+
 	const { data: cardsInfo } = query(
 		["oportunity", router.query],
 		() =>
@@ -43,8 +43,6 @@ export const OpportunitiesCard: FunctionComponent<
 			refetchInterval: false,
 		}
 	);
-	console.log(cardsInfo, "cardsInfo");
-	console.log(investorId, "investorId");
 
 	const { data: user } = query(
 		["user"],
@@ -103,18 +101,21 @@ export const OpportunitiesCard: FunctionComponent<
 						borderRadius="0.75rem"
 						flexDirection="column"
 						_hover={{
-							cursor:
-								cards?.isAvailable || isEnterprise ? "pointer" : "default",
+							cursor: cards?.isAvailable ? "pointer" : "default",
 							boxShadow:
 								"0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)",
 						}}
 						transition="150ms"
-						onClick={() =>
-							 router.push({
+						onClick={() => {
+							cards.token_minted === cards.token_supply ||
+							currentTime >= new Date(cards?.sale_end_at) ||
+							!cards?.isAvailable
+								? null
+								: router.push({
 										pathname: `/oportunidades/${cards._id}`,
 										query: { id: cards._id },
-								  })
-						}
+								  });
+						}}
 					>
 						<Flex
 							w="18.125rem"

@@ -36,7 +36,7 @@
 		"fullName": "Nome Completo",
 		"birthDate": "Data de Nascimento",
 		"socialNumber": "CPF",
-		"whoInvited": "Quem convidou você para a LIVN?",
+		"whoInvited": "Quem convidou você para o REP?",
 		"legalPerson": "Sou Pessoa Jurídica",
 		"corporateName": "Razão Social",
 		"nationalRegister": "CNPJ",
@@ -49,9 +49,9 @@
 		"noAbbreviations": "Sem abreviações"
 	},
 	"opportunities": {
-		"investingIs": "Investir é muito mais fácil com a LIVN",
+		"investingIs": "Investir é muito mais fácil com o REP",
 		"first": "Abra uma oportunidade disponível para você",
-		"second": "Selecione a quantidade de cotas que você deseja",
+		"second": "Selecione a quantidade de tokens que você deseja",
 		"third": "Clique em Quero investir e faça o pagamento",
 		"fourth": "Pronto! agora é só acompanhar os rendimentos na aba Portfólio",
 		"orderBy": "Ordenar por",
@@ -60,6 +60,7 @@
 		"completion": "Previsão de Conclusão",
 		"location": "Localização",
 		"result": "resultado",
+		"estimatedTimeline": "Cronograma estimado",
 		"card": {
 			"commercial": "Comercial",
 			"residential": "Residencial",
@@ -82,14 +83,14 @@
 		"initial": "Preço Inicial m²",
 		"final": "Preço Final m²",
 		"select": "Selecione a Quantidade",
-		"quota": "cota",
+		"quota": "token",
 		"total": "Total",
 		"wantTo": "Quero Investir",
 		"wontBe": "Você ainda não será cobrado.",
-		"quotaAddress": "Endereço da cota",
+		"quotaAddress": "Endereço do token",
 		"unit": "Preço unitário",
-		"shares": "Cotas emitidas",
-		"available": "Cotas disponíveis",
+		"shares": "Tokens emitidos",
+		"available": "Tokens disponíveis",
 		"offers": "O que este empreendimento oferece",
 		"seeAll": "Ver {{37}} comodidades",
 		"perYear": "ao ano",
@@ -104,14 +105,13 @@
 		"closeSales": "para encerrar as vendas",
 		"responsibleCompanyName": "Nome da Empresa Responsável",
 		"youHave": "Você possui",
-		"yourShares": "cotas",
+		"yourShares": "tokens",
 		"expected": "Rentabilidade Esperada: ",
 		"closedIn": "Encerrado em ",
 		"unitPrice": "Preço unitário no próximo lote: R$",
 		"priceCard": {
-			"sharesName": "Nome da Cota",
-			"shares": "{{value}} cota",
-			"endedSales": "Vendas encerradas",
+			"sharesName": "Nome do Token",
+			"shares": "{{value}} tokens",
 			"joinWhitelist": "Entrar na whitelist",
 			"earnDrex": "Compre DREX"
 		}
@@ -119,7 +119,7 @@
 	"wantToInvest": {
 		"summary": "Resumo do investimento",
 		"property": "Imóvel",
-		"quota": "Cota",
+		"quota": "Tokens",
 		"amount": "Quantidade",
 		"select": "Selecione a forma de pagamento",
 		"confirmData": "Confirmar dados",
@@ -129,7 +129,7 @@
 		"termsOf": "Termos de Compra."
 	},
 	"companies": {
-		"partners": "Empresas parceiras LIVN",
+		"partners": "Empresas parceiras REP",
 		"companie": "empresa",
 		"previous": "Anterior",
 		"next": "Próxima",
@@ -140,7 +140,7 @@
 		}
 	},
 	"companieDetails": {
-		"livnProp": "Empreendimentos LIVN",
+		"REPProp": "Empreendimentos REP",
 		"delivered": "Obras entregues",
 		"inProgress": "Em andamento",
 		"vgv": "VGV Total",
@@ -172,8 +172,8 @@
 		"ofPortfolio": "do portfólio",
 		"registered": "Empreendimentos cadastrados",
 		"revenue": "Arrecadação",
-		"sharesTraded": "Cotas Negociadas",
-		"bestSelling": "Cotas Mais Vendidas",
+		"sharesTraded": "Tokens Negociadas",
+		"bestSelling": "Tokens Mais Vendidas",
 		"month": "Mês",
 		"year": "Ano",
 		"units": "Unidades",
@@ -181,7 +181,7 @@
 		"portfolioDateOf": "Esse é o portfólio de",
 		"portfolioEmpty": "Seu portfólio esta vazio ainda",
 		"notInvested": "Você ainda não fez nenhum investimento.",
-		"textNotInvested": "Assim que realizar a compra de cotas, você poderá ver todos os dados, gráficos e resumos de investimentos com filtros inteligentes nesta página.",
+		"textNotInvested": "Assim que realizar a compra dos tokens, você poderá ver todos os dados, gráficos e resumos de investimentos com filtros inteligentes nesta página.",
 		"buttonNotInvested": "Ir para a página de Oportunidades",
 		"percentageOfPortfolio": "% do portfólio"
 	},

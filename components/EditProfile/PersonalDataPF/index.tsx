@@ -73,7 +73,6 @@ export const PersonalDataPF: React.FC<IChangePassword> = props => {
 					partners_rg: isStableUnion ? data.partners_rg : null,
 					partners_address: isStableUnion ? data.partners_address : null,
 			  };
-		console.log(value, "value");
 
 		request = {
 			full_name: data.full_name,

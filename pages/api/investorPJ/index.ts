@@ -52,17 +52,15 @@ router.post(verifyUser, async (req, res) => {
 		await dbConnect();
 
 		const investorData = req.body;
-		console.log(investorData, "investorData");
 
 		const user = req?.user;
-		console.log(user, "user");
 
 		insertSchema.parse(investorData);
 
 		const investorExists = await investorPJ.findOne({
 			cnpj: investorData.cnpj,
 		});
-		console.log(investorExists, "investorExists");
+
 		if (investorExists) {
 			return res.status(400).json({
 				error: "CNPJ already registered",

@@ -11,7 +11,7 @@ interface IChangePassword {
 export const PersonalDataComponent: React.FC<IChangePassword> = props => {
 	const { data, token } = props;
 	const { isInvestor } = useUser();
-	console.log(isInvestor, "isInvestor");
+
 	return (
 		<Flex w="100%" justifyContent="end">
 			{isInvestor ? (

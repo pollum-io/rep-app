@@ -16,6 +16,7 @@ import { Maps } from "../Map/Maps";
 import { Carousel } from "./Carousel";
 import { Collections } from "./Collections";
 import { PriceCard } from "./PriceCard";
+import { TimelineComponent } from "./TimelineComponent";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -76,6 +77,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 		// eslint-disable-next-line
 		[imovelDetails.token_address, account, dateEndend]
 	);
+
 	return (
 		<>
 			<Flex px="5rem" flexDir={"column"} alignItems="center">
@@ -227,27 +229,21 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 								fontSize="2xl"
 								color={"#171923"}
 							>
-								{t("opportunitieDetails.offers")}
+								{t("opportunities.estimatedTimeline")}
 							</Text>
-							<Flex gap="8rem">
-								<Flex flexDir={"column"} color={"#171923"}>
-									{imovelDetails?.general_info?.map((infos: string, idx) => (
-										<Text key={idx} pr="3">
-											&bull; {infos}
-										</Text>
+							<Flex maxWidth="70rem">
+								<Flex flexDir={"row"}>
+									{imovelDetails?.estimated_timeline?.map((data, index) => (
+										<>
+											<TimelineComponent
+												key={index}
+												titleWidth={"12rem"}
+												data={data}
+											/>
+										</>
 									))}
 								</Flex>
 							</Flex>
-							<Text
-								mt="2.375rem"
-								fontSize={"sm"}
-								fontWeight={"500"}
-								color={"#007D99"}
-								_hover={{ cursor: "pointer" }}
-								w="max-content"
-							>
-								{t("opportunitieDetails.seeAll")}
-							</Text>
 						</Flex>
 					</Flex>
 

@@ -1,3 +1,5 @@
+import { ITimelineSteps } from "./ITimelineSteps";
+
 export interface IOpportunitiesCard {
 	__v: number;
 	_id: string;
@@ -19,6 +21,13 @@ export interface IOpportunitiesCard {
 	init_date: string; // ou data
 	neighbor_description: string;
 	pictures_extra: string[];
+	estimated_timeline?: Array<{
+		year: number;
+		data: Array<{
+			quarter: string;
+			info: Array<{ name: string; status: string }>;
+		}>;
+	}>;
 	pictures_neighbor: string[];
 	token_price: number;
 	token_minted: number;
