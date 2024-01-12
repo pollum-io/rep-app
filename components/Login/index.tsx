@@ -21,7 +21,6 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 				email: email,
 				password: password,
 			});
-			console.log(email);
 			getInfosId(email);
 			toast({
 				id: "toast-login-suc",

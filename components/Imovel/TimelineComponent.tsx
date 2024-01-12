@@ -12,7 +12,6 @@ export const TimelineComponent: FunctionComponent<ITimelineSteps> = ({
 	titleWidth,
 	data,
 }) => {
-	console.log(data, "data");
 	const getQuarterStyle = (info: quarterStyleInfo[], quarter: string) => {
 		if (info.every((item: quarterStyleInfo) => item.status === "completed")) {
 			return (
