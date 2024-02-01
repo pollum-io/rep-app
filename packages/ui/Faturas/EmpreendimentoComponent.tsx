@@ -32,8 +32,8 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 					borderRadius={"624.9375rem"}
 					px={"0.75rem"}
 					py={"0.5rem"}
-					color={state === "abertas" ? "#00262D" : "#718096"}
-					bgColor={state === "abertas" ? "#B1D8DF" : "transparent"}
+					color={state === "abertas" ? "#fff" : "#718096"}
+					bgColor={state === "abertas" ? "#003243c8" : "transparent"}
 					fontWeight={"500"}
 					onClick={() => {
 						setState("abertas");
@@ -47,8 +47,8 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 					borderRadius={"624.9375rem"}
 					px={"0.75rem"}
 					py={"0.5rem"}
-					color={state === "pagas" ? "#00262D" : "#718096"}
-					bgColor={state === "pagas" ? "#B1D8DF" : "transparent"}
+					color={state === "pagas" ? "#fff" : "#718096"}
+					bgColor={state === "pagas" ? "#003243c8" : "transparent"}
 					fontWeight={"500"}
 					onClick={() => {
 						setState("pagas");

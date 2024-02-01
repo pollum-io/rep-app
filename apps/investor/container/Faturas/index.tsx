@@ -44,7 +44,7 @@ export const FaturasContainer: FunctionComponent<UserData> = (props) => {
 		<DefaultTemplate>
 			<Flex
 				zIndex={"1"}
-				bgColor={"#1789A3"}
+				bgGradient="linear(to-b, #001a29, #003243)"
 				borderBottomRadius="0.75rem"
 				h={"12.0625rem"}
 				alignItems={"end"}

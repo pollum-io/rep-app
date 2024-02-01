@@ -40,7 +40,7 @@ export const HeaderLinks: React.FC = () => {
 					}
 					mt="2"
 					pb="2"
-					color={pathname === item.url ? "#007D99" : "#4A5568"}
+					color={pathname === item.url ? "#003243" : "#4A5568"}
 					_hover={{
 						color: "#007D99",
 						cursor: "pointer",
