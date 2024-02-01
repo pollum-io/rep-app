@@ -21,11 +21,6 @@ export const HeaderLinks: React.FC = () => {
 			name: t("header.companies"),
 			url: "/empresas",
 		},
-		// {
-		// 	id: 4,
-		// 	name: t("companies.card.learnMore"),
-		// 	url: "/saibamais",
-		// },
 	];
 
 	const { pathname, push } = useRouter();

@@ -39,15 +39,13 @@ export const HamburguerMenu: React.FC = () => {
 					flexDir={"row"}
 					alignItems={"center"}
 					gap="3"
-					w={"max"}
 					border="0.0625rem solid #E2E8F0"
 					rounded={"1rem"}
 				>
-					{!isInvestorPerfilCompleted && <Img src="/icons/notification.svg" />}
 					{username ? (
 						<Text fontSize={"sm"} fontFamily="Poppins" color={"#4A5568"}>
 							{t("portfolio.hello", {
-								Name: firstName,
+								Name: username.slice(0, 8),
 							})}
 						</Text>
 					) : (
@@ -74,7 +72,7 @@ export const HamburguerMenu: React.FC = () => {
 					fontSize="0.875rem"
 					lineHeight="1.25rem"
 					pr="1.1875rem"
-					color="#4A5568"
+					color="#003243"
 					pl="0.9375rem"
 					mt="0.3rem"
 					h="1.8rem"
@@ -89,7 +87,7 @@ export const HamburguerMenu: React.FC = () => {
 					fontSize="0.875rem"
 					lineHeight="1.25rem"
 					pr="1.1875rem"
-					color="#4A5568"
+					color="#003243"
 					pl="0.9375rem"
 					mt="0.3rem"
 					h="1.8rem"
@@ -201,7 +199,7 @@ export const HamburguerMenu: React.FC = () => {
 					fontSize="0.875rem"
 					lineHeight="1.25rem"
 					pr="1.1875rem"
-					color="#4A5568"
+					color="#003243"
 					h="1.8rem"
 					pl="0.9375rem"
 					_focus={{}}
