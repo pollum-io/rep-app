@@ -65,21 +65,48 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 	const { t } = useTranslation();
 
 	return (
-		<Flex
-			bgColor="#ffffff"
-			width="100vw"
-			height="100vh"
-			justifyContent="space-between"
-		>
+		<Flex width="100vw" height="100vh" justifyContent="space-between">
 			<Flex
 				flex="1"
 				h="100vh"
 				justifyContent="center"
 				alignItems="center"
 				fontFamily="Poppins"
+				zIndex={"99"}
+				bgGradient="linear(to-b, #001a29, #003243)"
 			>
-				<Flex flexDirection="column" w="22rem" justifyContent="center">
-					<Flex flexDirection="column" gap="2"></Flex>
+				<Flex
+					bgColor="#ffffff"
+					flexDirection="column"
+					justifyContent="center"
+					w={{
+						base: "50%",
+						md: "45%",
+						lg: "35%",
+						xl: "35%",
+						"2xl": "24%",
+					}}
+					borderRadius="10px"
+					boxShadow="0rem 1.25rem 1.5625rem rgba(31, 41, 55, 0.1), 0rem 0.625rem 0.625rem rgba(31, 41, 55, 0.04)"
+					p={"3rem"}
+				>
+					<Flex flexDirection="column" gap="2">
+						<Img
+							w={"7rem"}
+							src="/images/vestar-assets/Asset5.svg"
+							transition={"0.8s"}
+							_hover={{ opacity: 0.6 }}
+						/>
+						<Text
+							color="#003243"
+							fontSize="0.875rem"
+							fontWeight="normal"
+							lineHeight="150%"
+							fontStyle="normal"
+						>
+							{t("login.liveInvesting")}
+						</Text>
+					</Flex>
 					<Flex flexDirection="column" mt="1rem" gap="12px">
 						<Text
 							flexDirection="column"
@@ -92,7 +119,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							E-mail
 						</Text>
 						<Input
-							placeholder={t("login.placeholderEmail") as string}
+							placeholder={t("login.placeholderEmail") as any}
 							_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 							border="0.0938rem solid #E2E8F0"
 							_hover={{}}
@@ -127,46 +154,32 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 								fontWeight="500"
 								fontSize="0.75rem"
 								lineHeight="1rem"
-								color="#007D99"
-								_hover={{ cursor: "pointer" }}
-								onClick={() => push("/recuperar-senha")}
+								color="#003243"
+								transition="0.7s"
+								_hover={{ opacity: 0.8, cursor: "pointer" }}
+								onClick={() => push("/recover_password")}
 							>
 								{t("login.forgot")}
 							</Text>
-						</Flex>{" "}
-						<InputGroup size="md">
-							<Input
-								placeholder={t("login.placeholderSenha") as string}
-								_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
-								border="0.0938rem solid #E2E8F0"
-								_hover={{}}
-								_focus={{}}
-								fontStyle="normal"
-								fontWeight="400"
-								fontSize="0.875rem"
-								lineHeight="1.25rem"
-								borderRadius="0.375rem"
-								h="2rem"
-								pl="0.7rem"
-								color="#2D3748"
-								onChange={(e) => setPassword(e.target.value)}
-								type={showPassword ? "password" : "text"}
-								onKeyPress={handleKeyPress}
-							/>
-							<InputRightElement
-								display={"flex"}
-								onClick={() => setShowPassword(!showPassword)}
-								alignItems="center"
-								_hover={{ cursor: "pointer" }}
-								pb="0.55rem"
-							>
-								{showPassword ? (
-									<AiOutlineEyeInvisible size={25} color="#7a7a7a" />
-								) : (
-									<AiOutlineEye size={25} color="#7a7a7a" />
-								)}
-							</InputRightElement>
-						</InputGroup>
+						</Flex>
+						<Input
+							placeholder={t("login.placeholderSenha") as any}
+							_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
+							border="0.0938rem solid #E2E8F0"
+							_hover={{}}
+							_focus={{}}
+							fontStyle="normal"
+							fontWeight="400"
+							fontSize="0.875rem"
+							lineHeight="1.25rem"
+							borderRadius="0.375rem"
+							h="2rem"
+							pl="0.7rem"
+							color="#2D3748"
+							onChange={(e) => setPassword(e.target.value)}
+							type={"password"}
+							onKeyPress={handleKeyPress}
+						/>
 					</Flex>
 					<Flex mt="2.5rem">
 						<Button
@@ -179,14 +192,10 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							borderRadius="0.5rem"
 							w="100%"
 							h="2.2rem"
-							bgColor="#1789A3"
+							bgColor="#003243"
 							onClick={handleLogin}
-							_hover={{
-								cursor: "pointer",
-								bgColor: "#007D99",
-								boxShadow:
-									"0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)",
-							}}
+							transition="0.7s"
+							_hover={{ opacity: 0.8, cursor: "pointer" }}
 						>
 							Login
 						</Button>
@@ -208,26 +217,21 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							{t("login.noAccount")}
 						</Text>
 						<Button
+							type="submit"
 							fontStyle="normal"
 							fontWeight="500"
 							fontSize="0.75rem"
 							lineHeight="1rem"
-							color="#007D99"
+							color="#003243"
 							bg={"transparent"}
-							_hover={{ opacity: 0.8 }}
-							onClick={() => push("/create-account")}
+							transition="0.7s"
+							_hover={{ opacity: 0.6 }}
+							cursor={"not-allowed"}
 						>
 							{t("login.register")}
 						</Button>
 					</Flex>
 				</Flex>
-			</Flex>
-			<Flex h="100%" justifyContent="flex-end" flex="1">
-				<Img
-					src="images/backgrounds/LoginBackground.png"
-					h="100%"
-					w="max-content"
-				/>
 			</Flex>
 		</Flex>
 	);
