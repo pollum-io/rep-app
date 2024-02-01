@@ -87,7 +87,7 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 						<Flex
 							w="100%"
 							h="21.3125rem"
-							background="linear-gradient(91.4deg, #BBA1FF 40.04%, #E3FCFC 140.32%)"
+							bgGradient="linear(to-b, #001a29, #003243)"
 							mixBlendMode="multiply"
 							transform="matrix(-1, 0, 0, 1, 0, 0)"
 							position="absolute"
@@ -106,14 +106,6 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 						px={["", "", "", "1rem", "unset"]}
 					>
 						<Flex position="relative" alignItems="center">
-							<Img
-								w="max-content"
-								h="100%"
-								src="images/backgrounds/woman.png"
-								position="absolute"
-								zIndex="base"
-								left="6rem"
-							/>
 							<Text
 								w="18rem"
 								fontFamily="Poppins"
@@ -124,7 +116,9 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 								color="#FFFFFF"
 								zIndex="docked"
 								mt="2.5rem"
-							></Text>
+							>
+								{t("opportunities.investingIs")}
+							</Text>
 						</Flex>
 						<Flex
 							h="21.3125rem"
@@ -133,8 +127,29 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 							maxWidth="47rem"
 						>
 							<Flex justifyContent="space-between" w="100%" gap="1.5rem">
-								<Flex flexDirection="column" gap="0.625rem">
-									<Img src="images/firstIcon.png" w="2.2rem" h="2.8rem" />
+								<Flex
+									flexDirection="column"
+									justifyContent={"center"}
+									gap="0.625rem"
+								>
+									<Flex position={"relative"}>
+										<Flex
+											borderRadius={"999px"}
+											w={"2.3rem"}
+											h="2.3rem"
+											bg={"#29525f"}
+										/>
+										<Text
+											position={"absolute"}
+											color={"white"}
+											fontSize={"3xl"}
+											fontWeight="700"
+											bottom={"25%"}
+											left={"15%"}
+										>
+											1
+										</Text>
+									</Flex>{" "}
 									<Text
 										fontFamily="Poppins"
 										fontSize="1rem"
@@ -146,7 +161,24 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 									</Text>
 								</Flex>
 								<Flex flexDirection="column" gap="0.625rem">
-									<Img src="images/secondIcon.png" w="2.2rem" h="2.8rem" />
+									<Flex position={"relative"}>
+										<Flex
+											borderRadius={"999px"}
+											w={"2.3rem"}
+											h="2.3rem"
+											bg={"#29525f"}
+										/>
+										<Text
+											position={"absolute"}
+											color={"white"}
+											fontSize={"3xl"}
+											fontWeight="700"
+											bottom={"25%"}
+											left={"12%"}
+										>
+											2
+										</Text>
+									</Flex>
 									<Text
 										fontFamily="Poppins"
 										fontSize="1rem"
@@ -158,7 +190,24 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 									</Text>
 								</Flex>
 								<Flex flexDirection="column" gap="0.625rem">
-									<Img src="images/thirdIcon.png" w="2.2rem" h="2.8rem" />
+									<Flex position={"relative"}>
+										<Flex
+											borderRadius={"999px"}
+											w={"2.3rem"}
+											h="2.3rem"
+											bg={"#29525f"}
+										/>
+										<Text
+											position={"absolute"}
+											color={"white"}
+											fontSize={"3xl"}
+											fontWeight="700"
+											bottom={"25%"}
+											left={"12%"}
+										>
+											3
+										</Text>
+									</Flex>{" "}
 									<Text
 										fontFamily="Poppins"
 										fontSize="1rem"
@@ -170,7 +219,20 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 									</Text>
 								</Flex>
 								<Flex flexDirection="column" gap="0.625rem" pt="0.2rem">
-									<Img src="images/checkIcon.png" w="2.8rem" h="2.6rem" />
+									<Flex position={"relative"}>
+										<Flex
+											borderRadius={"999px"}
+											w={"2.3rem"}
+											h="2.3rem"
+											bg={"#29525f"}
+										/>
+										<Img
+											position={"absolute"}
+											src="images/icons/check.svg"
+											bottom={"10%"}
+											left={"-2%"}
+										/>
+									</Flex>{" "}
 									<Text
 										fontFamily="Poppins"
 										fontSize="1rem"
@@ -181,10 +243,11 @@ export const OpportunitiesContainer: FunctionComponent<UserData> = (
 										{t("opportunities.fourth")}
 									</Text>
 								</Flex>
-							</Flex>
+							</Flex>{" "}
 						</Flex>
 					</Flex>
 				</Flex>
+
 				<motion.div
 					initial={{ opacity: 0, y: 40 }}
 					animate={{ opacity: 1, y: 0 }}
