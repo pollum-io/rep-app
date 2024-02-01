@@ -88,14 +88,14 @@ export const CompaniesCard: FunctionComponent<ICompaniesCard> = ({
 						<Button
 							w="10.125rem"
 							h="1.5rem"
-							border="0.0625rem solid #007D99"
+							border="0.0625rem solid #003243c8"
 							borderRadius="0.375rem"
 							bgColor="#ffffff"
 							fontFamily="Poppins"
 							fontWeight="500"
 							fontSize="0.75rem"
 							lineHeight="1rem"
-							color="#007D99"
+							color="#003243c8"
 							_hover={{ bgColor: "#EDF2F7" }}
 							onClick={() =>
 								push({

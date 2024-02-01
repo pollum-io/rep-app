@@ -122,11 +122,11 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 										px={"0.75rem"}
 										py={"0.5rem"}
 										color={
-											buttonstate === button.buttonstate ? "#00262D" : "#718096"
+											buttonstate === button.buttonstate ? "#fff" : "#718096"
 										}
 										bgColor={
 											buttonstate === button.buttonstate
-												? "#B1D8DF"
+												? "#003243c8"
 												: "transparent"
 										}
 										fontWeight={"500"}

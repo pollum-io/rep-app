@@ -481,7 +481,7 @@ export const OpportunitiesCard: FunctionComponent<
 					<Oval
 						height={70}
 						width={70}
-						color="#1789A3"
+						color="#003243c8"
 						wrapperStyle={{}}
 						wrapperClass=""
 						visible={true}

@@ -35,7 +35,7 @@ export const EmptyInvest: React.FC<ComponentProps> = ({ investments }) => {
 			</Text>
 			<Button
 				h="max"
-				bgColor="#1789A3"
+				bgColor="#003243c8"
 				color="#FFF"
 				px={"1rem"}
 				py={"10px"}

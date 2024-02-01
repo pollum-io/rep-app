@@ -46,7 +46,7 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 				w={isMozilla ? "12rem" : "unset"}
 			>
 				<Flex gap={"0.5rem"}>
-					<Text color={"#007D99"} fontSize={"0.875rem"} fontWeight={"500"}>
+					<Text color={"#003243c8"} fontSize={"0.875rem"} fontWeight={"500"}>
 						Parcelas quitadas
 					</Text>
 					<Img src="/icons/info-circle-littlegray.svg" />
@@ -64,7 +64,7 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 				w={isMozilla ? "12rem" : "unset"}
 			>
 				<Flex gap={"0.5rem"}>
-					<Text color={"#007D99"} fontSize={"0.875rem"} fontWeight={"500"}>
+					<Text color={"#003243c8"} fontSize={"0.875rem"} fontWeight={"500"}>
 						Total de cotas
 					</Text>
 					<Img src="/icons/info-circle-littlegray.svg" />
@@ -77,7 +77,7 @@ export const FaturasDetails: React.FC<ComponentProps> = ({ contribution }) => {
 				w={isMozilla ? "11rem" : "unset"}
 			>
 				<Flex gap={"0.5rem"}>
-					<Text color={"#007D99"} fontSize={"0.875rem"} fontWeight={"500"}>
+					<Text color={"#003243c8"} fontSize={"0.875rem"} fontWeight={"500"}>
 						Prazo final aportes
 					</Text>
 					<Img src="/icons/info-circle-littlegray.svg" />

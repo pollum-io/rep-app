@@ -38,7 +38,7 @@ export const ResumoFaturasComponent: React.FC<ComponentProps> = ({
 					<Text fontSize={"0.875rem"} color={"#1A202C"}>
 						Valor de todas as faturas abertas
 					</Text>
-					<Text color={"#865DF0"} fontWeight={"600"} fontSize={"1.5rem"}>
+					<Text color={"#003243c8"} fontWeight={"600"} fontSize={"1.5rem"}>
 						{contribution?.amount_open_invoices
 							? formatCurrency(contribution?.amount_open_invoices)
 							: "-"}
