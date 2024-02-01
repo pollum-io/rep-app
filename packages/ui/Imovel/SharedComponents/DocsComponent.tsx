@@ -66,9 +66,9 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 						borderRadius={"0.6rem"}
 						bgColor={"transparent"}
 						fontSize={"0.875rem"}
-						border="1px solid #1789A3"
+						border="1px solid #003243c8"
 						fontWeight={"500"}
-						color={"#1789A3"}
+						color={"#003243c8"}
 					>
 						Baixar todas
 					</Button>
@@ -79,7 +79,7 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 					<MotionFlex
 						key={index}
 						alignItems={"center"}
-						bgColor={"#F7FAFC"}
+						bgColor={"#29535f1c"}
 						px={"1rem"}
 						py={"0.5rem"}
 						borderRadius={"0.75rem"}

@@ -13,16 +13,17 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 	return (
 		<Flex w="70rem" h="100%" gap={"4"} justifyContent="start" mt={"2rem"}>
 			<Button
-				bg={page === "oportunidade" ? "#B1D8DF" : "transparent"}
+				bg={page === "oportunidade" ? "#003243c8" : "transparent"}
 				fontSize={"0.875rem"}
 				fontWeight={"500"}
-				color={page === "oportunidade" ? "#00262D" : "#718096"}
+				color={page === "oportunidade" ? "#fff" : "#718096"}
 				borderRadius={"1rem"}
 				w={"max"}
 				h={"max"}
 				py={"2"}
 				px={"4"}
-				_hover={{ color: "#007D99" }}
+				transition="0.6s"
+				_hover={{ opacity: 0.6 }}
 				onClick={() => setPage("oportunidade")}
 			>
 				Oportunidade
