@@ -14,13 +14,13 @@ export const Footer: React.FC = () => {
 			gap="10rem"
 			color="#ffffff"
 			flex={"1"}
-			mt="11.5rem"
+			mt="0rem"
 		>
 			<Flex flexDir={"column"} gap="0.4375rem">
 				<Flex gap={"0.5rem"} alignItems={"center"}>
 					<Img
 						w={"6rem"}
-						src="images/vestar-assets/Asset8.svg"
+						src="/images/vestar-assets/Asset8.svg"
 						transition={"0.8s"}
 						_hover={{ opacity: 0.6 }}
 					/>

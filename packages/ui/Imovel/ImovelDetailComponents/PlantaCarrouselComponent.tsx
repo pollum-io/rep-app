@@ -90,9 +90,9 @@ const PlantaCarrousel = () => {
 										w="13rem"
 										fontSize="0.75rem"
 										fontWeight="500"
-										border="1px solid #007D99"
+										border="1px solid #003243c8"
 										bg="transparent"
-										color="#007D99"
+										color="#003243c8"
 										h="max"
 										py="1"
 										onClick={() => handleViewPlant(plant.id)}
@@ -118,7 +118,7 @@ const PlantaCarrousel = () => {
 						isRound
 						ml={2}
 						bg={"white"}
-						color={"#007D99"}
+						color={"#003243c8"}
 						boxShadow={
 							"0px 2px 4px -1px rgba(0,0,0,0.05), 0px 6px 10px -2px rgba(0,0,0,0.1)"
 						}
@@ -143,7 +143,7 @@ const PlantaCarrousel = () => {
 							isRound
 							mr={2}
 							bg={"white"}
-							color={"#007D99"}
+							color={"#003243c8"}
 							boxShadow={
 								"0px 2px 4px -1px rgba(0,0,0,0.05), 0px 6px 10px -2px rgba(0,0,0,0.1)"
 							}

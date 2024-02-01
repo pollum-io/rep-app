@@ -58,7 +58,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 						<Flex flexDir={"column"}>
 							<Flex
 								w={"46.125rem"}
-								bg={"#1789A3"}
+								bg={"#003243c8"}
 								alignItems={"center"}
 								justifyContent={"center"}
 								px={"1rem"}
@@ -86,7 +86,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 									boxShadow="0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px rgba(0, 0, 0, 0.10);"
 								>
 									<Text
-										color={"#007D99"}
+										color={"#003243c8"}
 										fontSize={"1.125rem"}
 										fontWeight={"600"}
 									>
@@ -121,7 +121,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 									boxShadow="0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px rgba(0, 0, 0, 0.10);"
 								>
 									<Text
-										color={"#007D99"}
+										color={"#003243c8"}
 										fontSize={"1.125rem"}
 										fontWeight={"600"}
 									>

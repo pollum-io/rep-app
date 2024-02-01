@@ -17,7 +17,7 @@ export const TimelineComponent: FunctionComponent<ITimelineSteps> = ({
 			return (
 				<Flex
 					borderRadius="full"
-					bgColor={"#007088"}
+					bgColor={"#003243c8"}
 					w="1.9737rem"
 					h="1.9737rem"
 					p={"0.375rem"}
@@ -61,7 +61,7 @@ export const TimelineComponent: FunctionComponent<ITimelineSteps> = ({
 			return (
 				<Flex
 					borderRadius="full"
-					bgColor={"#007088"}
+					bgColor={"#003243c8"}
 					w="1.9737rem"
 					p={"0.375rem"}
 					h="1.9737rem"

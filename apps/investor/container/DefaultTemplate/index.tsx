@@ -21,7 +21,7 @@ export const DefaultTemplate: FunctionComponent<BaseLayoutProps> = ({
 		>
 			<Header />
 			{children}
-			<Flex mt={"20.0625rem"}>
+			<Flex mt={"10.0625rem"}>
 				<Footer />
 			</Flex>
 		</Flex>

@@ -21,7 +21,7 @@ export const PieChartComponent: React.FC<IPieChart> = (props) => {
 	}, []);
 
 	const RADIAN = Math.PI / 180;
-	const COLORS = ["#2321C0", "#BCA1FF", "#1BA9EA", "#6E40E7"];
+	const COLORS = ["#383683", "#BCA1FF", "#1BA9EA", "#6E40E7"];
 
 	const renderCustomizedLabel = ({
 		cx,

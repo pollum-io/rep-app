@@ -82,7 +82,7 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 				py={"0.75rem"}
 			>
 				<Flex flex="0.7" alignItems="center">
-					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#4BA3B7"}>
+					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#003243c8"}>
 						{item?.period}
 					</Text>
 				</Flex>
@@ -130,7 +130,7 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 		>
 			<Flex
 				id="table-header"
-				bg={"#1789A3"}
+				bg={"#003243c8"}
 				px="1rem"
 				py={"0.75rem"}
 				justifyContent="space-between"
@@ -171,7 +171,7 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 			{renderRows()}
 			<Flex
 				id="table-header"
-				bg={"#1789A3"}
+				bg={"#003243c8"}
 				px="1rem"
 				py={"0.75rem"}
 				justifyContent="space-between"
