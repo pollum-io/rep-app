@@ -37,7 +37,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 	};
 
 	const getBarColor = (entryValue: string | number) => {
-		return Number(entryValue) >= 0 ? "#48BB78" : "#E53E3E";
+		return Number(entryValue) >= 0 ? "#003243c8" : "#ca5d5d";
 	};
 
 	const CustomBarLabel = (props: any) => {

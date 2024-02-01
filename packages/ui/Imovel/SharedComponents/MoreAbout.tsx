@@ -19,7 +19,7 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 			transition={"0.5s"}
 			_hover={{
 				boxShadow:
-					"0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px rgba(0, 0, 0, 0.10);",
+					"3px 2px 6px -2px rgb(0 0 0), -6px 0px 15px 0px rgb(0 0 0 / 0%)",
 			}}
 			cursor={"pointer"}
 			onClick={onClick}

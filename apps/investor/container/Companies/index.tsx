@@ -53,6 +53,7 @@ export const CompaniesContainer: FunctionComponent<ICompanies> = ({
 					pt="6.25rem"
 					pb="8.5rem"
 					alignItems="center"
+					mb={"1.5rem"}
 				>
 					<Flex flexDirection="column" w="44.125rem" gap="2.75rem">
 						<Flex flexDirection="column" gap="0.25rem" fontFamily="Poppins">

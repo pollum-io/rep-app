@@ -70,7 +70,7 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma, data }) => {
 		>
 			<Flex
 				id="table-header"
-				bg={"#1789A3"}
+				bg={"#003243c8"}
 				px="1rem"
 				py={"0.75rem"}
 				justifyContent="space-between"
@@ -102,7 +102,7 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma, data }) => {
 			{renderRows()}
 			<Flex
 				id="table-header"
-				bg={"#1789A3"}
+				bg={"#003243c8"}
 				px="1rem"
 				py={"0.75rem"}
 				justifyContent="space-between"
