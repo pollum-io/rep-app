@@ -67,7 +67,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 		<Flex
 			w="23.125rem"
 			h={"max"}
-			bgColor={"#007D99"}
+			bgColor={"#003243"}
 			p="1.5rem"
 			flexDir={"column"}
 			borderRadius="0.75rem"
@@ -92,7 +92,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 					<Flex flexDirection="column">
 						<Flex
 							my="1rem"
-							bgColor={"#1789A3"}
+							bgColor={"#29525f"}
 							py="0.5rem"
 							px="1rem"
 							borderRadius="0.5rem"

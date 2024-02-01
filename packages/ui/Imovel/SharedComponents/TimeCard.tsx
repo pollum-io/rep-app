@@ -45,12 +45,12 @@ export const TimeCard: React.FC<ITimeCard> = ({ imovelDetails }) => {
 		<>
 			{ended ? (
 				<Flex
-					bgColor="#E2E8F0"
+					bgColor="#29525f"
 					py="0.25rem"
 					px="1rem"
 					borderRadius={"4.875rem"}
 					fontSize={"sm"}
-					color="#171923"
+					color="#f8f8f8"
 					gap="0.25rem"
 					justifyContent="center"
 				>
@@ -63,7 +63,7 @@ export const TimeCard: React.FC<ITimeCard> = ({ imovelDetails }) => {
 					padding="1.5rem"
 					gap="0.25rem"
 					w="23.125rem"
-					background="#4BA3B7"
+					bgColor="#29525f"
 					borderRadius="0.75rem"
 					fontFamily="Poppins"
 					color="#FFFFFF"

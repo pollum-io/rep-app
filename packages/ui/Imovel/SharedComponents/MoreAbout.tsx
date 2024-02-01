@@ -10,7 +10,7 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 }) => {
 	return (
 		<Flex
-			bgColor={"#E4F2F3"}
+			bgColor={"#003243c8"}
 			p={"1rem"}
 			flexDir={"column"}
 			h={"max"}
@@ -28,7 +28,7 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 				<Img src={icon} w={"3rem"} pb={"1rem"} mr={"1rem"} />
 				<Flex flexDir={"column"}>
 					<Text
-						color={"#007D99"}
+						color={"#fff"}
 						fontWeight={600}
 						fontSize={"1.125rem"}
 						pb={"0.5rem"}
@@ -40,7 +40,7 @@ const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 						textAlign={"left"}
 						w="100%"
 						h={"3.75rem"}
-						color={"#171923"}
+						color={"#fff"}
 						fontSize={"0.875rem"}
 					>
 						{description}

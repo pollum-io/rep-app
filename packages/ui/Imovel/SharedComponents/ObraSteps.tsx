@@ -59,7 +59,7 @@ export const ObraSteps: FunctionComponent<IObraSteps> = ({
 		<Flex gap="0.7762rem" alignItems="center" pb={"1rem"}>
 			<Flex
 				borderRadius="full"
-				bgColor={barStatus !== 0 ? "#007088" : "#EDF2F7"}
+				bgColor={barStatus !== 0 ? "#003243c8" : "#EDF2F7"}
 				w="1.9737rem"
 				h="1.9737rem"
 				justifyContent="center"
@@ -87,7 +87,7 @@ export const ObraSteps: FunctionComponent<IObraSteps> = ({
 					color={
 						barStatus !== 0
 							? barStatus === 50
-								? "#007088"
+								? "#004f69"
 								: "#000000"
 							: "#A0AEC0"
 					}
