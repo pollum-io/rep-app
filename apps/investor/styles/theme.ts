@@ -15,6 +15,13 @@ export const theme = extendTheme({
 			},
 		},
 	},
+	Progress: {
+		baseStyle: {
+			filledTrack: {
+				bg: "#003243",
+			},
+		},
+	},
 	components: {
 		Switch: {
 			baseStyle: {
