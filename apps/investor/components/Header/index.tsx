@@ -15,74 +15,62 @@ export const Header: React.FC = () => {
 			h={"4.75rem"}
 			flexDir="row"
 			alignItems={"center"}
-			justifyContent={"center"}
+			justifyContent="space-around"
 			bgColor={"#FFFFFF"}
 			borderBottom="0.0625rem solid #E2E8F0"
 			boxShadow="0rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.05)"
 		>
 			<Flex
-				px={{
-					sm: "24px",
-					md: "5rem",
-					lg: "0rem",
-					xl: "0rem",
-					"2xl": "unset",
-				}}
-				margin={"0 auto"}
-				maxWidth="70rem"
-				alignItems={"center"}
-				w={"100%"}
+				onClick={() => push("/oportunidades")}
+				_hover={{ cursor: "pointer" }}
 			>
-				<Flex
-					onClick={() => push("/oportunidades")}
-					_hover={{ cursor: "pointer" }}
-					justifyContent={"flex-start"}
-					w={"100%"}
-				>
-					{/* <Img src={"/images/livnlogo.png"} w="5" h="7" alt="Livn logo" /> */}
-				</Flex>
-				<Flex justifyContent={"center"} w={"100%"} alignItems={"center"}>
-					<HeaderLinks />
-				</Flex>
-				{username === undefined ? (
-					<Flex
-						gap="0.75rem"
-						fontFamily="Poppins"
-						fontWeight="500"
-						fontSize="0.875rem"
-						lineHeight="1.25rem"
-						alignItems="center"
-						w={"max"}
-						justifyContent="center"
-					>
-						<Oval
-							height={15}
-							width={15}
-							color="#1789A3"
-							wrapperStyle={{}}
-							wrapperClass=""
-							visible={true}
-							ariaLabel="oval-loading"
-							secondaryColor="#bdbdbd"
-							strokeWidth={2}
-							strokeWidthSecondary={2}
-						/>
-					</Flex>
-				) : (
-					<Flex
-						gap="0.75rem"
-						fontFamily="Poppins"
-						fontWeight="500"
-						justifyContent={"flex-end"}
-						fontSize="0.875rem"
-						lineHeight="1.25rem"
-						alignItems="center"
-						w={"100%"}
-					>
-						<HamburguerMenu />
-					</Flex>
-				)}
+				<Img
+					w={"7rem"}
+					src="/images/vestar-assets/Asset 5.png"
+					transition={"0.8s"}
+					_hover={{ opacity: 0.6 }}
+				/>
 			</Flex>
+			<Flex>
+				<HeaderLinks />
+			</Flex>
+			{username === undefined ? (
+				<Flex
+					gap="0.75rem"
+					fontFamily="Poppins"
+					fontWeight="500"
+					fontSize="0.875rem"
+					lineHeight="1.25rem"
+					alignItems="center"
+					w={"12rem"}
+					justifyContent="center"
+				>
+					<Oval
+						height={15}
+						width={15}
+						color="#1789A3"
+						wrapperStyle={{}}
+						wrapperClass=""
+						visible={true}
+						ariaLabel="oval-loading"
+						secondaryColor="#bdbdbd"
+						strokeWidth={2}
+						strokeWidthSecondary={2}
+					/>
+				</Flex>
+			) : (
+				<Flex
+					gap="0.75rem"
+					fontFamily="Poppins"
+					fontWeight="500"
+					fontSize="0.875rem"
+					lineHeight="1.25rem"
+					alignItems="center"
+					w={"14rem"}
+				>
+					<HamburguerMenu />
+				</Flex>
+			)}
 		</Flex>
 	);
 };
