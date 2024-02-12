@@ -36,7 +36,7 @@
 		"fullName": "Full Name",
 		"birthDate": "Birth Date",
 		"socialNumber": "Social Security Number",
-		"whoInvited": "Who invited you to LIVN?",
+		"whoInvited": "Who invited you to Vestar?",
 		"legalPerson": "Legal Person",
 		"corporateName": "Corporate Name",
 		"nationalRegister": "National Register of Legal Entity (CNPJ)",
@@ -51,7 +51,7 @@
 		"cityOfBirth": "City of birth"
 	},
 	"opportunities": {
-		"investingIs": "Investing is much easier with LIVN!",
+		"investingIs": "Investing is much easier with Vestar!",
 		"first": "Click on an opportunity available to you",
 		"second": "Select the amount of quotas you want",
 		"third": "Click on I want to invest and make the payment",
@@ -139,7 +139,7 @@
 		}
 	},
 	"companieDetails": {
-		"livnProp": "LIVN Properties",
+		"livnProp": "Vestar Properties",
 		"delivered": "Delivered works",
 		"inProgress": "In progress",
 		"vgv": "VGV Total",

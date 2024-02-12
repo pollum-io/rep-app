@@ -36,7 +36,7 @@
 		"fullName": "Nome Completo",
 		"birthDate": "Data de Nascimento",
 		"socialNumber": "CPF",
-		"whoInvited": "Quem convidou você para a LIVN?",
+		"whoInvited": "Quem convidou você para a Vestar?",
 		"legalPerson": "Sou Pessoa Jurídica",
 		"corporateName": "Razão Social",
 		"nationalRegister": "CNPJ",
@@ -51,7 +51,7 @@
 		"cityOfBirth": "Cidade de Nascimento"
 	},
 	"opportunities": {
-		"investingIs": "Investir é muito mais fácil com a LIVN",
+		"investingIs": "Investir é muito mais fácil com a Vestar",
 		"first": "Abra uma oportunidade disponível para você",
 		"second": "Selecione a quantidade de cotas que você deseja",
 		"third": "Clique em Quero investir e faça o pagamento",
@@ -128,7 +128,7 @@
 		"termsOf": "Termos de Compra."
 	},
 	"companies": {
-		"partners": "Empresas parceiras LIVN",
+		"partners": "Empresas parceiras Vestar",
 		"companie": "empresa",
 		"previous": "Anterior",
 		"next": "Próxima",
@@ -139,7 +139,7 @@
 		}
 	},
 	"companieDetails": {
-		"livnProp": "Empreendimentos LIVN",
+		"livnProp": "Empreendimentos Vestar",
 		"delivered": "Obras entregues",
 		"inProgress": "Em andamento",
 		"vgv": "VGV Total",

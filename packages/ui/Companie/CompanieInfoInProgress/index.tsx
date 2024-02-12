@@ -36,7 +36,7 @@ export const CompanieInfoInProgress: FunctionComponent<
 			>
 				<Flex flexDirection="column" gap="0.25rem">
 					<Text fontSize="0.875rem" lineHeight="1.25rem" color="#007D99">
-						{/* {t("companieDetails.livnProp")} */}Empreendimentos LIVN
+						{/* {t("companieDetails.livnProp")} */}Empreendimentos na plataforma
 					</Text>
 					<Text fontSize="1rem" lineHeight="1.5rem" color="#171923">
 						{livnProp}

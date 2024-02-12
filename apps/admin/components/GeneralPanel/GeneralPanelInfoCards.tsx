@@ -13,7 +13,7 @@ export const GeneralPanelInfoCards: React.FC<IGeneralPanelInfoCards> = ({
 		{
 			id: 1,
 			logo: "/logos/receitas.svg",
-			title: "Receitas LIVN",
+			title: "Receitas Vestar",
 			value: formatCurrency(cardsData?.revenue),
 		},
 		{

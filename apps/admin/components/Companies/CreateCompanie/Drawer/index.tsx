@@ -329,7 +329,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 								setSecondStep={setSecondStep}
 							/> */}
 								<Text color={"#171923"}>
-									Em breve você poderá ver aqui todas as oportunidades LIVN
+									Em breve você poderá ver aqui todas as oportunidades Vestar
 									cadastradas por esta empresa.
 								</Text>
 							</Flex>
