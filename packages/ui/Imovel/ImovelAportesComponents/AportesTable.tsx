@@ -10,7 +10,7 @@ type schedule = {
 };
 interface IValueTable {
 	isCronograma?: boolean;
-	data?: any[];
+	data?: unknown[];
 }
 
 const Table: FunctionComponent<IValueTable> = ({ isCronograma, data }) => {

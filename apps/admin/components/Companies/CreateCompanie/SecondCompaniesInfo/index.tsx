@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 import { PersistentFramework } from "ui";
 
 interface ISecondCompaniesInfo {
-	onOpenModal?: any;
+	onOpenModal?: unknown;
 	token: string;
 }
 

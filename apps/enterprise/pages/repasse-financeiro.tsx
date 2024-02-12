@@ -6,7 +6,7 @@ import { fetchEnterpriseById, fetchGetInvestorPFById } from "services";
 
 interface IFinancialDisbursementPage {
 	token: string;
-	enterpriseData: any;
+	enterpriseData: unknown;
 	enterpriseId: string;
 }
 

@@ -1,16 +1,15 @@
 import { Flex, Text, Img, Button } from "@chakra-ui/react";
 import { FunctionComponent, useMemo } from "react";
 import { formatCurrency } from "ui/utils/BRCurrency";
-import { formatDate, formatFullDate } from "../../utils/formatDate";
+import { formatFullDate } from "../../utils/formatDate";
 
 interface IValueTable {
 	isCronograma?: boolean;
-	data?: any; //TODO
+	data?: unknown; //TODO
 	total_invested: number;
 }
 
 export const ContributionScheduleTable: FunctionComponent<IValueTable> = ({
-	isCronograma,
 	total_invested,
 	data,
 }) => {

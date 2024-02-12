@@ -4,8 +4,8 @@ import { formatCurrency } from "../../utils/BRCurrency";
 import { formatDateOnlyDayMonthCompleteYear } from "../../../../apps/investor/utils/formatDate";
 
 interface IComponentProps {
-	data?: any; //
-	imovelDetails?: any;
+	data?: unknown; //
+	imovelDetails?: unknown;
 	isMyInvest: boolean;
 }
 

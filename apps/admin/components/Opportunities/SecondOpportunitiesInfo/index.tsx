@@ -17,7 +17,7 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 }) => {
 	const { setFirstStep, setSecondStep, firstStep, secondStep, setThirdStep } =
 		useCreateAdminCreateSteps();
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
+	const [opportuntiesFormData, setOpportuntiesFormData] = useState<unknown>({
 		enterprise_name: "",
 		name: "",
 		localizacao: "",

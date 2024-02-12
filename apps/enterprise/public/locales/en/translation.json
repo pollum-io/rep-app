@@ -179,7 +179,7 @@
 		"percentage": "Percentage",
 		"portfolioDateOf": "This is the portfolio of",
 		"portfolioEmpty": "Your portfolio is still empty",
-		"notInvested": "You haven't made any investments yet.",
+		"notInvested": "You haven't made unknown investments yet.",
 		"textNotInvested": "Once you purchase shares, you will be able to see all data, graphs and investment summaries with smart filters on this page.",
 		"buttonNotInvested": "Go to the Opportunities page",
 		"percentageOfPortfolio": "% of portfolio"

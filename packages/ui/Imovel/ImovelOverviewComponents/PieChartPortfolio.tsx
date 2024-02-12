@@ -4,7 +4,7 @@ import { PieChart, Pie, Sector, Cell } from "recharts";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
 
 interface IPieChart {
-	data?: any;
+	data?: unknown;
 	opData?: IOpportunitiesCard;
 }
 
@@ -31,7 +31,7 @@ export const PieChartComponent: React.FC<IPieChart> = (props) => {
 		outerRadius,
 		percent,
 		index,
-	}: any) => {
+	}: unknown) => {
 		const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
 		const x = cx + radius * Math.cos(-midAngle * RADIAN);
 		const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -55,7 +55,7 @@ export const PieChartComponent: React.FC<IPieChart> = (props) => {
 		);
 	};
 
-	const renderActiveShape = (props: any) => {
+	const renderActiveShape = (props: unknown) => {
 		const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } =
 			props;
 
@@ -73,33 +73,35 @@ export const PieChartComponent: React.FC<IPieChart> = (props) => {
 		);
 	};
 
-	const countEnterpriseTypes = (data: any) => {
-		const typesCount: any = {};
-		data?.forEach((item: any) => {
+	const countEnterpriseTypes = (data: unknown) => {
+		const typesCount: unknown = {};
+		data?.forEach((item: unknown) => {
 			const type = item.enterprise_type;
 			typesCount[type] = (typesCount[type] || 0) + 1;
 		});
-		const totalCount: any = Object.values(typesCount).reduce(
-			(a: any, b: any) => a + b,
+		const totalCount: unknown = Object.values(typesCount).reduce(
+			(a: unknown, b: unknown) => a + b,
 			0
 		);
-		return Object.entries(typesCount).map(([type, count]: any) => ({
+		return Object.entries(typesCount).map(([type, count]: unknown) => ({
 			name: type,
 			value: count / totalCount,
 		}));
 	};
 
-	const countOpportunityTypes = (opData: any) => {
-		const typesCount: any = {};
-		opData.business_details.description_flows_raised.forEach((item: any) => {
-			const type = item.item;
-			typesCount[type] = (typesCount[type] || 0) + item.value;
-		});
-		const totalCount: any = Object.values(typesCount).reduce(
-			(a: any, b: any) => a + b,
+	const countOpportunityTypes = (opData: unknown) => {
+		const typesCount: unknown = {};
+		opData.business_details.description_flows_raised.forEach(
+			(item: unknown) => {
+				const type = item.item;
+				typesCount[type] = (typesCount[type] || 0) + item.value;
+			}
+		);
+		const totalCount: unknown = Object.values(typesCount).reduce(
+			(a: unknown, b: unknown) => a + b,
 			0
 		);
-		return Object.entries(typesCount).map(([type, count]: any) => ({
+		return Object.entries(typesCount).map(([type, count]: unknown) => ({
 			name: type,
 			value: count / totalCount,
 		}));
@@ -132,7 +134,7 @@ export const PieChartComponent: React.FC<IPieChart> = (props) => {
 						className="recharts-pie-sector-active"
 						stroke="none"
 					>
-						{pieChartData.map((entry: any, index: any) => (
+						{pieChartData.map((entry: unknown, index: unknown) => (
 							<Cell
 								style={{ outline: "none" }}
 								key={`cell-${index}`}

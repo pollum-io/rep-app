@@ -6,7 +6,7 @@ import { WaitListCard } from "../../components/GeneralPanel/WaitListCard";
 import { Pendencies } from "../../components/GeneralPanel/Pendencies";
 
 interface IGeneralPanelContainer {
-	adminData: any;
+	adminData: unknown;
 }
 
 export const GeneralPanelContainer: FunctionComponent<

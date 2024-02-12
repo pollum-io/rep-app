@@ -3,7 +3,7 @@ import { Flex, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui";
 
 interface IShareHoldersTableFooter {
-	opportunitiesDetailsToEnteprise?: any;
+	opportunitiesDetailsToEnteprise?: unknown;
 }
 
 export const ShareHoldersTableFooter: React.FC<IShareHoldersTableFooter> = ({

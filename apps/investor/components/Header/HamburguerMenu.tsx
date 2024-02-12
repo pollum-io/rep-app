@@ -4,6 +4,7 @@ import {
 	AccordionIcon,
 	AccordionItem,
 	AccordionPanel,
+	Button,
 	Flex,
 	Icon,
 	Img,
@@ -17,17 +18,21 @@ import { useRouter } from "next/router";
 import { BsCheck } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { useUser } from "../../hooks/useUser";
+import { useWallet } from "../../hooks/useWallet";
+import { logout } from "services";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
-import { logout } from "services";
+import { useState } from "react";
 
 export const HamburguerMenu: React.FC = () => {
 	const { push } = useRouter();
-	const { userInfos, username, isInvestorPerfilCompleted } = useUser();
+	const { username } = useUser();
+	const { connectWallet, isConnected, address, disconnect } = useWallet();
+
 	const { t, i18n } = useTranslation();
 	const { language } = i18n;
-	const parts = username.split(" ");
-	const firstName = parts[0];
+
+	const [onHover, setOnHover] = useState(false);
 
 	return (
 		<Menu>
@@ -67,55 +72,46 @@ export const HamburguerMenu: React.FC = () => {
 				filter="drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.1)) drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.06))"
 				justifyContent="center"
 			>
-				<MenuItem
-					fontFamily="Poppins"
-					fontSize="0.875rem"
-					lineHeight="1.25rem"
-					pr="1.1875rem"
-					color="#003243"
-					pl="0.9375rem"
-					mt="0.3rem"
-					h="1.8rem"
-					_focus={{}}
-					_hover={{ bgColor: "#F7FAFC", opacity: 0.8 }}
-					onClick={() => push({ pathname: `/faturas` })}
-				>
-					Faturas
-				</MenuItem>
-				<MenuItem
-					fontFamily="Poppins"
-					fontSize="0.875rem"
-					lineHeight="1.25rem"
-					pr="1.1875rem"
-					color="#003243"
-					pl="0.9375rem"
-					mt="0.3rem"
-					h="1.8rem"
-					_focus={{}}
-					_hover={{ bgColor: "#F7FAFC", opacity: 0.8 }}
-					onClick={() =>
-						push({ pathname: `/usuario`, query: { id: userInfos } })
-					}
-				>
-					<Flex alignItems={"center"} gap={"0.5rem"}>
-						<Text> {t("header.profile")}</Text>
-						{!isInvestorPerfilCompleted && (
-							<Text
-								px={"0.5rem"}
-								py={"0.1rem"}
-								h={"max"}
-								borderRadius={"0.75rem"}
-								bgColor={"#FED7D7"}
-								color={"#E53E3E"}
-								fontSize={"0.75rem"}
-								fontWeight={"500"}
+				<Flex w="100%" px="0.9375rem" h="max-content">
+					<Button
+						padding="0.625rem 0.5rem"
+						w="100%"
+						h="1.5rem"
+						bgColor="#ffffff"
+						border="0.0625rem solid #007D99"
+						borderRadius="0.375rem"
+						fontFamily="Poppins"
+						fontWeight="500"
+						fontSize="0.75rem"
+						lineHeight="1rem"
+						color="#007D99"
+						_hover={{ bgColor: "#EDF2F7" }}
+						_active={{ bgColor: "#E2E8F0" }}
+					>
+						{isConnected ? (
+							<Flex
+								alignItems="center"
+								gap="0.5rem"
+								onMouseEnter={() => setOnHover(true)}
+								onMouseLeave={() => setOnHover(false)}
 							>
-								Completar
-							</Text>
+								<Img src="/icons/MetamaskIcon.png" />
+								{onHover ? (
+									<Text onClick={() => disconnect()}>Disconnect</Text>
+								) : (
+									<Text>
+										{" "}
+										{`${address?.slice(0, 5)}...${address?.slice(38)}`}
+									</Text>
+								)}
+							</Flex>
+						) : (
+							<button onClick={() => connectWallet()}>Connect Wallet</button>
 						)}
-					</Flex>
-				</MenuItem>
-				{/* <Accordion allowMultiple>
+					</Button>
+				</Flex>
+
+				<Accordion allowMultiple>
 					<AccordionItem border="none">
 						<AccordionButton
 							background="none"
@@ -127,6 +123,7 @@ export const HamburguerMenu: React.FC = () => {
 							pr="1.1875rem"
 							pl="1rem"
 							h="1.8rem"
+							mt="0.5rem"
 						>
 							<Flex justifyContent="space-between" alignItems="center" w="100%">
 								<Text
@@ -193,13 +190,13 @@ export const HamburguerMenu: React.FC = () => {
 							</Flex>
 						</AccordionPanel>
 					</AccordionItem>
-				</Accordion> */}
+				</Accordion>
 				<MenuItem
 					fontFamily="Poppins"
 					fontSize="0.875rem"
 					lineHeight="1.25rem"
 					pr="1.1875rem"
-					color="#003243"
+					color="#4A5568"
 					h="1.8rem"
 					pl="0.9375rem"
 					_focus={{}}

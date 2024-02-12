@@ -3,7 +3,7 @@ import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui";
 
 interface IPendencies {
-	pendenciesData: any;
+	pendenciesData: unknown;
 }
 
 export const Pendencies: React.FC<IPendencies> = ({ pendenciesData }) => {

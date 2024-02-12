@@ -29,12 +29,12 @@ export class PersistentFramework {
 	static get(
 		name: string
 	):
-		| { [k: string]: string | boolean | number | any }
+		| { [k: string]: string | boolean | number | unknown }
 		| string[]
 		| string
 		| boolean
 		| number
-		| any
+		| unknown
 		| undefined {
 		if (
 			typeof localStorage !== "undefined" &&

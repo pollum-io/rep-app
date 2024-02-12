@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 type ComponentProps = {
-	data: any;
+	data: unknown;
 };
 
 export const EstimatedTimeline: React.FC<ComponentProps> = (props) => {

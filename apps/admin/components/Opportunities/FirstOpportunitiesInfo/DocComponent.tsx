@@ -3,10 +3,10 @@ import { Button, Flex, Img, Text } from "@chakra-ui/react";
 
 type IDocComponent = {
 	name: string;
-	file: any;
-	onDeleteDoc: any;
-	onDocValueChange: any;
-	index: any;
+	file: unknown;
+	onDeleteDoc: unknown;
+	onDocValueChange: unknown;
+	index: unknown;
 };
 
 export const DocComponent: React.FC<IDocComponent> = ({

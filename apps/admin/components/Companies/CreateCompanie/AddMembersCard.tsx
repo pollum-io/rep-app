@@ -3,19 +3,19 @@ import { Flex, Img, Input, Text } from "@chakra-ui/react";
 import { Avatar } from "./Avatar";
 
 type IAddMembersCard = {
-	setShowImage: any;
-	avatarVisible: any;
-	showImage?: any;
-	handleToggleImage: any;
-	image?: any;
+	setShowImage: unknown;
+	avatarVisible: unknown;
+	showImage?: unknown;
+	handleToggleImage: unknown;
+	image?: unknown;
 	name?: string;
 	position?: string;
-	onInputChange?: any;
-	onImageChange?: any;
-	handleMouseEnter?: any;
-	handleMouseLeave?: any;
-	deleteUser?: any;
-	index: any;
+	onInputChange?: unknown;
+	onImageChange?: unknown;
+	handleMouseEnter?: unknown;
+	handleMouseLeave?: unknown;
+	deleteUser?: unknown;
+	index: unknown;
 };
 
 export const AddMembersCard: React.FC<IAddMembersCard> = ({

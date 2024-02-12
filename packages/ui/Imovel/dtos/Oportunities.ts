@@ -62,6 +62,8 @@ export interface IOpportunitiesCard {
 		}>;
 	}>;
 	template_key?: string;
+	sale_address: string;
+	compliant_address: string;
 }
 
 export interface IScheduleTable {

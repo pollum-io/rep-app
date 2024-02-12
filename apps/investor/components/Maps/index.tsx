@@ -52,7 +52,7 @@ export const Maps: FunctionComponent<IMaps> = ({
 						center={uniqueGeolocations[0]}
 						mapContainerClassName="map-container"
 					>
-						{uniqueGeolocations.map((places: any, index: any) => (
+						{uniqueGeolocations.map((places: unknown, index: unknown) => (
 							// eslint-disable-next-line react/jsx-key
 							<MarkerF
 								key={index}

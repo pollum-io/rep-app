@@ -1,5 +1,5 @@
 export interface ICompanieMembers {
-	image?: any;
+	image?: unknown;
 	name?: string;
 	occupation?: string;
 	position?: string;

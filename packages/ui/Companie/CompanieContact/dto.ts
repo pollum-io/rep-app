@@ -3,10 +3,10 @@ export interface ICompanieContact {
 	whatsapp?: string;
 	telephone?: string;
 	email?: string;
-	instagram?: any;
-	twitter?: any;
-	telegram?: any;
-	facebook?: any;
+	instagram?: unknown;
+	twitter?: unknown;
+	telegram?: unknown;
+	facebook?: unknown;
 }
 
 interface ISocial {

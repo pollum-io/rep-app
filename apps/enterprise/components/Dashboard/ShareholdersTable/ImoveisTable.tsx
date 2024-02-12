@@ -12,12 +12,12 @@ interface IImoveisTable {
 	token: string;
 	isMoreThenOnePage?: boolean;
 	buttonState?: string;
-	setFilter?: any;
-	dataShare?: any;
-	isLoading?: any;
-	error?: any;
+	setFilter?: unknown;
+	dataShare?: unknown;
+	isLoading?: unknown;
+	error?: unknown;
 	currentPage?: number;
-	setCurrentPage?: any;
+	setCurrentPage?: unknown;
 }
 const MotionFlex = motion(Flex);
 

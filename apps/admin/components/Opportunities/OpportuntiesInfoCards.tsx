@@ -3,7 +3,7 @@ import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui";
 
 interface IOpportuntiesInfoCards {
-	cardsData: any;
+	cardsData: unknown;
 }
 
 export const OpportuntiesInfoCards: React.FC<IOpportuntiesInfoCards> = ({

@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/react";
 
 type ComponentProps = {
-	data: any;
-	index: any;
+	data: unknown;
+	index: unknown;
 };
 
 export const PrevFinanceiraTable: React.FC<ComponentProps> = ({

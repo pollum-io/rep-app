@@ -16,7 +16,7 @@ const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 	token,
 }) => {
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
+	const [opportuntiesFormData, setOpportuntiesFormData] = useState<unknown>({
 		enterprise_name: "",
 		name: "",
 		localizacao: "",
@@ -53,7 +53,7 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 
 	const handleFileChange = (e) => {
 		const files = Array.from(e.target.files);
-		const selectedImageUrls = files.map((file: any) =>
+		const selectedImageUrls = files.map((file: unknown) =>
 			URL.createObjectURL(file)
 		);
 		setSelectedOpportuntiesPictures([

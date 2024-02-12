@@ -5,7 +5,7 @@ import { fetchGetAdmin, fetchGetContact } from "services";
 import { UserLogin } from "ui";
 
 interface IGeneralPanel {
-	requestAdmin: any;
+	requestAdmin: unknown;
 }
 
 const GeneralPanel: NextPage<IGeneralPanel> = ({ requestAdmin }) => (

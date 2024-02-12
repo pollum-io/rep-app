@@ -13,16 +13,11 @@ interface IImoveisTable {
 	token: string;
 	isMoreThenOnePage?: boolean;
 	buttonState?: string;
-	setFilter?: any;
+	setFilter?: unknown;
 }
 const MotionFlex = motion(Flex);
 
-const ImoveisTable: FunctionComponent<IImoveisTable> = ({
-	data,
-	token,
-	isMoreThenOnePage,
-	buttonState,
-}) => {
+const ImoveisTable: FunctionComponent<IImoveisTable> = ({ data, token }) => {
 	const { isOpen, onClose, onOpen } = useDisclosure();
 	const [empreendimento, setEmpreendimento] = useState<InvestmentModel | null>(
 		null
@@ -34,8 +29,8 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await fetchInvestmentByUser(token, currentPage);
-			setInvestmentData(response.investments);
-			setTotalPages(response.totalPages);
+			setInvestmentData(response?.investments);
+			setTotalPages(response?.totalPages);
 		};
 
 		fetchData();

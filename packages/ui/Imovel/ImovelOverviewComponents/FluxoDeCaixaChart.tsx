@@ -40,7 +40,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 		return Number(entryValue) >= 0 ? "#003243c8" : "#ca5d5d";
 	};
 
-	const CustomBarLabel = (props: any) => {
+	const CustomBarLabel = (props: unknown) => {
 		const { x, y, width, value, index } = props;
 		const isPositive = (value ? value : 0) >= 0;
 		const yPosition = isPositive ? y - -18 : y + -12;
@@ -71,7 +71,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 		fill: getBarColor(item.cash_flow),
 	}));
 
-	const CustomBar = (props: any) => {
+	const CustomBar = (props: unknown) => {
 		const { fill, x, y, width, height, value, index } = props;
 		const borderRadius = 8; // Adjust the border radius as needed
 		const isPositive = (value ? value : 0) >= 0;

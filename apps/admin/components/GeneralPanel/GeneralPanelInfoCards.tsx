@@ -3,7 +3,7 @@ import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui";
 
 interface IGeneralPanelInfoCards {
-	cardsData: any;
+	cardsData: unknown;
 }
 
 export const GeneralPanelInfoCards: React.FC<IGeneralPanelInfoCards> = ({

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 
-type ComponentProps = { data?: any };
+type ComponentProps = { data?: unknown };
 
 export const PrevRetornoComponent: React.FC<ComponentProps> = (props) => {
 	return (

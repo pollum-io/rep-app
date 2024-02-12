@@ -7,7 +7,7 @@ import { UserLogin } from "ui";
 interface IMyProfilePage {
 	token: string;
 	enterpriseId: string;
-	enterpriseData: any;
+	enterpriseData: unknown;
 }
 
 const MyProfile: NextPage<IMyProfilePage> = ({

@@ -19,12 +19,12 @@ const PieChartComponent = dynamic(
 );
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	opportuntyDetails?: any;
+	opportuntyDetails?: unknown;
 	usersId: UserLogin;
-	setFirstStep: any;
-	setSecondStep: any;
-	setCotas: any;
-	cotas: any;
+	setFirstStep: unknown;
+	setSecondStep: unknown;
+	setCotas: unknown;
+	cotas: unknown;
 	token?: string;
 }
 

@@ -5,7 +5,7 @@ import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSt
 import { PersistentFramework } from "ui";
 
 interface ICompaniesCard {
-	logo?: any;
+	logo?: unknown;
 	id?: string;
 	nome?: string;
 	opAvailable?: number;

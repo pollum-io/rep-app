@@ -15,7 +15,7 @@ interface IPayment {
 	investor_pf?: string;
 	userDataPF?: UserDataPF;
 	userDataPJ?: UserDataPJ;
-	imovelPayment?: any;
+	imovelPayment?: unknown;
 }
 
 const Pagamento: NextPage<IPayment> = ({

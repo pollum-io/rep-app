@@ -11,7 +11,7 @@ import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 
 interface IImovelProps {
 	data: IOpportunitiesCard;
-	opportuntyDetailsToEnterprise: any;
+	opportuntyDetailsToEnterprise: unknown;
 	user: UserLogin;
 	token: string;
 }

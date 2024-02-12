@@ -22,7 +22,7 @@ interface ICarousel {
 	extra_images?: string[];
 	modal_images?: string[];
 	selectedImage?: string;
-	setCurrentIndex?: any;
+	setCurrentIndex?: unknown;
 	isOpen?: boolean;
 }
 

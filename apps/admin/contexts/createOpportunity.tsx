@@ -1,7 +1,7 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
 import { PersistentFramework } from "ui";
 
-export const CreateOpportuntyContext = createContext({} as any);
+export const CreateOpportuntyContext = createContext({} as unknown);
 
 export const CreateOpportuntyProvider: React.FC<{
 	children: React.ReactNode;

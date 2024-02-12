@@ -1,27 +1,16 @@
-import {
-	Button,
-	ButtonProps,
-	Flex,
-	Img,
-	Input,
-	InputGroup,
-	InputRightElement,
-	Text,
-} from "@chakra-ui/react";
+import { Button, ButtonProps, Flex, Img, Input, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { FunctionComponent, useState } from "react";
 import { useUser } from "../../hooks/useUser";
 import { useTranslation } from "react-i18next";
 import { useToasty } from "../../hooks/useToasty";
 import { fetchSignIn } from "services";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export const Login: FunctionComponent<ButtonProps> = () => {
 	const { push } = useRouter();
 	const [email, setEmail] = useState<string>();
 	const [password, setPassword] = useState<string>();
 	const { getUserInfos } = useUser();
-	const [showPassword, setShowPassword] = useState<boolean>(true);
 	const { toast } = useToasty();
 
 	const handleLogin = async () => {
@@ -119,7 +108,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							E-mail
 						</Text>
 						<Input
-							placeholder={t("login.placeholderEmail") as any}
+							placeholder={t("login.placeholderEmail") as unknown}
 							_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 							border="0.0938rem solid #E2E8F0"
 							_hover={{}}
@@ -163,7 +152,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							</Text>
 						</Flex>
 						<Input
-							placeholder={t("login.placeholderSenha") as any}
+							placeholder={t("login.placeholderSenha") as unknown}
 							_placeholder={{ color: "rgba(0, 0, 0, 0.36)" }}
 							border="0.0938rem solid #E2E8F0"
 							_hover={{}}

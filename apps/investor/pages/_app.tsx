@@ -17,6 +17,12 @@ import "../styles/pageTransition.css";
 import "../styles/investModalScrollbar.css";
 import "../styles/appScrollbar.css";
 import "../styles/confirmedAnimation.css";
+import "../styles/check.css";
+
+import { WalletProvider } from "../contexts/wallet";
+import { TransactionsProvider } from "../contexts/transactions";
+import { connectionConfig } from "../configs";
+import { WagmiConfig } from "wagmi";
 
 const toasty = {
 	bg: "#FFFFFF",
@@ -28,17 +34,20 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ChakraProvider resetCSS theme={theme}>
-				<UserProvider>
-					<OpportunitiesProvider>
-						<ToastyProvider {...toasty}>
-							<AppWrapper>
-								<Component {...pageProps} />
-								<Script
-									id="HotJarAnalytics"
-									strategy="afterInteractive"
-									dangerouslySetInnerHTML={{
-										__html: `(function(h,o,t,j,a,r){
+			<WagmiConfig config={connectionConfig}>
+				<ChakraProvider resetCSS theme={theme}>
+					<WalletProvider>
+						<TransactionsProvider>
+							<UserProvider>
+								<OpportunitiesProvider>
+									<ToastyProvider {...toasty}>
+										<AppWrapper>
+											<Component {...pageProps} />
+											<Script
+												id="HotJarAnalytics"
+												strategy="afterInteractive"
+												dangerouslySetInnerHTML={{
+													__html: `(function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
         h._hjSettings={hjid:3635810,hjsv:6};
         a=o.getElementsByTagName('head')[0];
@@ -46,26 +55,29 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
-									}}
-								/>
-								<Script
-									src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-								/>
+												}}
+											/>
+											<Script
+												src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+											/>
 
-								<Script id="google-analytics" strategy="afterInteractive">
-									{`
+											<Script id="google-analytics" strategy="afterInteractive">
+												{`
 					          window.dataLayer = window.dataLayer || [];
 										function gtag(){dataLayer.push(arguments);}
 										gtag('js', new Date());
 
 										gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
                 `}
-								</Script>
-							</AppWrapper>
-						</ToastyProvider>
-					</OpportunitiesProvider>
-				</UserProvider>
-			</ChakraProvider>{" "}
+											</Script>
+										</AppWrapper>
+									</ToastyProvider>
+								</OpportunitiesProvider>
+							</UserProvider>{" "}
+						</TransactionsProvider>
+					</WalletProvider>
+				</ChakraProvider>{" "}
+			</WagmiConfig>
 		</QueryClientProvider>
 	);
 };

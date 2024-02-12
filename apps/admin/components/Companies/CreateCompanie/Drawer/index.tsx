@@ -29,8 +29,8 @@ import { useToasty } from "../../../../hooks/useToasty";
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 interface IDrawerComponent {
-	onClose: any;
-	isOpen: any;
+	onClose: unknown;
+	isOpen: unknown;
 	token: string;
 }
 
@@ -46,7 +46,6 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 		companyImages,
 		isEditing,
 		deleteAllDataFromStateCompanyForm,
-		haveCompanyCreateInProcess,
 		handleHasCompanyBeingCreated,
 		setMembers,
 		entepriseId,
@@ -73,8 +72,8 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 		}
 	});
 
-	const handleCreateCompany = async (data: any) => {
-		let request: any;
+	const handleCreateCompany = async (data: unknown) => {
+		let request: unknown;
 
 		const formData = new FormData();
 		formData.append("logo", data?.enterprise_logo);
@@ -271,7 +270,7 @@ export const DrawerComponent: React.FC<IDrawerComponent> = ({
 
 													<Flex>
 														{updatedCompanyFormData?.team?.map(
-															(team: any, index: number) => (
+															(team: unknown, index: number) => (
 																// eslint-disable-next-line react/jsx-key
 																<CompanieMembers
 																	key={index}

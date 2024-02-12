@@ -1,6 +1,6 @@
 import { api } from "../api";
 
-export const fetchUpdateEnterprise = async (data: any, id: string) => {
+export const fetchUpdateEnterprise = async (data: unknown, id: string) => {
 	try {
 		const response = await api.put(`/enterprise/${id}`, data);
 		return response.data;

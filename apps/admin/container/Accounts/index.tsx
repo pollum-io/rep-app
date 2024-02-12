@@ -5,7 +5,7 @@ import { WhitelistCard } from "../../components/Accounts/WhitelistCard";
 import { AdminsCard } from "../../components/Accounts/AdminsCard";
 
 // interface IAccountsContainer {
-// 	adminData: any;
+// 	adminData: unknown;
 // }
 
 export const AccountsContainer: FunctionComponent = () => {

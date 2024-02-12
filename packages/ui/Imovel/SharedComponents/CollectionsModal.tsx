@@ -15,7 +15,7 @@ interface ICollectionsModal {
 	onClose: () => void;
 	images: string[];
 	selectedImage: string;
-	setSelectedImage: any;
+	setSelectedImage: unknown;
 }
 
 export const CollectionsModal: React.FC<ICollectionsModal> = (props) => {

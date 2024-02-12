@@ -11,7 +11,7 @@ import { FunctionComponent } from "react";
 import { MdExpandMore } from "react-icons/md";
 
 interface IMenuChart {
-	title?: any;
+	title?: unknown;
 	titleColor?: string;
 	defaultSelection: string;
 }
@@ -49,7 +49,7 @@ export const MenuPieChartChart: FunctionComponent<IMenuChart> = ({
 					{defaultSelection}
 				</MenuButton>
 				<MenuList>
-					{options.map((values: any) => (
+					{options.map((values: unknown) => (
 						<MenuItem key={values.id}>{values.name}</MenuItem>
 					))}
 				</MenuList>

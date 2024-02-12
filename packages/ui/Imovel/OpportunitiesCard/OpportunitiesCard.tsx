@@ -28,9 +28,9 @@ interface IOpportunitiesCompaniesCard {
 	host?: string;
 	isEnterprise?: boolean;
 	isAdmin?: boolean;
-	setFirstStep?: any;
-	setSecondStep?: any;
-	setCotas?: any;
+	setFirstStep?: unknown;
+	setSecondStep?: unknown;
+	setCotas?: unknown;
 	enterpriseId?: string;
 }
 

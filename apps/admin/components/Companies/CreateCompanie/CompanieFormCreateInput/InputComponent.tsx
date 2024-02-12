@@ -18,7 +18,7 @@ interface InputProps extends ChakraInputProps {
 	maxLength?: number;
 	placeholderText?: string;
 	setInputValues?: React.Dispatch<string>;
-	handleInputChange?: any;
+	handleInputChange?: unknown;
 }
 
 const maskPhone = "(99) 99999-9999";

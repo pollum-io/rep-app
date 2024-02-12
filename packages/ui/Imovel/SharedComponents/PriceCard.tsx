@@ -14,10 +14,10 @@ interface IPriceCard {
 	heightDefault?: string;
 	pageSize?: string;
 	unitPrice?: number;
-	setFirstStep: any;
-	setSecondStep: any;
-	setCotas: any;
-	cotas: any;
+	setFirstStep: unknown;
+	setSecondStep: unknown;
+	setCotas: unknown;
+	cotas: unknown;
 	opportunitiesDetails?: {
 		constructed_area: number;
 		estimated_vgv: number;
@@ -25,7 +25,7 @@ interface IPriceCard {
 		available_units: number;
 		average_price: number;
 	};
-	opportunitiesDetailsToEnteprise?: any;
+	opportunitiesDetailsToEnteprise?: unknown;
 	token?: string;
 }
 

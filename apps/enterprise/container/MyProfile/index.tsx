@@ -7,7 +7,7 @@ import { useUser } from "../../hooks/useUser";
 interface IMyProfileProps {
 	token: string;
 	enterpriseId: string;
-	enterpriseData: any;
+	enterpriseData: unknown;
 }
 
 export const MyProfileContainer: FunctionComponent<IMyProfileProps> = ({

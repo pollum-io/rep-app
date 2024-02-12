@@ -19,7 +19,7 @@ import { useRegisterSteps } from "../../../hooks";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	opportuntyDetails?: any;
+	opportuntyDetails?: unknown;
 	usersId: UserLogin;
 	token: string;
 }
