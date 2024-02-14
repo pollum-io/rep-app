@@ -3,6 +3,7 @@ import { FunctionComponent, useMemo } from "react";
 import { getYearFromDate } from "../../utils/getYearFromDate";
 import { getMonthNameFromDate } from "../../utils/getMonthNameFromDate";
 import { formatCurrency } from "../../utils/BRCurrency";
+import { useTranslation } from "react-i18next";
 
 type schedule = {
 	date?: string;
@@ -14,6 +15,8 @@ interface IValueTable {
 }
 
 const Table: FunctionComponent<IValueTable> = ({ isCronograma, data }) => {
+	const { t } = useTranslation();
+
 	const calculateTotalFromArray = useMemo(() => {
 		const total = data?.reduce((accumulator, currentValue) => {
 			if (currentValue.value !== undefined) {
@@ -79,12 +82,12 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma, data }) => {
 			>
 				<Flex flex="0.7">
 					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"white"}>
-						Ano
+						{t("portfolio.year")}
 					</Text>
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.75rem"} fontWeight={"500"} color={"white"}>
-						Mês
+						{t("opportunitieDetails.Month")}
 					</Text>
 				</Flex>
 				<Flex flex="1" alignItems="center">
@@ -94,7 +97,7 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma, data }) => {
 						color={"white"}
 						pr={"1"}
 					>
-						Aporte
+						{t("opportunitieDetails.aporte")}
 					</Text>
 					<Img src="/icons/info-circle-gray.svg" />
 				</Flex>
@@ -111,7 +114,7 @@ const Table: FunctionComponent<IValueTable> = ({ isCronograma, data }) => {
 			>
 				<Flex flex="0.7">
 					<Text fontSize={"0.875rem"} fontWeight={"semibold"} color={"white"}>
-						Total
+						{t("opportunitieDetails.total")}
 					</Text>
 				</Flex>
 				<Flex flex={"1"} />

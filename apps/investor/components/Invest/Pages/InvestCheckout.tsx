@@ -15,6 +15,7 @@ import { useWallet } from "../../../hooks/useWallet";
 import { useTransactions } from "../../../hooks/useTransactions";
 import { useRouter } from "next/router";
 import { useToasty } from "../../../hooks/useToasty";
+import { useOpportunities } from "../../../hooks/useOpportunities";
 
 interface IInvestCheckout {
 	imovel: IOpportunitiesCard;
@@ -32,9 +33,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 	const { t } = useTranslation();
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { setInvestmentId, setDocLink } = useUser();
-
-	const [cotas, setCotas] = useState(0);
-
+	const { cotas, setCotas } = useOpportunities();
 	const router = useRouter();
 	const { toast } = useToasty();
 
@@ -102,7 +101,6 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 								Number(imovel?.min_investment) * Number(1e6) * cotas,
 							],
 						});
-						router.prefetch("/meus-investimentos");
 					} else {
 						console.log(buyToken.status, "BB");
 						buyToken.writeAsync({
@@ -126,7 +124,6 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 		imovel.sale_address,
 		imovel?.min_investment,
 		cotas,
-		router,
 		buyToken,
 		claimTokens,
 		addToWhitelist,
@@ -135,6 +132,8 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 	]);
 
 	useEffect(() => {
+		router.prefetch("/meus-investimentos");
+
 		if (buyToken.isSuccess) {
 			approve.reset();
 			buyToken.reset();

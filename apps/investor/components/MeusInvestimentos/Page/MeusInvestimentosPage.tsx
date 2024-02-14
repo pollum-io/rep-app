@@ -48,10 +48,10 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 	const [filteredArray, setFilteredArray] = useState<InvestmentModel[]>();
 
 	const filterButtons = [
-		{ buttonstate: "todos", label: "Todos" },
-		{ buttonstate: "em andamento", label: "Em andamento" },
-		{ buttonstate: "pedentes", label: "Pendentes" },
-		{ buttonstate: "concluidos", label: "Concluídos" },
+		{ buttonstate: "todos", label: "Todos", disabled: false },
+		{ buttonstate: "em andamento", label: "Em andamento", disabled: true },
+		{ buttonstate: "pedentes", label: "Pendentes", disabled: true },
+		{ buttonstate: "concluidos", label: "Concluídos", disabled: true },
 	];
 
 	const setFilter = useCallback(() => {
@@ -132,6 +132,7 @@ export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
 										fontWeight={"500"}
 										onClick={() => handleStateChange(button.buttonstate)}
 										_hover={{ opacity: 0.7 }}
+										isDisabled={button.disabled}
 									>
 										{button.label}
 									</Button>

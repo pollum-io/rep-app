@@ -109,11 +109,11 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 
 								<Flex flexDir={"column"} gap="0.25rem" w="9rem">
 									<Text fontSize={"sm"} fontWeight="400" color="#718096">
-										Prazo total invest.
+										{t("opportunitieDetails.prazoEsperadoinvest")}
 									</Text>
 									<Flex gap="0.25rem">
 										<Text color="#000000">
-											{imovelDetails?.opportunity_resume?.total_deadline} anos
+											{imovelDetails?.opportunity_resume?.total_deadline} meses
 										</Text>
 										<Img
 											src="/icons/info-circle-littlegray.svg"
@@ -125,7 +125,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 								</Flex>
 								<Flex flexDir={"column"} gap="0.25rem" w="7rem">
 									<Text fontSize={"sm"} fontWeight="400" color="#718096">
-										Retorno final{" "}
+										{t("opportunitieDetails.retornoFinal")}
 									</Text>
 									<Flex gap="0.25rem">
 										<Text color="#000000">
@@ -156,13 +156,13 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 								fontSize="2xl"
 								color={"#171923"}
 							>
-								Estado atual da obra
+								{t("opportunitieDetails.processoDeAprovacao")}
 							</Text>
 							<Flex>
 								<Flex gap="8rem" flexDir={"row"}>
 									<Flex flexDir={"column"} color={"#171923"}>
 										<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
-											Processo de aprovação
+											{t("opportunitieDetails.estadoAtualDaObra")}
 										</Text>
 										{imovelDetails?.approval_process?.map((data, index) => (
 											<>
@@ -176,7 +176,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 									</Flex>
 									<Flex flexDir={"column"} color={"#171923"}>
 										<Text fontWeight={"600"} color={"#171923"} pb={"1rem"}>
-											Processo de aprovação
+											{t("opportunitieDetails.processoDeAprovacao")}
 										</Text>
 										{imovelDetails?.licensing_process?.map((data, index) => (
 											<>
@@ -194,9 +194,9 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 								<Flex flexDir={"column"} color={"#171923"}></Flex>
 							</Flex>
 							<DocsComponent
-								title="Estudos de mercado"
+								title={t("opportunitieDetails.estudosDeMercado")}
 								isInvestPage={false}
-								width="max"
+								width="100%"
 								data={imovelDetails?.opportunity_resume_files}
 							/>
 						</Flex>
@@ -222,7 +222,7 @@ export const ImovelHomePage: FunctionComponent<IImovelProps> = ({
 				<Flex py="4rem" flexDir={"column"} justifyContent="center">
 					<Flex mt={"2rem"} mb={"2rem"} w="100%" maxWidth="70rem">
 						<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#171923"}>
-							Localização
+							{t("opportunitieDetails.localizacao")}
 						</Text>
 					</Flex>
 					<Flex maxWidth="70rem">

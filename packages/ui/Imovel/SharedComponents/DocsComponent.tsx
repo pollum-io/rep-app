@@ -45,6 +45,16 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
 	};
+
+	const handleDownload = () => {
+		const pdfLink =
+			"../../../../apps/investor/public/images/backgrounds/Vestar_pdf.pdf";
+		const link = document.createElement("a");
+		link.href = pdfLink;
+		link.download = "example.pdf";
+		link.click();
+	};
+
 	return (
 		<Flex flexDir={"column"} width={width} mr={"3.4rem"}>
 			{!isInvestPage && (
@@ -58,20 +68,6 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 					>
 						{title}
 					</Text>
-					<Button
-						h={"max"}
-						w={"max"}
-						py={"2"}
-						px={"6"}
-						borderRadius={"0.6rem"}
-						bgColor={"transparent"}
-						fontSize={"0.875rem"}
-						border="1px solid #003243c8"
-						fontWeight={"500"}
-						color={"#003243c8"}
-					>
-						Baixar todas
-					</Button>
 				</Flex>
 			)}
 			<Flex flexDir={"column"} gap="0.5rem">
@@ -95,7 +91,13 @@ export const DocsComponent: FunctionComponent<IDocs> = ({
 								{data?.name}
 							</Text>
 						</Flex>
-						<Img src={"/icons/downloand.svg"} />
+						<Img
+							src={"/icons/downloand.svg"}
+							transition="0.6s"
+							cursor={"pointer"}
+							_hover={{ opacity: 0.7 }}
+							onClick={handleDownload}
+						/>
 					</MotionFlex>
 				))}
 			</Flex>

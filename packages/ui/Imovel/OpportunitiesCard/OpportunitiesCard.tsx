@@ -107,7 +107,6 @@ export const OpportunitiesCard: FunctionComponent<
 	} else {
 		opportunitiesToMap = cardsInfo?.opportunities;
 	}
-	console.log(opportunitiesToMap);
 
 	return (
 		<>
@@ -322,7 +321,7 @@ export const OpportunitiesCard: FunctionComponent<
 													lineHeight="1rem"
 													color="#718096"
 												>
-													Total recebido{" "}
+													{t("opportunitieDetails.totalRecebido")}
 												</Text>
 												<Flex gap="0.25rem" fontFamily="Poppins">
 													<Text
@@ -352,7 +351,7 @@ export const OpportunitiesCard: FunctionComponent<
 													lineHeight="1rem"
 													color="#718096"
 												>
-													Cotistas{" "}
+													{t("opportunitieDetails.cotistas")}
 												</Text>
 												<Text
 													fontSize="1rem"
@@ -374,7 +373,7 @@ export const OpportunitiesCard: FunctionComponent<
 													lineHeight="1rem"
 													color="#718096"
 												>
-													Previsão de aportes{" "}
+													{t("opportunitieDetails.previsaoDeAportes")}{" "}
 												</Text>
 												<Flex gap="0.25rem" fontFamily="Poppins">
 													<Text
@@ -406,7 +405,7 @@ export const OpportunitiesCard: FunctionComponent<
 													lineHeight="1rem"
 													color="#718096"
 												>
-													Ass. pendentes
+													{t("opportunitieDetails.assPendentes")}
 												</Text>
 												<Text
 													fontSize="1rem"
@@ -421,9 +420,11 @@ export const OpportunitiesCard: FunctionComponent<
 								)}
 								{!isEnterprise && !isAdmin ? ( //TODO Validar isso no enterprise
 									<Flex
-										w="max"
+										w="100%"
 										background="#E4F2F3"
 										borderRadius="2.6875rem"
+										justifyContent={"center"}
+										alignItems={"center"}
 										py="0.125rem"
 										px={language === "pt-br" ? "1" : "3"}
 									>
@@ -434,9 +435,7 @@ export const OpportunitiesCard: FunctionComponent<
 											lineHeight="1rem"
 											color="#00576B"
 										>
-											{t("opportunities.card.expectedp/y", {
-												symbol1: cards?.profitability,
-											})}
+											{t("opportunitieDetails.rentabilidadeEsperada")}: 120%{" "}
 										</Text>
 									</Flex>
 								) : (
@@ -462,7 +461,7 @@ export const OpportunitiesCard: FunctionComponent<
 													(cards.totalRaised / cards.contributionForecast) *
 													100
 												).toFixed(2)}
-											% da meta alcançada
+											% {t("opportunitieDetails.daMetaAlcançada")}
 										</Text>
 									</Flex>
 								)}

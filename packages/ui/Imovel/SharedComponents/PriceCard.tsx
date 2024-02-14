@@ -216,8 +216,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 									{t("opportunitieDetails.shares")}
 								</Text>
 								<Text fontSize="md" fontWeight="400">
-									{(opportunitiesDetails?.total_units ?? 0) -
-										(opportunitiesDetails?.available_units ?? 0)}
+									{opportunitiesDetails?.total_units ?? 0}
 								</Text>
 							</Flex>
 							<Flex justifyContent={"space-between"}>
@@ -268,7 +267,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 					>
 						<Flex justifyContent={"space-between"} w={"100%"}>
 							<Text fontSize={"md"} fontWeight="400">
-								Cotistas
+								{t("opportunitieDetails.cotistas")}{" "}
 							</Text>
 							<Text fontSize={"md"} fontWeight="400">
 								{opportunitiesDetailsToEnteprise[0]?.totalShareholders}
@@ -276,7 +275,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						</Flex>
 						<Flex justifyContent={"space-between"}>
 							<Text fontSize={"md"} fontWeight="400">
-								Cotas emitidas
+								{t("opportunitieDetails.cotasEmitidas")}{" "}
 							</Text>
 							<Text fontSize="md" fontWeight="400">
 								{opportunitiesDetailsToEnteprise[0]?.totalCotas}
@@ -284,7 +283,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						</Flex>
 						<Flex justifyContent={"space-between"}>
 							<Text fontSize={"md"} fontWeight="400">
-								Previsão de aportes
+								{t("opportunitieDetails.previsaoDeAportes")}{" "}
 							</Text>
 							<Text fontSize={"md"} fontWeight="400">
 								{formatCurrency(
@@ -302,7 +301,7 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 						fontWeight={"500"}
 						onClick={() => onOpen()}
 					>
-						Ver detalhamento
+						{t("opportunitieDetails.verDetalhamento")}{" "}
 					</Button>
 				</Flex>
 			)}

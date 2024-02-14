@@ -7,6 +7,7 @@ import PositiveAndNegativeBarChart from "../ImovelOverviewComponents/FluxoDeCaix
 import { ImovelInfoDefault, PriceCard, TimeCard } from "../SharedComponents";
 import dynamic from "next/dynamic";
 import { UserLogin } from "../../GlobalDtos";
+import { useTranslation } from "react-i18next";
 
 const PieChartComponent = dynamic(
 	async () => {
@@ -38,6 +39,8 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 	cotas,
 	token,
 }) => {
+	const { t } = useTranslation();
+
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
@@ -52,7 +55,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 								fontSize="2xl"
 								color={"#171923"}
 							>
-								Estrutura do negócio{" "}
+								{t("opportunitieDetails.estruturaNegocio")}
 							</Text>
 						</Flex>
 						<Flex flexDir={"column"}>
@@ -70,7 +73,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 								top={"1.5rem"}
 							>
 								<Text fontSize={"1.125rem"} fontWeight={"600"} color={"white"}>
-									Sociedade em Conta de Participação
+									{t("opportunitieDetails.sociedadeConta")}
 								</Text>
 							</Flex>
 							<Flex justifyContent={"space-between"}>
@@ -90,14 +93,14 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 										fontSize={"1.125rem"}
 										fontWeight={"600"}
 									>
-										Sócios Participantes
+										{t("opportunitieDetails.sociosParticipantes")}
 									</Text>
 									<Text
 										color={"#171923"}
 										fontSize={"0.875rem"}
 										fontWeight={"500"}
 									>
-										Grupo Investidor
+										{t("opportunitieDetails.grupoInvest")}
 									</Text>
 									<Text
 										color={"#171923"}
@@ -105,8 +108,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 										fontWeight={"400"}
 										textAlign={"center"}
 									>
-										50% do lucro líquido + reembolso dos aportes atualizados
-										(IPCA)
+										{t("opportunitieDetails.lucroFrase")}
 									</Text>
 								</Flex>
 								<Flex
@@ -125,14 +127,14 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 										fontSize={"1.125rem"}
 										fontWeight={"600"}
 									>
-										Sócio Ostensivo (SPE){" "}
+										{t("opportunitieDetails.socioOstensivo")}
 									</Text>
 									<Text
 										color={"#171923"}
 										fontSize={"0.875rem"}
 										fontWeight={"500"}
 									>
-										Grupo Gestor{" "}
+										{t("opportunitieDetails.grupoGestor")}
 									</Text>
 									<Text
 										color={"#171923"}
@@ -140,30 +142,26 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 										fontWeight={"400"}
 										textAlign={"center"}
 									>
-										Saldo do lucro líquido{" "}
+										{t("opportunitieDetails.saldoLucro")}
 									</Text>
 								</Flex>
 							</Flex>
 						</Flex>
-						<Flex flexDir={"column"} mt="4rem" justifyContent={"space-between"}>
+						<Flex
+							flexDir={"column"}
+							w={"100%"}
+							mt="4rem"
+							justifyContent={"space-between"}
+						>
 							<Text
 								mb="0.5rem"
 								fontWeight={"600"}
 								fontSize="2xl"
 								color={"#171923"}
 							>
-								Previsão Financeira{" "}
+								{t("opportunitieDetails.previsaoFinanceira")}
 							</Text>
 							<PrevFinanceiraTable data={imovelDetails?.schedule_table} />
-							<Text
-								fontSize={"0.875rem"}
-								fontWeight={"400"}
-								color={"#171923"}
-								mt={"1rem"}
-							>
-								* Espaço para disclaimer: um texto que escreveremos sobre os
-								valores já terem impostos descontados, comissão de venda, etc.
-							</Text>
 							<Flex w="100%" py="4rem" flexDir={"column"}>
 								<Text
 									fontSize={"1.5rem"}
@@ -171,7 +169,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 									color={"#171923"}
 									mb={"2rem"}
 								>
-									Fluxo de caixa
+									{t("opportunitieDetails.fluxoDeCaixa")}
 								</Text>
 								<PositiveAndNegativeBarChart
 									data={imovelDetails?.schedule_table}
@@ -184,7 +182,7 @@ export const ImovelOverviewPage: FunctionComponent<IImovelProps> = ({
 									color={"#171923"}
 									mb={"1rem"}
 								>
-									Previsão de caixa
+									{t("opportunitieDetails.fluxoDeCaixa")}
 								</Text>
 								<PieChartComponent opData={imovelDetails} />
 							</Flex>
