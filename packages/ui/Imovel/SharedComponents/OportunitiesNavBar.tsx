@@ -10,6 +10,8 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 	page,
 	setPage,
 }) => {
+	const { t } = useTranslation();
+
 	return (
 		<Flex w="70rem" h="100%" gap={"4"} justifyContent="start" mt={"2rem"}>
 			<Button
@@ -26,7 +28,7 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 				_hover={{ opacity: 0.6 }}
 				onClick={() => setPage("oportunidade")}
 			>
-				Oportunidade
+				{t("opportunitieDetails.oportunidade")}
 			</Button>
 			<Button
 				bg={page === "detalhamento" ? "#003243c8" : "transparent"}
@@ -41,7 +43,7 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 				_hover={{ opacity: 0.6 }}
 				onClick={() => setPage("detalhamento")}
 			>
-				Detalhamento técnico
+				{t("opportunitieDetails.detalhamentoTecnico")}
 			</Button>
 			<Button
 				bg={page === "aportes" ? "#003243c8" : "transparent"}
@@ -56,7 +58,7 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 				_hover={{ opacity: 0.6 }}
 				onClick={() => setPage("aportes")}
 			>
-				Aportes
+				{t("opportunitieDetails.aportes")}
 			</Button>
 			<Button
 				bg={page === "visao geral" ? "#003243c8" : "transparent"}
@@ -71,7 +73,7 @@ export const OportunitiesNavBar: FunctionComponent<IOportunitiesNavBar> = ({
 				_hover={{ opacity: 0.6 }}
 				onClick={() => setPage("visao geral")}
 			>
-				Visão geral
+				{t("opportunitieDetails.visaoGeral")}{" "}
 			</Button>
 		</Flex>
 	);

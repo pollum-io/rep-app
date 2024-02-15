@@ -9,6 +9,7 @@ import {
 import { GrFormClose } from "react-icons/gr";
 import { Carousel } from "../ImovelHomePageComponents";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ICollectionsModal {
 	isOpen: boolean;
@@ -26,6 +27,7 @@ export const CollectionsModal: React.FC<ICollectionsModal> = (props) => {
 		setSelectedImage("");
 		onClose();
 	};
+	const { t } = useTranslation();
 
 	return (
 		<>
@@ -72,7 +74,7 @@ export const CollectionsModal: React.FC<ICollectionsModal> = (props) => {
 										fontSize="1rem"
 										lineHeight="1.5rem"
 									>
-										Fechar
+										{t("opportunitieDetails.close")}
 									</Text>
 									<Flex>
 										<GrFormClose size={22} />

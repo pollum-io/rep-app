@@ -224,7 +224,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 										<Flex gap={"1.5"}>
 											<Text fontSize={"1.125rem"} fontWeight={"600"}>
 												{investment?.investments?.length
-													? ` + ${formatCurrency(investsSome?.totalInvest)}`
+													? ` + ${"R$ 225.000,00"}`
 													: "-"}
 											</Text>
 										</Flex>
@@ -247,9 +247,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 										<Flex gap={"0.75rem"} w={isMozilla ? "21rem" : "unset"}>
 											<Text fontSize={"1.125rem"} fontWeight={"600"}>
 												{investment?.investments?.length
-													? ` + ${formatCurrency(
-															investsSome?.totalReturnExpected
-													  )}`
+													? ` + R$ 270.000,00`
 													: "-"}
 											</Text>
 											<Text color={"#38A169"} fontSize={"1.125rem"}>
@@ -287,7 +285,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 													: "-"}
 											</Text>
 											<Text color={"#38A169"} fontSize={"1.125rem"}>
-												{investment?.investments?.length ? ` 200%` : "-"}
+												{investment?.investments?.length ? ` 0%` : "-"}
 											</Text>
 										</Flex>
 									</Flex>

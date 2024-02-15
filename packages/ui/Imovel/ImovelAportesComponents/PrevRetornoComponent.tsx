@@ -2,6 +2,7 @@ import React from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "../../utils/BRCurrency";
 import { formatDateOnlyDayMonthCompleteYear } from "../../../../apps/investor/utils/formatDate";
+import { useTranslation } from "react-i18next";
 
 interface IComponentProps {
 	data?: unknown; //
@@ -14,6 +15,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 	isMyInvest,
 	imovelDetails,
 }) => {
+	const { t } = useTranslation();
 	let isMozilla = false;
 	if (typeof window !== "undefined") {
 		isMozilla = /firefox/i.test(window.navigator.userAgent);
@@ -28,7 +30,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 					fontSize={"1.5rem"}
 					mb={"2rem"}
 				>
-					Previsão de retorno{" "}
+					{t("opportunitieDetails.previsaoDeRetorno")}
 				</Text>
 			)}
 			<Flex gap={"8.8125rem"} mb={"1.5rem"}>
@@ -40,7 +42,9 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 							color={"#007D99"}
 							fontWeight={"500"}
 						>
-							{isMyInvest ? "Valor estimado" : "Previsão de retorno"}{" "}
+							{isMyInvest
+								? t("opportunitieDetails.valorEstimado")
+								: t("opportunitieDetails.previsaoDeRetorno")}{" "}
 						</Text>
 						<Img src="/icons/info-circle-littlegray.svg" />
 					</Flex>
@@ -65,7 +69,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 					<Flex flexDir={"column"} gap={"0.25rem"}>
 						<Flex gap={"0.5rem"} w={isMozilla ? "14rem" : "unset"}>
 							<Text fontSize={"0.875rem"} color={"#007D99"} fontWeight={"500"}>
-								Data da previsão{" "}
+								{t("opportunitieDetails.dataDaPrevisao")}
 							</Text>
 							<Img src="/icons/info-circle-littlegray.svg" />
 						</Flex>
@@ -88,10 +92,7 @@ export const PrevRetornoComponent: React.FC<IComponentProps> = ({
 				color={"#171923"}
 				w={isMyInvest === true ? "65% " : "80%"}
 			>
-				Os retornos serão reembolsados a partir das receitas advindas das
-				vendas. Os valores aportados como adiantamento serão devolvidos
-				corrigidos pelo IPCA. Ao final, os resultados obtidos (lucros) serão
-				divididos em igualdade entre grupo gestor e grupo investidor.
+				{t("opportunitieDetails.retornosSeraoReembolsados")}
 			</Text>
 		</Flex>
 	);

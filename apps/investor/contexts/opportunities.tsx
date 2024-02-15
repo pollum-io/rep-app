@@ -17,6 +17,8 @@ export const OpportunitiesProvider: React.FC<{ children: React.ReactNode }> = ({
 	const [ended, setEnded] = useState(false);
 	const [hasToken, setHasToken] = useState(false);
 	const [cotas, setCotas] = useState<number>(0);
+	console.log(cotas);
+
 	const providerValue = useMemo(
 		() => ({
 			ended,

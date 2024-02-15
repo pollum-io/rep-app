@@ -4,6 +4,7 @@ import {
 	formatCurrency,
 	formatCurrencyWithoutSymbol,
 } from "../../utils/BRCurrency";
+import { useTranslation } from "react-i18next";
 
 interface IScheduleItem {
 	period?: number;
@@ -18,8 +19,36 @@ interface IPrevFinanceira {
 	data?: IScheduleItem[];
 }
 
+const dataFin = [
+	{
+		period: 2024,
+		cost: 82587965.23,
+		total_revenue: 75781249.95,
+		total_revenue_percentage: 15.63,
+		units_sold: 15,
+		cash_flow: -6806715.28,
+	},
+	{
+		period: 2025,
+		cost: 196745896.58,
+		total_revenue: 176822916.55,
+		total_revenue_percentage: 36.46,
+		units_sold: 35,
+		cash_flow: -19922980.03,
+	},
+	{
+		period: 2026,
+		cost: 148742369.87,
+		total_revenue: 202083333.2,
+		total_revenue_percentage: 41.67,
+		units_sold: 40,
+		cash_flow: 53340963.33,
+	},
+];
+
 const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
-	const [totalData, setTotalData] = useState<IScheduleItem | null>(null);
+	const [totalData, setTotalData] = useState<IScheduleItem | null>(dataFin);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		const calculateTotal = (data: IScheduleItem[]) => {
@@ -32,47 +61,24 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 			};
 
 			return data.reduce((total, item) => {
-				total.cost += parseFloat(
-					item.cost
-						.toString()
-						.replace("R$", "")
-						.replace(".", "")
-						.replace(",", "")
-				);
-				total.total_revenue += parseFloat(
-					item.total_revenue
-						.toString()
-						.replace("R$", "")
-						.replace(".", "")
-						.replace(",", "")
-				);
-				total.total_revenue_percentage += parseFloat(
-					item.total_revenue_percentage
-						.toString()
-						.replace(" %", "")
-						.replace(",", "")
-				);
+				total.cost += item.cost;
+				total.total_revenue += item.total_revenue;
+				total.total_revenue_percentage += item.total_revenue_percentage;
 				total.units_sold += item.units_sold;
-				total.cash_flow += parseFloat(
-					item.cash_flow
-						.toString()
-						.replace("R$", "")
-						.replace(".", "")
-						.replace(",", "")
-				);
+				total.cash_flow += item.cash_flow;
 
 				return total;
 			}, initialTotal);
 		};
 
 		if (data) {
-			const calculatedTotal = calculateTotal(data);
+			const calculatedTotal = calculateTotal(dataFin);
 			setTotalData(calculatedTotal);
 		}
 	}, [data]);
 
 	const renderRows = () => {
-		return data?.map((item: IScheduleItem, index: number) => (
+		return dataFin?.map((item: IScheduleItem, index: number) => (
 			<Flex
 				key={index}
 				px="1rem"
@@ -81,17 +87,17 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 				alignItems="center"
 				py={"0.75rem"}
 			>
-				<Flex flex="0.7" alignItems="center">
+				<Flex flex="0.6" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#003243c8"}>
 						{item?.period}
 					</Text>
 				</Flex>
-				<Flex flex="1" alignItems="center">
+				<Flex flex="1.1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
 						{formatCurrencyWithoutSymbol(item?.cost)}
 					</Text>
 				</Flex>
-				<Flex flex="1" alignItems="center">
+				<Flex flex="1.1" alignItems="center">
 					<Text fontSize={"0.75rem"} fontWeight={"400"} color={"#171923"}>
 						{formatCurrencyWithoutSymbol(item.total_revenue)}
 					</Text>
@@ -125,7 +131,7 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 		<Flex
 			border={"1px solid #E2E8F0"}
 			flexDir={"column"}
-			w={"44.125rem"}
+			w={"46.125rem"}
 			borderRadius="0.75rem"
 		>
 			<Flex
@@ -137,34 +143,34 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 				alignItems="center"
 				borderTopRadius="0.75rem"
 			>
-				<Flex flex="0.7">
+				<Flex flex="0.6">
 					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
-						Período{" "}
+						{t("opportunitieDetails.periodo")}
+					</Text>
+				</Flex>
+				<Flex flex="1.1">
+					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
+						{t("opportunitieDetails.custo")}
+					</Text>
+				</Flex>
+				<Flex flex="1.1">
+					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
+						{t("opportunitieDetails.receitaTotal")}
 					</Text>
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
-						Custo
+						{t("opportunitieDetails.receitaTotal")}
 					</Text>
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
-						Recita Total
+						{t("opportunitieDetails.unVendidas")}
 					</Text>
 				</Flex>
 				<Flex flex="1">
 					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
-						Receita total{" "}
-					</Text>
-				</Flex>
-				<Flex flex="1">
-					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
-						Un. vendidas{" "}
-					</Text>
-				</Flex>
-				<Flex flex="1">
-					<Text fontSize={"0.875rem"} fontWeight={"500"} color={"white"}>
-						Fluxo de caixa{" "}
+						{t("opportunitieDetails.fluxoCaixa")}
 					</Text>
 				</Flex>
 			</Flex>
@@ -178,19 +184,19 @@ const PrevFinanceiraTable: FunctionComponent<IPrevFinanceira> = ({ data }) => {
 				alignItems="center"
 				borderBottomRadius="0.75rem"
 			>
-				<Flex flex="0.7">
+				<Flex flex="0.6">
 					<Text fontSize={"0.75rem"} fontWeight={"600"} color={"white"}>
-						Total{" "}
+						{t("opportunitieDetails.total")}
 					</Text>
 				</Flex>
-				<Flex flex="1">
+				<Flex flex="1.1">
 					<Text fontSize={"0.75rem"} fontWeight={"600"} color={"white"}>
-						{formatCurrencyWithoutSymbol(totalData?.cost)}{" "}
+						{formatCurrency(totalData?.cost)}{" "}
 					</Text>
 				</Flex>
-				<Flex flex="1">
+				<Flex flex="1.1">
 					<Text fontSize={"0.75rem"} fontWeight={"600"} color={"white"}>
-						{formatCurrencyWithoutSymbol(totalData?.total_revenue)}{" "}
+						{formatCurrency(totalData?.total_revenue)}{" "}
 					</Text>
 				</Flex>
 				<Flex flex="1">

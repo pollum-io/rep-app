@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { Flex, Text, Img } from "@chakra-ui/react";
 import { IMoreAbout } from "../dtos/IMoreAbout";
+import { useTranslation } from "react-i18next";
 
 const MoreAboutComponent: FunctionComponent<IMoreAbout> = ({
 	icon,
@@ -65,13 +66,14 @@ export const MoreAbout: FunctionComponent<IMoreAbountRender> = ({
 			behavior: "smooth",
 		});
 	};
+	const { t } = useTranslation();
 
 	return (
 		<Flex gap={"1.5rem"}>
 			<MoreAboutComponent
 				icon="/icons/description.svg"
-				title="Detalhamento técnico"
-				description="Veja o detalhamento técnico do empreendimento"
+				title={t("opportunitieDetails.detalhamentoTecnico")}
+				description={t("opportunitieDetails.veja")}
 				onClick={() => {
 					setPage("detalhamento");
 					scrollToTop();
@@ -79,8 +81,8 @@ export const MoreAbout: FunctionComponent<IMoreAbountRender> = ({
 			/>
 			<MoreAboutComponent
 				icon="/icons/opt-resume.svg"
-				title="Resumo da oportunidade"
-				description="Confira o cronograma de aportes, retorno, riscos e condições"
+				title={t("opportunitieDetails.resumo")}
+				description={t("opportunitieDetails.confira")}
 				onClick={() => {
 					setPage("aportes");
 					scrollToTop();
@@ -88,8 +90,8 @@ export const MoreAbout: FunctionComponent<IMoreAbountRender> = ({
 			/>
 			<MoreAboutComponent
 				icon="/icons/geral.svg"
-				title="Visão geral"
-				description="Veja o detalhamento da estrutura de negócio com previsões financeiras"
+				title={t("opportunitieDetails.visaoGeral")}
+				description={t("opportunitieDetails.previsoesFin")}
 				onClick={() => {
 					setPage("visao geral");
 					scrollToTop();

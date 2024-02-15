@@ -10,6 +10,7 @@ import {
 } from "../SharedComponents";
 import { PrevRetornoComponent } from "../ImovelAportesComponents";
 import { UserLogin } from "../../GlobalDtos";
+import { useTranslation } from "react-i18next";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -32,7 +33,8 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 	cotas,
 	token,
 }) => {
-	console.log(imovelDetails, "imovelDetails");
+	const { t } = useTranslation();
+
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
@@ -43,7 +45,7 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 							imovelDetails={imovelDetails}
 							isMyInvest={false}
 						/>
-						<Flex flexDir={"row"} maxWidth={"70%"} mr={"0rem"} gap={"1.7rem"}>
+						{/* <Flex flexDir={"row"} maxWidth={"70%"} mr={"0rem"} gap={"1.7rem"}>
 							<Flex flexDir={"column"}>
 								<Flex alignItems={"baseline"} gap={"1.5"}>
 									<Text
@@ -63,17 +65,17 @@ export const ImovelAportesPage: FunctionComponent<IImovelProps> = ({
 									}
 								/>
 							</Flex>
-						</Flex>
-						<Flex mt={"1.5rem"} mb={"1rem"} w={"95%"}>
+						</Flex> */}
+						{/* <Flex mt={"1.5rem"} mb={"1rem"} w={"95%"}>
 							<Text fontSize={"0.875rem"}>
 								{imovelDetails?.opportunity_resume?.return_descritption}
 							</Text>
-						</Flex>
+						</Flex> */}
 						<Flex pb="4rem" flexDir={"column"} justifyContent="center">
 							<DocsComponent
-								title="Informações adicionais"
+								title={t("opportunitieDetails.informaçõesAdicionais")}
 								isInvestPage={false}
-								width="max"
+								width="100%"
 								data={imovelDetails?.opportunity_resume_files}
 							/>
 						</Flex>

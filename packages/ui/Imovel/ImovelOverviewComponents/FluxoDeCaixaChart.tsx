@@ -49,7 +49,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 			<>
 				{x && y && width && value && (
 					<text
-						x={x + width / 2.4}
+						x={x + width / 1.9}
 						y={yPosition}
 						fill="white"
 						fontSize={12}
@@ -81,7 +81,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 				<Rectangle
 					x={x}
 					y={y}
-					width={105}
+					width={115}
 					height={height}
 					radius={
 						isPositive
@@ -113,7 +113,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 				mb={"2rem"}
 			>
 				{data?.map((data, index) => (
-					<Flex key={index} width={"9.2rem"} justifyContent={"center"}>
+					<Flex key={index} width={"8.5rem"} justifyContent={"center"}>
 						<Text
 							textAlign={"center"}
 							color="#171923"
@@ -125,7 +125,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 					</Flex>
 				))}
 			</Flex>
-			<BarChart width={610} height={220} data={chartData}>
+			<BarChart width={410} height={220} data={chartData}>
 				<XAxis hide={true} />
 				<YAxis hide={true} />
 				<Bar
