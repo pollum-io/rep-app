@@ -1,12 +1,11 @@
-import { Button, Flex, useDisclosure } from "@chakra-ui/react";
-import { FunctionComponent, useEffect, useState } from "react";
+import { Button, Flex } from "@chakra-ui/react";
+import { FunctionComponent } from "react";
 import { ImoveisTableRow } from "./Row";
-import { InvestmentDetailsModal } from "../Modal/InvestmentDetailsModal";
+// import { InvestmentDetailsModal } from "../Modal/InvestmentDetailsModal";
 import { ImoveisTableHeader } from "./ImoveisTableHeader";
 import { InvestmentModel } from "../../../dtos/IInvestment";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { motion } from "framer-motion";
-import { fetchInvestmentByUser } from "services";
 
 interface IImoveisTable {
 	data: InvestmentModel[];
@@ -18,24 +17,6 @@ interface IImoveisTable {
 const MotionFlex = motion(Flex);
 
 const ImoveisTable: FunctionComponent<IImoveisTable> = ({ data, token }) => {
-	const { isOpen, onClose, onOpen } = useDisclosure();
-	const [empreendimento, setEmpreendimento] = useState<InvestmentModel | null>(
-		null
-	);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [totalPages, setTotalPages] = useState(1);
-	const [investmentData, setInvestmentData] = useState<InvestmentModel[]>([]);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetchInvestmentByUser(token, currentPage);
-			setInvestmentData(response?.investments);
-			setTotalPages(response?.totalPages);
-		};
-
-		fetchData();
-	}, [token, currentPage, investmentData]);
-
 	return (
 		<Flex flexDir={"column"} w={"70rem"} borderRadius="0.75rem" mb={"0.75rem"}>
 			<ImoveisTableHeader />
@@ -111,11 +92,11 @@ const ImoveisTable: FunctionComponent<IImoveisTable> = ({ data, token }) => {
 				</Flex>
 			)}
 
-			<InvestmentDetailsModal
+			{/* <InvestmentDetailsModal
 				data={empreendimento}
 				isOpen={isOpen}
 				onClose={onClose}
-			/>
+			/> */}
 		</Flex>
 	);
 };

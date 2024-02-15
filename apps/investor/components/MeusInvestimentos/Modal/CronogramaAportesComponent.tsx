@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Img, Text } from "@chakra-ui/react";
 import { ContributionScheduleTable } from "../ContributionScheduleTable";
 
 type ComponentProps = {

@@ -1,10 +1,7 @@
 import { Flex, Text, Button, Img } from "@chakra-ui/react";
 import { FunctionComponent, useMemo } from "react";
 import { IEmpreendimentoData } from "../../../dtos/IEmpreendimentoMeuInvestimento";
-import {
-	formatDateOnlyDayMonthYear,
-	formatDateOnlyMonthYear,
-} from "../../../utils/formatDate";
+import { formatDateOnlyMonthYear } from "../../../utils/formatDate";
 import { useRouter } from "next/router";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { motion } from "framer-motion";

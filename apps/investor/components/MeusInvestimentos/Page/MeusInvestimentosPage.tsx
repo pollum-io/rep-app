@@ -23,11 +23,7 @@ type ComponentProps = {
 };
 
 export const MeusInvestimentosPage: React.FC<ComponentProps> = (props) => {
-	const {
-		data: investment,
-		isError: isErrorInvestment,
-		isLoading: isLoadingInvestment,
-	} = useQuery(
+	const { data: investment } = useQuery(
 		["investment", props?.token],
 		async () => {
 			try {

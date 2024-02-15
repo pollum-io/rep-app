@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Img, Text } from "@chakra-ui/react";
 
 type ComponentProps = { data?: unknown };
 
-export const PrevRetornoComponent: React.FC<ComponentProps> = (props) => {
+export const PrevRetornoComponent: React.FC<ComponentProps> = () => {
 	return (
 		<Flex mb={"2rem"} flexDir={"column"}>
 			<Text

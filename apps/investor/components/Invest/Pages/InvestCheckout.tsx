@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { useTranslation } from "react-i18next";
@@ -62,7 +62,6 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 		approve,
 		addToWhitelist,
 		buyToken,
-		isLoading,
 		balance,
 	} = useTransactions();
 	const { isConnected, connectWallet, address } = useWallet();

@@ -13,10 +13,7 @@ const Change_Password: NextPage<IChangePasswordData> = ({ code, isValid }) => (
 
 export default Change_Password;
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const response = await fetchCodeVerify(String(query.code));
 
 	if (!response?.data?.isValid) {

@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from "next";
 import { ImovelContainer } from "../../container/Imovel/index";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { UserLogin } from "../../dtos/IUserLogin";
-import { UserInfo } from "../../dtos/GlobalUserInfo";
 import { fetchImovelDetail } from "services";
 
 interface IImovelProps {
