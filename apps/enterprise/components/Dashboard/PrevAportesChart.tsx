@@ -77,7 +77,7 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 						fontWeight={500}
 						textAnchor="top"
 						style={{ transition: "all 0.5s ease-in-out", zIndex: 9999999 }}
-						onMouseEnter={() => setHighlightedCell(index)}
+						onMouseEnter={() => setHighlightedCell(Number(index))}
 						onMouseLeave={() => setHighlightedCell(null)}
 					>
 						{formatCurrencyValue(value)}

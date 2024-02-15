@@ -113,22 +113,22 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 		if (isPhysical) {
 			dataPF = {
 				full_name: String(data?.full_name),
-				cpf: data?.cpf?.replace(/[.-]/g, ""),
+				cpf: String(data?.cpf?.replace(/[.-]/g, "")),
 				birthday_date: new Date(data?.birthday_date),
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
-				email: user.email,
-				nationality: data?.nationality,
-				city_of_birth: data?.city_of_birth,
+				email: String(user.email),
+				nationality: String(data?.nationality),
+				city_of_birth: String(data?.city_of_birth),
 			};
 		} else {
 			dataPJ = {
 				full_name: String(data?.full_name),
-				cnpj: data?.cnpj.replace(/[-./]/g, ""),
+				cnpj: String(data?.cnpj.replace(/[-./]/g, "")),
 				uf: Object?.values(inputValuesUf)[0],
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
-				email: user.email,
+				email: String(user.email),
 			};
 		}
 
