@@ -8,8 +8,3 @@ export interface ICompanieContact {
 	telegram?: unknown;
 	facebook?: unknown;
 }
-
-interface ISocial {
-	username?: string;
-	url?: string;
-}

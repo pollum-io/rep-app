@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useCreateAdminCreateSteps } from "../../hooks/useCreateAdminCreateSteps";
@@ -28,7 +28,7 @@ const sideBarLinks = [
 
 export const Sidebar: React.FC = () => {
 	const router = useRouter();
-	const { isCreatePage, setFirstStep, setSecondStep, setIsCreatePage } =
+	const { setFirstStep, setSecondStep, setIsCreatePage } =
 		useCreateAdminCreateSteps();
 	return (
 		<Flex

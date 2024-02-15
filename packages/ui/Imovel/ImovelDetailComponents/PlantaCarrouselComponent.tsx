@@ -5,18 +5,14 @@ import {
 	Img,
 	Text,
 	Button,
-	IconButton,
 	Modal,
 	ModalOverlay,
 	ModalContent,
 	ModalHeader,
 	ModalBody,
 	ModalCloseButton,
-	Image,
 } from "@chakra-ui/react";
-import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { PiFilePdfLight } from "react-icons/pi";
 import { useTranslation } from "react-i18next";
 
@@ -47,23 +43,8 @@ const plants = [
 const PlantaCarrousel = () => {
 	const { t } = useTranslation();
 
-	const [currentSlide, setCurrentSlide] = useState(0);
-	const [loaded, setLoaded] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedImage, setSelectedImage] = useState<IPlants>();
-	const [sliderRef, instanceRef] = useKeenSlider({
-		mode: "free-snap",
-		slides: {
-			perView: 3,
-			spacing: 15,
-		},
-		slideChanged(slider) {
-			setCurrentSlide(slider.track.details.rel);
-		},
-		created() {
-			setLoaded(true);
-		},
-	});
 
 	const handleViewPlant = (index: number) => {
 		const plantIndex = (-1 + index) % plants.length;
@@ -86,7 +67,7 @@ const PlantaCarrousel = () => {
 
 	return (
 		<Flex gap={"1.5rem"} w={"70rem"}>
-			<div ref={sliderRef} className="keen-slider">
+			<div className="keen-slider">
 				{plants.map((plant) => (
 					<div className="keen-slider__slide" key={plant.id}>
 						<Box

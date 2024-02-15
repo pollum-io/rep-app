@@ -3,11 +3,7 @@ import { FunctionComponent, useMemo } from "react";
 import { useRouter } from "next/router";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { motion } from "framer-motion";
-import {
-	formatCPF,
-	formatDateOnlyDayMonthYear,
-	formatDateOnlyMonthYear,
-} from "ui";
+import { formatCPF } from "ui";
 import { fetchGetDocumentLinks } from "services";
 
 const MotionFlex = motion(Flex);
@@ -118,11 +114,6 @@ export const ShareholdersTableRow: FunctionComponent<IShareholders> = ({
 		const req = await fetchGetDocumentLinks(token, documentKey);
 		window.open(req?.original_file_url, "_blank");
 	};
-
-	const statusAction = getStatusColorAndText(status)?.action;
-	const isAssinarContrato = statusAction === "Assinar contrato";
-	const isRealizarPagamento = statusAction === "Realizar pagamento";
-	const isVerAportesRetornos = statusAction === "Ver aportes e retornos";
 
 	// const handleButtonClick = () => {
 	// 	if (isAssinarContrato) {

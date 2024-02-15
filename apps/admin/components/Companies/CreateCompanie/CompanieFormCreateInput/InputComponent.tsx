@@ -5,13 +5,13 @@ import {
 	FormLabel,
 	Text,
 } from "@chakra-ui/react";
-import React, { ForwardRefRenderFunction, forwardRef, useMemo } from "react";
+import React, { ForwardRefRenderFunction, forwardRef } from "react";
 import InputMask from "react-input-mask";
 
 interface InputProps extends ChakraInputProps {
 	name: string;
 	label?: string;
-	maskType?: string;
+	maskType: string;
 	type?: string;
 	width?: string;
 	defaultValue?: string;
@@ -25,7 +25,7 @@ const maskPhone = "(99) 99999-9999";
 const maskCPF = "999.999.999-99";
 const maskCNPJ = "99.999.999/9999-99";
 
-const getMask = (inputType) => {
+const getMask = (inputType: string) => {
 	switch (inputType) {
 		case "Telefone":
 			return maskPhone;
@@ -51,7 +51,6 @@ export const InputBase: ForwardRefRenderFunction<
 		type,
 		maxLength,
 		placeholderText,
-		handleInputChange,
 		...rest
 	},
 	ref

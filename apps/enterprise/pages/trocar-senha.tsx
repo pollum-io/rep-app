@@ -15,10 +15,7 @@ const ChangeEnterprisePassword: NextPage<IChangeEnterprisePassword> = ({
 
 export default ChangeEnterprisePassword;
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["inc_auth"];
 
 	if (!token) {

@@ -1,13 +1,10 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
-import { useTranslation } from "react-i18next";
 import { ICompanieInfoInProgress } from "./dto";
 
 export const CompanieInfoInProgress: FunctionComponent<
 	ICompanieInfoInProgress
 > = ({ livnProp, delivered, inProgress, vgv }) => {
-	const { t } = useTranslation();
-
 	return (
 		<Flex h={["unset", "unset", "unset", "24rem", "10rem"]}>
 			<Flex

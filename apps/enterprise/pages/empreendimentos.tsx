@@ -1,7 +1,7 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import { EmpreendimentosContainer } from "../container/Empreendimentos";
-import { fetchEnterpriseById, fetchGetInvestorPFById } from "services";
+import { fetchEnterpriseById } from "services";
 import { UserLogin } from "ui";
 
 interface IPage {
@@ -13,10 +13,7 @@ const Empreendimentos: NextPage<IPage> = ({ token, enterpriseId }) => (
 	<EmpreendimentosContainer token={token} enterpriseId={enterpriseId} />
 );
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["inc_auth"];
 
 	if (!token) {

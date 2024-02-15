@@ -1,7 +1,6 @@
-import { Flex, Img, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import { IOpportunitiesCard } from "../../../../apps/investor/dtos/Oportunities";
-import Table from "../ImovelAportesComponents/AportesTable";
 import {
 	DocsComponent,
 	ImovelInfoDefault,

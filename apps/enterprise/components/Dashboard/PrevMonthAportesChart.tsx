@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React, { FunctionComponent, useState } from "react";
-import { BarChart, Bar, LabelList, Rectangle, Cell, YAxis } from "recharts";
+import { BarChart, Bar, LabelList, Rectangle, Cell } from "recharts";
 import { IMonthlyForecast } from "../../types/IMonthlyForecast";
 
 const monthsData = [
@@ -36,11 +36,6 @@ export const PrevMonthAportesChart: FunctionComponent<
 	IPrevMonthAportesChart
 > = ({ monthlyForecast }) => {
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
-
-	const monthlyData = Object.entries(monthlyForecast).map(([year, value]) => ({
-		month: year,
-		value: value,
-	}));
 
 	const formatCurrencyValue = (value: number) => {
 		if (value > 999999.99) {
@@ -159,7 +154,7 @@ export const PrevMonthAportesChart: FunctionComponent<
 	}));
 
 	const CustomBar = (props: ICustomBarLabelProps) => {
-		const { fill, x, y, height, value, index } = props;
+		const { fill, x, y, value, index } = props;
 		const borderRadius = 8; // Adjust the border radius as needed
 		const isPositive = (value ? value : 0) >= 0;
 
@@ -176,7 +171,7 @@ export const PrevMonthAportesChart: FunctionComponent<
 							: [borderRadius, borderRadius, 0, 0]
 					}
 					fill={fill}
-					onMouseEnter={() => setHighlightedCell(index)}
+					onMouseEnter={() => setHighlightedCell(Number(index))}
 					onMouseLeave={() => setHighlightedCell(null)}
 					style={{
 						filter:

@@ -29,13 +29,6 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 > = ({ data }) => {
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
 
-	const formatCurrencyValue = (value: number) => {
-		return (value / 10).toLocaleString("pt-BR", {
-			style: "currency",
-			currency: "BRL",
-		});
-	};
-
 	const getBarColor = (entryValue: string | number) => {
 		return Number(entryValue) >= 0 ? "#003243c8" : "#ca5d5d";
 	};
@@ -72,7 +65,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 	}));
 
 	const CustomBar = (props: unknown) => {
-		const { fill, x, y, width, height, value, index } = props;
+		const { fill, x, y, height, value, index } = props;
 		const borderRadius = 8; // Adjust the border radius as needed
 		const isPositive = (value ? value : 0) >= 0;
 

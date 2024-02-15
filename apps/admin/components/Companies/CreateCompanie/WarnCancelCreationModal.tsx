@@ -21,20 +21,11 @@ export const WarnCancelCreationModal: FunctionComponent<
 > = ({ isOpen, onClose }) => {
 	const {
 		handleHasCompanyBeingCreated,
-		isEditing,
-		setMembers,
-		setCompanyFormData,
 		deleteAllDataFromStateCompanyForm,
 		handleSaveFormData,
 	} = useCreateCompany();
-	const {
-		isCreatePage,
-		firstStep,
-		secondStep,
-		setSecondStep,
-		setFirstStep,
-		setIsCreatePage,
-	} = useCreateAdminCreateSteps();
+	const { setSecondStep, setFirstStep, setIsCreatePage } =
+		useCreateAdminCreateSteps();
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} size={"md"}>
 			<ModalOverlay />

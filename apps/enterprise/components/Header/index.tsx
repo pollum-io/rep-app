@@ -1,4 +1,4 @@
-import { Flex, Img } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { Oval } from "react-loader-spinner";
 import { useUser } from "../../hooks/useUser";

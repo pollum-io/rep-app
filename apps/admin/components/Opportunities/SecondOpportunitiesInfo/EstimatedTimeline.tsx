@@ -14,14 +14,14 @@ type ComponentProps = {
 	data: unknown;
 };
 
-export const EstimatedTimeline: React.FC<ComponentProps> = (props) => {
+export const EstimatedTimeline: React.FC<ComponentProps> = () => {
 	const [additionalInputs, setAdditionalInputs] = useState([""]);
 
 	const handleAddInput = () => {
 		setAdditionalInputs([...additionalInputs, ""]);
 	};
 
-	const handleRemoveInput = (index) => {
+	const handleRemoveInput = (index: number) => {
 		if (additionalInputs.length > 1) {
 			const newInputs = [...additionalInputs];
 			newInputs.splice(index, 1);

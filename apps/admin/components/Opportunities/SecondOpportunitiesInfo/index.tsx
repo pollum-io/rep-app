@@ -10,37 +10,12 @@ type ISecondOpportunitiesInfo = {
 	token: string;
 };
 
-const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
-
-export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
-	token,
-}) => {
+export const SecondOpportunitiesInfo: React.FC<
+	ISecondOpportunitiesInfo
+> = ({}) => {
 	const { setFirstStep, setSecondStep, firstStep, secondStep, setThirdStep } =
 		useCreateAdminCreateSteps();
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<unknown>({
-		enterprise_name: "",
-		name: "",
-		localizacao: "",
-		min_investment: 0,
-		init_date: "",
-		expected_delivery_date: "",
-		profitability: 0,
-		opportunity_resume: {
-			total_deadline: "",
-			percentage_final_return: "",
-			min_invest: "",
-		},
-		opportunities_details: {
-			total_units: "",
-			constructed_area: "",
-			estimated_vgv: "",
-			average_price: "",
-		},
-		approval_process: "",
-		description: "",
-		pictures_enterprise: [], // esse é o selectedOpportunitiesPictures
-		opportunity_resume_files: [], // esse é o array docs
-	});
+
 	const [docs, setDocs] = useState([{ name: "", file: null }]);
 
 	const [estimatedTimeline, setEstimatedTimeline] = useState([
@@ -64,13 +39,13 @@ export const SecondOpportunitiesInfo: React.FC<ISecondOpportunitiesInfo> = ({
 		setDocs([...docs, { name: "", file: null }]);
 	};
 
-	const handleDeleteDoc = (index) => {
+	const handleDeleteDoc = (index: number) => {
 		const updatedDocs = [...docs];
 		updatedDocs.splice(index, 1);
 		setDocs(updatedDocs);
 	};
 
-	const handleDocsChange = (index, value) => {
+	const handleDocsChange = (index: number, value) => {
 		console.log({ index, value }, "index, key, value");
 
 		const updatedMembers = [...docs];

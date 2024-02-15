@@ -1,7 +1,6 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import PlantaCarrousel from "../ImovelDetailComponents/PlantaCarrouselComponent";
-import { TimelineComponent } from "../ImovelDetailComponents";
 import {
 	ImovelInfoDefault,
 	ObraSteps,

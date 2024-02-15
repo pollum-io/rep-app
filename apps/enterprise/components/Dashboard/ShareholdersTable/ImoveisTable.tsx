@@ -1,5 +1,5 @@
 import { Button, Flex } from "@chakra-ui/react";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { ShareholdersTableRow } from "./ShareholdersTableRow";
 import { ShareholdersTableHeader } from "./ShareholdersTableHeader";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";

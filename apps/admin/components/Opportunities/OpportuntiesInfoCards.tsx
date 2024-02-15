@@ -1,14 +1,11 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
-import { formatCurrency } from "ui";
+import { Flex, Img, Text } from "@chakra-ui/react";
 
 interface IOpportuntiesInfoCards {
 	cardsData: unknown;
 }
 
-export const OpportuntiesInfoCards: React.FC<IOpportuntiesInfoCards> = ({
-	cardsData,
-}) => {
+export const OpportuntiesInfoCards: React.FC<IOpportuntiesInfoCards> = ({}) => {
 	const cards = [
 		{
 			id: 1,

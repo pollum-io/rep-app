@@ -23,26 +23,8 @@ type YearlyData = {
 	[year: number]: number;
 };
 
-export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
-	generalForecast,
-	opForecast,
-	isOpportunityPage,
-}) => {
+export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({}) => {
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
-
-	const yearlyData = isOpportunityPage
-		? opForecast
-			? Object.entries(opForecast).map(([year, value]) => ({
-					name: year,
-					value: value,
-			  }))
-			: []
-		: generalForecast && generalForecast.yearlyData
-		? Object.entries(generalForecast.yearlyData).map(([year, value]) => ({
-				name: year,
-				value: value,
-		  }))
-		: [];
 
 	const formatCurrencyValue = (value: number) => {
 		if (value > 999999.99) {
@@ -133,9 +115,13 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 	}));
 
 	const CustomBar = (props: ICustomBarLabel) => {
-		const { fill, x, y, width, height, value, index } = props;
+		const { fill, x, y, width, value, index } = props;
 		const borderRadius = 8; // Adjust the border radius as needed
 		const isPositive = (value ? value : 0) >= 0;
+
+		if (width === undefined || x === undefined) {
+			return null;
+		}
 
 		return (
 			<g>
@@ -150,7 +136,7 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 							: [borderRadius, borderRadius, 0, 0]
 					}
 					fill={fill}
-					onMouseEnter={() => setHighlightedCell(index)}
+					onMouseEnter={() => setHighlightedCell(Number(index))}
 					onMouseLeave={() => setHighlightedCell(null)}
 					style={{
 						filter:
@@ -254,14 +240,11 @@ export const PrevAportesChart: FunctionComponent<IPrevAportes> = ({
 			<BarChart width={1090} height={300} data={chartData}>
 				<Bar
 					radius={[8, 8, 0, 0]}
-					dataKey="logValue" // Usando o valor transformado pelo logaritmo
+					dataKey="logValue"
 					shape={<CustomBar />}
 					isAnimationActive={false}
 				>
-					<LabelList
-						dataKey="originalValue" // Usando o valor original para exibição
-						content={<CustomBarLabel />}
-					/>
+					<LabelList dataKey="originalValue" content={<CustomBarLabel />} />
 					{chartData.map((entry, index) => (
 						<Cell key={`cell-${index}`} fill={entry.fill} />
 					))}{" "}

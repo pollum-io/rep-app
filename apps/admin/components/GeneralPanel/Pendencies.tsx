@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
-import { formatCurrency } from "ui";
+import { Flex, Img, Text } from "@chakra-ui/react";
 
 interface IPendencies {
 	pendenciesData: unknown;

@@ -1,21 +1,9 @@
 import React, { useState } from "react";
-import {
-	Button,
-	Flex,
-	Img,
-	Radio,
-	RadioGroup,
-	Stack,
-	Text,
-} from "@chakra-ui/react";
+import { Button, Flex, Radio, RadioGroup, Stack, Text } from "@chakra-ui/react";
 
-import { fetchEnterprise } from "services";
-import { useQuery, useQueryClient } from "react-query";
-import { OpportunitiesCard, PersistentFramework } from "ui";
+import { OpportunitiesCard } from "ui";
 import { OpportuntiesInfoCards } from "./OpportuntiesInfoCards";
 import { useCreateAdminCreateSteps } from "../../hooks/useCreateAdminCreateSteps";
-
-const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 interface IOpportunitiesControll {
 	token: string;
@@ -24,38 +12,9 @@ interface IOpportunitiesControll {
 export const OpportunitiesControll: React.FC<IOpportunitiesControll> = ({
 	token,
 }) => {
-	const [currentPage, setCurrentPage] = useState(1);
 	const [value, setValue] = useState("1");
 	const { setFirstStep, setIsCreatOpportunityePage } =
 		useCreateAdminCreateSteps();
-
-	const queryClient = useQueryClient();
-
-	const { data, isLoading, error } = useQuery(
-		["enterpriseShareholdersFilter"],
-		async () => await fetchEnterprise()
-	);
-
-	const totalPages = data?.totalPages;
-
-	const handleNextPageClick = () => {
-		if (currentPage < totalPages - 1) {
-			setCurrentPage(currentPage + 1);
-			const queryKey = ["enterpriseShareholders", currentPage];
-			queryClient.invalidateQueries(queryKey);
-		}
-	};
-
-	const handlePreviousPageClick = () => {
-		if (currentPage > 1) {
-			setCurrentPage(currentPage - 1);
-			const queryKey = ["enterpriseShareholders", currentPage];
-			queryClient.invalidateQueries(queryKey);
-		}
-	};
-
-	const hasNextPage = !isLoading && currentPage < totalPages - 1;
-	const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
 	return (
 		<Flex flexDir={"column"}>

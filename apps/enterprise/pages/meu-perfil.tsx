@@ -22,10 +22,7 @@ const MyProfile: NextPage<IMyProfilePage> = ({
 	/>
 );
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["inc_auth"];
 
 	if (!token) {

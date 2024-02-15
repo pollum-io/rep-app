@@ -2,7 +2,6 @@ import React from "react";
 import { Flex, Text, Img } from "@chakra-ui/react";
 import { useCreateCompany } from "../../../hooks/useCreateCompany";
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
-import { PersistentFramework } from "ui";
 
 interface ICompaniesCard {
 	logo?: unknown;

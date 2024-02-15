@@ -1,4 +1,4 @@
-import React, { ForwardRefRenderFunction, forwardRef, useState } from "react";
+import React, { ForwardRefRenderFunction, forwardRef } from "react";
 import { FormControl, FormLabel, Select, Text } from "@chakra-ui/react";
 import { InputValues, SelectProps } from "ui";
 
@@ -19,8 +19,6 @@ export const SelectComponent: ForwardRefRenderFunction<
 	},
 	ref
 ) => {
-	const [selectedValue, setSelectedValue] = useState(defaultValue);
-
 	return (
 		<FormControl id={name}>
 			{label && (
@@ -59,8 +57,8 @@ export const SelectComponent: ForwardRefRenderFunction<
 					}}
 				>
 					{selectValue?.map((value, index: number) => (
-						<option key={index} value={value.Uf}>
-							{value.State}
+						<option key={index} value={value?.Uf}>
+							{value?.State}
 						</option>
 					))}
 				</Select>

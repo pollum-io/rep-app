@@ -1,10 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useTranslation } from "react-i18next";
 
 export const HeaderLinks: React.FC = () => {
-	const { t } = useTranslation();
-
 	const links = [
 		{
 			id: 1,

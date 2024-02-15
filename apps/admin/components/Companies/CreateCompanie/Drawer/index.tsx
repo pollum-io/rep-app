@@ -3,7 +3,6 @@ import {
 	Drawer,
 	DrawerOverlay,
 	DrawerContent,
-	DrawerCloseButton,
 	Flex,
 	Text,
 	Button,
@@ -14,7 +13,6 @@ import {
 	CompanieInfoInProgress,
 	CompanieMembers,
 	Header,
-	ICompaniesTeam,
 	PersistentFramework,
 } from "ui";
 import { useCreateCompany } from "../../../../hooks/useCreateCompany";

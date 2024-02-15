@@ -1,10 +1,6 @@
 import jwt_decode from "jwt-decode";
 import { GetServerSideProps, NextPage } from "next";
-import {
-	fetchEnterpriseById,
-	fetchEnterpriseDetail,
-	fetchImovelDetail,
-} from "services";
+import { fetchEnterpriseDetail, fetchImovelDetail } from "services";
 import { UserLogin } from "ui";
 import { ImovelContainer } from "../../container/Imovel";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";

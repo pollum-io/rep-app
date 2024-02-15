@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-	Button,
-	Flex,
-	Img,
-	Text,
-	Textarea,
-	useDisclosure,
-} from "@chakra-ui/react";
+import { Button, Flex, Img, Text, Textarea } from "@chakra-ui/react";
 import { InputComponent } from "../CompanieFormCreateInput/InputComponent";
 import { useCreateAdminCreateSteps } from "../../../../hooks/useCreateAdminCreateSteps";
 import { AddMembersCard } from "../AddMembersCard";
@@ -14,7 +7,6 @@ import { useCreateCompany } from "../../../../hooks/useCreateCompany";
 import { useQuery } from "react-query";
 import { fetchEnterpriseById } from "services";
 import { PersistentFramework } from "ui";
-import { WarnCancelCreationModal } from "../WarnCancelCreationModal";
 
 type FirstCompaniesInfo = {
 	token: string;
@@ -37,7 +29,7 @@ export const FirstCompaniesInfo: React.FC<FirstCompaniesInfo> = ({ token }) => {
 	const { setFirstStep, setSecondStep, firstStep, secondStep } =
 		useCreateAdminCreateSteps();
 
-	const { data, isLoading, error } = useQuery(
+	const { data, isLoading } = useQuery(
 		["enterpriseById"],
 		async () => await fetchEnterpriseById(entepriseId, token),
 		{

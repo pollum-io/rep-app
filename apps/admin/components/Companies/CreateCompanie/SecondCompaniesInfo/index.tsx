@@ -27,7 +27,7 @@ export const SecondCompaniesInfo: React.FC<ISecondCompaniesInfo> = ({
 		isNotCretedYet,
 	} = useCreateCompany();
 
-	const { data, isLoading, error } = useQuery(
+	const { isLoading } = useQuery(
 		["enterpriseById"],
 		async () => await fetchEnterpriseById(entepriseId, token),
 		{
