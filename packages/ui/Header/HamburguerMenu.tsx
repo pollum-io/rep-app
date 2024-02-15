@@ -1,9 +1,4 @@
 import {
-	Accordion,
-	AccordionButton,
-	AccordionIcon,
-	AccordionItem,
-	AccordionPanel,
 	Flex,
 	Icon,
 	Img,
@@ -14,10 +9,8 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { BsCheck } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { useUser } from "../../../apps/investor/hooks/useUser";
-import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { logout } from "services";
 
@@ -28,8 +21,7 @@ interface IHamburguerMenu {
 export const HamburguerMenu: React.FC<IHamburguerMenu> = ({ isDrawer }) => {
 	const { push } = useRouter();
 	const { userInfos, username, isInvestorPerfilCompleted } = useUser();
-	const { t, i18n } = useTranslation();
-	const { language } = i18n;
+	const { t } = useTranslation();
 	const mockedName = "Nome empresa";
 	const parts = isDrawer ? mockedName.split(" ") : username.split(" ");
 	const firstName = parts[0];

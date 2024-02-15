@@ -1,16 +1,15 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Img, Text } from "@chakra-ui/react";
 
 type IDocComponent = {
 	name: string;
-	file: any;
-	onDeleteDoc: any;
-	onDocValueChange: any;
-	index: any;
+	file: unknown;
+	onDeleteDoc: unknown;
+	onDocValueChange: unknown;
+	index: unknown;
 };
 
 export const DocComponent: React.FC<IDocComponent> = ({
-	file,
 	name,
 	onDeleteDoc,
 	onDocValueChange,
@@ -44,7 +43,7 @@ export const DocComponent: React.FC<IDocComponent> = ({
 						type="file"
 						accept="image/*"
 						style={{ display: "none" }}
-						onChange={(e) => onDocValueChange(e.target.files[0])}
+						onChange={(e) => onDocValueChange(e.target.files[0] ?? "")}
 					/>
 				</label>
 				<Img

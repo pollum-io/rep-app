@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Img, Text } from "@chakra-ui/react";
 
-export const ImoveisTableHeader: React.FC = (props) => {
+export const ImoveisTableHeader: React.FC = () => {
 	return (
 		<Flex
 			id="table-header"

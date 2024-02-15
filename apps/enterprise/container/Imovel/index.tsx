@@ -8,7 +8,7 @@ import { ImovelDetail } from "../../components/Pages/Imovel/imovel";
 
 interface IImovelProps {
 	imovel: IOpportunitiesCard;
-	opportuntyDetails?: any;
+	opportuntyDetails?: unknown;
 
 	user: UserLogin;
 	token: string;

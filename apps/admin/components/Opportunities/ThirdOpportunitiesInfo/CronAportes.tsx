@@ -1,27 +1,18 @@
 import React, { useState } from "react";
-import {
-	Button,
-	Flex,
-	Img,
-	Input,
-	Select,
-	Stack,
-	Switch,
-	Text,
-} from "@chakra-ui/react";
+import { Button, Flex, Img, Input, Select, Text } from "@chakra-ui/react";
 
 type ComponentProps = {
-	data: any;
+	data: unknown;
 };
 
-export const CronAportes: React.FC<ComponentProps> = (props) => {
+export const CronAportes: React.FC<ComponentProps> = () => {
 	const [additionalInputs, setAdditionalInputs] = useState([""]);
 
 	const handleAddInput = () => {
 		setAdditionalInputs([...additionalInputs, ""]);
 	};
 
-	const handleRemoveInput = (index) => {
+	const handleRemoveInput = (index: number) => {
 		if (additionalInputs.length > 1) {
 			const newInputs = [...additionalInputs];
 			newInputs.splice(index, 1);

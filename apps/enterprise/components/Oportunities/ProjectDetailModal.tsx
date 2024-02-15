@@ -26,7 +26,7 @@ const PrevAportesChart = dynamic(
 interface ICreateAccountModal {
 	isOpen: boolean;
 	onClose: () => void;
-	opportunitiesDetailsToEnteprise: any;
+	opportunitiesDetailsToEnteprise: unknown;
 	token?: string;
 }
 

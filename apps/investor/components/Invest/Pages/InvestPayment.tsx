@@ -7,16 +7,11 @@ import { useOpportunities } from "../../../hooks/useOpportunities";
 import { ICompaniesDetails } from "../../Companies/CompaniesCard/dto";
 import { formatCNPJ } from "../../../utils/formatCnpj";
 import { useUser } from "../../../hooks/useUser";
-import Base64Image from "../qrcode";
 import { formattedDateWithYour } from "../../../utils/formatDate";
 import { useToasty } from "../../../hooks/useToasty";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import {
-	fetchContributionById,
-	fetchForcePayment,
-	fetchGetInvestmentById,
-} from "services";
+import { fetchContributionById, fetchGetInvestmentById } from "services";
 
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
@@ -24,8 +19,8 @@ interface IContractSign {
 	token?: string;
 	investor?: string;
 	isCheckout?: boolean;
-	imovelPayment?: any;
-	contributionIdCheck?: any;
+	imovelPayment?: unknown;
+	contributionIdCheck?: unknown;
 }
 
 export const InvestPayment: React.FC<IContractSign> = ({
@@ -37,7 +32,7 @@ export const InvestPayment: React.FC<IContractSign> = ({
 	imovelPayment,
 	contributionIdCheck,
 }) => {
-	const [qrCodeImage, setQRCodeImage] = useState<string | null>(null);
+	// const [qrCodeImage, setQRCodeImage] = useState<string | null>(null);
 	const [pixDate, setPixDate] = useState<string | null>(null);
 	const [copyQrCodeAddress, setCopyQrCodeAddress] = useState<string | null>(
 		null
@@ -88,8 +83,8 @@ export const InvestPayment: React.FC<IContractSign> = ({
 	useMemo(() => {
 		if (!isLoading && !isError && contribution) {
 			setPixDate(contribution.due_date);
-			const dataURL = `data:image/png;base64,${contribution.pix_qr_code}`;
-			setQRCodeImage(dataURL);
+			// const dataURL = `data:image/png;base64,${contribution.pix_qr_code}`;
+			// setQRCodeImage(dataURL);
 			setCopyQrCodeAddress(contribution.pix_payload);
 		}
 	}, [isLoading, isError, contribution]);
@@ -122,32 +117,32 @@ export const InvestPayment: React.FC<IContractSign> = ({
 		}
 	);
 
-	const { data: forcePayment } = useQuery(
-		["forcePayment", isCheckout],
-		async () => {
-			try {
-				if (!isCheckout) {
-					return await fetchForcePayment(
-						imovelPayment?.contribution?.invoice_key,
-						imovelPayment?.contribution?.due_date,
-						imovelPayment?.contribution?.amount,
+	// const { data: forcePayment } = useQuery(
+	// 	["forcePayment", isCheckout],
+	// 	async () => {
+	// 		try {
+	// 			if (!isCheckout) {
+	// 				return await fetchForcePayment(
+	// 					imovelPayment?.contribution?.invoice_key,
+	// 					imovelPayment?.contribution?.due_date,
+	// 					imovelPayment?.contribution?.amount,
 
-						token
-					);
-				} else {
-					return;
-				}
-			} catch (error) {
-				throw new Error("Erro ao buscar investimento");
-			}
-		},
-		{
-			refetchInterval: 3000, // Refetch a cada 5 segundos
-			onError: (error) => {
-				console.error("Erro ao buscar investimento:", error);
-			},
-		}
-	);
+	// 					token
+	// 				);
+	// 			} else {
+	// 				return;
+	// 			}
+	// 		} catch (error) {
+	// 			throw new Error("Erro ao buscar investimento");
+	// 		}
+	// 	},
+	// 	{
+	// 		refetchInterval: 3000, // Refetch a cada 5 segundos
+	// 		onError: (error) => {
+	// 			console.error("Erro ao buscar investimento:", error);
+	// 		},
+	// 	}
+	// );
 
 	useMemo(() => {
 		if (copied) {

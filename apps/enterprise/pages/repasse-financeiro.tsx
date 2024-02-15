@@ -2,11 +2,11 @@ import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import { UserLogin } from "ui";
 import { FinancialDisbursementContainer } from "../container/FinancialDisbursement";
-import { fetchEnterpriseById, fetchGetInvestorPFById } from "services";
+import { fetchEnterpriseById } from "services";
 
 interface IFinancialDisbursementPage {
 	token: string;
-	enterpriseData: any;
+	enterpriseData: unknown;
 	enterpriseId: string;
 }
 
@@ -24,10 +24,7 @@ const FinancialDisbursement: NextPage<IFinancialDisbursementPage> = ({
 
 export default FinancialDisbursement;
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["inc_auth"];
 
 	if (!token) {

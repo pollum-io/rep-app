@@ -10,21 +10,21 @@ interface ICreateCompany {
 	setIsNotCretedYet: React.Dispatch<React.SetStateAction<boolean>>;
 	isCreating: boolean;
 	setIsCreating: React.Dispatch<React.SetStateAction<boolean>>;
-	handleSaveFormData: any;
-	members: any;
-	setMembers: any;
-	companyImages: any;
-	setCompanyImages: any;
+	handleSaveFormData: unknown;
+	members: unknown;
+	setMembers: unknown;
+	companyImages: unknown;
+	setCompanyImages: unknown;
 	entepriseId: string;
 	setEntepriseId: React.Dispatch<React.SetStateAction<string>>;
 	haveCompanyCreateInProcess: boolean;
 	setHaveCompanyCreateInProcess: React.Dispatch<React.SetStateAction<boolean>>;
-	banner: any;
-	setBanner: any;
-	logo: any;
-	setLogo: any;
-	handleHasCompanyBeingCreated: any;
-	deleteAllDataFromStateCompanyForm: any;
+	banner: unknown;
+	setBanner: unknown;
+	logo: unknown;
+	setLogo: unknown;
+	handleHasCompanyBeingCreated: unknown;
+	deleteAllDataFromStateCompanyForm: unknown;
 }
 
 type CreateData = {
@@ -33,8 +33,8 @@ type CreateData = {
 	localizacao?: string;
 	cnpj?: string;
 	contact_number?: string;
-	enterprise_logo?: any;
-	enterprise_banner?: any;
+	enterprise_logo?: unknown;
+	enterprise_banner?: unknown;
 	description?: string;
 	team?: Array<{ image?: string; name?: string; position?: string }>;
 	enterprise_info?: {
@@ -57,15 +57,15 @@ type CreateData = {
 };
 
 type companyMember = {
-	image?: any;
+	image?: unknown;
 	name?: string;
 	position?: string;
 };
 
 type CompanyImages = {
-	enterprise_logo: any;
-	enterprise_banner: any;
-	membersImages: any[];
+	enterprise_logo: unknown;
+	enterprise_banner: unknown;
+	membersImages: unknown[];
 };
 
 const companyFormDataFirstInputs = {
@@ -123,8 +123,8 @@ export const CreateCompanyProvider: React.FC<{
 	const [entepriseId, setEntepriseId] = useState<string>("");
 	const [haveCompanyCreateInProcess, setHaveCompanyCreateInProcess] =
 		useState<boolean>(false);
-	const [banner, setBanner] = useState<any>();
-	const [logo, setLogo] = useState<any>();
+	const [banner, setBanner] = useState<unknown>();
+	const [logo, setLogo] = useState<unknown>();
 
 	const [members, setMembers] = useState<companyMember[]>([
 		{ image: null, name: "", position: "" },
@@ -186,8 +186,8 @@ export const CreateCompanyProvider: React.FC<{
 	};
 
 	useEffect(() => {
-		let getformData: any;
-		let getformDataEdit: any;
+		let getformData: unknown;
+		let getformDataEdit: unknown;
 
 		if (isEditing) {
 			getformDataEdit = PersistentFramework.get("formDataEdit");

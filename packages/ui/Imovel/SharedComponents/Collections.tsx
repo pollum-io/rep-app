@@ -11,7 +11,7 @@ interface ICollections {
 export const Collections: React.FC<ICollections> = (props) => {
 	const { images } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [selectedImage, setSelectedImage] = useState<any>();
+	const [selectedImage, setSelectedImage] = useState<unknown>();
 	return (
 		<Flex
 			w="100%"

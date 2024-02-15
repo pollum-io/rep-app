@@ -4,19 +4,19 @@ import { Button, Flex, Img } from "@chakra-ui/react";
 const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 type IAvatar = {
-	setShowImage?: any;
-	avatarVisible?: any;
-	showImage?: any;
-	handleToggleImage?: any;
-	foto?: any;
+	setShowImage?: unknown;
+	avatarVisible?: unknown;
+	showImage?: unknown;
+	handleToggleImage?: unknown;
+	foto?: unknown;
 	nome?: string;
 	cargo?: string;
-	onInputChange?: any;
-	onImageChange?: any;
-	handleMouseEnter?: any;
-	handleMouseLeave?: any;
-	deleteUser?: any;
-	index?: any;
+	onInputChange?: unknown;
+	onImageChange?: unknown;
+	handleMouseEnter?: unknown;
+	handleMouseLeave?: unknown;
+	deleteUser?: unknown;
+	index?: unknown;
 };
 export const Avatar: React.FC<IAvatar> = ({
 	showImage,

@@ -7,11 +7,9 @@ type IFourthOpportunitiesInfo = {
 	token: string;
 };
 
-const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
-
-export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
-	token,
-}) => {
+export const FourthOpportunitiesInfo: React.FC<
+	IFourthOpportunitiesInfo
+> = ({}) => {
 	const {
 		setFirstStep,
 		setSecondStep,
@@ -20,7 +18,6 @@ export const FourthOpportunitiesInfo: React.FC<IFourthOpportunitiesInfo> = ({
 		setThirdStep,
 		setFourthStep,
 	} = useCreateAdminCreateSteps();
-	const [docs, setDocs] = useState([{ name: "", file: null }]);
 	const [banner, setBanner] = useState(null);
 
 	const [estimatedTimeline, setEstimatedTimeline] = useState([

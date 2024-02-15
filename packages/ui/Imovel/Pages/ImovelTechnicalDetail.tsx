@@ -1,7 +1,6 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import PlantaCarrousel from "../ImovelDetailComponents/PlantaCarrouselComponent";
-import { TimelineComponent } from "../ImovelDetailComponents";
 import {
 	ImovelInfoDefault,
 	ObraSteps,
@@ -10,15 +9,17 @@ import {
 } from "../SharedComponents";
 import { IOpportunitiesCard } from "../dtos/Oportunities";
 import { UserLogin } from "../../GlobalDtos";
+import { formatCurrencyWithoutSymbol } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
-	opportuntyDetails?: any;
+	opportuntyDetails?: unknown;
 	usersId: UserLogin;
-	setFirstStep: any;
-	setSecondStep: any;
-	setCotas: any;
-	cotas: any;
+	setFirstStep: unknown;
+	setSecondStep: unknown;
+	setCotas: unknown;
+	cotas: unknown;
 	token?: string;
 }
 
@@ -32,6 +33,16 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 	cotas,
 	token,
 }) => {
+	const handleDownload = () => {
+		const pdfLink =
+			"../../../../apps/investor/public/images/backgrounds/Vestar_pdf.pdf";
+		const link = document.createElement("a");
+		link.href = pdfLink;
+		link.download = "example.pdf";
+		link.click();
+	};
+	const { t } = useTranslation();
+
 	return (
 		<>
 			<Flex flexDir={"column"} alignItems="flex-start">
@@ -70,18 +81,18 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 							>
 								<Flex flexDir={"column"} gap="0.25rem" w="max">
 									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										Área construída{" "}
+										{t("opportunitieDetails.areaConstruída")}
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
-											{imovelDetails?.opportunities_details?.constructed_area}{" "}
-											m²
+											{imovelDetails?.opportunities_details?.constructed_area}
+											mil m²
 										</Text>
 									</Flex>
 								</Flex>
 								<Flex flexDir={"column"} gap="0.25rem" w="max">
 									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										Unidades
+										{t("opportunitieDetails.unidades")}
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
@@ -89,20 +100,10 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 										</Text>
 									</Flex>
 								</Flex>
+
 								<Flex flexDir={"column"} gap="0.25rem" w="max">
 									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										À venda
-									</Text>
-									<Flex gap="0.25rem">
-										<Text fontSize={"md"} color="#171923">
-											{imovelDetails?.opportunities_details?.available_units}{" "}
-											lotes{" "}
-										</Text>
-									</Flex>
-								</Flex>
-								<Flex flexDir={"column"} gap="0.25rem" w="max">
-									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										VGV estimado{" "}
+										{t("opportunitieDetails.vgvEstimado")}
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
@@ -113,11 +114,14 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 
 								<Flex flexDir={"column"} gap="0.25rem" w="max">
 									<Text fontSize={"sm"} fontWeight="400" color="#007D99">
-										Preço médio{" "}
+										{t("opportunitieDetails.precoMedio")}
 									</Text>
 									<Flex gap="0.25rem">
 										<Text fontSize={"md"} color="#171923">
-											R$ {imovelDetails?.opportunities_details?.average_price}{" "}
+											R${" "}
+											{formatCurrencyWithoutSymbol(
+												imovelDetails?.opportunities_details?.average_price
+											)}{" "}
 										</Text>
 									</Flex>
 								</Flex>
@@ -132,7 +136,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 										fontSize="2xl"
 										color={"#171923"}
 									>
-										Registro de incorporação e matrícula{" "}
+										{t("opportunitieDetails.registroIcorporacaoMatricula")}
 									</Text>
 									<Flex>
 										<Flex flexDir={"column"} color={"#171923"}>
@@ -156,7 +160,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 										{imovelDetails?.description}
 									</Text>
 								</Flex>
-								<Flex my={"2rem"} w="100%" maxWidth="70rem">
+								{/* <Flex my={"2rem"} w="100%" maxWidth="70rem">
 									<Text
 										fontSize={"1.5rem"}
 										fontWeight={"600"}
@@ -177,7 +181,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 											</>
 										))}
 									</Flex>
-								</Flex>
+								</Flex> */}
 							</Flex>
 						</Flex>
 					</Flex>
@@ -210,7 +214,7 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 					>
 						<Flex w="100%" maxWidth="70rem" justifyContent={"space-between"}>
 							<Text fontSize={"1.5rem"} fontWeight={"600"} color={"#171923"}>
-								Plantas{" "}
+								{t("opportunitieDetails.plantas")}
 							</Text>
 							<Button
 								h={"max"}
@@ -221,8 +225,9 @@ export const ImovelTechnicalDetailPage: FunctionComponent<IImovelProps> = ({
 								fontSize={"0.875rem"}
 								fontWeight={"500"}
 								color={"#ffffff"}
+								onClick={handleDownload}
 							>
-								Baixar todas{" "}
+								{t("opportunitieDetails.baixarTodas")}
 							</Button>
 						</Flex>
 						<Flex maxWidth="70rem">

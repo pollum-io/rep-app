@@ -58,15 +58,9 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 	const [canSend, setCanSend] = useState(false);
 	const [buttonDisabled, setButtonDisabled] = useState("");
 	const [inputValuesUf, setInputValuesUf] = useState<UfData>();
-	const {
-		firstStep,
-		secondStep,
-		isPhysical,
-		setFirstStep,
-		setSecondStep,
-		setIsPhysical,
-	} = useRegisterSteps();
-	const { register, handleSubmit, reset, getValues } = useForm();
+	const { firstStep, secondStep, isPhysical, setFirstStep, setSecondStep } =
+		useRegisterSteps();
+	const { register, handleSubmit, getValues } = useForm();
 	const { push } = useRouter();
 	const { toast } = useToasty();
 	const { t } = useTranslation();
@@ -119,22 +113,22 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 		if (isPhysical) {
 			dataPF = {
 				full_name: String(data?.full_name),
-				cpf: data?.cpf?.replace(/[.-]/g, ""),
+				cpf: String(data?.cpf?.replace(/[.-]/g, "")),
 				birthday_date: new Date(data?.birthday_date),
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
-				email: user.email,
-				nationality: data?.nationality,
-				city_of_birth: data?.city_of_birth,
+				email: String(user.email),
+				nationality: String(data?.nationality),
+				city_of_birth: String(data?.city_of_birth),
 			};
 		} else {
 			dataPJ = {
 				full_name: String(data?.full_name),
-				cnpj: data?.cnpj.replace(/[-./]/g, ""),
+				cnpj: String(data?.cnpj.replace(/[-./]/g, "")),
 				uf: Object?.values(inputValuesUf)[0],
 				is_legal_entity: isPhysical,
 				invited_by: String(data?.invited_by),
-				email: user.email,
+				email: String(user.email),
 			};
 		}
 
@@ -164,7 +158,7 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 					});
 				}
 			})
-			.catch((err) => {
+			.catch(() => {
 				toast({
 					id: "toast1",
 					position: "top-right",
@@ -173,18 +167,6 @@ export const RegisterContent: FunctionComponent<IRegisterContent> = (props) => {
 					description: "Revise as informações preenchidas.",
 				});
 			});
-	};
-
-	const handleClearInputs = () => {
-		reset({
-			full_name: "",
-			enterprise_name: "",
-			cpf: "",
-			birthday_date: "",
-			cnpj: "",
-			uf: "",
-			corporate_name: "",
-		});
 	};
 
 	return (

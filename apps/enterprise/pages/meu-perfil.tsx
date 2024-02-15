@@ -7,7 +7,7 @@ import { UserLogin } from "ui";
 interface IMyProfilePage {
 	token: string;
 	enterpriseId: string;
-	enterpriseData: any;
+	enterpriseData: unknown;
 }
 
 const MyProfile: NextPage<IMyProfilePage> = ({
@@ -22,10 +22,7 @@ const MyProfile: NextPage<IMyProfilePage> = ({
 	/>
 );
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["inc_auth"];
 
 	if (!token) {

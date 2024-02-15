@@ -1,6 +1,6 @@
 import { api } from "../api";
 
-export const fetchCreateEnterprise = async (data: any) => {
+export const fetchCreateEnterprise = async (data: unknown) => {
 	try {
 		const response = await api.post(`/enterprise`, data);
 		return response.data;

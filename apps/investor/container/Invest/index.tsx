@@ -47,10 +47,8 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 				margin={"0 auto"}
 				justifyContent={"center"}
 				flexDir={"column"}
+				pt={"6.5rem"}
 			>
-				<Flex justifyContent={"center"} py={"5rem"}>
-					<InvestSteps />
-				</Flex>
 				<motion.div
 					initial={{ opacity: 0, y: 40 }}
 					animate={firstStep ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}

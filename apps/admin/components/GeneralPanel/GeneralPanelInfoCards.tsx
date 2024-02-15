@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
+import { Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui";
 
 interface IGeneralPanelInfoCards {
-	cardsData: any;
+	cardsData: unknown;
 }
 
 export const GeneralPanelInfoCards: React.FC<IGeneralPanelInfoCards> = ({
@@ -13,7 +13,7 @@ export const GeneralPanelInfoCards: React.FC<IGeneralPanelInfoCards> = ({
 		{
 			id: 1,
 			logo: "/logos/receitas.svg",
-			title: "Receitas LIVN",
+			title: "Receitas Vestar",
 			value: formatCurrency(cardsData?.revenue),
 		},
 		{

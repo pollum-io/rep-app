@@ -22,7 +22,7 @@ export const CompaniesControll: React.FC = () => {
 	} = useCreateCompany();
 	const [currentPage, setCurrentPage] = useState(1);
 	const queryClient = useQueryClient();
-	const { data, isLoading, error } = useQuery(
+	const { data, isLoading } = useQuery(
 		["enterpriseShareholdersFilter"],
 		async () => await fetchEnterprise()
 	);

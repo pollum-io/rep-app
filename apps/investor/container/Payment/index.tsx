@@ -9,7 +9,7 @@ import { UserDataPJ } from "../../dtos/UserPJ";
 import { motion } from "framer-motion";
 
 interface IPayment {
-	imovelPayment?: any;
+	imovelPayment?: unknown;
 	oportunitiesAddress?: string;
 	user?: UserInfo;
 	token: string;

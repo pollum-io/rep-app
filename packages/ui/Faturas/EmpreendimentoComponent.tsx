@@ -11,7 +11,7 @@ export const EmpreendimentoComponent: React.FC<ComponentProps> = ({
 	contribution,
 }) => {
 	const [state, setState] = useState("abertas");
-	const [filteredArray, setFilteredArray] = useState<any[]>([]);
+	const [filteredArray, setFilteredArray] = useState<unknown[]>([]);
 
 	const setFilter = useMemo(() => {
 		const newArray =

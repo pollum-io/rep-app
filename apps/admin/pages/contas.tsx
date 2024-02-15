@@ -11,10 +11,7 @@ const Accounts: NextPage = () => <AccountsContainer />;
 
 export default Accounts;
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["adm_auth"];
 
 	if (!token) {

@@ -4,7 +4,6 @@ import { UserLogin } from "../dtos/IUserLogin";
 import { FaturasContainer } from "../container/Faturas";
 import { UserDataPF } from "../dtos/UserPF";
 import { UserDataPJ } from "../dtos/UserPJ";
-import { UserInfo } from "../dtos/GlobalUserInfo";
 import { InvestmentModel } from "../dtos/IInvestment";
 import { IContribution } from "ui";
 import {

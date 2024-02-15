@@ -2,6 +2,7 @@ import { Flex, Img, Text } from "@chakra-ui/react";
 import { FunctionComponent } from "react";
 import { FiMapPin } from "react-icons/fi";
 import { ICompanieDetails } from "./dto";
+import { formatCNPJ } from "../../utils";
 
 export const CompanieDetails: FunctionComponent<ICompanieDetails> = ({
 	banner,
@@ -55,7 +56,7 @@ export const CompanieDetails: FunctionComponent<ICompanieDetails> = ({
 							{name}
 						</Text>
 						<Text fontSize="1rem" lineHeight="1.5rem" color="#718096">
-							{id}
+							CNPJ: {formatCNPJ(id)}
 						</Text>
 					</Flex>
 				</Flex>

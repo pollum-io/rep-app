@@ -65,18 +65,19 @@ export const CompaniePage: FunctionComponent<ICompanie> = ({
 									color="#171923"
 								>
 									<Text>{t("companieDetails.whoBuilds")}</Text>
-
-									{companieDetail?.team?.map(
-										(team: ICompaniesTeam, index: number) => (
-											// eslint-disable-next-line react/jsx-key
-											<CompanieMembers
-												key={index}
-												name={team.name}
-												occupation={team.position}
-												image={team.image}
-											/>
-										)
-									)}
+									<Flex>
+										{companieDetail?.team?.map(
+											(team: ICompaniesTeam, index: number) => (
+												// eslint-disable-next-line react/jsx-key
+												<CompanieMembers
+													key={index}
+													name={team.name}
+													occupation={team.position}
+													image={team.image}
+												/>
+											)
+										)}
+									</Flex>
 								</Flex>
 							</Flex>
 						</Flex>

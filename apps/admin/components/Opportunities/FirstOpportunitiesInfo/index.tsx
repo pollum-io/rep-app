@@ -5,18 +5,16 @@ import { InputComponent } from "../../Companies/CreateCompanie/CompanieFormCreat
 import { DocComponent } from "./DocComponent";
 import { useCreateAdminCreateSteps } from "../../../hooks/useCreateAdminCreateSteps";
 import { fetchEnterprise } from "services";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
 type IFirstOpportunitiesInfo = {
 	token: string;
 };
 
-const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
-
-export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
-	token,
-}) => {
-	const [opportuntiesFormData, setOpportuntiesFormData] = useState<any>({
+export const FirstOpportunitiesInfo: React.FC<
+	IFirstOpportunitiesInfo
+> = ({}) => {
+	const [opportuntiesFormData, setOpportuntiesFormData] = useState<unknown>({
 		enterprise_name: "",
 		name: "",
 		localizacao: "",
@@ -45,15 +43,14 @@ export const FirstOpportunitiesInfo: React.FC<IFirstOpportunitiesInfo> = ({
 	const { setFirstStep, setSecondStep, firstStep, secondStep } =
 		useCreateAdminCreateSteps();
 
-	const {
-		data: allEnterprises,
-		isLoading,
-		error,
-	} = useQuery(["enterprises"], async () => await fetchEnterprise());
+	const { data: allEnterprises } = useQuery(
+		["enterprises"],
+		async () => await fetchEnterprise()
+	);
 
 	const handleFileChange = (e) => {
 		const files = Array.from(e.target.files);
-		const selectedImageUrls = files.map((file: any) =>
+		const selectedImageUrls = files.map((file: unknown) =>
 			URL.createObjectURL(file)
 		);
 		setSelectedOpportuntiesPictures([

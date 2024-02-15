@@ -1,11 +1,5 @@
 import {
-	Accordion,
-	AccordionButton,
-	AccordionIcon,
-	AccordionItem,
-	AccordionPanel,
 	Flex,
-	Icon,
 	Img,
 	Menu,
 	MenuButton,
@@ -14,18 +8,15 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { BsCheck } from "react-icons/bs";
-import { FiMenu } from "react-icons/fi";
+
 import { useUser } from "../../hooks/useUser";
-import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { logout } from "services";
 
 export const HamburguerMenu: React.FC = () => {
 	const { push } = useRouter();
 	const { userInfos, username, isInvestorPerfilCompleted } = useUser();
-	const { t, i18n } = useTranslation();
-	const { language } = i18n;
+	const { t } = useTranslation();
 
 	return (
 		<Menu>

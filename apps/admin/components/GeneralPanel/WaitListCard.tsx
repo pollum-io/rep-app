@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "react-query";
 import { fetchGetContact } from "services";
@@ -19,7 +19,7 @@ export const WaitListCard: React.FC = () => {
 		// });
 	};
 
-	const { data, isLoading, error } = useQuery(
+	const { data, isLoading } = useQuery(
 		["enterpriseShareholdersFilter"],
 		async () => await fetchGetContact(currentPage)
 	);

@@ -16,8 +16,8 @@ import {
 interface UserData {
 	token?: string;
 	enterpriseId?: string;
-	investments?: any[];
-	enterpriseData: any;
+	investments?: unknown[];
+	enterpriseData: unknown;
 	contribution?: IContribution;
 }
 

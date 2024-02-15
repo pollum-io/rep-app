@@ -1,9 +1,8 @@
 import React from "react";
-import { Button, Flex, Img, Text } from "@chakra-ui/react";
-import { formatCurrency } from "ui";
+import { Flex, Img, Text } from "@chakra-ui/react";
 
 interface IPendencies {
-	pendenciesData: any;
+	pendenciesData: unknown;
 }
 
 export const Pendencies: React.FC<IPendencies> = ({ pendenciesData }) => {

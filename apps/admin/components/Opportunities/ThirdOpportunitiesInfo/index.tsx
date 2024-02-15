@@ -9,11 +9,9 @@ type IThirdOpportunitiesInfo = {
 	token: string;
 };
 
-const url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
-
-export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
-	token,
-}) => {
+export const ThirdOpportunitiesInfo: React.FC<
+	IThirdOpportunitiesInfo
+> = ({}) => {
 	const {
 		setFirstStep,
 		setSecondStep,
@@ -22,7 +20,6 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 		setThirdStep,
 		setFourthStep,
 	} = useCreateAdminCreateSteps();
-	const [docs, setDocs] = useState([{ name: "", file: null }]);
 
 	const [estimatedTimeline, setEstimatedTimeline] = useState([
 		{
@@ -40,26 +37,6 @@ export const ThirdOpportunitiesInfo: React.FC<IThirdOpportunitiesInfo> = ({
 			],
 		},
 	]);
-
-	const handleAddDoc = () => {
-		setDocs([...docs, { name: "", file: null }]);
-	};
-
-	const handleDeleteDoc = (index) => {
-		const updatedDocs = [...docs];
-		updatedDocs.splice(index, 1);
-		setDocs(updatedDocs);
-	};
-
-	const handleDocsChange = (index, value) => {
-		console.log({ index, value }, "index, key, value");
-
-		const updatedMembers = [...docs];
-		updatedMembers[index]["file"] = value;
-		updatedMembers[index]["name"] = value.name;
-
-		setDocs(updatedMembers);
-	};
 
 	const handleAddestimatedTimeline = () => {
 		setEstimatedTimeline([

@@ -38,7 +38,7 @@ const InsertSchema = z.object({
 	kyc_approved: z.optional(z.boolean()),
 	aum: z.optional(z.number()),
 	wallet_address: z.optional(z.string()),
-	investments: z.optional(z.array(z.any())),
+	investments: z.optional(z.array(z.unknown())),
 	invited_by: z.string(),
 	uf: z.string(),
 });

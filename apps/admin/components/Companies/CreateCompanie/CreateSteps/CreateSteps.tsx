@@ -3,7 +3,6 @@ import { Flex, Text, Progress } from "@chakra-ui/react";
 import { IRegisterSteps } from "./dto";
 
 import { BsCheck } from "react-icons/bs";
-import { useTranslation } from "react-i18next";
 import { useCreateAdminCreateSteps } from "../../../../hooks/useCreateAdminCreateSteps";
 
 const CreateStep: FunctionComponent<IRegisterSteps> = ({
@@ -77,7 +76,6 @@ export const CreateSteps: FunctionComponent = () => {
 		fourthStep,
 		isCreateOpportunityPage,
 	} = useCreateAdminCreateSteps();
-	const { t } = useTranslation();
 
 	return (
 		<Flex gap="3.875rem">

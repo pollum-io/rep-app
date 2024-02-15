@@ -1,16 +1,13 @@
 import jwt_decode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
-import { UserDataPF, UserLogin } from "ui";
+import { UserLogin } from "ui";
 import { DashboardContainer } from "../container/Dashboard";
 import {
-	fetchEnterpriseById,
 	fetchEnterpriseForecastGeneral,
 	fetchEnterpriseForecastMonthly,
-	fetchEnterpriseShareholders,
 } from "services";
 import { IMonthlyForecast } from "../types/IMonthlyForecast";
 import { IGeneralForecast } from "../types/IGeneralForecast";
-import { IShareholder } from "../types/IShareholders";
 interface IDashboardPage {
 	token: string;
 	enterpriseId: string;
@@ -32,10 +29,7 @@ const Dashboard: NextPage<IDashboardPage> = ({
 	/>
 );
 
-export const getServerSideProps: GetServerSideProps = async ({
-	req,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 	const token = req.cookies["inc_auth"];
 
 	if (!token) {

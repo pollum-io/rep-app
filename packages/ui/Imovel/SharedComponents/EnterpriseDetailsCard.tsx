@@ -1,9 +1,8 @@
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useOpportunities } from "../../../../apps/investor/hooks/useOpportunities";
-import { useRegisterSteps } from "../../../../apps/investor/hooks/useRegisterSteps";
 import { formatCurrency } from "../../utils/BRCurrency";
 
 interface IEnterpriseDetailsCard {
@@ -13,10 +12,10 @@ interface IEnterpriseDetailsCard {
 	heightDefault?: string;
 	pageSize?: string;
 	unitPrice?: number;
-	setFirstStep: any;
-	setSecondStep: any;
-	setCotas: any;
-	cotas: any;
+	setFirstStep: unknown;
+	setSecondStep: unknown;
+	setCotas: unknown;
+	cotas: unknown;
 	opportunitiesDetails?: {
 		constructed_area: number;
 		estimated_vgv: number;
@@ -44,7 +43,6 @@ export const EnterpriseDetailsCard: React.FC<IEnterpriseDetailsCard> = (
 	const { push } = useRouter();
 	const { t } = useTranslation();
 
-	const [scroll, setScrollY] = useState("");
 	const [scrollPosition, setScrollPosition] = useState(0);
 	const topMargin = 0; // Altura em pixels onde o PriceCard deve começar a se mover
 	const bottomMargin = 0; // Altura em pixels onde o PriceCard deve parar de se mover

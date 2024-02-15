@@ -22,7 +22,7 @@ interface ICarousel {
 	extra_images?: string[];
 	modal_images?: string[];
 	selectedImage?: string;
-	setCurrentIndex?: any;
+	setCurrentIndex?: unknown;
 	isOpen?: boolean;
 }
 
@@ -39,7 +39,6 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 	const [slider, setSlider] = React.useState<Slider | null>(null);
 
 	const top = useBreakpointValue({ base: "90%", md: "50%" });
-	const side = useBreakpointValue({ base: "30%", md: "10px" });
 	const [imagesCarousel, setImagesCarousel] = useState<string[]>([]);
 
 	useMemo(() => {
@@ -79,6 +78,7 @@ export const Carousel: React.FC<ICarousel> = (props) => {
 				});
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedImage]);
 
 	const handleIndex = (index: number) => {

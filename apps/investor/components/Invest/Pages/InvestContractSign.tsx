@@ -13,7 +13,7 @@ import { fetchGetInvestmentById } from "services";
 interface IContractSign {
 	imovel?: IOpportunitiesCard;
 	token: string;
-	setContribution: any;
+	setContribution: unknown;
 }
 
 export const InvestContractSign: React.FC<IContractSign> = ({

@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Text, Progress } from "@chakra-ui/react";
 import { BsCheck } from "react-icons/bs";
-import { useTranslation } from "react-i18next";
 import { ISteps } from "./stepsdto";
 import { useRegisterSteps } from "../../../hooks";
 
@@ -14,7 +13,7 @@ const InvestStepsComponent: FunctionComponent<ISteps> = ({
 		<Flex gap="0.7762rem" alignItems="center">
 			<Flex
 				borderRadius="full"
-				bgColor={barPercentage !== 0 ? "#007088" : "#EDF2F7"}
+				bgColor={barPercentage !== 0 ? "#003243c8" : "#EDF2F7"}
 				w="1.9737rem"
 				h="1.9737rem"
 				justifyContent="center"
@@ -70,7 +69,6 @@ const InvestStepsComponent: FunctionComponent<ISteps> = ({
 
 export const InvestSteps: FunctionComponent = () => {
 	const { firstStep, secondStep } = useRegisterSteps();
-	const { t } = useTranslation();
 
 	return (
 		<Flex gap="3.875rem">

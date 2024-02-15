@@ -9,7 +9,7 @@ import {
 	Stack,
 	Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useUser } from "../../../hooks/useUser";
@@ -36,7 +36,6 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 	const [defaultValues, setDefaultValues] = useState<UserDataPF>();
 	const [isDisabled] = useState(true);
 	const [equityRegime, setEquityRegime] = useState<string>("");
-	const [isMarried, setIsMarried] = useState<boolean>();
 
 	const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<string>();
 	const { userInfos } = useUser();
@@ -170,11 +169,11 @@ export const PersonalDataPF: React.FC<IPersonalDataPF> = (props) => {
 			});
 	};
 
-	useEffect(() => {
-		if (watch("marital_status.status") === "Casado(a)") {
-			setIsMarried(true);
-		}
-	}, [watch]);
+	// useEffect(() => {
+	// 	if (watch("marital_status.status") === "Casado(a)") {
+	// 		setIsMarried(true);
+	// 	}
+	// }, [watch]);
 	return (
 		<Flex w="100%" justifyContent="end">
 			<Flex flexDirection="column" gap="2.75rem" w="100%" maxWidth="47.4375rem">

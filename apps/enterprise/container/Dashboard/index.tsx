@@ -46,7 +46,7 @@ export const DashboardContainer: FunctionComponent<IDashboardContainer> = ({
 	generalForecast,
 }) => {
 	const [buttonstate, setButtonState] = useState("");
-	const [filteredArray, setFilteredArray] = useState<any[]>();
+	const [filteredArray, setFilteredArray] = useState<unknown[]>();
 	const [haveInvestment, setHaveInvestment] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
 	const queryClient = useQueryClient();

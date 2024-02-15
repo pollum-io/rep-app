@@ -1,10 +1,7 @@
 import { Flex, Text, Button, Img } from "@chakra-ui/react";
 import { FunctionComponent, useMemo } from "react";
 import { IEmpreendimentoData } from "../../../dtos/IEmpreendimentoMeuInvestimento";
-import {
-	formatDateOnlyDayMonthYear,
-	formatDateOnlyMonthYear,
-} from "../../../utils/formatDate";
+import { formatDateOnlyMonthYear } from "../../../utils/formatDate";
 import { useRouter } from "next/router";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { motion } from "framer-motion";
@@ -112,11 +109,11 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 				flex="1.5"
 				flexDir={"row"}
 				alignItems={"center"}
-				onClick={() =>
-					push({
-						pathname: `/oportunidades/${props?.opportunity_url}`,
-					})
-				}
+				// onClick={() =>
+				// 	push({
+				// 		pathname: `/oportunidades/${props?.opportunity_url}`,
+				// 	})
+				// }
 			>
 				<Flex h={"max"} mr={"0.75rem"} position="relative">
 					<Img
@@ -124,7 +121,7 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 						h={"4.25rem"}
 						objectFit={"cover"}
 						borderLeftRadius={"0.75rem"}
-						src={`/api/file/${props?.pictures_enterprise[0]}`}
+						src={`/api/file/b1075e7f-9256-4bd6-9afa-1326b9f740a9.jpeg`}
 					/>
 					<Flex
 						position="absolute"
@@ -161,19 +158,19 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 				</Flex>
 			</Flex>
 			<Flex
-				onClick={
-					!props.isModal
-						? () => {
-								props.setEmpreendimento(props);
-								props.modalOpen();
-						  }
-						: null
-				}
+				// onClick={
+				// 	!props.isModal
+				// 		? () => {
+				// 				props.setEmpreendimento(props);
+				// 				props.modalOpen();
+				// 		  }
+				// 		: null
+				// }
 				flex={"3"}
 			>
 				<Flex flex="0.7" flexDir={"column"}>
 					<Text fontSize={"0.875rem"} fontWeight={"400"} color={"#171923"}>
-						{formatDateOnlyDayMonthYear(props?.dataInvest)}
+						{props?.dataInvest}
 					</Text>
 					<Text fontSize={"0.875rem"} fontWeight={"400"} color={"#171923"}>
 						{props?.num_cotas} cotas
@@ -207,8 +204,8 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 			<Flex
 				flex="2"
 				as={"a"}
-				href={isAssinarContrato ? props?.url_unsigned_document : null}
-				onClick={() => handleButtonClick()}
+				// href={isAssinarContrato ? props?.url_unsigned_document : null}
+				// onClick={() => handleButtonClick()}
 				target="_blank"
 				h={"100%"}
 				alignItems={"center"}
@@ -243,7 +240,8 @@ export const ImoveisTableRow: FunctionComponent<IEmpreendimentoData> = (
 						color={"#007D99"}
 						fontWeight={"500"}
 						_hover={{}}
-						href={isAssinarContrato ? props?.url_unsigned_document : null}
+						isDisabled
+						// href={isAssinarContrato ? props?.url_unsigned_document : null}
 						onClick={() => handleButtonClick()}
 					>
 						{getStatusColorAndText(props?.status)?.action}

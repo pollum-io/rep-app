@@ -1,31 +1,15 @@
 import React, { useState } from "react";
-import {
-	Button,
-	Flex,
-	Img,
-	Input,
-	Select,
-	Stack,
-	Switch,
-	Text,
-} from "@chakra-ui/react";
+import { Flex, Img, Input, Select, Text } from "@chakra-ui/react";
 
 type ComponentProps = {
-	data: any;
-	index: any;
+	data: unknown;
+	index: number;
 };
 
-export const PrevFinanceiraTable: React.FC<ComponentProps> = ({
-	data,
-	index,
-}) => {
+export const PrevFinanceiraTable: React.FC<ComponentProps> = ({ index }) => {
 	const [additionalInputs, setAdditionalInputs] = useState([""]);
 
-	const handleAddInput = () => {
-		setAdditionalInputs([...additionalInputs, ""]);
-	};
-
-	const handleRemoveInput = (index) => {
+	const handleRemoveInput = (index: number) => {
 		if (additionalInputs.length > 1) {
 			const newInputs = [...additionalInputs];
 			newInputs.splice(index, 1);

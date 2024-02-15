@@ -29,18 +29,11 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 > = ({ data }) => {
 	const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
 
-	const formatCurrencyValue = (value: number) => {
-		return (value / 10).toLocaleString("pt-BR", {
-			style: "currency",
-			currency: "BRL",
-		});
-	};
-
 	const getBarColor = (entryValue: string | number) => {
 		return Number(entryValue) >= 0 ? "#003243c8" : "#ca5d5d";
 	};
 
-	const CustomBarLabel = (props: any) => {
+	const CustomBarLabel = (props: unknown) => {
 		const { x, y, width, value, index } = props;
 		const isPositive = (value ? value : 0) >= 0;
 		const yPosition = isPositive ? y - -18 : y + -12;
@@ -49,7 +42,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 			<>
 				{x && y && width && value && (
 					<text
-						x={x + width / 2.4}
+						x={x + width / 1.9}
 						y={yPosition}
 						fill="white"
 						fontSize={12}
@@ -71,8 +64,8 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 		fill: getBarColor(item.cash_flow),
 	}));
 
-	const CustomBar = (props: any) => {
-		const { fill, x, y, width, height, value, index } = props;
+	const CustomBar = (props: unknown) => {
+		const { fill, x, y, height, value, index } = props;
 		const borderRadius = 8; // Adjust the border radius as needed
 		const isPositive = (value ? value : 0) >= 0;
 
@@ -81,7 +74,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 				<Rectangle
 					x={x}
 					y={y}
-					width={105}
+					width={115}
 					height={height}
 					radius={
 						isPositive
@@ -113,7 +106,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 				mb={"2rem"}
 			>
 				{data?.map((data, index) => (
-					<Flex key={index} width={"9.2rem"} justifyContent={"center"}>
+					<Flex key={index} width={"8.5rem"} justifyContent={"center"}>
 						<Text
 							textAlign={"center"}
 							color="#171923"
@@ -125,7 +118,7 @@ const PositiveAndNegativeBarChart: FunctionComponent<
 					</Flex>
 				))}
 			</Flex>
-			<BarChart width={610} height={220} data={chartData}>
+			<BarChart width={410} height={220} data={chartData}>
 				<XAxis hide={true} />
 				<YAxis hide={true} />
 				<Bar

@@ -1,5 +1,5 @@
 import { Button, Flex } from "@chakra-ui/react";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { ShareholdersTableRow } from "./ShareholdersTableRow";
 import { ShareholdersTableHeader } from "./ShareholdersTableHeader";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
@@ -12,12 +12,12 @@ interface IImoveisTable {
 	token: string;
 	isMoreThenOnePage?: boolean;
 	buttonState?: string;
-	setFilter?: any;
-	dataShare?: any;
-	isLoading?: any;
-	error?: any;
+	setFilter?: unknown;
+	dataShare?: unknown;
+	isLoading?: unknown;
+	error?: unknown;
 	currentPage?: number;
-	setCurrentPage?: any;
+	setCurrentPage?: unknown;
 }
 const MotionFlex = motion(Flex);
 

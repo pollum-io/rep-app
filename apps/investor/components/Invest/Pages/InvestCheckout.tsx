@@ -1,50 +1,44 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Button, Flex, Img, Text } from "@chakra-ui/react";
 import { formatCurrency } from "ui/utils/BRCurrency";
 import { useTranslation } from "react-i18next";
 import { useRegisterSteps } from "../../../hooks";
-import { PersonalDataPF } from "../../EditProfile/PersonalDataPF";
 import { UserDataPF } from "../../../dtos/UserPF";
 import { UserDataPJ } from "../../../dtos/UserPJ";
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
-import { useOpportunities } from "../../../hooks/useOpportunities";
 import { useUser } from "../../../hooks/useUser";
 import { Oval } from "react-loader-spinner";
-import { useMutation, useQuery } from "react-query";
-import { fetchGetInvestorPFById, fetchSignContract } from "services";
+import { useMutation } from "react-query";
+import { useWallet } from "../../../hooks/useWallet";
+import { useTransactions } from "../../../hooks/useTransactions";
+import { useRouter } from "next/router";
+import { useToasty } from "../../../hooks/useToasty";
+import { useOpportunities } from "../../../hooks/useOpportunities";
 
 interface IInvestCheckout {
-	imovel?: IOpportunitiesCard;
+	imovel: IOpportunitiesCard;
 	isPerfilCompleted?: boolean;
-	userDataPF?: UserDataPF;
+	userDataPF: UserDataPF;
 	userDataPJ?: UserDataPJ;
 	token: string;
+	oportunitiesAddress: string;
 }
 
 export const InvestCheckout: React.FC<IInvestCheckout> = ({
-	userDataPF,
-	userDataPJ,
 	imovel,
 	token,
 }) => {
 	const { t } = useTranslation();
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
-	const { cotas, setCotas } = useOpportunities();
 	const { setInvestmentId, setDocLink } = useUser();
-
-	const { data, isLoading, isError, error } = useQuery(
-		"ïd",
-		async () => await fetchGetInvestorPFById(userDataPF?._id, token),
-		{
-			onError: (error) => {
-				console.error("Erro ao buscar investimento:", error);
-			},
-			refetchInterval: 3000, // Refetch a cada 5 segundos
-		}
-	);
+	const { cotas, setCotas } = useOpportunities();
+	const router = useRouter();
+	const { toast } = useToasty();
 
 	const mutation = useMutation(
-		async (contractData: any) => {
+		async (contractData: unknown) => {
 			try {
 				const res = await fetchSignContract(contractData, token);
 				return res;
@@ -62,19 +56,156 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 		}
 	);
 
-	const handleSignContract = () => {
-		const contractData = {
-			templateKey: imovel?.template_key,
-			enterpriseId: imovel?.enterprise_id,
-			opportunityId: imovel?._id,
-			num_cotas: cotas,
-			totalInvested: cotas * (imovel?.min_investment ?? 0),
+	const {
+		claimTokens,
+		isWhitelisted,
+		approve,
+		addToWhitelist,
+		buyToken,
+		balance,
+	} = useTransactions();
+	const { isConnected, connectWallet, address } = useWallet();
+
+	const buttonLabel = useMemo(() => {
+		const labelMap = {
+			connected: {
+				whitelisted: balance
+					? approve.isSuccess
+						? "Buy Token"
+						: "Approve"
+					: "Buy Drex",
+				notWhitelisted: "Enter Whitelist",
+			},
+			notConnected: "Connect to metamask",
 		};
 
-		mutation.mutate(contractData);
-	};
+		if (isConnected) {
+			return isWhitelisted
+				? labelMap.connected.whitelisted
+				: labelMap.connected.notWhitelisted;
+		} else {
+			return labelMap.notConnected;
+		}
+	}, [isConnected, isWhitelisted, balance, approve.isSuccess]);
+
+	const handleButton = useCallback(() => {
+		if (isConnected) {
+			if (isWhitelisted) {
+				if (balance) {
+					if (!approve.isSuccess) {
+						console.log(approve.status, "AA");
+						approve.write({
+							args: [
+								imovel.sale_address,
+								Number(imovel?.min_investment) * Number(1e6) * cotas,
+							],
+						});
+					} else {
+						console.log(buyToken.status, "BB");
+						buyToken.writeAsync({
+							args: [Number(imovel?.min_investment) * Number(1e6) * cotas],
+						});
+					}
+				} else {
+					claimTokens.writeAsync();
+				}
+			} else {
+				addToWhitelist.writeAsync({ args: [address] });
+			}
+		} else {
+			connectWallet();
+		}
+	}, [
+		isConnected,
+		isWhitelisted,
+		balance,
+		approve,
+		imovel.sale_address,
+		imovel?.min_investment,
+		cotas,
+		buyToken,
+		claimTokens,
+		addToWhitelist,
+		address,
+		connectWallet,
+	]);
+
+	useEffect(() => {
+		router.prefetch("/meus-investimentos");
+
+		if (buyToken.isSuccess) {
+			approve.reset();
+			buyToken.reset();
+			toast({
+				id: "toast-create-suc",
+				position: "top-right",
+				status: "success",
+				title: "Transação concluída",
+				description:
+					"Em breve voce receberá o email com os detalhes e comprovantes da transação",
+			});
+			router.push("/meus-investimentos");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [buyToken.isSuccess, router, toast]);
+
+	const buttonValid = useMemo(() => {
+		let isValid: boolean;
+		if (
+			isConnected &&
+			!cotas > 0 &&
+			Number(imovel?.min_investment) * Number(1e6) * cotas <= balance
+		) {
+			isValid = true;
+		} else {
+			isValid = false;
+		}
+		return isValid;
+	}, [isConnected, balance, imovel?.min_investment, cotas]);
+
+	const loader = useMemo(() => {
+		if (buyToken.isLoading || approve.isLoading) {
+			return (
+				<Flex position={"absolute"} left={"50%"} bottom={"50%"} zIndex={9999}>
+					<Oval
+						height={98}
+						width={98}
+						color="#29525f"
+						wrapperStyle={{}}
+						wrapperClass=""
+						visible={true}
+						ariaLabel="oval-loading"
+						secondaryColor="#a8a8a8"
+						strokeWidth={4}
+						strokeWidthSecondary={4}
+					/>
+				</Flex>
+			);
+		}
+	}, [approve.isLoading, buyToken.isLoading]);
+
+	useMemo(() => {
+		if (approve?.isError) {
+			toast({
+				id: "toast-create-suc",
+				position: "top-right",
+				status: "error",
+				title: "Approve error",
+			});
+		}
+		if (buyToken?.isError) {
+			toast({
+				id: "toast-create-suc",
+				position: "top-right",
+				status: "error",
+				title: "Buy token error",
+			});
+		}
+	}, [approve?.isError, buyToken?.isError, toast]);
+
 	return (
 		<Flex w="100%" gap="5%" justifyContent="space-between" mb="12rem">
+			{loader}
 			<Flex flexDir={"column"}>
 				<Flex>
 					<Text
@@ -135,48 +266,6 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 						</Flex>
 					</Flex>
 				</Flex>
-				{!isLoading && data?.data?.is_profile_filled === false && (
-					<Flex gap={"1.5rem"} flexDir={"column"}>
-						<Text
-							mt={"4rem"}
-							color={"#171923"}
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-						>
-							Formas de pagamento{" "}
-						</Text>
-						<Flex
-							border={"1px solid #D9D9D9"}
-							w={"max"}
-							p={"2"}
-							borderRadius={"0.5rem"}
-						>
-							<Img w={"3.1635rem"} h={"1.125rem"} src="images/pixLogo.png" />
-						</Flex>
-					</Flex>
-				)}
-				{!isLoading && data?.data?.is_profile_filled === false && (
-					<Flex gap={"1.5rem"} flexDir={"column"}>
-						<Text
-							mt={"4rem"}
-							color={"#171923"}
-							fontSize={"1.5rem"}
-							fontWeight={"600"}
-						>
-							Complete seu cadastro para continuar{" "}
-						</Text>
-						<Text color={"#E53E3E"} fontSize={"0.875rem"}>
-							Todos os campos abaixo são obrigatórios para realização da compra.
-						</Text>
-						<Flex>
-							<PersonalDataPF
-								isCheckout={true}
-								userDataPF={userDataPF}
-								token={token}
-							/>
-						</Flex>
-					</Flex>
-				)}
 			</Flex>
 			<Flex w="100%" justifyContent={"end"}>
 				<Flex
@@ -184,7 +273,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 					w="23.125rem"
 					fontFamily="Poppins"
 					h="max-content"
-					bg="#007D99"
+					bg="#003243"
 					boxShadow="0rem 1.25rem 1.5625rem rgba(31, 41, 55, 0.1), 0rem 0.625rem 0.625rem rgba(31, 41, 55, 0.04)"
 					borderRadius="0.75rem"
 					gap="1rem"
@@ -195,7 +284,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 						{t("wantToInvest.confirmData")}
 					</Text>
 					<Flex
-						bgColor={"#1789A3"}
+						bgColor={"#29525f"}
 						py="0.5rem"
 						px="1rem"
 						borderRadius="0.5rem"
@@ -277,19 +366,17 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 							color="#007088"
 							_hover={{ bgColor: "#EDF2F7" }}
 							_active={{ bgColor: "#E2E8F0" }}
-							isDisabled={
-								(!isLoading && data?.data?.is_profile_filled === false) ||
-								!cotas
-							}
-							onClick={() => handleSignContract()}
+							onClick={handleButton}
+							isDisabled={buttonValid}
+							disabled={buttonValid}
 						>
-							Confirmar e prosseguir
+							{buttonLabel}
 							{mutation.isLoading && (
 								<Flex pl={"0.625rem"}>
 									<Oval
 										height={18}
 										width={18}
-										color="#1789A3"
+										color="#29525f"
 										wrapperStyle={{}}
 										wrapperClass=""
 										visible={true}
