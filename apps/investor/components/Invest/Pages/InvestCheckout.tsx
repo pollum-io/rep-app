@@ -204,7 +204,7 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 	}, [approve?.isError, buyToken?.isError, toast]);
 
 	return (
-		<Flex w="100%" gap="5%" justifyContent="space-between" mb="12rem">
+		<Flex w="100%" gap="5%" justifyContent="space-between">
 			{loader}
 			<Flex flexDir={"column"}>
 				<Flex>
@@ -388,9 +388,6 @@ export const InvestCheckout: React.FC<IInvestCheckout> = ({
 								</Flex>
 							)}
 						</Button>
-						<Text fontWeight={"400"} fontSize={"xs"} display={"flex"}>
-							{t("opportunitieDetails.wontBe")}
-						</Text>
 					</Flex>
 				</Flex>
 			</Flex>

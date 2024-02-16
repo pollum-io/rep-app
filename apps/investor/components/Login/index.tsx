@@ -137,7 +137,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 							>
 								{t("login.password")}
 							</Text>
-							<Text
+							{/* <Text
 								flexDirection="column"
 								fontStyle="normal"
 								fontWeight="500"
@@ -149,7 +149,7 @@ export const Login: FunctionComponent<ButtonProps> = () => {
 								onClick={() => push("/recover_password")}
 							>
 								{t("login.forgot")}
-							</Text>
+							</Text> */}
 						</Flex>
 						<Input
 							placeholder={t("login.placeholderSenha") as string}

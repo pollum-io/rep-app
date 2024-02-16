@@ -188,15 +188,8 @@ export const PriceCard: React.FC<IPriceCard> = (props) => {
 										? hasToken
 											? "Ver tokens adquiridos"
 											: "Vendas encerradas"
-										: "Quero investir"}
+										: t("opportunitieDetails.wantTo")}
 								</Button>
-								<Text
-									fontWeight={"400"}
-									fontSize={"xs"}
-									display={ended ? "none" : "flex"}
-								>
-									{t("opportunitieDetails.wontBe")}
-								</Text>
 							</Flex>
 						</Flex>
 						<Flex flexDir={"column"} gap="0.5rem">

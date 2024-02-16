@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Button } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 interface IOportunitiesNavBar {
 	page?: string;
