@@ -4,7 +4,6 @@ import { DefaultTemplate } from "../DefaultTemplate";
 import { IOpportunitiesCard } from "../../dtos/Oportunities";
 import { useUser } from "../../hooks/useUser";
 import { UserInfo } from "../../dtos/GlobalUserInfo";
-import { InvestSteps } from "../../components/Invest/PaymentMethods/InvestSteps";
 import { InvestCheckout } from "../../components/Invest/Pages/InvestCheckout";
 import { useRegisterSteps } from "../../hooks";
 import { InvestContractSign } from "../../components/Invest/Pages/InvestContractSign";
@@ -47,7 +46,8 @@ export const InvestContainer: FunctionComponent<IInvest> = (props: IInvest) => {
 				margin={"0 auto"}
 				justifyContent={"center"}
 				flexDir={"column"}
-				pt={"6.5rem"}
+				h={"100vh"}
+				maxH={"65.5vh"}
 			>
 				<motion.div
 					initial={{ opacity: 0, y: 40 }}

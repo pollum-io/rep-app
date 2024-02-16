@@ -16,6 +16,7 @@ import {
 import { IOpportunitiesCard } from "ui/Imovel/dtos/Oportunities";
 import { useOpportunities } from "../../hooks/useOpportunities";
 import { useRegisterSteps } from "../../hooks";
+import { useTranslation } from "react-i18next";
 
 interface IImovelProps {
 	imovelDetails: IOpportunitiesCard;
@@ -30,6 +31,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 	const [page, setPage] = useState("oportunidade");
 	const { setFirstStep, setSecondStep } = useRegisterSteps();
 	const { cotas, setCotas } = useOpportunities();
+	const { t } = useTranslation();
 
 	return (
 		<Flex w={"100%"} maxW={"70rem"} margin={"0 auto"} justifyContent={"center"}>
@@ -124,7 +126,7 @@ export const ImovelDetail: FunctionComponent<IImovelProps> = ({
 									color={"#171923"}
 									mb={"2rem"}
 								>
-									Conheça mais sobre essa oportunidade
+									{t("opportunitieDetails.knowMoreAbout")}
 								</Text>
 								<MoreAbout page={page} setPage={setPage} />
 							</Flex>
