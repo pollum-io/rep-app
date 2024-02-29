@@ -13,8 +13,7 @@ export const Footer: React.FC = () => {
 			py="1rem"
 			gap="10rem"
 			color="#ffffff"
-			flex={"1"}
-			mt="0rem"
+			mt="10rem"
 		>
 			<Flex flexDir={"column"} gap="0.4375rem">
 				<Flex gap={"0.5rem"} alignItems={"center"}>
