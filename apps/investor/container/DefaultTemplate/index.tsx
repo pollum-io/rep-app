@@ -14,16 +14,18 @@ export const DefaultTemplate: FunctionComponent<BaseLayoutProps> = ({
 		<Flex
 			id="default-template"
 			w="100%"
-			h="max"
-			minHeight={"100vh"}
+			minHeight={"100vh"} // Set minHeight to full viewport height
 			flexDir={"column"}
 			bgColor="#ffffff"
 		>
 			<Header />
-			{children}
-			<Flex mt={"10.0625rem"}>
-				<Footer />
+			<Flex
+				flex="1" // Allow content to grow and fill remaining space
+				flexDirection="column"
+			>
+				{children}
 			</Flex>
+			<Footer />
 		</Flex>
 	);
 };
