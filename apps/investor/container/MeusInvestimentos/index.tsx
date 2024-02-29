@@ -1,9 +1,4 @@
-import React, {
-	FunctionComponent,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-} from "react";
+import React, { FunctionComponent, useLayoutEffect, useMemo } from "react";
 import { UserDataPF } from "../../dtos/UserPF";
 import { UserDataPJ } from "../../dtos/UserPJ";
 import { DefaultTemplate } from "../DefaultTemplate";
@@ -54,11 +49,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 		props?.user?.investor_pj,
 	]);
 
-	const {
-		data: investment,
-		isError: isErrorInvestment,
-		isLoading: isLoadingInvestment,
-	} = useQuery(
+	const { data: investment, isLoading: isLoadingInvestment } = useQuery(
 		["investment", props?.token],
 		async () => {
 			try {
@@ -251,9 +242,7 @@ export const MeusInvestimentosContainer: FunctionComponent<UserData> = (
 													: "-"}
 											</Text>
 											<Text color={"#38A169"} fontSize={"1.125rem"}>
-												{investment?.investments?.length
-													? `${investsSome?.profitability}%`
-													: "-"}
+												{investment?.investments?.length ? `120%` : "-"}
 											</Text>
 										</Flex>
 									</Flex>
